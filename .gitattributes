@@ -1,0 +1,2 @@
+videos/bg_home.mp4 filter=lfs diff=lfs merge=lfs -text
+videos/bg_home2.mp4 filter=lfs diff=lfs merge=lfs -text
