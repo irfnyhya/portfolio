@@ -318,7 +318,7 @@
       /* Experience Cards */
       .experience-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 2rem;
       }
 
@@ -329,6 +329,8 @@
         overflow: hidden;
         transition: all 0.3s;
         backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
       }
 
       .exp-card:hover {
@@ -349,8 +351,26 @@
         transition: transform 0.5s;
       }
 
+      .exp-media.logo-bg {
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2.5rem;
+      }
+
+      .exp-media.logo-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
       .exp-card:hover .exp-media img {
         transform: scale(1.05);
+      }
+
+      .exp-card:hover .exp-media.logo-bg img {
+        transform: scale(1.03);
       }
 
       .exp-overlay {
@@ -1021,6 +1041,7 @@
           font-size: 6rem;
         }
 
+        .experience-grid,
         .skills-grid,
         .certs-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -1222,26 +1243,28 @@
           <div class="about-text fade-up">
             <p>
               I am a
-              <span class="about-highlight">software engineer graduate</span>
-              based in Kuala Lumpur, Malaysia.
+              <span class="about-highlight">Solutions Engineer</span> at
+              <span class="about-highlight">TNEX Malaysia</span>, based in
+              Kuala Lumpur.
             </p>
             <p>
-              I transitioned from a technical background to focus entirely on
-              delivering functional, high-quality software solutions. Rather
-              than being tied to specific tools, I adapt to the latest
-              technology to solve problems and improve user experience.
+              I work at the intersection of full-stack engineering and client
+              solutioning — building and configuring GRC AI products while
+              helping translate them into real business value. I focus on
+              shipping practical software and improving how users experience it.
             </p>
             <p>
-              I am looking for new challenges where I can execute projects from
-              start to finish. My portfolio demonstrates my ability to deliver
-              results regardless of the complexity.
+              Previously, I gained hands-on experience through internships and
+              academic projects across automation, mobile, and enterprise
+              systems. I enjoy owning features end-to-end and adapting quickly
+              to the tools the problem needs.
             </p>
             <p>
-              Skilled in
-              <span class="about-highlight"
-                >Java, Python, PHP, React Native
-              </span>
-              and <span class="about-highlight">SQL</span>.
+              Currently working with
+              <span class="about-highlight">React.js, .NET Core, SQL</span>,
+              alongside
+              <span class="about-highlight">Java, Python, PHP</span> and
+              <span class="about-highlight">React Native</span>.
             </p>
           </div>
         </div>
@@ -1256,6 +1279,48 @@
           <h2 class="section-title">Professional Journey</h2>
         </div>
         <div class="experience-grid">
+          <!-- TNEX Experience - Current -->
+          <div class="exp-card fade-up">
+            <div class="exp-media logo-bg">
+              <img src="images/tnex/tnex.png" alt="TNEX" />
+              <div class="exp-overlay">
+                <i class="fas fa-map-pin"></i> WORQ Bangsar, KL
+              </div>
+            </div>
+            <div class="exp-content">
+              <div class="exp-header">
+                <h3>Solutions Engineer</h3>
+                <span class="exp-date">2026 — Present</span>
+              </div>
+              <div class="exp-company">
+                <i class="fas fa-building"></i> TNEX Malaysia Sdn Bhd
+              </div>
+              <ul class="exp-list">
+                <li>
+                  <i class="fas fa-check-circle"></i> Build GRC AI features with
+                  React.js frontend and .NET Core / C# backend under guidance
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i> Configure compliance
+                  assistant demos — regulation management, audit scheduling, and
+                  assessment frameworks
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i> Support client solutioning:
+                  demos, proposals, and translating requirements into technical
+                  scope
+                </li>
+              </ul>
+              <div class="exp-tech">
+                <span>React.js</span>
+                <span>.NET Core</span>
+                <span>SQL Server</span>
+                <span>GRC AI</span>
+                <span>TypeScript</span>
+              </div>
+            </div>
+          </div>
+
           <!-- PayNet Experience - WITH VENUE PICTURE -->
           <div class="exp-card fade-up">
             <div class="exp-media">
@@ -1386,7 +1451,11 @@
                 >
                   <i class="fas fa-play"></i> Demo
                 </a>
-                <a href="#" class="project-link">
+                <a
+                  href="javascript:void(0)"
+                  onclick="openGallery('paynet')"
+                  class="project-link"
+                >
                   <i class="fas fa-images"></i> Gallery
                 </a>
               </div>
@@ -1610,13 +1679,20 @@
         </div>
         <div class="contact-grid">
           <div class="contact-left fade-up">
-            <h2>Looking for opportunities.</h2>
+            <h2>Let's stay in touch.</h2>
             <p>
-              I am currently seeking job opportunities at startups, agencies, or
-              companies. Please feel free to
-              <a href="mailto:irfanyahya808@gmail.com" class="email-link"
-                >email me</a
-              >.
+              I'm currently a Solutions Engineer at TNEX Malaysia, working on
+              GRC AI solutions. Open to connecting — feel free to
+              <a
+                href="mailto:irfanyahya808@gmail.com?subject=Hello%20from%20your%20portfolio"
+                class="email-link"
+                >send me an email</a
+              >
+              (<a
+                href="mailto:irfanyahya808@gmail.com?subject=Hello%20from%20your%20portfolio"
+                class="email-link"
+                >irfanyahya808@gmail.com</a
+              >).
             </p>
 
             <div class="social-spaces">
@@ -1634,18 +1710,18 @@
             </div>
           </div>
 
-          <form class="contact-form fade-up">
+          <form class="contact-form fade-up" action="mailto:irfanyahya808@gmail.com" method="get" enctype="text/plain">
             <div class="form-group">
-              <label>Your name</label>
-              <input type="text" required />
+              <label for="contact-name">Your name</label>
+              <input id="contact-name" name="name" type="text" required autocomplete="name" />
             </div>
             <div class="form-group">
-              <label>Your email</label>
-              <input type="email" required />
+              <label for="contact-email">Your email</label>
+              <input id="contact-email" name="email" type="email" required autocomplete="email" />
             </div>
             <div class="form-group">
-              <label>Your message</label>
-              <textarea required></textarea>
+              <label for="contact-message">Your message</label>
+              <textarea id="contact-message" name="message" required></textarea>
             </div>
             <button type="submit" class="submit-btn">SEND MESSAGE</button>
           </form>
@@ -1732,10 +1808,12 @@
     <script>
       // Custom cursor
       const cursor = document.querySelector(".custom-cursor");
-      document.addEventListener("mousemove", (e) => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-      });
+      if (cursor) {
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.left = e.clientX + "px";
+          cursor.style.top = e.clientY + "px";
+        });
+      }
 
       // Live time update for aesthetic page
       function updateTime() {
@@ -1771,24 +1849,41 @@
         .querySelectorAll(".fade-up")
         .forEach((el) => observer.observe(el));
 
-      // Smooth scrolling
+      // Smooth scrolling (skip bare "#" / missing targets)
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (!href || href === "#") return;
+          const target = document.querySelector(href);
+          if (!target) return;
           e.preventDefault();
-          document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-          });
+          target.scrollIntoView({ behavior: "smooth" });
         });
       });
 
-      // Form handling
-      document
-        .querySelector(".contact-form")
-        .addEventListener("submit", (e) => {
+      // Contact form → open default email client
+      const contactForm = document.querySelector(".contact-form");
+      if (contactForm) {
+        contactForm.addEventListener("submit", (e) => {
           e.preventDefault();
-          alert("Thanks for reaching out! I'll get back to you soon.");
-          e.target.reset();
+          const name = contactForm.querySelector("#contact-name").value.trim();
+          const email = contactForm
+            .querySelector("#contact-email")
+            .value.trim();
+          const message = contactForm
+            .querySelector("#contact-message")
+            .value.trim();
+
+          const subject = encodeURIComponent(
+            `Portfolio message from ${name}`,
+          );
+          const body = encodeURIComponent(
+            `Name: ${name}\nEmail: ${email}\n\n${message}`,
+          );
+
+          window.location.href = `mailto:irfanyahya808@gmail.com?subject=${subject}&body=${body}`;
         });
+      }
 
       // Gallery data
       const galleryData = {
