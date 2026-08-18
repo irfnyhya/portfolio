@@ -21,9 +21,13 @@
         box-sizing: border-box;
       }
 
+      html {
+        background-color: #000000;
+      }
+
       body {
         font-family: "Inter", sans-serif;
-        background-color: #000000;
+        background-color: transparent;
         color: #ffffff;
         line-height: 1.5;
         overflow-x: hidden;
@@ -89,34 +93,38 @@
 
       .nav-right span {
         color: #ffffff;
-      }
 
-      /* Video Background Section */
-      .video-section {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 3rem;
-        position: relative;
-        overflow: hidden;
       }
-
+      /* Global Video Background - one fixed layer behind the whole page */
       .video-background {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
         z-index: -1;
         overflow: hidden;
         pointer-events: none;
+        background-color: #000000;
       }
 
       .video-background video {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        opacity: 0.4;
+        opacity: 0.6;
+      }
+
+      /* Keeps text readable over the moving footage */
+      .video-tint {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.25) 0%,
+          rgba(0, 0, 0, 0.6) 100%
+        );
       }
 
       .section-content {
@@ -136,6 +144,7 @@
         padding: 2rem 3rem;
         position: relative;
         overflow: hidden;
+        background-color: transparent;
       }
 
       .home-content {
@@ -248,8 +257,16 @@
       /* All other sections - consistent dark theme */
       section {
         padding: 6rem 2rem;
-        background-color: #000000;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+      }
+
+      /* Content sections sit on a translucent scrim, so the fixed video keeps
+         showing through while the text stays readable */
+      section:not(.home-section):not(.aesthetic-section),
+      footer {
+        background-color: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(2px);
       }
 
       .section-container {
@@ -823,6 +840,7 @@
         padding: 2rem 3rem;
         position: relative;
         overflow: hidden;
+        background-color: transparent;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
 
@@ -1177,6 +1195,22 @@
     </style>
   </head>
   <body>
+
+    <!-- Global Video Background - fixed, visible behind every section -->
+    <div class="video-background">
+      <video
+        id="bgVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+      >
+        <source src="videos/bghome.mp4" type="video/mp4" />
+      </video>
+      <div class="video-tint"></div>
+    </div>
     <!-- Custom Cursor -->
     <div class="custom-cursor"></div>
 
@@ -1199,14 +1233,6 @@
 
     <!-- Home Section - With Video Background -->
     <section id="home" class="home-section">
-      <!-- Video Background -->
-      <div class="video-background">
-        <video autoplay muted loop playsinline>
-          <source src="videos/bghome.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-
       <div class="home-content">
         <div class="gps-line fade-in"></div>
 
@@ -2119,6 +2145,27 @@
           closeVideoModal();
         }
       });
+
+      // Background video: keep it running across tab switches and recover if
+      // the browser blocks the initial autoplay until the first interaction
+      (() => {
+        const bg = document.getElementById("bgVideo");
+        if (!bg) return;
+
+        const play = () => bg.play().catch(() => {});
+
+        play();
+        bg.addEventListener("loadeddata", play);
+        bg.addEventListener("pause", () => {
+          if (!document.hidden) play();
+        });
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) play();
+        });
+        ["click", "touchstart", "keydown", "scroll"].forEach((evt) =>
+          window.addEventListener(evt, play, { once: true, passive: true })
+        );
+      })();
     </script>
   </body>
 </html>
