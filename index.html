@@ -1,1446 +1,1298 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="flat">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Irfan Hakimi</title>
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    <title>Irfan Hakimi, Solutions Engineer in Kuala Lumpur</title>
+    <meta
+      name="description"
+      content="Irfan Hakimi is a solutions engineer at TNEX Malaysia in Kuala Lumpur, building GRC AI products and shipping web apps like Sanding, Museum of Us and TravelBud."
     />
-    <!-- Google Fonts -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Irfan Hakimi, Solutions Engineer" />
+    <meta
+      property="og:description"
+      content="GRC AI at TNEX by day. Wedding cards, a walkable 3D gallery and a travel planner on the side."
+    />
+    <meta property="og:image" content="images/profilepic.jpeg" />
+    <meta name="theme-color" content="#000000" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='46' font-family='Impact,Arial Narrow,sans-serif' font-size='40' fill='%23d9a066' text-anchor='middle'%3EIH%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <style>
-      * {
+      :root {
+        --bg: #000000;
+        --surface: #141414;
+        --surface-2: #1f1f1f;
+        --ink: #ffffff;
+        --muted: #b8b8b8;
+        --accent: #7fe3d0;
+        --accent-ink: #000000;
+
+        --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+        --font-text: "Work Sans", system-ui, sans-serif;
+
+        --step-small: 0.875rem;
+        --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+        --step-lead: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem);
+        --step-head: clamp(3rem, 1.6rem + 5vw, 6rem);
+        --step-display: clamp(5rem, 1rem + 10vw, 10.5rem);
+
+        --margin: clamp(16px, 2.2vw, 32px);
+        --gap-section: clamp(96px, 12vw, 200px);
+        --nav-h: 64px;
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
 
-      html,
-      body {
-        background-color: transparent;
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(--nav-h);
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
-        font-family: "Inter", sans-serif;
-        color: #ffffff;
-        line-height: 1.5;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-text);
+        font-size: var(--step-body);
+        line-height: 1.55;
         overflow-x: hidden;
-        position: relative;
-        z-index: 0;
       }
 
-      /* Custom Cursor */
-      .custom-cursor {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #ffffff;
-        border-radius: 50%;
-        position: fixed;
-        pointer-events: none;
-        z-index: 9999;
-        mix-blend-mode: difference;
+      img,
+      video {
+        display: block;
+        max-width: 100%;
+        height: auto;
       }
 
-      /* No mouse, no cursor ring - it would sit frozen in a corner on touch */
-      @media (hover: none), (pointer: coarse) {
-        .custom-cursor {
-          display: none;
-        }
+      a {
+        color: inherit;
       }
 
-      /* Navigation - Fixed for all pages */
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
-        z-index: 1000;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
       }
 
-      .nav-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 1.5rem 2rem;
+      ::selection {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .wrap {
+        padding-inline: var(--margin);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: clamp(16px, 2vw, 32px);
+      }
+
+      .h-section {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-head);
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+      }
+
+      .h-item {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-lead);
+        line-height: 1;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .small {
+        font-size: var(--step-small);
+      }
+
+      /* Buttons and text links: one shape, square corners */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5em;
+        min-height: 48px;
+        padding: 0 22px;
+        font-weight: 600;
+        font-size: var(--step-body);
+        text-decoration: none;
+        background: var(--ink);
+        color: var(--bg);
+        transition: transform 0.25s var(--ease-out), background-color 0.25s,
+          color 0.25s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      .btn-accent {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .btn-accent:hover {
+        background: var(--ink);
+      }
+
+      .btn-quiet {
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+
+      .btn-quiet:hover {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .link {
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.25em;
+        text-decoration-color: var(--accent);
+        transition: text-underline-offset 0.25s var(--ease-out), color 0.25s;
+      }
+
+      .link:hover {
+        text-underline-offset: 0.4em;
+        color: var(--accent);
+      }
+
+      .links {
         display: flex;
-        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px 24px;
         align-items: center;
       }
 
-      .nav-left {
-        display: flex;
-        gap: 3rem;
+      /* ---------- Background video (the moving picture) ---------- */
+      .video-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background: #000 url("videos/bghome-poster.jpg") center / cover
+          no-repeat;
       }
 
-      .nav-left a {
-        color: #ffffff;
+      .video-bg video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .video-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      main,
+      .site-footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ---------- Navigation: a plain bar ---------- */
+      .nav {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 50;
+        height: var(--nav-h);
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding-inline: var(--margin);
+      }
+
+      .wordmark {
+        font-weight: 600;
         text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-        transition: opacity 0.3s;
+        white-space: nowrap;
       }
 
-      .nav-left a:hover {
-        opacity: 0.7;
-      }
-
-      .nav-right {
+      .nav-links {
         display: flex;
-        gap: 1rem;
-        color: #808080;
-        font-size: 0.8rem;
-        font-family: monospace;
+        align-items: center;
+        gap: clamp(16px, 2.4vw, 36px);
       }
 
-      .nav-right span {
-        color: #ffffff;
+      .nav-links a:not(.btn) {
+        text-decoration: none;
+        font-weight: 400;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:not(.btn):hover,
+      .nav-links a[aria-current="true"] {
+        color: var(--accent);
+      }
+
+      .nav-links .btn {
+        min-height: 40px;
+        padding: 0 16px;
+        font-size: var(--step-small);
       }
 
       .nav-toggle {
         display: none;
-        background: transparent;
-        border: none;
-        color: #ffffff;
-        font-size: 1.4rem;
-        line-height: 1;
-        padding: 0.5rem;
-        margin: -0.5rem;
-        cursor: pointer;
-      }
-
-      /* Global Video Background - one fixed layer behind the whole page */
-      .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        z-index: 0;
-        overflow: hidden;
-        pointer-events: none;
-        background-color: #000000;
-      }
-
-      .video-background video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.6;
-      }
-
-      /* Keeps text readable over the moving footage */
-      .video-tint {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          ellipse at center,
-          rgba(0, 0, 0, 0.25) 0%,
-          rgba(0, 0, 0, 0.6) 100%
-        );
-      }
-
-      .section-content {
-        position: relative;
-        z-index: 1;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      /* Home Section */
-      .home-section {
-        min-height: 100vh;
-        /* dvh tracks the mobile URL bar, so the hero is never clipped on iOS */
-        min-height: 100dvh;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 3rem;
-        position: relative;
-        overflow: hidden;
-        background-color: transparent;
-      }
-
-      .home-content {
-        position: relative;
-        z-index: 1;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .gps-line {
-        position: absolute;
-        top: 20%;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        color: #808080;
-        font-family: monospace;
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-
-      .name-display {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        margin: 3rem 0;
-        position: relative;
-      }
-
-      .name-left,
-      .name-center {
-        font-size: clamp(3.25rem, 15vw, 8rem);
-        font-weight: 800;
-        color: #ffffff;
-        line-height: 0.9;
-        letter-spacing: -5px;
-        text-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-      }
-
-      .name-center {
-        position: relative;
-      }
-
-      .name-center::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 200px;
-        height: 200px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        z-index: -1;
-        box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-      }
-
-      .button-group {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 2rem;
-      }
-
-      .cv-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: transparent;
-        border: 1px solid #ffffff;
-        color: #ffffff;
-        padding: 0.75rem 2rem;
-        border-radius: 50px;
-        font-size: 1rem;
-        font-weight: 500;
-        text-decoration: none;
-        transition: all 0.3s;
-        cursor: pointer;
-      }
-
-      .cv-button:hover {
-        background: #ffffff;
-        color: #000000;
-      }
-
-      .cv-button i {
-        font-size: 1rem;
-      }
-
-      .bottom-text {
-        display: flex;
-        justify-content: center;
-        gap: 3rem;
-        margin-top: 4rem;
-        color: #808080;
-        font-size: 1.2rem;
-        font-weight: 500;
-        letter-spacing: 2px;
-      }
-
-      .bottom-text span {
-        color: #ffffff;
-      }
-
-      /* All other sections - consistent dark theme */
-      section {
-        padding: 6rem 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Content sections sit on a translucent scrim, so the fixed video keeps
-         showing through while the text stays readable */
-      section:not(.home-section):not(.aesthetic-section),
-      footer {
-        background-color: rgba(0, 0, 0, 0.55);
-        backdrop-filter: blur(2px);
-      }
-
-      .section-container {
-        max-width: 1400px;
-        margin: 0 auto;
-      }
-
-      .section-header {
-        margin-bottom: 4rem;
-      }
-
-      .section-number {
-        color: #808080;
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-        margin-bottom: 1rem;
-        display: block;
-      }
-
-      .section-title {
-        font-size: clamp(1.9rem, 6.5vw, 3rem);
-        font-weight: 700;
-        letter-spacing: -1px;
-      }
-
-      /* About Section - WITH PROFILE PICTURE */
-      .about-content {
-        display: grid;
-        grid-template-columns: 0.8fr 1.2fr;
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .profile-image {
-        width: 100%;
-        border-radius: 20px;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .profile-image img {
-        width: 100%;
-        height: auto;
-        display: block;
-        transition: transform 0.5s;
-      }
-
-      .profile-image img:hover {
-        transform: scale(1.02);
-      }
-
-      .about-text {
-        color: #808080;
-        font-size: 1.1rem;
-        line-height: 1.8;
-      }
-
-      .about-text p {
-        margin-bottom: 1.5rem;
-      }
-
-      .about-highlight {
-        color: #ffffff;
+        min-height: 44px;
+        padding: 0 4px;
         font-weight: 600;
       }
 
-      /* Experience Cards */
-      .experience-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-
-      .exp-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        overflow: hidden;
-        transition: all 0.3s;
-        backdrop-filter: blur(10px);
-        display: flex;
-        flex-direction: column;
-      }
-
-      .exp-card:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: translateY(-5px);
-      }
-
-      .exp-media {
-        height: 250px;
+      /* ---------- The pinned poster: hero + selected work ----------
+         The name holds two corners of a fixed stage; the intro and each
+         project swap into the band between them as the page scrolls. */
+      .poster {
+        --steps: 6;
+        --name-h: calc(var(--step-display) * 0.86);
+        --band-top: calc(var(--nav-h) + 12px + var(--name-h) + 28px);
+        --band-bottom: calc(16px + var(--name-h) + 28px);
         position: relative;
+        height: calc(100svh + (var(--steps) - 1) * 56svh);
+      }
+
+      .poster-stage {
+        position: sticky;
+        top: 0;
+        height: 100svh;
         overflow: hidden;
       }
 
-      .exp-media img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s;
+      .name {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-display);
+        line-height: 0.86;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        color: var(--ink);
       }
 
-      .exp-media.logo-bg {
-        background: #ffffff;
-        display: flex;
+      .name span {
+        position: absolute;
+        display: block;
+      }
+
+      .name .name-a {
+        top: calc(var(--nav-h) + 12px);
+        left: var(--margin);
+      }
+
+      .name .name-b {
+        bottom: 16px;
+        right: var(--margin);
+      }
+
+      .panel {
+        position: absolute;
+        left: var(--margin);
+        right: var(--margin);
+        top: var(--band-top);
+        bottom: var(--band-bottom);
+        display: grid;
         align-items: center;
-        justify-content: center;
-        padding: 2.5rem;
+        align-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(48px);
+        transition: opacity 0.6s var(--ease-out), transform 0.8s var(--ease-out),
+          visibility 0s linear 0.8s;
       }
 
-      .exp-media.logo-bg img {
+      .panel.is-past {
+        transform: translateY(-48px);
+      }
+
+      .panel.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: opacity 0.6s var(--ease-out) 0.12s,
+          transform 0.8s var(--ease-out) 0.12s, visibility 0s;
+      }
+
+      .panel .project-shot img {
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 0.9s var(--ease-out) 0.1s,
+          transform 1.4s var(--ease-out);
+        transform: scale(1.08);
+      }
+
+      .panel.is-active .project-shot img {
+        clip-path: inset(0 0 0 0);
+        transform: none;
+      }
+
+      /* The reel: where you are in the run, and a way to jump */
+      .reel {
+        position: absolute;
+        left: var(--margin);
+        bottom: 20px;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 20px;
+        max-width: 52vw;
+        font-size: var(--step-small);
+      }
+
+      .reel button {
+        padding: 3px 0;
+        color: var(--muted);
+        text-align: left;
+        transition: color 0.2s, transform 0.3s var(--ease-out);
+      }
+
+      .reel button:hover {
+        color: var(--ink);
+        transform: translateX(4px);
+      }
+
+      .reel button[aria-current="true"] {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .hero-copy {
+        grid-column: 1 / span 6;
+        max-width: 36rem;
+      }
+
+      .hero-copy .lead {
+        font-size: var(--step-lead);
+        line-height: 1.3;
+      }
+
+      .hero-copy .links {
+        margin-top: 32px;
+      }
+
+      .hero-copy .now {
+        margin-top: 28px;
+      }
+
+      .project {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        column-gap: clamp(16px, 2vw, 32px);
+      }
+
+      .project-shot {
+        grid-column: 1 / span 7;
+        overflow: hidden;
+      }
+
+      .project-shot img {
         width: 100%;
-        height: 100%;
+        max-height: calc(100svh - var(--band-top) - var(--band-bottom));
+        aspect-ratio: 9 / 4;
+        object-fit: cover;
+        object-position: top center;
+        background: var(--surface);
+      }
+
+      .project-text {
+        grid-column: 8 / span 5;
+        padding-left: clamp(0px, 2vw, 24px);
+      }
+
+      .project-text .kind {
+        color: var(--muted);
+        margin-top: 10px;
+      }
+
+      .project-text p {
+        margin-top: 14px;
+        max-width: 34ch;
+      }
+
+      .project-text .stack {
+        margin-top: 12px;
+        color: var(--muted);
+      }
+
+      .project-text .links {
+        margin-top: 20px;
+      }
+
+      /* ---------- Solid sections after the pin ---------- */
+      .solid {
+        position: relative;
+        z-index: 2;
+        background: var(--bg);
+        padding-block: var(--gap-section) 0;
+      }
+
+      #certificates {
+        padding-bottom: var(--gap-section);
+      }
+
+      .section-head {
+        margin-bottom: clamp(40px, 5vw, 72px);
+      }
+
+      .section-head p {
+        margin-top: 20px;
+        max-width: 44ch;
+      }
+
+      /* Earlier builds: two projects side by side */
+      .builds {
+        row-gap: 56px;
+      }
+
+      .build {
+        grid-column: span 6;
+      }
+
+      .build img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        object-position: top center;
+        background: var(--surface);
+      }
+
+      .build h3 {
+        margin-top: 24px;
+      }
+
+      .build p {
+        margin-top: 12px;
+        max-width: 52ch;
+      }
+
+      .build .stack {
+        margin-top: 10px;
+        color: var(--muted);
+      }
+
+      .build .links {
+        margin-top: 16px;
+      }
+
+      /* Experience: text left, the place on the right */
+      .jobs {
+        display: grid;
+        gap: clamp(72px, 8vw, 120px);
+      }
+
+      .job {
+        align-items: start;
+      }
+
+      .job-text {
+        grid-column: 1 / span 7;
+      }
+
+      .job-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 24px;
+        margin-top: 12px;
+        color: var(--muted);
+      }
+
+      .job-meta strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .job ul {
+        list-style: none;
+        margin-top: 24px;
+        display: grid;
+        gap: 12px;
+        max-width: 60ch;
+      }
+
+      .job li {
+        padding-left: 22px;
+        position: relative;
+      }
+
+      .job li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.62em;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+      }
+
+      .job .stack {
+        margin-top: 20px;
+        color: var(--muted);
+      }
+
+      .job .links {
+        margin-top: 24px;
+      }
+
+      .job-photo {
+        grid-column: 9 / span 4;
+        background: var(--surface);
+        overflow: hidden;
+      }
+
+      .job-photo img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        transition: transform 0.8s var(--ease-out);
+      }
+
+      .job-photo.logo img {
+        aspect-ratio: 16 / 9;
         object-fit: contain;
+        background: #ffffff;
+        padding: 8%;
       }
 
-      .exp-card:hover .exp-media img {
-        transform: scale(1.05);
-      }
-
-      .exp-card:hover .exp-media.logo-bg img {
+      .job:hover .job-photo img {
         transform: scale(1.03);
       }
 
-      .exp-overlay {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
-        padding: 0.5rem 1rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .exp-content {
-        padding: 2rem;
-      }
-
-      .exp-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-      }
-
-      .exp-header h3 {
-        font-size: 1.3rem;
-        font-weight: 600;
-      }
-
-      .exp-date {
-        color: #808080;
-        font-size: 0.9rem;
-      }
-
-      .exp-company {
-        color: #808080;
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .exp-company i {
-        color: #ffffff;
-      }
-
-      .exp-list {
-        list-style: none;
-        margin-bottom: 1.5rem;
-      }
-
-      .exp-list li {
-        color: #808080;
-        font-size: 0.9rem;
-        margin-bottom: 0.8rem;
-        display: flex;
-        gap: 0.5rem;
-      }
-
-      .exp-list li i {
-        color: #ffffff;
-        font-size: 0.8rem;
-        margin-top: 0.2rem;
-      }
-
-      .exp-tech {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .exp-tech span {
-        background: rgba(255, 255, 255, 0.05);
-        color: #808080;
-        padding: 0.3rem 0.8rem;
-        border-radius: 50px;
-        font-size: 0.7rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .exp-gallery-btn {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #ffffff;
-        padding: 0.6rem 1.5rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .exp-gallery-btn:hover {
-        background: #ffffff;
-        color: #000000;
-      }
-
-      /* Projects Section */
-      .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-      }
-
-      .project-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        overflow: hidden;
-        transition: all 0.3s;
-        backdrop-filter: blur(10px);
-      }
-
-      .project-card:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: translateY(-10px);
-      }
-
-      .project-media {
-        height: 250px;
+      /* Life at work: a rising triptych */
+      .rise {
+        height: calc(200svh + var(--gap-section));
         position: relative;
-        overflow: hidden;
+        z-index: 2;
+        background: var(--bg);
+        padding-top: var(--gap-section);
       }
 
-      .project-media img {
+      .rise-stage {
+        position: sticky;
+        top: 0;
+        height: 100svh;
+        overflow: hidden;
+        padding-top: calc(var(--nav-h) + 32px);
+        text-align: center;
+      }
+
+      .rise-stage .section-head {
+        margin-bottom: 0;
+        position: relative;
+        z-index: 2;
+      }
+
+      .rise-stage .section-head p {
+        margin-inline: auto;
+      }
+
+      .rise-stage .links {
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .rise-row {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 0;
+        height: 100%;
+      }
+
+      .rise-img {
+        position: absolute;
+        top: 100%;
+        will-change: transform;
+      }
+
+      .rise-img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s;
       }
 
-      .project-card:hover .project-media img {
-        transform: scale(1.05);
+      .rise-img.c {
+        width: min(42vw, 600px);
+        aspect-ratio: 4 / 5;
+        left: calc(min(42vw, 600px) / -2);
+        z-index: 1;
       }
 
-      .project-tags {
+      .rise-img.l,
+      .rise-img.r {
+        width: min(26vw, 380px);
+        aspect-ratio: 4 / 5;
+      }
+
+      .rise-img.l {
+        right: calc(min(42vw, 600px) / 2 + 12px);
+      }
+
+      .rise-img.r {
+        left: calc(min(42vw, 600px) / 2 + 12px);
+      }
+
+      .rise-img figcaption {
         position: absolute;
-        top: 1rem;
-        left: 1rem;
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
+        left: 0;
+        bottom: 0;
+        padding: 10px 14px;
+        background: var(--bg);
+        font-size: var(--step-small);
+        text-align: left;
       }
 
-      .project-tag {
-        background: rgba(0, 0, 0, 0.8);
-        color: #ffffff;
-        padding: 0.3rem 1rem;
-        border-radius: 50px;
-        font-size: 0.7rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(5px);
-      }
-
-      .project-content {
-        padding: 2rem;
-      }
-
-      .project-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        margin-bottom: 1rem;
-      }
-
-      .project-header h3 {
-        font-size: 1.3rem;
-        font-weight: 600;
-      }
-
-      .project-price {
-        color: #808080;
-        font-size: 0.9rem;
-      }
-
-      .project-price span {
-        color: #ffffff;
-        font-weight: 600;
-      }
-
-      .project-desc {
-        color: #808080;
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-        line-height: 1.7;
-      }
-
-      .project-tech {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .project-tech span {
-        background: rgba(255, 255, 255, 0.05);
-        color: #808080;
-        padding: 0.3rem 0.8rem;
-        border-radius: 50px;
-        font-size: 0.7rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .project-links {
-        display: flex;
-        gap: 1rem;
-      }
-
-      .project-link {
-        text-decoration: none;
-        color: #ffffff;
-        font-size: 0.8rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        padding: 0.5rem 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 50px;
-        transition: all 0.3s;
-        background: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(5px);
-      }
-
-      .project-link:hover {
-        background: #ffffff;
-        color: #000000;
-      }
-
-      /* Skills Section */
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-      }
-
-      .skill-group h3 {
-        font-size: 1rem;
-        color: #808080;
-        margin-bottom: 1.5rem;
-        letter-spacing: 1px;
-      }
-
-      .skill-items {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .skill-item {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-        padding: 0.4rem 1rem;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        backdrop-filter: blur(5px);
-      }
-
-      /* Certifications Section */
-      .certs-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-      }
-
-      .cert-card {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 2rem 1.5rem;
-        text-align: center;
-        transition: all 0.3s;
-        backdrop-filter: blur(10px);
-      }
-
-      .cert-card:hover {
-        border-color: rgba(255, 255, 255, 0.3);
-        transform: translateY(-5px);
-      }
-
-      .cert-icon {
-        font-size: 2rem;
-        color: #ffffff;
-        margin-bottom: 1.5rem;
-      }
-
-      .cert-card h4 {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .cert-card p {
-        color: #808080;
-        font-size: 0.8rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .pdf-link {
-        text-decoration: none;
-        color: #ffffff;
-        font-size: 0.7rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        padding: 0.3rem 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 50px;
-        transition: all 0.3s;
-        background: rgba(0, 0, 0, 0.3);
-      }
-
-      .pdf-link:hover {
-        background: #ffffff;
-        color: #000000;
-      }
-
-      /* Contact Section */
-      .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
+      /* About */
+      .about-grid {
         align-items: start;
       }
 
-      .contact-left h2 {
-        font-size: clamp(1.9rem, 6.5vw, 3rem);
-        font-weight: 700;
-        letter-spacing: -1px;
-        margin-bottom: 2rem;
+      .portrait {
+        grid-column: 1 / span 5;
+        position: sticky;
+        top: calc(var(--nav-h) + 24px);
+        background: var(--surface);
       }
 
-      .contact-left p {
-        color: #808080;
-        margin-bottom: 2rem;
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-
-      .contact-left .email-link {
-        color: #ffffff;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        padding-bottom: 2px;
-        transition: border-color 0.3s;
-      }
-
-      .contact-left .email-link:hover {
-        border-color: #ffffff;
-      }
-
-      .social-spaces {
-        margin-top: 3rem;
-      }
-
-      .social-spaces h3 {
-        font-size: 1rem;
-        color: #808080;
-        font-weight: 400;
-        margin-bottom: 1rem;
-        letter-spacing: 0.5px;
-      }
-
-      .social-icons {
-        display: flex;
-        gap: 1.5rem;
-      }
-
-      .social-icons a {
-        color: #ffffff;
-        font-size: 1.5rem;
-        transition: opacity 0.3s;
-      }
-
-      .social-icons a:hover {
-        opacity: 0.7;
-      }
-
-      .contact-form {
-        background: transparent;
-      }
-
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .form-group label {
-        display: block;
-        color: #808080;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .form-group input,
-      .form-group textarea {
+      .portrait img {
         width: 100%;
-        padding: 0.75rem 0;
-        background: transparent;
-        border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        color: #ffffff;
-        font-size: 1rem;
-        transition: border-color 0.3s;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        object-position: center 30%;
       }
 
-      .form-group input:focus,
-      .form-group textarea:focus {
-        outline: none;
-        border-bottom-color: #ffffff;
+      .portrait figcaption {
+        padding: 12px 0 0;
+        color: var(--muted);
+        font-size: var(--step-small);
+        background: var(--bg);
       }
 
-      .form-group textarea {
-        height: 100px;
+      .about-text {
+        grid-column: 7 / span 6;
+      }
+
+      .about-text p + p {
+        margin-top: 1.1em;
+      }
+
+      .about-text p {
+        max-width: 60ch;
+      }
+
+      .about-text strong {
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .motto {
+        margin-top: 48px;
+        font-family: var(--font-display);
+        font-size: var(--step-lead);
+        line-height: 1.1;
+        text-transform: uppercase;
+      }
+
+      .skills {
+        margin-top: 56px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .skills div {
+        display: grid;
+        grid-template-columns: 11rem 1fr;
+        gap: 4px 24px;
+        padding: 18px 20px;
+        background: var(--surface);
+      }
+
+      .skills dt {
+        font-weight: 600;
+      }
+
+      /* Certificates */
+      .certs {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: clamp(24px, 4vw, 64px);
+        row-gap: 8px;
+      }
+
+      .certs li {
+        display: grid;
+        grid-template-columns: minmax(0, 26rem) auto;
+        justify-content: start;
+        align-items: baseline;
+        gap: 4px 20px;
+        padding: 22px 0;
+      }
+
+      .certs h3 {
+        grid-column: 1;
+      }
+
+      .certs .issuer {
+        grid-column: 1;
+        color: var(--muted);
+      }
+
+      .certs .cert-link {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+      }
+
+      /* Contact: a card over the moving picture */
+      .contact {
+        min-height: 100svh;
+        padding: calc(var(--nav-h) + 56px) var(--margin) 56px;
+        align-items: start;
+      }
+
+      .contact-now {
+        grid-column: 1 / span 6;
+        position: sticky;
+        top: calc(var(--nav-h) + 32px);
+      }
+
+      .clock {
+        font-family: var(--font-display);
+        font-size: var(--step-head);
+        line-height: 0.9;
+        text-transform: uppercase;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .contact-now p {
+        margin-top: 20px;
+        font-size: var(--step-lead);
+        line-height: 1.3;
+        max-width: 26ch;
+      }
+
+      .card {
+        grid-column: 7 / span 6;
+        background: var(--surface);
+        padding: clamp(24px, 3vw, 40px);
+        position: sticky;
+        top: calc(var(--nav-h) + 32px);
+      }
+
+      .card > p {
+        margin-top: 16px;
+      }
+
+      .card .direct {
+        margin-top: 16px;
+      }
+
+      .form {
+        margin-top: 28px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .form label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .form input,
+      .form textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        background: var(--surface-2);
+        border: 0;
+        border-bottom: 2px solid #4a4a4a;
+        padding: 12px 14px;
+        border-radius: 0;
+        transition: border-color 0.2s, background-color 0.2s;
+      }
+
+      .form textarea {
+        min-height: 120px;
         resize: vertical;
       }
 
-      .submit-btn {
-        background: transparent;
-        border: 1px solid #ffffff;
-        color: #ffffff;
-        padding: 0.75rem 2rem;
-        border-radius: 30px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s;
-        width: auto;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        margin-top: 1rem;
+      .form input:focus,
+      .form textarea:focus {
+        outline: none;
+        border-bottom-color: var(--accent);
+        background: #262626;
       }
 
-      .submit-btn:hover {
-        background: #ffffff;
-        color: #000000;
-      }
-
-      /* Aesthetic Final Page */
-      .aesthetic-section {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 3rem;
-        position: relative;
-        overflow: hidden;
-        background-color: transparent;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .aesthetic-content {
-        position: relative;
-        z-index: 1;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      .aesthetic-header {
-        position: absolute;
-        top: 15%;
-        left: 0;
+      .form .btn {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 3rem;
-        color: #808080;
-        font-size: 0.9rem;
-        letter-spacing: 1px;
+        min-height: 52px;
+        margin-top: 6px;
       }
 
-      .aesthetic-header .left,
-      .aesthetic-header .right {
-        display: flex;
-        gap: 2rem;
+      .card .socials {
+        margin-top: 24px;
       }
 
-      .aesthetic-main {
-        margin-bottom: 4rem;
-      }
-
-      .aesthetic-main .motto {
-        color: #808080;
-        font-size: 0.9rem;
-        letter-spacing: 2px;
-        margin-bottom: 1rem;
-      }
-
-      .aesthetic-main h1 {
-        font-size: clamp(2.5rem, 11vw, 5rem);
-        font-weight: 700;
-        letter-spacing: -2px;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-      }
-
-      .aesthetic-main .do-it {
-        color: #808080;
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
-
-      .aesthetic-footer {
-        position: absolute;
-        bottom: 15%;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 3rem;
-        align-items: center;
-      }
-
-      .location-time {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3rem;
-      }
-
-      .location {
-        color: #808080;
-        font-size: 0.9rem;
-      }
-
-      .time {
-        color: #ffffff;
-        font-size: 1.2rem;
-        font-weight: 500;
-      }
-
-      .name-large {
-        font-size: clamp(1.75rem, 7vw, 3rem);
-        font-weight: 800;
-        letter-spacing: -1px;
-        color: #ffffff;
-      }
-
-      .back-to-top {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 0.3rem;
-      }
-
-      .back-to-top a {
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: opacity 0.3s;
-      }
-
-      .back-to-top a:hover {
-        opacity: 0.7;
-      }
-
-      .back-to-top .top-text {
-        color: #808080;
-        font-size: 0.8rem;
-      }
-
-      /* Footer */
-      footer {
-        padding: 2rem;
-        text-align: center;
-        color: #808080;
-        font-size: 0.8rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        position: relative;
-        z-index: 1;
-      }
-
-      /* Modal Styles */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 2000;
-        overflow: auto;
-        backdrop-filter: blur(10px);
-      }
-
-      .modal-content {
-        position: relative;
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 2rem;
-      }
-
-      .close-modal {
-        position: fixed;
-        top: 2rem;
-        right: 2rem;
-        color: #ffffff;
-        font-size: 3rem;
-        cursor: pointer;
-        z-index: 2001;
-        transition: opacity 0.3s;
-      }
-
-      .close-modal:hover {
-        opacity: 0.7;
-      }
-
-      .modal-title {
-        color: #ffffff;
-        font-size: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .gallery-grid {
+      /* Footer: one quiet line */
+      .site-footer {
+        background: var(--bg);
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-        gap: 1.5rem;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: baseline;
+        gap: 16px 24px;
+        padding: 28px var(--margin) 30px;
+        font-size: var(--step-small);
       }
 
-      .gallery-item {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 15px;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .gallery-item img,
-      .gallery-item video {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-      }
-
-      .gallery-caption {
-        padding: 1rem;
-        color: #808080;
-        text-align: center;
-        font-size: 0.8rem;
-      }
-
-      #videoModal .modal-content {
-        display: flex;
+      .site-footer .links {
         justify-content: center;
+      }
+
+      .site-footer .end {
+        text-align: right;
+        color: var(--muted);
+      }
+
+      .site-footer a {
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .site-footer a:hover {
+        color: var(--accent);
+      }
+
+      /* ---------- Albums and the demo player ---------- */
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.94);
+        overflow-y: auto;
+        padding: 24px var(--margin) 48px;
+      }
+
+      .modal[hidden] {
+        display: none;
+      }
+
+      .modal-bar {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        min-height: 100vh;
-        min-height: 100dvh;
+        gap: 16px;
+        margin-bottom: 24px;
       }
 
-      #videoModal video {
-        max-width: 100%;
-        max-height: 80vh;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+      .album {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
       }
 
-      /* Responsive */
-      @media (max-width: 1200px) {
-        .experience-grid,
-        .skills-grid,
-        .certs-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+      .album figure img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: var(--surface);
       }
 
-      @media (max-width: 968px) {
-        /* Seven links do not fit a phone header - collapse them behind a button */
-        .nav-container {
-          padding: 1rem 1.25rem;
+      .album figcaption {
+        margin-top: 8px;
+        font-size: var(--step-small);
+        color: var(--muted);
+      }
+
+      .modal video {
+        width: 100%;
+        max-height: 80svh;
+        background: #000;
+      }
+
+      /* ---------- Motion ---------- */
+      .js [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        transition-delay: calc(var(--i, 0) * 80ms);
+      }
+
+      .js [data-reveal].in {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Without script, or with reduced motion, the poster is a plain stack */
+      .flat .poster {
+        height: auto;
+      }
+
+      .flat .poster-stage {
+        position: relative;
+        height: auto;
+        overflow: visible;
+      }
+
+      .flat .name {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: calc(var(--nav-h) + 12px) var(--margin) 0;
+      }
+
+      .flat .name span {
+        position: static;
+      }
+
+      .flat .panel {
+        position: relative;
+        inset: auto;
+        min-height: 70svh;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        padding-block: 48px;
+      }
+
+      .flat .panel .project-shot img {
+        clip-path: none;
+        transform: none;
+      }
+
+      .flat .reel {
+        display: none;
+      }
+
+      .js .name span {
+        opacity: 0;
+        transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+      }
+
+      .js .name .name-a {
+        transform: translateX(-6vw);
+      }
+
+      .js .name .name-b {
+        transform: translateX(6vw);
+        transition-delay: 0.12s;
+      }
+
+      .js.loaded .name span {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
 
-        .nav-toggle {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          order: 2;
-          margin-left: auto;
-          min-width: 44px;
-          min-height: 44px;
-        }
-
-        /* Absolute against the fixed nav - a fixed panel would depend on the
-           header's backdrop-filter to stay anchored below it */
-        .nav-left {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          flex-direction: column;
-          gap: 0;
-          padding: 0.5rem 1.25rem 1rem;
-          background: rgba(0, 0, 0, 0.95);
-          backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          transform: translateY(-8px);
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
-          max-height: calc(100dvh - 100%);
-          overflow-y: auto;
-        }
-
-        nav.open .nav-left {
-          transform: translateY(0);
+        .js [data-reveal],
+        .js .name span {
           opacity: 1;
-          visibility: visible;
+          transform: none;
+          transition: none;
         }
 
-        .nav-left a {
-          padding: 0.9rem 0;
-          font-size: 1rem;
+        .panel,
+        .panel.is-past,
+        .panel .project-shot img {
+          transform: none;
         }
 
-        /* Separators between rows only - a trailing bottom rule would hang
-           below the last visible link */
-        .nav-left a + a {
-          border-top: 1px solid rgba(255, 255, 255, 0.07);
+        .panel .project-shot img {
+          clip-path: none;
         }
 
-        /* The unlabelled easter-egg link would render as a blank menu row */
-        .nav-left a[href="#aesthetic"] {
-          display: none;
-        }
-
-        .nav-right {
-          display: none;
-        }
-
-        .name-display {
-          flex-direction: column;
-          gap: 0.5rem;
-          margin: 2rem 0;
-        }
-
-        .name-left,
-        .name-center {
-          letter-spacing: -2px;
-        }
-
-        .name-center::before {
-          width: 130px;
-          height: 130px;
-        }
-
-        .gps-line {
-          top: 10%;
-        }
-
-        .bottom-text {
-          flex-wrap: wrap;
-          gap: 1.25rem;
-          margin-top: 2.5rem;
-          font-size: 1rem;
-        }
-
-        .about-content,
-        .experience-grid,
-        .projects-grid,
-        .contact-grid {
-          grid-template-columns: 1fr;
-          gap: 2.5rem;
-        }
-
-        /* These are wide UI screenshots (1.8-2.2:1). A fixed 250px box makes
-           cover slice their sides off on a narrow card, so let the media
-           follow each image's own aspect ratio instead */
-        .project-media,
-        .exp-media:not(.logo-bg) {
+        .rise {
           height: auto;
         }
 
-        .project-media img,
-        .exp-media:not(.logo-bg) img {
+        .rise-stage {
+          position: relative;
           height: auto;
-          display: block;
+          padding-bottom: 0;
         }
 
-        .exp-media.logo-bg {
-          height: 180px;
-          padding: 1.75rem;
-        }
-
-        .button-group {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        /* Absolute positioning stacks these on top of the hero text on a phone */
-        .aesthetic-header,
-        .aesthetic-footer {
-          position: static;
-          flex-direction: column;
-          gap: 1rem;
-          align-items: center;
-          text-align: center;
-          padding: 0;
-          width: 100%;
-        }
-
-        .aesthetic-content {
-          justify-content: space-between;
-          gap: 2.5rem;
-          padding: 2rem 0;
-        }
-
-        .aesthetic-header .left,
-        .aesthetic-header .right {
-          gap: 1rem;
-          flex-wrap: wrap;
+        .rise-row {
+          position: relative;
+          left: auto;
+          width: auto;
+          height: auto;
+          display: flex;
           justify-content: center;
+          align-items: flex-start;
+          gap: 12px;
+          margin-top: 48px;
+          overflow: hidden;
         }
 
-        .aesthetic-main {
-          margin-bottom: 0;
+        .rise-img {
+          position: relative;
+          top: auto;
+          left: auto !important;
+          right: auto !important;
+          transform: none !important;
         }
 
-        .location-time,
-        .back-to-top {
-          align-items: center;
+        .rise-img.l,
+        .rise-img.r {
+          margin-top: 56px;
         }
       }
 
-      @media (max-width: 768px) {
-        section {
-          padding: 4rem 1.25rem;
+      /* ---------- Tablet ---------- */
+      @media (max-width: 1024px) {
+        .project-shot {
+          grid-column: 1 / span 7;
         }
 
-        .home-section,
-        .aesthetic-section {
-          padding: 1.5rem 1.25rem;
+        .project-text {
+          grid-column: 8 / span 5;
         }
 
-        .section-header {
-          margin-bottom: 2.5rem;
+        .job-text {
+          grid-column: 1 / span 12;
         }
 
-        .skills-grid,
-        .certs-grid {
-          grid-template-columns: 1fr;
+        .job-photo {
+          grid-column: 1 / span 8;
+          margin-top: 32px;
         }
 
-        /* A full-height portrait pushes the bio a screen and a half away */
-        .profile-image img {
-          aspect-ratio: 4 / 5;
-          object-fit: cover;
-          object-position: top center;
+        .portrait {
+          grid-column: 1 / span 5;
         }
 
         .about-text {
-          font-size: 1rem;
-          line-height: 1.7;
+          grid-column: 6 / span 7;
         }
 
-        .social-icons {
-          gap: 1.75rem;
+        .contact-now {
+          grid-column: 1 / span 12;
+          position: relative;
+          top: auto;
+          margin-bottom: 40px;
         }
 
-        .submit-btn {
-          width: 100%;
+        .card {
+          grid-column: 1 / span 9;
+          position: relative;
+          top: auto;
         }
 
-        /* Comfortable thumb targets */
-        .cv-button,
-        .exp-gallery-btn,
-        .project-link,
-        .pdf-link,
-        .submit-btn {
-          min-height: 44px;
-          padding-top: 0.6rem;
-          padding-bottom: 0.6rem;
-        }
-
-        .social-icons a {
-          font-size: 1.75rem;
-          padding: 0.25rem;
-        }
-
-        .modal-content {
-          padding: 1rem;
-          margin: 1rem auto;
-        }
-
-        .close-modal {
-          top: 0.75rem;
-          right: 1rem;
-          font-size: 2.5rem;
-        }
-
-        .modal-title {
-          font-size: 1.4rem;
-          margin-bottom: 1.25rem;
-          padding-right: 2.5rem;
-        }
-
-        .gallery-item img,
-        .gallery-item video {
-          height: 200px;
+        .certs {
+          grid-template-columns: 1fr;
         }
       }
 
-      @media (max-width: 400px) {
-        .exp-content,
-        .project-content,
-        .skill-group,
-        .cert-card {
-          padding: 1.25rem;
+      /* ---------- Phone ---------- */
+      @media (max-width: 720px) {
+        :root {
+          --step-display: 24vw;
+          --nav-h: 56px;
         }
 
-        .bottom-text {
-          gap: 1rem;
-          font-size: 0.9rem;
-        }
-      }
-
-      /* Landscape phones: wide but very short, so the stacked hero overflows */
-      @media (max-height: 520px) and (orientation: landscape) {
-        .home-section,
-        .aesthetic-section {
-          min-height: auto;
-          padding: 5rem 1.5rem 3rem;
+        .nav-toggle {
+          display: inline-flex;
+          align-items: center;
         }
 
-        .name-display {
-          flex-direction: row;
-          gap: 1.25rem;
-          margin: 1rem 0;
+        .nav-links {
+          position: fixed;
+          top: var(--nav-h);
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          padding: 8px var(--margin) 24px;
+          background: var(--bg);
+          display: none;
         }
 
-        .name-left,
-        .name-center {
-          font-size: clamp(2rem, 8vw, 4rem);
+        .nav.open .nav-links {
+          display: flex;
         }
 
-        .name-center::before {
-          width: 90px;
-          height: 90px;
+        .nav-links a:not(.btn) {
+          padding: 14px 0;
+          font-size: var(--step-lead);
         }
 
-        .gps-line {
-          position: static;
-          margin-bottom: 0.5rem;
+        .nav-links .btn {
+          margin-top: 12px;
+          min-height: 52px;
+          font-size: var(--step-body);
         }
 
-        .bottom-text {
-          margin-top: 1.5rem;
+        .name .name-a {
+          top: calc(var(--nav-h) + 8px);
         }
 
-        .aesthetic-main {
-          margin-bottom: 0;
+        .name .name-b {
+          bottom: 12px;
         }
 
-        .aesthetic-content {
-          padding: 1rem 0;
-          gap: 1.5rem;
+        .poster {
+          --band-top: calc(var(--nav-h) + 8px + var(--name-h) + 20px);
+          --band-bottom: calc(12px + var(--name-h) + 20px);
         }
 
-        .nav-left {
-          max-height: calc(100dvh - 100%);
+        .reel {
+          display: none;
         }
-      }
 
-      /* Honour reduced-motion preferences */
-      @media (prefers-reduced-motion: reduce) {
-        .fade-up,
-        .fade-in {
-          opacity: 1 !important;
-          transform: none !important;
-          animation: none !important;
-          transition: none !important;
+        .hero-copy,
+        .project-shot,
+        .project-text {
+          grid-column: 1 / -1;
         }
-      }
 
-      /* Animations */
-      .fade-up {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s;
-      }
-
-      .fade-up.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .fade-in {
-        opacity: 0;
-        animation: fadeIn 1s ease-in forwards;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+        .project-shot img {
+          aspect-ratio: 16 / 9;
+          max-height: 30svh;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+
+        .project-text {
+          margin-top: 16px;
+          padding-left: 0;
         }
-      }
 
-      .delay-1 {
-        animation-delay: 0.2s;
-      }
+        .project-text p {
+          margin-top: 10px;
+        }
 
-      .delay-2 {
-        animation-delay: 0.4s;
-      }
+        .project-text .links {
+          margin-top: 14px;
+        }
 
-      .delay-3 {
-        animation-delay: 0.6s;
+        .project-text p {
+          max-width: none;
+        }
+
+        .build {
+          grid-column: 1 / -1;
+        }
+
+        .job-photo {
+          grid-column: 1 / -1;
+        }
+
+        .rise {
+          height: 180svh;
+        }
+
+        .rise-img.c {
+          width: 64vw;
+          left: -32vw;
+        }
+
+        .rise-img.l,
+        .rise-img.r {
+          width: 44vw;
+        }
+
+        .rise-img.l {
+          right: calc(32vw + 8px);
+        }
+
+        .rise-img.r {
+          left: calc(32vw + 8px);
+        }
+
+        .portrait {
+          grid-column: 1 / -1;
+          position: relative;
+          top: auto;
+        }
+
+        .portrait img {
+          aspect-ratio: 4 / 5;
+        }
+
+        .about-text {
+          grid-column: 1 / -1;
+          margin-top: 40px;
+        }
+
+        .skills div {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          grid-column: 1 / -1;
+          padding: 24px 20px;
+        }
+
+        .site-footer {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding-top: 40px;
+        }
+
+        .site-footer .links {
+          justify-content: flex-start;
+        }
+
+        .site-footer .end {
+          text-align: left;
+        }
       }
     </style>
   </head>
   <body>
+    <script>
+      document.documentElement.classList.add("js");
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+        document.documentElement.classList.remove("flat");
+    </script>
 
-    <!-- Global Video Background - fixed, visible behind every section -->
-    <div class="video-background">
+    <div class="video-bg" aria-hidden="true">
       <video
         id="bgVideo"
         autoplay
@@ -1453,1075 +1305,1001 @@
       >
         <source src="videos/bghome.mp4" type="video/mp4" />
       </video>
-      <div class="video-tint"></div>
     </div>
-    <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
 
-    <!-- Fixed Navigation -->
-    <nav>
-      <div class="nav-container">
-        <button
-          class="nav-toggle"
-          id="navToggle"
-          aria-label="Open menu"
-          aria-expanded="false"
-          aria-controls="navMenu"
+    <header class="nav" id="nav">
+      <a class="wordmark" href="#top">Irfan Hakimi</a>
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-expanded="false"
+        aria-controls="navLinks"
+      >
+        Menu
+      </button>
+      <nav class="nav-links" id="navLinks" aria-label="Sections">
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
+          >Download CV</a
         >
-          <i class="fas fa-bars" aria-hidden="true"></i>
-        </button>
-        <div class="nav-left" id="navMenu">
-          <a href="#home">HOME</a>
-          <a href="#about">ABOUT</a>
-          <a href="#experience">EXP</a>
-          <a href="#projects">WORK</a>
-          <a href="#skills">SKILLS</a>
-          <a href="#certifications">CERTS</a>
-          <a href="#contact">CONTACT</a>
-          <a href="#aesthetic"> </a>
-        </div>
-        <div class="nav-right"><span></span></div>
-      </div>
-    </nav>
+      </nav>
+    </header>
 
-    <!-- Home Section - With Video Background -->
-    <section id="home" class="home-section">
-      <div class="home-content">
-        <div class="gps-line fade-in"></div>
+    <main id="top">
+      <!-- The pinned poster: the name holds the corners while the work passes between -->
+      <section class="poster" id="work" aria-label="Introduction and selected work">
+        <div class="poster-stage">
+          <h1 class="name">
+            <span class="name-a">Irfan</span>
+            <span class="name-b">Hakimi</span>
+          </h1>
 
-        <div class="name-display">
-          <div class="name-left fade-in delay-1">IRFAN</div>
-          <div class="name-center fade-in delay-2">HAKIMI</div>
-        </div>
-
-        <!-- CV Download Button Added Here -->
-        <div class="button-group fade-in delay-2">
-          <a href="file/Irfan_Hakimi_CV.pdf" download class="cv-button">
-            <i class="fas fa-download"></i> Download CV
-          </a>
-        </div>
-
-        <div class="bottom-text fade-in delay-2">
-          <div>CODE <span>•</span></div>
-          <div>CREATE <span>•</span></div>
-          <div>INNOVATE</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section - WITH PROFILE PICTURE -->
-    <section id="about">
-      <div class="section-container">
-        <div class="section-header fade-up">
-          <span class="section-number">01 — ABOUT</span>
-          <h2 class="section-title">Little bit about me</h2>
-        </div>
-        <div class="about-content">
-          <div class="profile-image fade-up">
-            <img src="images/profilepic.jpeg" alt="Irfan Hakimi" />
-          </div>
-          <div class="about-text fade-up">
-            <p>
-              I am a
-              <span class="about-highlight">Solutions Engineer</span> at
-              <span class="about-highlight">TNEX Malaysia</span>, based in
-              Kuala Lumpur.
+        <div class="panel grid is-active" data-step="0">
+          <div class="hero-copy">
+            <p class="lead">
+              Solutions engineer in Kuala Lumpur, building GRC AI at TNEX
+              Malaysia and shipping my own web apps on the side.
             </p>
-            <p>
-              I work at the intersection of full-stack engineering and client
-              solutioning — building and configuring GRC AI products while
-              helping translate them into real business value. I focus on
-              shipping practical software and improving how users experience it.
-            </p>
-            <p>
-              Previously, I gained hands-on experience through internships and
-              academic projects across automation, mobile, and enterprise
-              systems. I enjoy owning features end-to-end and adapting quickly
-              to the tools the problem needs.
-            </p>
-            <p>
-              Currently working with
-              <span class="about-highlight">React.js, .NET Core, SQL</span>,
-              alongside
-              <span class="about-highlight">Java, Python, PHP</span> and
-              <span class="about-highlight">React Native</span>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Experience Section - WITH VENUE PICTURES -->
-    <section id="experience">
-      <div class="section-container">
-        <div class="section-header fade-up">
-          <span class="section-number">02 — EXPERIENCE</span>
-          <h2 class="section-title">Professional Journey</h2>
-        </div>
-        <div class="experience-grid">
-          <!-- TNEX Experience - Current -->
-          <div class="exp-card fade-up">
-            <div class="exp-media logo-bg">
-              <img src="images/tnex/tnex.png" alt="TNEX" />
-              <div class="exp-overlay">
-                <i class="fas fa-map-pin"></i> WORQ Bangsar, KL
-              </div>
-            </div>
-            <div class="exp-content">
-              <div class="exp-header">
-                <h3>Solutions Engineer</h3>
-                <span class="exp-date">2026 — Present</span>
-              </div>
-              <div class="exp-company">
-                <i class="fas fa-building"></i> TNEX Malaysia Sdn Bhd
-              </div>
-              <ul class="exp-list">
-                <li>
-                  <i class="fas fa-check-circle"></i> Build GRC AI features with
-                  React.js frontend and .NET Core / C# backend under guidance
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i> Configure compliance
-                  assistant demos — regulation management, audit scheduling, and
-                  assessment frameworks
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i> Support client solutioning:
-                  demos, proposals, and translating requirements into technical
-                  scope
-                </li>
-              </ul>
-              <div class="exp-tech">
-                <span>React.js</span>
-                <span>.NET Core</span>
-                <span>SQL Server</span>
-                <span>GRC AI</span>
-                <span>TypeScript</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- PayNet Experience - WITH VENUE PICTURE -->
-          <div class="exp-card fade-up">
-            <div class="exp-media">
-              <img src="images/paynet/paynet.jpg" alt="PayNet Office" />
-              <div class="exp-overlay">
-                <i class="fas fa-map-pin"></i> Kuala Lumpur
-              </div>
-            </div>
-            <div class="exp-content">
-              <div class="exp-header">
-                <h3>Automation and Data Engineer Intern</h3>
-                <span class="exp-date">2025</span>
-              </div>
-              <div class="exp-company">
-                <i class="fas fa-building"></i> Payments Network Malaysia
-                (PayNet)
-              </div>
-              <ul class="exp-list">
-                <li>
-                  <i class="fas fa-check-circle"></i> Built automated data
-                  workflows using Python, Boto3, and AWS Lambda
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i> Developed React Native app
-                  integrating National Addressing Database API
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i> Created dashboards and
-                  automated alerts for operational reviews
-                </li>
-              </ul>
-              <div class="exp-tech">
-                <span>Python</span>
-                <span>AWS Lambda</span>
-                <span>React Native</span>
-                <span>SQL</span>
-                <span>Grafana</span>
-              </div>
-              <button class="exp-gallery-btn" onclick="openGallery('paynet')">
-                <i class="fas fa-images"></i> View Gallery
-              </button>
-            </div>
-          </div>
-
-          <!-- UMT Experience - WITH VENUE PICTURE -->
-          <div class="exp-card fade-up">
-            <div class="exp-media">
-              <img src="images/umt/umt.jpg" alt="UMT Campus" />
-              <div class="exp-overlay">
-                <i class="fas fa-map-pin"></i> Terengganu
-              </div>
-            </div>
-            <div class="exp-content">
-              <div class="exp-header">
-                <h3>System Developer</h3>
-                <span class="exp-date">2024</span>
-              </div>
-              <div class="exp-company">
-                <i class="fas fa-building"></i> UMT - Pusat Ekosistem Digital
-              </div>
-              <ul class="exp-list">
-                <li>
-                  <i class="fas fa-check-circle"></i> Developed International
-                  Centre Management System for student/staff records
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i> Built automated Travel
-                  Abroad Application with multi-level approvals
-                </li>
-                <li>
-                  <i class="fas fa-check-circle"></i> Created dashboards for
-                  population and visa analytics
-                </li>
-              </ul>
-              <div class="exp-tech">
-                <span>PHP</span>
-                <span>CodeIgniter</span>
-                <span>MySQL</span>
-                <span>JavaScript</span>
-              </div>
-              <button class="exp-gallery-btn" onclick="openGallery('umt')">
-                <i class="fas fa-images"></i> View Gallery
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-      <div class="section-container">
-        <div class="section-header fade-up">
-          <span class="section-number">03 — PROJECTS</span>
-          <h2 class="section-title">Featured Work</h2>
-        </div>
-        <div class="projects-grid">
-          <!-- Sanding (kadkahwin.website) -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dpkadkahwin.png" alt="Sanding digital wedding invitations" />
-              <div class="project-tags">
-                <span class="project-tag">SaaS</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Sanding</h3>
-                <div class="project-price">
-                  Web | <span>Digital Wedding Cards</span>
-                </div>
-              </div>
-              <p class="project-desc">
-                Malaysian digital wedding invitations with 966 designs that
-                open like the real thing. Guests RSVP, leave ucapan and get
-                directions on the card, while couples track it all in a dashboard.
-              </p>
-              <div class="project-tech">
-                <span>Web</span>
-                <span>Payments</span>
-                <span>Dashboard</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://kadkahwin.website/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  <i class="fas fa-external-link-alt"></i> Live
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Museum of Us -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dpmuseum.png" alt="Museum of Us" />
-              <div class="project-tags">
-                <span class="project-tag">3D Web</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Museum of Us</h3>
-                <div class="project-price">
-                  Web | <span>3D Gallery</span>
-                </div>
-              </div>
-              <p class="project-desc">
-                A private walkable gallery of photos, captions, and music.
-                Built one at a time as a lasting link for anniversaries,
-                birthdays, and people far away.
-              </p>
-              <div class="project-tech">
-                <span>3D</span>
-                <span>Web</span>
-                <span>Interactive</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://museumofus.online/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  <i class="fas fa-external-link-alt"></i> Live
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mental Health Bot -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dpmhbot.png" alt="Mental Health Bot" />
-              <div class="project-tags">
-                <span class="project-tag">Full-Stack</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Mental Health Bot</h3>
-                <div class="project-price">
-                  Python | <span>Flask</span>
-                </div>
-              </div>
-              <p class="project-desc">
-                Educational mental health chatbot with guest chat, self-assessments,
-                mindfulness exercises, and a private journal. Support, not a
-                substitute.
-              </p>
-              <div class="project-tech">
-                <span>Python</span>
-                <span>Flask</span>
-                <span>TensorFlow</span>
-                <span>MySQL</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://mental-health-chat-bot-ashy.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  <i class="fas fa-external-link-alt"></i> Live
-                </a>
-                <a
-                  href="https://github.com/irfnyhya/Mental-Health-ChatBot"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  <i class="fab fa-github"></i> Code
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- TravelBud -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dptravelbud.png" alt="TravelBud" />
-              <div class="project-tags">
-                <span class="project-tag">Full-Stack</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>TravelBud</h3>
-                <div class="project-price">
-                  Next.js | <span>TypeScript</span>
-                </div>
-              </div>
-              <p class="project-desc">
-                Collaborative travel planner with trip dashboards, live maps,
-                packing, budgets, and invite-based travel buddies.
-              </p>
-              <div class="project-tech">
-                <span>Next.js</span>
-                <span>TypeScript</span>
-                <span>Postgres</span>
-                <span>Tailwind</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://travel-bud-nine.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  <i class="fas fa-external-link-alt"></i> Live
-                </a>
-                <a
-                  href="https://github.com/irfnyhya/TravelBud"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="project-link"
-                >
-                  <i class="fab fa-github"></i> Code
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- PayNet Mobile App -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dpapp.jpeg" alt="PayNet Mobile App" />
-              <div class="project-tags">
-                <span class="project-tag">Full-Stack</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>PayNet Mobile App</h3>
-                <div class="project-price">
-                  React Native | <span> Firebase</span>
-                </div>
-              </div>
-              <p class="project-desc">
-                Expo React Native app integrated with PayNet's UAT APIs for
-                DuitNow ID management and software-based Soundbox.
-              </p>
-              <div class="project-tech">
-                <span>React Native</span>
-                <span>Expo</span>
-                <span>Firebase</span>
-                <span>API Integration</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="javascript:void(0)"
-                  onclick="openVideoModal('videos/app_demo.mp4')"
-                  class="project-link"
-                >
-                  <i class="fas fa-play"></i> Demo
-                </a>
-                <a
-                  href="javascript:void(0)"
-                  onclick="openGallery('paynet')"
-                  class="project-link"
-                >
-                  <i class="fas fa-images"></i> Gallery
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- ICMS -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dpicms.jpg" alt="ICMS" />
-              <div class="project-tags">
-                <span class="project-tag">Full-Stack</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>International Centre System</h3>
-                <div class="project-price">
-                  PHP | <span>Oracle Database</span>
-                </div>
-              </div>
-              <p class="project-desc">
-                Full-stack system for managing international records with
-                automated workflows and visa expiry reminders.
-              </p>
-              <div class="project-tech">
-                <span>PHP</span>
-                <span>CodeIgniter</span>
-                <span>MySQL</span>
-                <span>Bootstrap</span>
-              </div>
-              <div class="project-links">
-                <a href="file/ICMS.pdf" target="_blank" class="project-link">
-                  <i class="fas fa-file"></i> Docs
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bus E-Ticketing -->
-          <div class="project-card fade-up">
-            <div class="project-media">
-              <img src="images/dpbas2.jpeg" alt="Bus System" />
-              <div class="project-tags">
-                <span class="project-tag">Collab</span>
-              </div>
-            </div>
-            <div class="project-content">
-              <div class="project-header">
-                <h3>Bus E-Ticketing System</h3>
-                <div class="project-price">Java | <span>MySQL</span></div>
-              </div>
-              <p class="project-desc">
-                Java-based e-ticketing system with role-based access and
-                real-time chat features.
-              </p>
-              <div class="project-tech">
-                <span>Java</span>
-                <span>MySQL</span>
-              </div>
-              <div class="project-links">
-                <a
-                  href="https://github.com/irfnyhya/bus-booking-reservation-system"
-                  class="project-link"
-                >
-                  <i class="fab fa-github"></i> Code
-                </a>
-                <a
-                  href="file/BUS_BOOKING_SYSTEM.pdf"
-                  target="_blank"
-                  class="project-link"
-                >
-                  <i class="fas fa-file"></i> Docs
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-      <div class="section-container">
-        <div class="section-header fade-up">
-          <span class="section-number">04 — SKILLS</span>
-          <h2 class="section-title">Technical Expertise</h2>
-        </div>
-        <div class="skills-grid">
-          <div class="skill-group fade-up">
-            <h3>LANGUAGES</h3>
-            <div class="skill-items">
-              <span class="skill-item">Java</span>
-              <span class="skill-item">Python</span>
-              <span class="skill-item">PHP</span>
-              <span class="skill-item">React Native</span>
-              <span class="skill-item">SQL</span>
-              <span class="skill-item">JavaScript</span>
-            </div>
-          </div>
-          <div class="skill-group fade-up">
-            <h3>FRAMEWORKS</h3>
-            <div class="skill-items">
-              <span class="skill-item">React Native</span>
-              <span class="skill-item">CodeIgniter</span>
-              <span class="skill-item">Flask</span>
-              <span class="skill-item">Expo</span>
-            </div>
-          </div>
-          <div class="skill-group fade-up">
-            <h3>CLOUD & TOOLS</h3>
-            <div class="skill-items">
-              <span class="skill-item">AWS Lambda</span>
-              <span class="skill-item">AWS Athena</span>
-              <span class="skill-item">Firebase</span>
-              <span class="skill-item">Grafana</span>
-              <span class="skill-item">Jira</span>
-            </div>
-          </div>
-          <div class="skill-group fade-up">
-            <h3>SPECIALTIES</h3>
-            <div class="skill-items">
-              <span class="skill-item">API Integration</span>
-              <span class="skill-item">Data Automation</span>
-              <span class="skill-item">Mobile Dev</span>
-              <span class="skill-item">System Design</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications">
-      <div class="section-container">
-        <div class="section-header fade-up">
-          <span class="section-number">05 — CERTIFICATIONS</span>
-          <h2 class="section-title">Continuous Learning</h2>
-        </div>
-        <div class="certs-grid">
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-user-shield"></i></div>
-            <h4>Cybersecurity Fundamentals</h4>
-            <p>IBM</p>
-            <a href="file/CyberSecurityFundamentals.pdf" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-robot"></i></div>
-            <h4>AI Fundamentals</h4>
-            <p>IBM</p>
-            <a href="file/AIFundamental.pdf" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-cloud-arrow-up"></i></div>
-            <h4>Cloud Computing</h4>
-            <p>IBM</p>
-            <a href="file/CloudComputingFundamental.pdf" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-database"></i></div>
-            <h4>Data Analysis Python</h4>
-            <p>IBM</p>
-            <a href="file/DataAnalysisUsingPython.pdf" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-shield-alt"></i></div>
-            <h4>Social Engineering</h4>
-            <p>AI Age</p>
-            <a href="#" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-microchip"></i></div>
-            <h4>Petronas BeDigital</h4>
-            <p>Bootcamp</p>
-            <a href="file/petronas.pdf" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-users"></i></div>
-            <h4>K-Youth Programme</h4>
-            <p>Digital & Tech</p>
-            <a href="file/kyouth.pdf" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-          <div class="cert-card fade-up">
-            <div class="cert-icon"><i class="fas fa-desktop"></i></div>
-            <h4>IT Fundamentals</h4>
-            <p>Oxbridge</p>
-            <a href="#" class="pdf-link"
-              ><i class="fas fa-file-pdf"></i> View</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-      <div class="section-container">
-        <div class="section-header fade-up">
-          <span class="section-number">06 — CONTACT</span>
-          <h2 class="section-title">Let's Connect</h2>
-        </div>
-        <div class="contact-grid">
-          <div class="contact-left fade-up">
-            <h2>Let's stay in touch.</h2>
-            <p>
-              I'm currently a Solutions Engineer at TNEX Malaysia, working on
-              GRC AI solutions. Open to connecting — feel free to
-              <a
-                href="mailto:irfanyahya808@gmail.com?subject=Hello%20from%20your%20portfolio"
-                class="email-link"
-                >send me an email</a
+            <div class="links">
+              <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
+                >Download CV</a
               >
-              (<a
-                href="mailto:irfanyahya808@gmail.com?subject=Hello%20from%20your%20portfolio"
-                class="email-link"
-                >irfanyahya808@gmail.com</a
-              >).
+              <button class="link" type="button" data-go="1">See the work</button>
+            </div>
+            <p class="now muted" data-now>
+              Based in Kuala Lumpur, GMT+8.
             </p>
+          </div>
+        </div>
 
-            <div class="social-spaces">
-              <h3>SOCIAL SPACES</h3>
-              <div class="social-icons">
-                <a href="https://github.com/irfnyhya" target="_blank"
-                  ><i class="fab fa-github"></i
-                ></a>
-                <a
-                  href="https://www.linkedin.com/in/irfan-hakimi-74684b259"
-                  target="_blank"
-                  ><i class="fab fa-linkedin-in"></i
-                ></a>
-              </div>
+        <article class="panel project" id="sanding" data-step="1">
+          <figure class="project-shot">
+            <img
+              src="images/dpkadkahwin.png"
+              width="1024"
+              height="455"
+              alt="Sanding: a digital wedding invitation card with RSVP"
+            />
+          </figure>
+          <div class="project-text">
+            <h3 class="h-item">Sanding</h3>
+            <p class="kind small">Web app, digital wedding cards</p>
+            <p>
+              Malaysian digital wedding invitations with 966 designs that open
+              like the real thing. Guests RSVP, leave ucapan and get directions
+              on the card, while couples track it all in a dashboard.
+            </p>
+            <p class="stack small">Web, payments, dashboard</p>
+            <div class="links">
+              <a
+                class="link"
+                href="https://kadkahwin.website/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Live site ↗</a
+              >
             </div>
           </div>
+        </article>
 
-          <form class="contact-form fade-up" action="mailto:irfanyahya808@gmail.com" method="get" enctype="text/plain">
-            <div class="form-group">
+        <article class="panel project" data-step="2">
+          <figure class="project-shot">
+            <img
+              src="images/dpmuseum.png"
+              width="1024"
+              height="457"
+              alt="Museum of Us: a 3D gallery room with framed photos on the walls"
+            />
+          </figure>
+          <div class="project-text">
+            <h3 class="h-item">Museum of Us</h3>
+            <p class="kind small">3D web, interactive gallery</p>
+            <p>
+              A private walkable gallery of photos, captions and music. Built
+              one at a time as a lasting link for anniversaries, birthdays and
+              people far away.
+            </p>
+            <p class="stack small">3D, web, interactive</p>
+            <div class="links">
+              <a
+                class="link"
+                href="https://museumofus.online/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Live site ↗</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="panel project" data-step="3">
+          <figure class="project-shot">
+            <img
+              src="images/dptravelbud.png"
+              width="1024"
+              height="479"
+              alt="TravelBud: trip dashboard for a hiking trip to Kazakhstan"
+            />
+          </figure>
+          <div class="project-text">
+            <h3 class="h-item">TravelBud</h3>
+            <p class="kind small">Full-stack, travel planner</p>
+            <p>
+              Collaborative travel planner with trip dashboards, live maps,
+              packing, budgets and invite-based travel buddies.
+            </p>
+            <p class="stack small">Next.js, TypeScript, Postgres, Tailwind</p>
+            <div class="links">
+              <a
+                class="link"
+                href="https://travel-bud-nine.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Live site ↗</a
+              >
+              <a
+                class="link"
+                href="https://github.com/irfnyhya/TravelBud"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Code ↗</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="panel project" data-step="4">
+          <figure class="project-shot">
+            <img
+              src="images/dpmhbot.png"
+              width="1024"
+              height="469"
+              alt="Mental Health Bot: landing page reading A calm place to talk about how you're really doing"
+            />
+          </figure>
+          <div class="project-text">
+            <h3 class="h-item">Mental Health Bot</h3>
+            <p class="kind small">Full-stack, wellbeing chatbot</p>
+            <p>
+              Educational mental health chatbot with guest chat,
+              self-assessments, mindfulness exercises and a private journal.
+              Support, not a substitute.
+            </p>
+            <p class="stack small">Python, Flask, TensorFlow, MySQL</p>
+            <div class="links">
+              <a
+                class="link"
+                href="https://mental-health-chat-bot-ashy.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Live site ↗</a
+              >
+              <a
+                class="link"
+                href="https://github.com/irfnyhya/Mental-Health-ChatBot"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Code ↗</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <article class="panel project" data-step="5">
+          <figure class="project-shot">
+            <img
+              src="images/dpapp.jpeg"
+              width="1538"
+              height="863"
+              alt="PayNet mobile app proof of concept: sign-in screen on a phone"
+            />
+          </figure>
+          <div class="project-text">
+            <h3 class="h-item">PayNet Mobile App</h3>
+            <p class="kind small">Mobile, built during the PayNet internship</p>
+            <p>
+              Expo React Native app integrated with PayNet's UAT APIs for
+              DuitNow ID management and a software-based Soundbox.
+            </p>
+            <p class="stack small">React Native, Expo, Firebase, API integration</p>
+            <div class="links">
+              <button
+                class="link"
+                type="button"
+                data-video="videos/app_demo.mp4"
+              >
+                Watch the demo
+              </button>
+              <button class="link" type="button" data-album="paynet">
+                Photos
+              </button>
+            </div>
+          </div>
+        </article>
+              <ol class="reel" aria-label="Jump to">
+          <li><button type="button" data-go="0">Intro</button></li>
+          <li><button type="button" data-go="1">Sanding</button></li>
+          <li><button type="button" data-go="2">Museum of Us</button></li>
+          <li><button type="button" data-go="3">TravelBud</button></li>
+          <li><button type="button" data-go="4">Mental Health Bot</button></li>
+          <li><button type="button" data-go="5">PayNet Mobile App</button></li>
+        </ol>
+        </div>
+      </section>
+
+      <!-- Earlier builds -->
+      <section class="solid wrap" id="earlier" aria-labelledby="earlier-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="earlier-h">Earlier builds</h2>
+          <p>Two systems from university, both still documented.</p>
+        </div>
+        <div class="grid builds">
+          <article class="build" data-reveal>
+            <img
+              src="images/dpicms.jpg"
+              width="1866"
+              height="1056"
+              loading="lazy"
+              alt="International Centre System: records table for international students"
+            />
+            <h3 class="h-item">International Centre System</h3>
+            <p>
+              Full-stack system for managing international records with
+              automated workflows and visa expiry reminders.
+            </p>
+            <p class="stack small">PHP, CodeIgniter, MySQL, Bootstrap</p>
+            <div class="links">
+              <a class="link" href="file/ICMS.pdf" target="_blank">Read the docs ↗</a>
+            </div>
+          </article>
+          <article class="build" data-reveal style="--i: 1">
+            <img
+              src="images/dpbas2.jpeg"
+              width="1426"
+              height="775"
+              loading="lazy"
+              alt="Bus E-Ticketing System: seat selection screen"
+            />
+            <h3 class="h-item">Bus E-Ticketing System</h3>
+            <p>
+              Java-based e-ticketing system with role-based access and
+              real-time chat. A team project.
+            </p>
+            <p class="stack small">Java, MySQL</p>
+            <div class="links">
+              <a
+                class="link"
+                href="https://github.com/irfnyhya/bus-booking-reservation-system"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Code ↗</a
+              >
+              <a class="link" href="file/BUS_BOOKING_SYSTEM.pdf" target="_blank"
+                >Read the docs ↗</a
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Experience -->
+      <section class="solid wrap" id="experience" aria-labelledby="exp-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="exp-h">Experience</h2>
+        </div>
+        <div class="jobs">
+          <article class="job grid">
+            <div class="job-text" data-reveal>
+              <h3 class="h-item">Solutions Engineer</h3>
+              <p class="job-meta">
+                <strong>TNEX Malaysia Sdn Bhd</strong>
+                <span>WORQ Bangsar, Kuala Lumpur</span>
+                <span>2026 to present</span>
+              </p>
+              <ul>
+                <li>
+                  Build GRC AI features with a React.js frontend and a .NET Core
+                  and C# backend, under guidance.
+                </li>
+                <li>
+                  Configure compliance assistant demos: regulation management,
+                  audit scheduling and assessment frameworks.
+                </li>
+                <li>
+                  Support client solutioning: demos, proposals, and translating
+                  requirements into technical scope.
+                </li>
+              </ul>
+              <p class="stack small">
+                React.js, .NET Core, SQL Server, GRC AI, TypeScript
+              </p>
+            </div>
+            <figure class="job-photo logo" data-reveal style="--i: 1">
+              <img
+                src="images/tnex/tnex.png"
+                width="1024"
+                height="537"
+                loading="lazy"
+                alt="TNEX logo"
+              />
+            </figure>
+          </article>
+
+          <article class="job grid">
+            <div class="job-text" data-reveal>
+              <h3 class="h-item">Automation and Data Engineer Intern</h3>
+              <p class="job-meta">
+                <strong>Payments Network Malaysia (PayNet)</strong>
+                <span>Kuala Lumpur</span>
+                <span>2025</span>
+              </p>
+              <ul>
+                <li>
+                  Built automated data workflows using Python, Boto3 and AWS
+                  Lambda.
+                </li>
+                <li>
+                  Developed a React Native app integrating the National
+                  Addressing Database API.
+                </li>
+                <li>
+                  Created dashboards and automated alerts for operational
+                  reviews.
+                </li>
+              </ul>
+              <p class="stack small">
+                Python, AWS Lambda, React Native, SQL, Grafana
+              </p>
+              <div class="links">
+                <button class="btn btn-quiet" type="button" data-album="paynet">
+                  PayNet photos
+                </button>
+              </div>
+            </div>
+            <figure class="job-photo" data-reveal style="--i: 1">
+              <img
+                src="images/paynet/paynet.jpg"
+                width="750"
+                height="500"
+                loading="lazy"
+                alt="PayNet office lobby in Kuala Lumpur"
+              />
+            </figure>
+          </article>
+
+          <article class="job grid">
+            <div class="job-text" data-reveal>
+              <h3 class="h-item">System Developer</h3>
+              <p class="job-meta">
+                <strong>UMT, Pusat Ekosistem Digital</strong>
+                <span>Terengganu</span>
+                <span>2024</span>
+              </p>
+              <ul>
+                <li>
+                  Developed the International Centre Management System for
+                  student and staff records.
+                </li>
+                <li>
+                  Built an automated Travel Abroad Application with multi-level
+                  approvals.
+                </li>
+                <li>Created dashboards for population and visa analytics.</li>
+              </ul>
+              <p class="stack small">PHP, CodeIgniter, MySQL, JavaScript</p>
+              <div class="links">
+                <button class="btn btn-quiet" type="button" data-album="umt">
+                  UMT photos
+                </button>
+              </div>
+            </div>
+            <figure class="job-photo" data-reveal style="--i: 1">
+              <img
+                src="images/umt/umt.jpg"
+                width="798"
+                height="449"
+                loading="lazy"
+                alt="UMT building in Terengganu"
+              />
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <!-- Life at work: three photographs rise as you scroll -->
+      <section class="rise" id="life" aria-labelledby="life-h">
+        <div class="rise-stage wrap">
+          <div class="section-head">
+            <h2 class="h-section" id="life-h">Days at PayNet and UMT</h2>
+            <p>Scrums, workshops, team buildings and one Chinese New Year.</p>
+            <div class="links">
+              <button class="link" type="button" data-album="paynet">
+                PayNet album
+              </button>
+              <button class="link" type="button" data-album="umt">
+                UMT album
+              </button>
+            </div>
+          </div>
+          <div class="rise-row" data-rise>
+            <figure class="rise-img l">
+              <img
+                src="images/paynet/1.jpeg"
+                width="960"
+                height="1280"
+                loading="lazy"
+                alt="The PayNet team at the Chinese New Year celebration"
+              />
+            </figure>
+            <figure class="rise-img c">
+              <img
+                src="images/paynet/8.jpeg"
+                width="960"
+                height="1280"
+                loading="lazy"
+                alt="Mobile apps meeting at PayNet, code on the big screen"
+              />
+              <figcaption>Mobile apps meeting, PayNet</figcaption>
+            </figure>
+            <figure class="rise-img r">
+              <img
+                src="images/umt/2.jpeg"
+                width="960"
+                height="1280"
+                loading="lazy"
+                alt="Docker workshop at UMT, laptops along a red-walled room"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="solid wrap" id="about" aria-labelledby="about-h">
+        <div class="grid about-grid">
+          <figure class="portrait" data-reveal>
+            <img
+              src="images/profilepic.jpeg"
+              width="1000"
+              height="1340"
+              loading="lazy"
+              alt="Irfan Hakimi in a dark double-breasted suit, standing by a framed painting of a kopitiam cup"
+            />
+          </figure>
+          <div class="about-text">
+            <div class="section-head" data-reveal>
+              <h2 class="h-section" id="about-h">About</h2>
+            </div>
+            <div data-reveal style="--i: 1">
+              <p>
+                I am a <strong>Solutions Engineer</strong> at
+                <strong>TNEX Malaysia</strong>, based in Kuala Lumpur.
+              </p>
+              <p>
+                I work at the intersection of full-stack engineering and client
+                solutioning, building and configuring GRC AI products while
+                helping translate them into real business value. I focus on
+                shipping practical software and improving how users experience
+                it.
+              </p>
+              <p>
+                Previously, I gained hands-on experience through internships and
+                academic projects across automation, mobile and enterprise
+                systems. I enjoy owning features end to end and adapting quickly
+                to the tools the problem needs.
+              </p>
+              <p>
+                Currently working with <strong>React.js, .NET Core, SQL</strong>,
+                alongside <strong>Java, Python, PHP</strong> and
+                <strong>React Native</strong>.
+              </p>
+            </div>
+            <p class="motto" data-reveal style="--i: 2">
+              Do it once. Do it right.
+            </p>
+            <dl class="skills" data-reveal style="--i: 3">
+              <div>
+                <dt>Languages</dt>
+                <dd>Java, Python, PHP, React Native, SQL, JavaScript</dd>
+              </div>
+              <div>
+                <dt>Frameworks</dt>
+                <dd>React Native, CodeIgniter, Flask, Expo</dd>
+              </div>
+              <div>
+                <dt>Cloud and tools</dt>
+                <dd>AWS Lambda, AWS Athena, Firebase, Grafana, Jira</dd>
+              </div>
+              <div>
+                <dt>Specialties</dt>
+                <dd>API integration, data automation, mobile dev, system design</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- Certificates -->
+      <section class="solid wrap" id="certificates" aria-labelledby="cert-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="cert-h">Certificates</h2>
+        </div>
+        <ul class="certs" data-reveal style="--i: 1">
+          <li>
+            <h3 class="h-item">Cybersecurity Fundamentals</h3>
+            <p class="issuer">IBM</p>
+            <a class="link cert-link" href="file/CyberSecurityFundamentals.pdf" target="_blank">View ↗</a>
+          </li>
+          <li>
+            <h3 class="h-item">AI Fundamentals</h3>
+            <p class="issuer">IBM</p>
+            <a class="link cert-link" href="file/AIFundamental.pdf" target="_blank">View ↗</a>
+          </li>
+          <li>
+            <h3 class="h-item">Cloud Computing</h3>
+            <p class="issuer">IBM</p>
+            <a class="link cert-link" href="file/CloudComputingFundamental.pdf" target="_blank">View ↗</a>
+          </li>
+          <li>
+            <h3 class="h-item">Data Analysis with Python</h3>
+            <p class="issuer">IBM</p>
+            <a class="link cert-link" href="file/DataAnalysisUsingPython.pdf" target="_blank">View ↗</a>
+          </li>
+          <li>
+            <h3 class="h-item">Petronas BeDigital</h3>
+            <p class="issuer">Bootcamp</p>
+            <a class="link cert-link" href="file/petronas.pdf" target="_blank">View ↗</a>
+          </li>
+          <li>
+            <h3 class="h-item">K-Youth Programme</h3>
+            <p class="issuer">Digital and tech</p>
+            <a class="link cert-link" href="file/kyouth.pdf" target="_blank">View ↗</a>
+          </li>
+          <li>
+            <h3 class="h-item">Social Engineering</h3>
+            <p class="issuer">AI Age</p>
+          </li>
+          <li>
+            <h3 class="h-item">IT Fundamentals</h3>
+            <p class="issuer">Oxbridge</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Contact: the live thing, the time in Kuala Lumpur right now -->
+      <section class="contact grid" id="contact" aria-labelledby="contact-h">
+        <div class="contact-now" data-reveal>
+          <p class="clock" data-clock aria-live="off">Kuala Lumpur</p>
+          <p data-status>GMT+8. I usually reply within a day.</p>
+        </div>
+        <div class="card" data-reveal style="--i: 1">
+          <h2 class="h-section" id="contact-h">Let's talk</h2>
+          <p>
+            I'm a solutions engineer at TNEX Malaysia, working on GRC AI.
+            Open to connecting about work, projects or a kopi.
+          </p>
+          <p class="direct">
+            <a
+              class="link"
+              href="mailto:irfanyahya808@gmail.com?subject=Hello%20from%20your%20portfolio"
+              >irfanyahya808@gmail.com</a
+            >
+          </p>
+          <form
+            class="form"
+            id="contactForm"
+            action="mailto:irfanyahya808@gmail.com"
+            method="get"
+            enctype="text/plain"
+          >
+            <div>
               <label for="contact-name">Your name</label>
               <input id="contact-name" name="name" type="text" required autocomplete="name" />
             </div>
-            <div class="form-group">
+            <div>
               <label for="contact-email">Your email</label>
               <input id="contact-email" name="email" type="email" required autocomplete="email" />
             </div>
-            <div class="form-group">
+            <div>
               <label for="contact-message">Your message</label>
               <textarea id="contact-message" name="message" required></textarea>
             </div>
-            <button type="submit" class="submit-btn">SEND MESSAGE</button>
+            <button class="btn btn-accent" type="submit">Send message</button>
           </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Aesthetic Final Page -->
-    <section id="aesthetic" class="aesthetic-section">
-      <div class="aesthetic-content">
-        <!-- Header with SOCIALS and ROGER ME -->
-        <div class="aesthetic-header">
-          <div class="left">
-            <span> </span>
-          </div>
-          <div class="right">
+          <div class="links socials">
             <a
-              href="#contact"
-              style="
-                color: #808080;
-                text-decoration: none;
-                transition: opacity 0.3s;
-              "
-              onmouseover="this.style.color = '#ffffff'"
-              onmouseout="this.style.color = '#808080'"
-              >ROGER ME</a
+              class="link"
+              href="https://www.linkedin.com/in/irfan-hakimi-74684b259"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn ↗</a
+            >
+            <a
+              class="link"
+              href="https://github.com/irfnyhya"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub ↗</a
             >
           </div>
         </div>
+      </section>
+    </main>
 
-        <!-- Main Content -->
-        <div class="aesthetic-main">
-          <div class="motto">Do it once. Do it right.</div>
-          <h1><br /></h1>
-          <div class="do-it" id="current-time-aesthetic"></div>
-        </div>
-
-        <!-- Footer -->
-        <div class="aesthetic-footer">
-          <div class="location-time">
-            <span class="location">KUALA LUMPUR, MALAYSIA</span>
-            <span class="time" id="aesthetic-time"></span>
-          </div>
-          <div class="name-large">IRFAN HAKIMI</div>
-          <div class="back-to-top">
-            <a href="#home">BACK TO TOP <i class="fas fa-arrow-up"></i></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <p>© 2026 Irfan Hakimi</p>
+    <footer class="site-footer">
+      <span>Irfan Hakimi, solutions engineer</span>
+      <span class="links">
+        <a href="https://github.com/irfnyhya" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/irfan-hakimi-74684b259" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="file/Irfan_Hakimi_CV.pdf" download>CV</a>
+        <a href="#top">Back to top</a>
+      </span>
+      <span class="end">© 2026 Irfan Hakimi</span>
     </footer>
 
-    <!-- Gallery Modal -->
-    <div id="galleryModal" class="modal">
-      <span class="close-modal" onclick="closeGallery()">&times;</span>
-      <div class="modal-content">
-        <h2 class="modal-title" id="galleryTitle">Gallery</h2>
-        <div class="gallery-grid" id="galleryGrid"></div>
+    <!-- Photo album -->
+    <div class="modal" id="albumModal" role="dialog" aria-modal="true" aria-labelledby="albumTitle" hidden>
+      <div class="modal-bar">
+        <h2 class="h-item" id="albumTitle">Album</h2>
+        <button class="btn btn-quiet" type="button" data-close>Close</button>
       </div>
+      <div class="album" id="albumGrid"></div>
     </div>
 
-    <!-- Video Modal -->
-    <div id="videoModal" class="modal">
-      <span class="close-modal" onclick="closeVideoModal()">&times;</span>
-      <div class="modal-content">
-        <video id="modalVideo" controls>
-          <source src="" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+    <!-- Demo player -->
+    <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="PayNet app demo" hidden>
+      <div class="modal-bar">
+        <h2 class="h-item">PayNet app demo</h2>
+        <button class="btn btn-quiet" type="button" data-close>Close</button>
       </div>
+      <video id="modalVideo" controls playsinline preload="none"></video>
     </div>
 
     <script>
-      // Custom cursor - only where an actual pointer exists
-      const cursor = document.querySelector(".custom-cursor");
-      if (cursor && window.matchMedia("(hover: hover)").matches) {
-        document.addEventListener("mousemove", (e) => {
-          cursor.style.left = e.clientX + "px";
-          cursor.style.top = e.clientY + "px";
-        });
-      } else if (cursor) {
-        cursor.remove();
-      }
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-      // Mobile navigation
+      // Names slide in from their corners once the page is ready
+      const markLoaded = () => document.documentElement.classList.add("loaded");
+      requestAnimationFrame(() => requestAnimationFrame(markLoaded));
+      setTimeout(markLoaded, 120);
+
+      // The pinned poster: scrolling picks which panel sits between the names
       (() => {
-        const nav = document.querySelector("nav");
-        const toggle = document.getElementById("navToggle");
-        const menu = document.getElementById("navMenu");
-        if (!nav || !toggle || !menu) return;
+        const poster = document.querySelector(".poster");
+        if (!poster || document.documentElement.classList.contains("flat")) {
+          document.querySelectorAll("[data-go]").forEach((b) =>
+            b.addEventListener("click", () => {
+              const t = document.querySelectorAll(".panel")[+b.dataset.go];
+              if (t) t.scrollIntoView();
+            })
+          );
+          return;
+        }
+        const panels = [...poster.querySelectorAll(".panel")];
+        const reel = [...poster.querySelectorAll(".reel [data-go]")];
+        const steps = panels.length;
+        let current = -1;
 
-        const icon = toggle.querySelector("i");
+        const range = () => poster.offsetHeight - window.innerHeight;
+        const show = (index) => {
+          if (index === current) return;
+          current = index;
+          panels.forEach((panel, i) => {
+            panel.classList.toggle("is-active", i === index);
+            panel.classList.toggle("is-past", i < index);
+          });
+          reel.forEach((b, i) =>
+            i === index
+              ? b.setAttribute("aria-current", "true")
+              : b.removeAttribute("aria-current")
+          );
+        };
+        const update = () => {
+          const top = poster.getBoundingClientRect().top;
+          const p = Math.min(0.9999, Math.max(0, -top / range()));
+          show(Math.floor(p * steps));
+        };
+        const goTo = (i) => {
+          const y = poster.offsetTop + (range() * (i + 0.5)) / steps;
+          window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
+        };
+
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+
+        document
+          .querySelectorAll("[data-go]")
+          .forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.go)));
+
+      })();
+
+      // Mobile menu
+      (() => {
+        const nav = document.getElementById("nav");
+        const toggle = document.getElementById("navToggle");
+        const links = document.getElementById("navLinks");
         const setOpen = (open) => {
           nav.classList.toggle("open", open);
           toggle.setAttribute("aria-expanded", String(open));
-          toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-          if (icon) icon.className = open ? "fas fa-xmark" : "fas fa-bars";
+          toggle.textContent = open ? "Close" : "Menu";
         };
-
         toggle.addEventListener("click", () =>
           setOpen(!nav.classList.contains("open"))
         );
-
-        // Tapping a destination should take you there, not leave the menu open
-        menu.querySelectorAll("a").forEach((a) =>
-          a.addEventListener("click", () => setOpen(false))
-        );
-
-        document.addEventListener("click", (e) => {
-          if (!nav.contains(e.target)) setOpen(false);
-        });
-
+        links
+          .querySelectorAll("a")
+          .forEach((a) => a.addEventListener("click", () => setOpen(false)));
         document.addEventListener("keydown", (e) => {
           if (e.key === "Escape") setOpen(false);
         });
-
-        // Rotating to landscape can cross back into the desktop layout
         window.addEventListener("resize", () => {
-          if (window.innerWidth > 968) setOpen(false);
+          if (window.innerWidth > 720) setOpen(false);
         });
       })();
 
-      // Live time update for aesthetic page
-      function updateTime() {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString("en-US", {
-          hour: "2-digit",
+      // Entrances: each part of a section rises once as it enters
+      (() => {
+        const items = document.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window)) {
+          items.forEach((el) => el.classList.add("in"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in");
+                io.unobserve(entry.target);
+              }
+            }),
+          { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+        );
+        items.forEach((el) => io.observe(el));
+      })();
+
+      // The live thing: what time it is in Kuala Lumpur, and what I'm likely doing
+      (() => {
+        const tz = "Asia/Kuala_Lumpur";
+        const timeFmt = new Intl.DateTimeFormat("en-US", {
+          timeZone: tz,
+          hour: "numeric",
           minute: "2-digit",
-          second: "2-digit",
           hour12: true,
         });
-
-        const aestheticTimeElement = document.getElementById("aesthetic-time");
-        if (aestheticTimeElement) {
-          aestheticTimeElement.textContent = timeString;
-        }
-      }
-      updateTime();
-      setInterval(updateTime, 1000);
-
-      // Intersection Observer
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-            }
-          });
-        },
-        { threshold: 0.1 },
-      );
-
-      document
-        .querySelectorAll(".fade-up")
-        .forEach((el) => observer.observe(el));
-
-      // Smooth scrolling (skip bare "#" / missing targets)
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          const href = this.getAttribute("href");
-          if (!href || href === "#") return;
-          const target = document.querySelector(href);
-          if (!target) return;
-          e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth" });
+        const partsFmt = new Intl.DateTimeFormat("en-GB", {
+          timeZone: tz,
+          hour: "2-digit",
+          hourCycle: "h23",
+          weekday: "short",
         });
+
+        const doing = (hour, day) => {
+          const weekend = day === "Sat" || day === "Sun";
+          if (hour < 7) return "I'm probably asleep. Replies come in the morning.";
+          if (hour < 9) return "I'm probably having kopi before work.";
+          if (!weekend && hour < 18)
+            return "I'm probably at work in Bangsar, building GRC AI.";
+          if (hour < 23) return "I'm probably shipping a side project.";
+          return "I'm probably winding down. Replies come in the morning.";
+        };
+
+        const gap = () => {
+          const now = new Date();
+          const kl = new Date(now.toLocaleString("en-US", { timeZone: tz }));
+          const here = new Date(now.toLocaleString("en-US"));
+          const h = Math.round((kl - here) / 36e5);
+          if (h === 0) return "Same time as you.";
+          const n = Math.abs(h);
+          return `${n} hour${n === 1 ? "" : "s"} ${h > 0 ? "ahead of" : "behind"} you.`;
+        };
+
+        const clock = document.querySelector("[data-clock]");
+        const status = document.querySelector("[data-status]");
+        const heroNow = document.querySelector("[data-now]");
+
+        const tick = () => {
+          const now = new Date();
+          const parts = Object.fromEntries(
+            partsFmt.formatToParts(now).map((p) => [p.type, p.value])
+          );
+          const hour = parseInt(parts.hour, 10);
+          const time = timeFmt.format(now);
+          const line = doing(hour, parts.weekday);
+          if (clock) clock.textContent = `${time} in KL`;
+          if (status) status.textContent = `${line} ${gap()}`;
+          if (heroNow)
+            heroNow.textContent = `It's ${time} in Kuala Lumpur. ${line}`;
+        };
+        tick();
+        setInterval(tick, 15000);
+      })();
+
+      // Rising triptych: three photographs climb at their own speeds
+      (() => {
+        const row = document.querySelector("[data-rise]");
+        if (!row || reduceMotion) return;
+        const section = row.closest(".rise");
+        const c = row.querySelector(".c");
+        const l = row.querySelector(".l");
+        const r = row.querySelector(".r");
+        const ease = (t) => 1 - Math.pow(1 - t, 3);
+        let ticking = false;
+
+        const update = () => {
+          ticking = false;
+          const rect = section.getBoundingClientRect();
+          const vh = window.innerHeight;
+          const pad = parseFloat(getComputedStyle(section).paddingTop) || 0;
+          const span = section.offsetHeight - pad - vh;
+          const p = Math.min(1, Math.max(0, (-rect.top - pad) / span));
+          const stage = row.parentElement;
+          const head = stage.querySelector(".section-head");
+          const headBottom =
+            head.getBoundingClientRect().bottom - stage.getBoundingClientRect().top;
+          const top = Math.max(headBottom + 40, vh * 0.42);
+          // The centre photo ends just under the heading; the outer two trail it
+          const travelC = vh - top;
+          const startC = 0.45 * c.offsetHeight;
+          const cy = -(startC + (travelC - startC) * ease(Math.min(1, p * 1.15)));
+          const oy = -(startC + (travelC - startC) * ease(Math.min(1, p * 1.05))) + 56;
+          c.style.transform = `translateY(${cy}px)`;
+          l.style.transform = `translateY(${oy + 40 * (1 - p)}px)`;
+          r.style.transform = `translateY(${oy + 90 * (1 - p)}px)`;
+        };
+        const onScroll = () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        };
+        update();
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+      })();
+
+      // Highlight the nav link for the section in view
+      (() => {
+        const links = [...document.querySelectorAll(".nav-links a[href^='#']")];
+        const map = new Map(
+          links.map((a) => [document.querySelector(a.getAttribute("href")), a])
+        );
+        const io = new IntersectionObserver(
+          (entries) =>
+            entries.forEach((e) => {
+              const a = map.get(e.target);
+              if (a && e.isIntersecting) {
+                links.forEach((x) => x.removeAttribute("aria-current"));
+                a.setAttribute("aria-current", "true");
+              }
+            }),
+          { rootMargin: "-45% 0px -50% 0px" }
+        );
+        map.forEach((_, section) => section && io.observe(section));
+      })();
+
+      // Contact form: open the visitor's email app with the message filled in
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const f = e.currentTarget;
+        const name = f.querySelector("#contact-name").value.trim();
+        const email = f.querySelector("#contact-email").value.trim();
+        const message = f.querySelector("#contact-message").value.trim();
+        const subject = encodeURIComponent(`Portfolio message from ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+        window.location.href = `mailto:irfanyahya808@gmail.com?subject=${subject}&body=${body}`;
       });
 
-      // Contact form → open default email client
-      const contactForm = document.querySelector(".contact-form");
-      if (contactForm) {
-        contactForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const name = contactForm.querySelector("#contact-name").value.trim();
-          const email = contactForm
-            .querySelector("#contact-email")
-            .value.trim();
-          const message = contactForm
-            .querySelector("#contact-message")
-            .value.trim();
+      // Albums and the demo player
+      (() => {
+        const albums = {
+          paynet: {
+            title: "PayNet",
+            items: [
+              ["images/paynet/8.jpeg", "Mobile apps meeting"],
+              ["images/paynet/9.jpeg", "Daily scrum meeting"],
+              ["images/paynet/10.jpeg", "Team meeting"],
+              ["images/paynet/11.jpeg", "Team meeting"],
+              ["images/paynet/1.jpeg", "Chinese New Year celebration"],
+              ["images/paynet/2.jpeg", "Team lunch"],
+              ["images/paynet/3.jpeg", "PayNet team building"],
+              ["images/paynet/4.jpeg", "PayNet team building"],
+              ["images/paynet/6.jpeg", "PayNet engagement forum"],
+              ["images/paynet/7.jpeg", "PayNet engagement forum"],
+            ],
+          },
+          umt: {
+            title: "UMT",
+            items: [
+              ["images/umt/1.jpeg", "Meeting with stakeholders"],
+              ["images/umt/2.jpeg", "Docker workshop"],
+              ["images/umt/3.jpeg", "Figma workshop"],
+              ["images/umt/4.jpeg", "Backend and dev workshop"],
+              ["images/umt/5.jpeg", "Deployment session"],
+            ],
+          },
+        };
 
-          const subject = encodeURIComponent(
-            `Portfolio message from ${name}`,
-          );
-          const body = encodeURIComponent(
-            `Name: ${name}\nEmail: ${email}\n\n${message}`,
-          );
-
-          window.location.href = `mailto:irfanyahya808@gmail.com?subject=${subject}&body=${body}`;
-        });
-      }
-
-      // Gallery data
-      const galleryData = {
-        paynet: [
-          {
-            type: "image",
-            src: "images/paynet/8.jpeg",
-            caption: "Mobile Apps Meeting",
-          },
-          {
-            type: "image",
-            src: "images/paynet/9.jpeg",
-            caption: "Daily Scrum Meeting",
-          },
-          {
-            type: "image",
-            src: "images/paynet/10.jpeg",
-            caption: "Team Meeting",
-          },
-          {
-            type: "image",
-            src: "images/paynet/11.jpeg",
-            caption: "Team Meeting",
-          },
-          {
-            type: "image",
-            src: "images/paynet/1.jpeg",
-            caption: "Chinese New Year Celebration",
-          },
-          { type: "image", src: "images/paynet/2.jpeg", caption: "Team Lunch" },
-          {
-            type: "image",
-            src: "images/paynet/3.jpeg",
-            caption: "PayNet Team Building",
-          },
-          {
-            type: "image",
-            src: "images/paynet/4.jpeg",
-            caption: "PayNet Team Building",
-          },
-          {
-            type: "image",
-            src: "images/paynet/6.jpeg",
-            caption: "PayNet Engagement Forum",
-          },
-          {
-            type: "image",
-            src: "images/paynet/7.jpeg",
-            caption: "PayNet Engagement Forum",
-          },
-        ],
-        umt: [
-          {
-            type: "image",
-            src: "images/umt/1.jpeg",
-            caption: "Meeting With Stakeholder",
-          },
-          {
-            type: "image",
-            src: "images/umt/2.jpeg",
-            caption: "Docker Workshop",
-          },
-          {
-            type: "image",
-            src: "images/umt/3.jpeg",
-            caption: "Figma Workshop",
-          },
-          {
-            type: "image",
-            src: "images/umt/4.jpeg",
-            caption: "Backend / Dev Workshop",
-          },
-          {
-            type: "image",
-            src: "images/umt/5.jpeg",
-            caption: "Deployment Session",
-          },
-        ],
-      };
-
-      function openGallery(experience) {
-        const modal = document.getElementById("galleryModal");
-        const title = document.getElementById("galleryTitle");
-        const grid = document.getElementById("galleryGrid");
-
-        title.textContent =
-          experience === "paynet" ? "PayNet Experience" : "UMT Experience";
-        grid.innerHTML = "";
-
-        galleryData[experience].forEach((item) => {
-          const div = document.createElement("div");
-          div.className = "gallery-item";
-          div.innerHTML = `
-                    <img src="${item.src}" alt="${item.caption}">
-                    <div class="gallery-caption">${item.caption}</div>
-                `;
-          grid.appendChild(div);
-        });
-
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-      }
-
-      function closeGallery() {
-        document.getElementById("galleryModal").style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-
-      function openVideoModal(videoPath) {
-        const modal = document.getElementById("videoModal");
+        const albumModal = document.getElementById("albumModal");
+        const videoModal = document.getElementById("videoModal");
+        const grid = document.getElementById("albumGrid");
+        const title = document.getElementById("albumTitle");
         const video = document.getElementById("modalVideo");
-        const source = video.querySelector("source");
+        let opener = null;
 
-        source.src = videoPath;
-        source.type = videoPath.endsWith(".MOV")
-          ? "video/quicktime"
-          : "video/mp4";
-        video.load();
+        const open = (modal) => {
+          opener = document.activeElement;
+          modal.hidden = false;
+          document.body.style.overflow = "hidden";
+          modal.querySelector("[data-close]").focus();
+        };
+        const close = () => {
+          [albumModal, videoModal].forEach((m) => (m.hidden = true));
+          video.pause();
+          document.body.style.overflow = "";
+          if (opener) opener.focus();
+        };
 
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-        video.play().catch((e) => console.log("Autoplay prevented"));
-      }
+        document.querySelectorAll("[data-album]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            const album = albums[btn.dataset.album];
+            title.textContent = `${album.title} album`;
+            grid.innerHTML = "";
+            album.items.forEach(([src, caption]) => {
+              const fig = document.createElement("figure");
+              const img = document.createElement("img");
+              img.src = src;
+              img.alt = caption;
+              img.loading = "lazy";
+              const cap = document.createElement("figcaption");
+              cap.textContent = caption;
+              fig.append(img, cap);
+              grid.append(fig);
+            });
+            open(albumModal);
+          })
+        );
 
-      function closeVideoModal() {
-        const modal = document.getElementById("videoModal");
-        const video = document.getElementById("modalVideo");
+        document.querySelectorAll("[data-video]").forEach((btn) =>
+          btn.addEventListener("click", () => {
+            video.src = btn.dataset.video;
+            open(videoModal);
+            video.play().catch(() => {});
+          })
+        );
 
-        video.pause();
-        video.currentTime = 0;
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-      }
-
-      // Close modals on click outside
-      window.onclick = (event) => {
-        if (event.target.classList.contains("modal")) {
-          closeGallery();
-          closeVideoModal();
-        }
-      };
-
-      // ESC key to close modals
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeGallery();
-          closeVideoModal();
-        }
-      });
+        document
+          .querySelectorAll("[data-close]")
+          .forEach((b) => b.addEventListener("click", close));
+        [albumModal, videoModal].forEach((m) =>
+          m.addEventListener("click", (e) => {
+            if (e.target === m) close();
+          })
+        );
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && (!albumModal.hidden || !videoModal.hidden))
+            close();
+        });
+      })();
 
       // Background video: keep it running across tab switches and recover if
-      // the browser blocks the initial autoplay until the first interaction
+      // the browser blocks the first autoplay until an interaction
       (() => {
         const bg = document.getElementById("bgVideo");
         if (!bg) return;
-
+        if (reduceMotion) {
+          bg.removeAttribute("autoplay");
+          bg.pause();
+          return;
+        }
         const play = () => bg.play().catch(() => {});
-
         play();
         bg.addEventListener("loadeddata", play);
-        bg.addEventListener("pause", () => {
-          if (!document.hidden) play();
-        });
         document.addEventListener("visibilitychange", () => {
           if (!document.hidden) play();
         });
