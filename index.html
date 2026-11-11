@@ -286,7 +286,7 @@
          The name holds two corners of a fixed stage; the intro and each
          project swap into the band between them as the page scrolls. */
       .poster {
-        --steps: 6;
+        --steps: 5;
         --name-h: calc(var(--step-display) * 0.86);
         --band-top: calc(var(--nav-h) + 12px + var(--name-h) + 28px);
         --band-bottom: calc(16px + var(--name-h) + 28px);
@@ -599,88 +599,34 @@
         transform: scale(1.03);
       }
 
-      /* Life at work: a rising triptych */
-      .rise {
-        height: calc(200svh + var(--gap-section));
-        position: relative;
-        z-index: 2;
-        background: var(--bg);
-        padding-top: var(--gap-section);
+      /* A short row of photos under each job, each keeping its own shape */
+      .job-photos {
+        grid-column: 1 / -1;
+        display: flex;
+        gap: 12px;
+        margin-top: 40px;
       }
 
-      .rise-stage {
-        position: sticky;
-        top: 0;
-        height: 100svh;
+      .job-photos button {
+        flex: var(--r) 1 0;
+        min-width: 0;
         overflow: hidden;
-        padding-top: calc(var(--nav-h) + 32px);
-        text-align: center;
+        background: var(--surface);
       }
 
-      .rise-stage .section-head {
-        margin-bottom: 0;
-        position: relative;
-        z-index: 2;
-      }
-
-      .rise-stage .section-head p {
-        margin-inline: auto;
-      }
-
-      .rise-stage .links {
-        justify-content: center;
-        margin-top: 20px;
-      }
-
-      .rise-row {
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        width: 0;
-        height: 100%;
-      }
-
-      .rise-img {
-        position: absolute;
-        top: 100%;
-        will-change: transform;
-      }
-
-      .rise-img img {
+      .job-photos img {
         width: 100%;
-        height: 100%;
+        aspect-ratio: var(--r);
         object-fit: cover;
+        transition: transform 0.6s var(--ease-out), opacity 0.3s;
       }
 
-      .rise-img.c {
-        width: min(42vw, 600px);
-        aspect-ratio: 4 / 5;
-        left: calc(min(42vw, 600px) / -2);
-        z-index: 1;
+      .job-photos button:hover img {
+        transform: scale(1.05);
       }
 
-      .rise-img.l,
-      .rise-img.r {
-        width: min(26vw, 380px);
-        aspect-ratio: 4 / 5;
-      }
-
-      .rise-img.l {
-        right: calc(min(42vw, 600px) / 2 + 12px);
-      }
-
-      .rise-img.r {
-        left: calc(min(42vw, 600px) / 2 + 12px);
-      }
-
-      .rise-img figcaption {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        padding: 10px 14px;
-        background: var(--bg);
-        font-size: var(--step-small);
-        text-align: left;
+      .job-photos button:active img {
+        opacity: 0.8;
       }
 
       /* About */
@@ -798,7 +744,8 @@
         top: calc(var(--nav-h) + 32px);
       }
 
-      .clock {
+      .contact-now .clock {
+        margin-top: 0;
         font-family: var(--font-display);
         font-size: var(--step-head);
         line-height: 0.9;
@@ -1047,42 +994,6 @@
         .panel .project-shot img {
           clip-path: none;
         }
-
-        .rise {
-          height: auto;
-        }
-
-        .rise-stage {
-          position: relative;
-          height: auto;
-          padding-bottom: 0;
-        }
-
-        .rise-row {
-          position: relative;
-          left: auto;
-          width: auto;
-          height: auto;
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-          gap: 12px;
-          margin-top: 48px;
-          overflow: hidden;
-        }
-
-        .rise-img {
-          position: relative;
-          top: auto;
-          left: auto !important;
-          right: auto !important;
-          transform: none !important;
-        }
-
-        .rise-img.l,
-        .rise-img.r {
-          margin-top: 56px;
-        }
       }
 
       /* ---------- Tablet ---------- */
@@ -1223,26 +1134,25 @@
           grid-column: 1 / -1;
         }
 
-        .rise {
-          height: 180svh;
+        .job-photos {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          margin-top: 28px;
         }
 
-        .rise-img.c {
-          width: 64vw;
-          left: -32vw;
+        .job-photos img {
+          aspect-ratio: 4 / 3;
         }
 
-        .rise-img.l,
-        .rise-img.r {
-          width: 44vw;
+        .job-photos button:first-child,
+        .job-photos button:last-child:nth-child(even) {
+          grid-column: span 2;
         }
 
-        .rise-img.l {
-          right: calc(32vw + 8px);
-        }
-
-        .rise-img.r {
-          left: calc(32vw + 8px);
+        .job-photos button:first-child img,
+        .job-photos button:last-child:nth-child(even) img {
+          aspect-ratio: 16 / 9;
         }
 
         .portrait {
@@ -1318,9 +1228,9 @@
         Menu
       </button>
       <nav class="nav-links" id="navLinks" aria-label="Sections">
+        <a href="#about">About</a>
         <a href="#work">Work</a>
         <a href="#experience">Experience</a>
-        <a href="#about">About</a>
         <a href="#contact">Contact</a>
         <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
           >Download CV</a
@@ -1329,15 +1239,14 @@
     </header>
 
     <main id="top">
-      <!-- The pinned poster: the name holds the corners while the work passes between -->
-      <section class="poster" id="work" aria-label="Introduction and selected work">
+      <!-- Opening screen: the name holds two corners over the moving picture -->
+      <section class="poster poster-hero" style="--steps: 1" aria-label="Introduction">
         <div class="poster-stage">
           <h1 class="name">
             <span class="name-a">Irfan</span>
             <span class="name-b">Hakimi</span>
           </h1>
-
-        <div class="panel grid is-active" data-step="0">
+        <div class="panel grid is-active">
           <div class="hero-copy">
             <p class="lead">
               Solutions engineer in Kuala Lumpur, building GRC AI at TNEX
@@ -1347,15 +1256,89 @@
               <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
                 >Download CV</a
               >
-              <button class="link" type="button" data-go="1">See the work</button>
+              <a class="link" href="#work">See the work</a>
             </div>
             <p class="now muted" data-now>
               Based in Kuala Lumpur, GMT+8.
             </p>
           </div>
         </div>
+        </div>
+      </section>
 
-        <article class="panel project" id="sanding" data-step="1">
+      <!-- About -->
+      <section class="solid wrap" id="about" aria-labelledby="about-h">
+        <div class="grid about-grid">
+          <figure class="portrait" data-reveal>
+            <img
+              src="images/profilepic.jpeg"
+              width="1000"
+              height="1340"
+              loading="lazy"
+              alt="Irfan Hakimi in a dark double-breasted suit, standing by a framed painting of a kopitiam cup"
+            />
+          </figure>
+          <div class="about-text">
+            <div class="section-head" data-reveal>
+              <h2 class="h-section" id="about-h">About</h2>
+            </div>
+            <div data-reveal style="--i: 1">
+              <p>
+                I am a <strong>Solutions Engineer</strong> at
+                <strong>TNEX Malaysia</strong>, based in Kuala Lumpur.
+              </p>
+              <p>
+                I work at the intersection of full-stack engineering and client
+                solutioning, building and configuring GRC AI products while
+                helping translate them into real business value. I focus on
+                shipping practical software and improving how users experience
+                it.
+              </p>
+              <p>
+                Previously, I gained hands-on experience through internships and
+                academic projects across automation, mobile and enterprise
+                systems. I enjoy owning features end to end and adapting quickly
+                to the tools the problem needs.
+              </p>
+              <p>
+                Currently working with <strong>React.js, .NET Core, SQL</strong>,
+                alongside <strong>Java, Python, PHP</strong> and
+                <strong>React Native</strong>.
+              </p>
+            </div>
+            <p class="motto" data-reveal style="--i: 2">
+              Do it once. Do it right.
+            </p>
+            <dl class="skills" data-reveal style="--i: 3">
+              <div>
+                <dt>Languages</dt>
+                <dd>Java, Python, PHP, React Native, SQL, JavaScript</dd>
+              </div>
+              <div>
+                <dt>Frameworks</dt>
+                <dd>React Native, CodeIgniter, Flask, Expo</dd>
+              </div>
+              <div>
+                <dt>Cloud and tools</dt>
+                <dd>AWS Lambda, AWS Athena, Firebase, Grafana, Jira</dd>
+              </div>
+              <div>
+                <dt>Specialties</dt>
+                <dd>API integration, data automation, mobile dev, system design</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- Selected work: the title holds the corners while each project swaps in -->
+      <section class="poster" id="work" style="--steps: 5" aria-labelledby="work-h">
+        <div class="poster-stage">
+          <h2 class="name" id="work-h">
+            <span class="name-a">Selected</span>
+            <span class="name-b">Work</span>
+          </h2>
+        <article class="panel project is-active" id="sanding" data-step="0">
           <figure class="project-shot">
             <img
               src="images/dpkadkahwin.png"
@@ -1384,8 +1367,7 @@
             </div>
           </div>
         </article>
-
-        <article class="panel project" data-step="2">
+        <article class="panel project" data-step="1">
           <figure class="project-shot">
             <img
               src="images/dpmuseum.png"
@@ -1414,8 +1396,7 @@
             </div>
           </div>
         </article>
-
-        <article class="panel project" data-step="3">
+        <article class="panel project" data-step="2">
           <figure class="project-shot">
             <img
               src="images/dptravelbud.png"
@@ -1450,8 +1431,7 @@
             </div>
           </div>
         </article>
-
-        <article class="panel project" data-step="4">
+        <article class="panel project" data-step="3">
           <figure class="project-shot">
             <img
               src="images/dpmhbot.png"
@@ -1487,8 +1467,7 @@
             </div>
           </div>
         </article>
-
-        <article class="panel project" data-step="5">
+        <article class="panel project" data-step="4">
           <figure class="project-shot">
             <img
               src="images/dpapp.jpeg"
@@ -1519,13 +1498,12 @@
             </div>
           </div>
         </article>
-              <ol class="reel" aria-label="Jump to">
-          <li><button type="button" data-go="0">Intro</button></li>
-          <li><button type="button" data-go="1">Sanding</button></li>
-          <li><button type="button" data-go="2">Museum of Us</button></li>
-          <li><button type="button" data-go="3">TravelBud</button></li>
-          <li><button type="button" data-go="4">Mental Health Bot</button></li>
-          <li><button type="button" data-go="5">PayNet Mobile App</button></li>
+        <ol class="reel" aria-label="Jump to">
+          <li><button type="button" data-go="0">Sanding</button></li>
+          <li><button type="button" data-go="1">Museum of Us</button></li>
+          <li><button type="button" data-go="2">TravelBud</button></li>
+          <li><button type="button" data-go="3">Mental Health Bot</button></li>
+          <li><button type="button" data-go="4">PayNet Mobile App</button></li>
         </ol>
         </div>
       </section>
@@ -1616,6 +1594,11 @@
               <p class="stack small">
                 React.js, .NET Core, SQL Server, GRC AI, TypeScript
               </p>
+              <div class="links">
+                <button class="btn btn-quiet" type="button" data-album="tnex">
+                  All 6 TNEX photos
+                </button>
+              </div>
             </div>
             <figure class="job-photo logo" data-reveal style="--i: 1">
               <img
@@ -1626,6 +1609,23 @@
                 alt="TNEX logo"
               />
             </figure>
+            <div class="job-photos" data-reveal style="--i: 2">
+              <button type="button" style="--r: 1.333" data-album="tnex" data-index="0" aria-label="Open the TNEX album: Group photo at Bridging Innovation: GBA × ASEAN">
+                <img src="images/tnex/1.jpg" width="1400" height="1050" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 0.750" data-album="tnex" data-index="1" aria-label="Open the TNEX album: Presenting the TNEX AI compliance platform">
+                <img src="images/tnex/2.jpg" width="1050" height="1400" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.333" data-album="tnex" data-index="2" aria-label="Open the TNEX album: With fellow attendees after the event">
+                <img src="images/tnex/4.jpg" width="1400" height="1050" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.333" data-album="tnex" data-index="3" aria-label="Open the TNEX album: Eat, sleep, build, repeat">
+                <img src="images/tnex/5.jpg" width="1400" height="1050" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.333" data-album="tnex" data-index="5" aria-label="Open the TNEX album: Thumbs up after the talk">
+                <img src="images/tnex/7.jpg" width="1400" height="1050" loading="lazy" alt="" />
+              </button>
+            </div>
           </article>
 
           <article class="job grid">
@@ -1655,7 +1655,7 @@
               </p>
               <div class="links">
                 <button class="btn btn-quiet" type="button" data-album="paynet">
-                  PayNet photos
+                  All 10 PayNet photos
                 </button>
               </div>
             </div>
@@ -1668,6 +1668,23 @@
                 alt="PayNet office lobby in Kuala Lumpur"
               />
             </figure>
+            <div class="job-photos" data-reveal style="--i: 2">
+              <button type="button" style="--r: 1.333" data-album="paynet" data-index="1" aria-label="Open the PayNet album: Daily scrum meeting">
+                <img src="images/paynet/9.jpeg" width="1280" height="960" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 0.750" data-album="paynet" data-index="0" aria-label="Open the PayNet album: Mobile apps meeting">
+                <img src="images/paynet/8.jpeg" width="960" height="1280" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 0.750" data-album="paynet" data-index="4" aria-label="Open the PayNet album: Chinese New Year celebration">
+                <img src="images/paynet/1.jpeg" width="960" height="1280" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.778" data-album="paynet" data-index="7" aria-label="Open the PayNet album: PayNet team building">
+                <img src="images/paynet/4.jpeg" width="1280" height="720" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.333" data-album="paynet" data-index="8" aria-label="Open the PayNet album: PayNet engagement forum">
+                <img src="images/paynet/6.jpeg" width="1280" height="960" loading="lazy" alt="" />
+              </button>
+            </div>
           </article>
 
           <article class="job grid">
@@ -1692,7 +1709,7 @@
               <p class="stack small">PHP, CodeIgniter, MySQL, JavaScript</p>
               <div class="links">
                 <button class="btn btn-quiet" type="button" data-album="umt">
-                  UMT photos
+                  All 5 UMT photos
                 </button>
               </div>
             </div>
@@ -1705,122 +1722,24 @@
                 alt="UMT building in Terengganu"
               />
             </figure>
+            <div class="job-photos" data-reveal style="--i: 2">
+              <button type="button" style="--r: 2.278" data-album="umt" data-index="0" aria-label="Open the UMT album: Meeting with stakeholders">
+                <img src="images/umt/1.jpeg" width="1080" height="474" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 0.750" data-album="umt" data-index="1" aria-label="Open the UMT album: Docker workshop">
+                <img src="images/umt/2.jpeg" width="960" height="1280" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.333" data-album="umt" data-index="2" aria-label="Open the UMT album: Figma workshop">
+                <img src="images/umt/3.jpeg" width="1280" height="960" loading="lazy" alt="" />
+              </button>
+              <button type="button" style="--r: 1.333" data-album="umt" data-index="4" aria-label="Open the UMT album: Deployment session">
+                <img src="images/umt/5.jpeg" width="1280" height="960" loading="lazy" alt="" />
+              </button>
+            </div>
           </article>
         </div>
       </section>
 
-      <!-- Life at work: three photographs rise as you scroll -->
-      <section class="rise" id="life" aria-labelledby="life-h">
-        <div class="rise-stage wrap">
-          <div class="section-head">
-            <h2 class="h-section" id="life-h">Days at PayNet and UMT</h2>
-            <p>Scrums, workshops, team buildings and one Chinese New Year.</p>
-            <div class="links">
-              <button class="link" type="button" data-album="paynet">
-                PayNet album
-              </button>
-              <button class="link" type="button" data-album="umt">
-                UMT album
-              </button>
-            </div>
-          </div>
-          <div class="rise-row" data-rise>
-            <figure class="rise-img l">
-              <img
-                src="images/paynet/1.jpeg"
-                width="960"
-                height="1280"
-                loading="lazy"
-                alt="The PayNet team at the Chinese New Year celebration"
-              />
-            </figure>
-            <figure class="rise-img c">
-              <img
-                src="images/paynet/8.jpeg"
-                width="960"
-                height="1280"
-                loading="lazy"
-                alt="Mobile apps meeting at PayNet, code on the big screen"
-              />
-              <figcaption>Mobile apps meeting, PayNet</figcaption>
-            </figure>
-            <figure class="rise-img r">
-              <img
-                src="images/umt/2.jpeg"
-                width="960"
-                height="1280"
-                loading="lazy"
-                alt="Docker workshop at UMT, laptops along a red-walled room"
-              />
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      <!-- About -->
-      <section class="solid wrap" id="about" aria-labelledby="about-h">
-        <div class="grid about-grid">
-          <figure class="portrait" data-reveal>
-            <img
-              src="images/profilepic.jpeg"
-              width="1000"
-              height="1340"
-              loading="lazy"
-              alt="Irfan Hakimi in a dark double-breasted suit, standing by a framed painting of a kopitiam cup"
-            />
-          </figure>
-          <div class="about-text">
-            <div class="section-head" data-reveal>
-              <h2 class="h-section" id="about-h">About</h2>
-            </div>
-            <div data-reveal style="--i: 1">
-              <p>
-                I am a <strong>Solutions Engineer</strong> at
-                <strong>TNEX Malaysia</strong>, based in Kuala Lumpur.
-              </p>
-              <p>
-                I work at the intersection of full-stack engineering and client
-                solutioning, building and configuring GRC AI products while
-                helping translate them into real business value. I focus on
-                shipping practical software and improving how users experience
-                it.
-              </p>
-              <p>
-                Previously, I gained hands-on experience through internships and
-                academic projects across automation, mobile and enterprise
-                systems. I enjoy owning features end to end and adapting quickly
-                to the tools the problem needs.
-              </p>
-              <p>
-                Currently working with <strong>React.js, .NET Core, SQL</strong>,
-                alongside <strong>Java, Python, PHP</strong> and
-                <strong>React Native</strong>.
-              </p>
-            </div>
-            <p class="motto" data-reveal style="--i: 2">
-              Do it once. Do it right.
-            </p>
-            <dl class="skills" data-reveal style="--i: 3">
-              <div>
-                <dt>Languages</dt>
-                <dd>Java, Python, PHP, React Native, SQL, JavaScript</dd>
-              </div>
-              <div>
-                <dt>Frameworks</dt>
-                <dd>React Native, CodeIgniter, Flask, Expo</dd>
-              </div>
-              <div>
-                <dt>Cloud and tools</dt>
-                <dd>AWS Lambda, AWS Athena, Firebase, Grafana, Jira</dd>
-              </div>
-              <div>
-                <dt>Specialties</dt>
-                <dd>API integration, data automation, mobile dev, system design</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
 
       <!-- Certificates -->
       <section class="solid wrap" id="certificates" aria-labelledby="cert-h">
@@ -1968,20 +1887,17 @@
       requestAnimationFrame(() => requestAnimationFrame(markLoaded));
       setTimeout(markLoaded, 120);
 
-      // The pinned poster: scrolling picks which panel sits between the names
-      (() => {
-        const poster = document.querySelector(".poster");
-        if (!poster || document.documentElement.classList.contains("flat")) {
-          document.querySelectorAll("[data-go]").forEach((b) =>
-            b.addEventListener("click", () => {
-              const t = document.querySelectorAll(".panel")[+b.dataset.go];
-              if (t) t.scrollIntoView();
-            })
+      // The pinned posters: scrolling picks which panel sits between the corner words
+      document.querySelectorAll(".poster").forEach((poster) => {
+        const panels = [...poster.querySelectorAll(".panel")];
+        const reel = [...poster.querySelectorAll(".reel [data-go]")];
+        if (document.documentElement.classList.contains("flat")) {
+          reel.forEach((b) =>
+            b.addEventListener("click", () => panels[+b.dataset.go]?.scrollIntoView())
           );
           return;
         }
-        const panels = [...poster.querySelectorAll(".panel")];
-        const reel = [...poster.querySelectorAll(".reel [data-go]")];
+        if (panels.length < 2) return;
         const steps = panels.length;
         let current = -1;
 
@@ -2012,12 +1928,8 @@
         window.addEventListener("scroll", update, { passive: true });
         window.addEventListener("resize", update);
         update();
-
-        document
-          .querySelectorAll("[data-go]")
-          .forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.go)));
-
-      })();
+        reel.forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.go)));
+      });
 
       // Mobile menu
       (() => {
@@ -2120,49 +2032,6 @@
         setInterval(tick, 15000);
       })();
 
-      // Rising triptych: three photographs climb at their own speeds
-      (() => {
-        const row = document.querySelector("[data-rise]");
-        if (!row || reduceMotion) return;
-        const section = row.closest(".rise");
-        const c = row.querySelector(".c");
-        const l = row.querySelector(".l");
-        const r = row.querySelector(".r");
-        const ease = (t) => 1 - Math.pow(1 - t, 3);
-        let ticking = false;
-
-        const update = () => {
-          ticking = false;
-          const rect = section.getBoundingClientRect();
-          const vh = window.innerHeight;
-          const pad = parseFloat(getComputedStyle(section).paddingTop) || 0;
-          const span = section.offsetHeight - pad - vh;
-          const p = Math.min(1, Math.max(0, (-rect.top - pad) / span));
-          const stage = row.parentElement;
-          const head = stage.querySelector(".section-head");
-          const headBottom =
-            head.getBoundingClientRect().bottom - stage.getBoundingClientRect().top;
-          const top = Math.max(headBottom + 40, vh * 0.42);
-          // The centre photo ends just under the heading; the outer two trail it
-          const travelC = vh - top;
-          const startC = 0.45 * c.offsetHeight;
-          const cy = -(startC + (travelC - startC) * ease(Math.min(1, p * 1.15)));
-          const oy = -(startC + (travelC - startC) * ease(Math.min(1, p * 1.05))) + 56;
-          c.style.transform = `translateY(${cy}px)`;
-          l.style.transform = `translateY(${oy + 40 * (1 - p)}px)`;
-          r.style.transform = `translateY(${oy + 90 * (1 - p)}px)`;
-        };
-        const onScroll = () => {
-          if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(update);
-          }
-        };
-        update();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onScroll);
-      })();
-
       // Highlight the nav link for the section in view
       (() => {
         const links = [...document.querySelectorAll(".nav-links a[href^='#']")];
@@ -2198,6 +2067,17 @@
       // Albums and the demo player
       (() => {
         const albums = {
+          tnex: {
+            title: "TNEX",
+            items: [
+              ["images/tnex/1.jpg", "Group photo at Bridging Innovation: GBA × ASEAN"],
+              ["images/tnex/2.jpg", "Presenting the TNEX AI compliance platform"],
+              ["images/tnex/4.jpg", "With fellow attendees after the event"],
+              ["images/tnex/5.jpg", "Eat, sleep, build, repeat"],
+              ["images/tnex/6.jpg", "Dinner after the event"],
+              ["images/tnex/7.jpg", "Thumbs up after the talk"],
+            ],
+          },
           paynet: {
             title: "PayNet",
             items: [
@@ -2262,6 +2142,8 @@
               grid.append(fig);
             });
             open(albumModal);
+            const at = grid.children[+btn.dataset.index || 0];
+            if (btn.dataset.index && at) at.scrollIntoView({ block: "center" });
           })
         );
 
