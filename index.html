@@ -516,6 +516,55 @@
         margin-top: 16px;
       }
 
+      /* Services: five things businesses can hire me for */
+      .services {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0 clamp(24px, 3vw, 48px);
+      }
+
+      .services li {
+        border-top: 1px solid var(--surface-2);
+        padding-block: 28px 36px;
+      }
+
+      .services p {
+        margin-top: 12px;
+        max-width: 40ch;
+        color: var(--muted);
+      }
+
+      .services-cta {
+        margin-top: clamp(32px, 4vw, 56px);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding-top: 28px;
+        border-top: 1px solid var(--surface-2);
+      }
+
+      .services-cta .links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 20px;
+      }
+
+      @media (max-width: 1024px) {
+        .services {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .services {
+          grid-template-columns: 1fr;
+        }
+      }
+
       /* Experience: text left, the place on the right */
       .jobs {
         display: grid;
@@ -1230,6 +1279,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Sections">
         <a href="#about">About</a>
         <a href="#work">Work</a>
+        <a href="#services">Services</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
         <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
@@ -1256,6 +1306,7 @@
               <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
                 >Download CV</a
               >
+              <a class="link" href="#services">Work with me</a>
               <a class="link" href="#work">See the work</a>
             </div>
             <p class="now muted" data-now>
@@ -1351,8 +1402,8 @@
             <h3 class="h-item">Sanding</h3>
             <p class="kind small">Web app, digital wedding cards</p>
             <p>
-              Malaysian digital wedding invitations with 966 designs that open
-              like the real thing. Guests RSVP, leave ucapan and get directions
+              Malaysian digital wedding invitations with 141 designs and
+              thousands of choices, opening like the real thing. Guests RSVP, leave ucapan and get directions
               on the card, while couples track it all in a dashboard.
             </p>
             <p class="stack small">Web, payments, dashboard</p>
@@ -1380,9 +1431,10 @@
             <h3 class="h-item">Museum of Us</h3>
             <p class="kind small">3D web, interactive gallery</p>
             <p>
-              A private walkable gallery of photos, captions and music. Built
-              one at a time as a lasting link for anniversaries, birthdays and
-              people far away.
+              An online 3D gallery of a couple's or family's photos, with a
+              note beside each photo and their song playing as you walk
+              through. A lasting link for anniversaries, birthdays and people
+              far away.
             </p>
             <p class="stack small">3D, web, interactive</p>
             <div class="links">
@@ -1505,6 +1557,51 @@
           <li><button type="button" data-go="3">Mental Health Bot</button></li>
           <li><button type="button" data-go="4">PayNet Mobile App</button></li>
         </ol>
+        </div>
+      </section>
+
+      <!-- Services: what businesses can hire me for -->
+      <section class="solid wrap" id="services" aria-labelledby="services-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="services-h">Services</h2>
+          <p>
+            I build websites, apps and 3D models for Malaysian businesses. Every
+            job is priced per project, so tell me what you need and I will
+            quote it.
+          </p>
+        </div>
+        <ul class="services">
+          <li data-reveal>
+            <h3 class="h-item">Business websites</h3>
+            <p>A fast, mobile friendly site that shows what you do and gets customers to call, message or visit.</p>
+          </li>
+          <li data-reveal style="--i: 1">
+            <h3 class="h-item">Booking and order systems</h3>
+            <p>Let customers book a slot or place an order online, with a simple dashboard for you to manage it all.</p>
+          </li>
+          <li data-reveal style="--i: 2">
+            <h3 class="h-item">Custom web and mobile apps</h3>
+            <p>Tools built around how your business actually runs, on the web, Android or iPhone.</p>
+          </li>
+          <li data-reveal>
+            <h3 class="h-item">UI design</h3>
+            <p>Clean, easy screens for a new product or a refresh of the one you already have.</p>
+          </li>
+          <li data-reveal style="--i: 1">
+            <h3 class="h-item">3D model design</h3>
+            <p>3D models of products, spaces or characters, ready for the web, print or video.</p>
+          </li>
+        </ul>
+        <div class="services-cta" data-reveal>
+          <p>Priced per project. No fixed packages.</p>
+          <div class="links">
+            <a
+              class="btn btn-accent"
+              href="mailto:irfanyahya808@gmail.com?subject=Project%20enquiry"
+              >Ask for a quote</a
+            >
+            <a class="link" href="#contact">Other ways to reach me</a>
+          </div>
         </div>
       </section>
 
@@ -1797,8 +1894,8 @@
         <div class="card" data-reveal style="--i: 1">
           <h2 class="h-section" id="contact-h">Let's talk</h2>
           <p>
-            I'm a solutions engineer at TNEX Malaysia, working on GRC AI.
-            Open to connecting about work, projects or a kopi.
+            Have a website, app or 3D model in mind? Tell me what you need and
+            I will send a quote. Also happy to just connect over a kopi.
           </p>
           <p class="direct">
             <a
