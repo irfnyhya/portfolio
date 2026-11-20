@@ -1,0 +1,24 @@
+Photo credits for the Lindap Dining Room demo (demo/restoran/)
+
+All photos are from Unsplash and free to use under the Unsplash License
+(https://unsplash.com/license). Each photo page was checked on 20 Nov 2026 and
+shows "Free to use under the Unsplash License" (not Unsplash+).
+Files were downloaded from images.unsplash.com, cropped and re-compressed (JPEG q72).
+None of them show a real Lindap venue; Lindap is fictional.
+
+file              | used for                     | photographer            | source
+hero-wide.jpg     | hero (desktop)               | Sholahudien Al Ayyuby   | https://unsplash.com/photos/meat-skewers-cooking-over-a-hot-grill-sjZwWcUuqko
+hero-tall.jpg     | hero (mobile crop)           | Sholahudien Al Ayyuby   | https://unsplash.com/photos/meat-skewers-cooking-over-a-hot-grill-sjZwWcUuqko
+grill.jpg         | story, satay over charcoal   | Nita Anggraeni Goenawan | https://unsplash.com/photos/grilled-meat-on-charcoal-grill-9tuLDya614I
+room.jpg          | dining room                  | Decima Athens           | https://unsplash.com/photos/a-restaurant-with-a-round-table-and-chairs-PisnUZWdsms
+room-tall.jpg     | dining room                  | Antonio Araujo          | https://unsplash.com/photos/cozy-restaurant-interior-with-tables-and-seating-yQYtdkKOLnQ
+spread.jpg        | sharing table                | Takashi Miyazaki        | https://unsplash.com/photos/indonesian-feast-spread-on-wooden-table-LZDdhaYd9Z4
+satay.jpg         | menu: Satay ayam             | K Azwan                 | https://unsplash.com/photos/a-white-plate-topped-with-meat-and-veggies-next-to-a-bowl-of-sauce-qCmoHnvA94o
+ulam-sambal.jpg   | menu: Ulam platter           | Keriliwi                | https://unsplash.com/photos/vegetable-salad-on-brown-wooden-round-plate-zcxEoLOCTvQ
+ikan-bakar.jpg    | menu: Ikan bakar             | Michael Lock            | https://unsplash.com/photos/a-grilled-fish-sitting-on-top-of-a-banana-leaf-hVnClpnYUUk
+ayam-bakar.jpg    | menu: Ayam bakar             | Brian Fathurohman       | https://unsplash.com/photos/cooked-meat-with-sauce-on-white-ceramic-plate-dPoNxtkaz0Q
+rendang.jpg       | menu: Rendang daging         | qaz farid               | https://unsplash.com/photos/a-close-up-of-a-bowl-of-food-on-a-table-bX7UPKH1vxs
+nasi-lemak.jpg    | menu: Nasi lemak             | You Le                  | https://unsplash.com/photos/nasi-lemak-served-on-banana-leaf-with-spoon-o5UmAx8vEjg
+kuih-lapis.jpg    | menu: Kuih lapis             | You Le                  | https://unsplash.com/photos/rows-of-colorful-layered-cakes-on-wooden-trays-WMscq_3YADI
+kuih-daun.jpg     | menu: Kuih koci              | RANGGA ANDIKA WIBISANA  | https://unsplash.com/photos/delicious-traditional-snacks-wrapped-in-banana-leaves-on-driftwood-60kMO-HkSMA
+teh-tarik.jpg     | menu: Teh tarik              | Far Chinberdiev         | https://unsplash.com/photos/milk-tea-in-glass-mug-BiITU-lIFbs

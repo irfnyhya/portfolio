@@ -1,0 +1,28 @@
+Rona Kasturi demo: photo credits
+All photos are from Unsplash under the Unsplash License (free for commercial use,
+no permission needed; credit given anyway): https://unsplash.com/license
+Found through Unsplash search with the "free" licence filter (no Unsplash+ images).
+Files were cropped and compressed for this demo. Rona Kasturi is a fictional brand;
+the people and garments in these photos have no connection to it.
+
+file                 photographer (Unsplash profile)          source page
+kurung-krim.jpg      @fzeo           https://unsplash.com/@fzeo           https://unsplash.com/photos/VkLE03LYZE8
+kurung-bunga.jpg     @fzeo           https://unsplash.com/@fzeo           https://unsplash.com/photos/_rjVj3YJfV0
+kurung-merah.jpg     @ibrahimmushan  https://unsplash.com/@ibrahimmushan  https://unsplash.com/photos/Y_e1gxxHkeo
+kurung-fuchsia.jpg   @hng21          https://unsplash.com/@hng21          https://unsplash.com/photos/2kgxMzm9ikA
+kebaya-pucuk.jpg     @hng21          https://unsplash.com/@hng21          https://unsplash.com/photos/zkac4lVIOGY
+kebaya-lilac.jpg     @hng21          https://unsplash.com/@hng21          https://unsplash.com/photos/lnSMrlin0d4
+kebaya-nyonya.jpg    @aimaris        https://unsplash.com/@aimaris        https://unsplash.com/photos/wogd1mhVuFM
+kebaya-biru.jpg      @caesarakbr     https://unsplash.com/@caesarakbr     https://unsplash.com/photos/4FaB-6v7gfA
+shawl-pudina.jpg     @fahriseus      https://unsplash.com/@fahriseus      https://unsplash.com/photos/IRPBoFtGLFM
+shawl-emas.jpg       @visualbywahyu  https://unsplash.com/@visualbywahyu  https://unsplash.com/photos/7kzX8jUwGKA
+shawl-pasir.jpg      @iitzblackcool  https://unsplash.com/@iitzblackcool  https://unsplash.com/photos/FgoOkdwrIXg
+bawal-stack.jpg      @moonstariousproject https://unsplash.com/@moonstariousproject https://unsplash.com/photos/wl2TODALiAY
+
+Campaign banners (each saved as -m phone portrait crop and -d desktop landscape crop)
+b-hero-*.jpg         @kilarov345      https://unsplash.com/@kilarov345      https://unsplash.com/photos/WR5hZDLv79A
+b-raya-*.jpg         @febrianzakaria  https://unsplash.com/@febrianzakaria  https://unsplash.com/photos/x4sS1HzMRa4
+b-kebaya-*.jpg       @febrianzakaria  https://unsplash.com/@febrianzakaria  https://unsplash.com/photos/7YwyZePr0K0
+b-kurung-*.jpg       @thealiaziz      https://unsplash.com/@thealiaziz      https://unsplash.com/photos/LhpPRp5nyOw
+b-tudung-*.jpg       @muizur_syed     https://unsplash.com/@muizur_syed     https://unsplash.com/photos/MrRUgFfSjBA
+b-malam-*.jpg        @raheemblacksnows https://unsplash.com/@raheemblacksnows https://unsplash.com/photos/MzImhIYa3-I

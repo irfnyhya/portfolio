@@ -1,0 +1,14 @@
+Photos used in this demo (Unsplash License, free for commercial use, no permission needed).
+They show a generic dental clinic, not a real Klinik Pergigian Teratai Biru (the clinic is fictional).
+
+bilik-rawatan.jpg
+  "A dentist chair in a room with a painting on the wall"
+  Photographer: Ozkan Guner
+  Source: https://unsplash.com/photos/a-dentist-chair-in-a-room-with-a-painting-on-the-wall-aFqSRokmw2E
+
+ruang-menunggu-900.jpg
+  "Blue couch beside green potted plant"
+  Photographer: Benyamin Bohlouli
+  Source: https://unsplash.com/photos/blue-couch-beside-green-potted-plant-B_sK_xgzwVA
+
+Downloaded from Unsplash, resized and re-saved as baseline JPEG (each file under 64 KB).

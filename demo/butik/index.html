@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Rona Kasturi, butik baju kurung, kebaya dan tudung</title>
+    <meta
+      name="description"
+      content="Laman demo butik pakaian Muslimah: baju kurung, kebaya dan tudung. Pilih rona dan saiz, kemudian sediakan pesanan untuk WhatsApp."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230c0c0e'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23e8892b'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script>document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+    <a class="skip" href="#koleksi">Terus ke koleksi</a>
+
+    <p class="demo-bar">
+      <span>Demo oleh <a href="https://irfanhakimi.com/kerja/">Irfan Hakimi</a></span>
+      <a href="#owner">Paparan pemilik</a>
+    </p>
+
+    <header class="bar" data-bar>
+      <button class="icon-btn" type="button" data-open-menu aria-label="Buka menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+      </button>
+      <a class="wordmark" href="#top" aria-label="Rona Kasturi, ke atas">Rona Kasturi</a>
+      <div class="bar-right">
+        <a class="icon-btn" href="#koleksi" aria-label="Cari dalam koleksi" data-filter="semua">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.6"/></svg>
+        </a>
+        <button class="icon-btn cart-btn" type="button" data-open-cart aria-label="Buka troli">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="cart-count" data-cart-count>0</span>
+        </button>
+      </div>
+    </header>
+
+    <dialog class="menu" data-menu aria-label="Menu">
+      <div class="menu-head">
+        <span class="wordmark">Rona Kasturi</span>
+        <button class="icon-btn" type="button" data-close-menu aria-label="Tutup menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+      </div>
+      <nav class="menu-nav" aria-label="Utama">
+        <a href="#koleksi" data-filter="raya">Koleksi Raya</a>
+        <a href="#koleksi" data-filter="baru">Baru tiba</a>
+        <a href="#koleksi" data-filter="kurung">Baju kurung</a>
+        <a href="#koleksi" data-filter="kebaya">Kebaya</a>
+        <a href="#koleksi" data-filter="tudung">Tudung</a>
+        <a href="#cara">Cara tempah</a>
+        <a href="#saiz">Panduan saiz</a>
+        <a href="#owner">Paparan pemilik</a>
+      </nav>
+      <p class="menu-foot">Shah Alam, Selangor. Isnin hingga Sabtu, 10 pagi hingga 6 petang.</p>
+    </dialog>
+
+    <main id="top">
+      <section class="banner banner-hero" aria-labelledby="hero-title">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/b-hero-d.jpg" width="1920" height="1080" />
+          <img src="img/b-hero-m.jpg" width="900" height="1600" alt="Wanita bertudung hitam memandang ke atas di bawah pohon gelap" fetchpriority="high" />
+        </picture>
+        <div class="banner-copy">
+          <h1 id="hero-title">Rona untuk setiap majlis</h1>
+          <p>Baju kurung, kebaya dan tudung. Butik kecil di Shah Alam.</p>
+          <a class="cta" href="#koleksi" data-filter="semua"><span aria-hidden="true">&rarr;</span> Beli semua</a>
+        </div>
+      </section>
+
+      <section class="banner" aria-labelledby="b-raya">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/b-raya-d.jpg" width="1920" height="1080" />
+          <img src="img/b-raya-m.jpg" width="900" height="1600" loading="lazy" alt="Kebaya biru firus bersulam emas dengan hiasan kepala pengantin" />
+        </picture>
+        <div class="banner-copy">
+          <h2 id="b-raya">Koleksi Raya</h2>
+          <a class="cta" href="#koleksi" data-filter="raya"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+        </div>
+      </section>
+
+      <section class="banner" aria-labelledby="b-kebaya">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/b-kebaya-d.jpg" width="1920" height="1080" />
+          <img src="img/b-kebaya-m.jpg" width="900" height="1600" loading="lazy" alt="Potret hitam putih kebaya renda bermanik dengan hiasan kepala" />
+        </picture>
+        <div class="banner-copy">
+          <h2 id="b-kebaya">Kebaya</h2>
+          <a class="cta" href="#koleksi" data-filter="kebaya"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+        </div>
+      </section>
+
+      <section class="banner" aria-labelledby="b-kurung">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/b-kurung-d.jpg" width="1920" height="1080" />
+          <img src="img/b-kurung-m.jpg" width="900" height="1600" loading="lazy" alt="Baju hijau zaitun bersulam emas dengan kain batik, di atas pentas peragaan" />
+        </picture>
+        <div class="banner-copy">
+          <h2 id="b-kurung">Baju kurung</h2>
+          <a class="cta" href="#koleksi" data-filter="kurung"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+        </div>
+      </section>
+
+      <section class="banner" aria-labelledby="b-tudung">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/b-tudung-d.jpg" width="1920" height="1080" />
+          <img src="img/b-tudung-m.jpg" width="900" height="1600" loading="lazy" alt="Potret dekat wanita bertudung hitam yang menutup separuh wajah, latar malam" />
+        </picture>
+        <div class="banner-copy">
+          <h2 id="b-tudung">Tudung</h2>
+          <a class="cta" href="#koleksi" data-filter="tudung"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+        </div>
+      </section>
+
+      <section class="banner" aria-labelledby="b-baru">
+        <picture>
+          <source media="(min-width: 900px)" srcset="img/b-malam-d.jpg" width="1920" height="1080" />
+          <img src="img/b-malam-m.jpg" width="900" height="1600" loading="lazy" alt="Butiran jubah hitam bersulam bunga dan renda di lengan" />
+        </picture>
+        <div class="banner-copy">
+          <h2 id="b-baru">Baru tiba</h2>
+          <a class="cta" href="#koleksi" data-filter="baru"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+        </div>
+      </section>
+
+      <section id="koleksi" class="koleksi" aria-labelledby="koleksi-title">
+        <div class="koleksi-head">
+          <h2 id="koleksi-title" class="sec-title" data-koleksi-title>Semua</h2>
+          <div class="tabs" role="tablist" aria-label="Kategori">
+            <button role="tab" aria-selected="true" data-cat="semua">Semua</button>
+            <button role="tab" aria-selected="false" data-cat="raya">Raya</button>
+            <button role="tab" aria-selected="false" data-cat="baru">Baru tiba</button>
+            <button role="tab" aria-selected="false" data-cat="kurung">Baju kurung</button>
+            <button role="tab" aria-selected="false" data-cat="kebaya">Kebaya</button>
+            <button role="tab" aria-selected="false" data-cat="tudung">Tudung</button>
+          </div>
+        </div>
+        <ul class="grid" data-grid aria-live="polite"></ul>
+      </section>
+
+      <ul class="perks" aria-label="Kelebihan">
+        <li><b>Pos percuma</b> dari RM250, Semenanjung</li>
+        <li><b>Dipos hari sama</b> jika bayar sebelum 3 petang</li>
+        <li><b>Tukar saiz</b> dalam 7 hari</li>
+        <li><b>XS hingga 3XL</b> bagi kebanyakan rekaan</li>
+      </ul>
+
+      <section id="cara" class="cara" aria-labelledby="cara-title">
+        <h2 id="cara-title" class="sec-title">Cara tempah</h2>
+        <div class="slip" role="table" aria-label="Langkah tempahan">
+          <p class="slip-day">Di laman ini</p>
+          <p class="slip-row" role="row"><span role="cell">Pilih rona, saiz dan kuantiti</span><i aria-hidden="true"></i><span role="cell">2 minit</span></p>
+          <p class="slip-row" role="row"><span role="cell">Isi nama dan alamat</span><i aria-hidden="true"></i><span role="cell">1 minit</span></p>
+          <p class="slip-row" role="row"><span role="cell">Hantar senarai ke WhatsApp</span><i aria-hidden="true"></i><span role="cell">Serta merta</span></p>
+          <p class="slip-day">Di WhatsApp</p>
+          <p class="slip-row" role="row"><span role="cell">Kami sahkan stok dan jumlah</span><i aria-hidden="true"></i><span role="cell">Dalam 1 jam</span></p>
+          <p class="slip-row" role="row"><span role="cell">Bayar dengan DuitNow atau pindahan bank</span><i aria-hidden="true"></i><span role="cell">Bila sedia</span></p>
+          <p class="slip-day">Selepas bayar</p>
+          <p class="slip-row" role="row"><span role="cell">Dibungkus, dipos, nombor tracking dihantar</span><i aria-hidden="true"></i><span role="cell">Hari sama</span></p>
+          <p class="slip-row" role="row"><span role="cell">Sampai di Semenanjung</span><i aria-hidden="true"></i><span role="cell">2 hingga 4 hari</span></p>
+          <p class="slip-end" role="row"><span role="cell">Baju di tangan anda</span><span role="cell">3 hingga 5 hari</span></p>
+        </div>
+      </section>
+
+      <section class="info" aria-label="Maklumat">
+        <details id="saiz" class="acc">
+          <summary>Panduan saiz</summary>
+          <p>Ukuran badan dalam inci. Jika di antara dua saiz, pilih yang lebih besar.</p>
+          <div class="table-wrap" data-size-table>
+            <table class="size-table">
+              <caption class="sr">Ukuran badan mengikut saiz</caption>
+              <thead>
+                <tr><th scope="col">Saiz</th><th scope="col">XS</th><th scope="col">S</th><th scope="col">M</th><th scope="col">L</th><th scope="col">XL</th><th scope="col">2XL</th><th scope="col">3XL</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Dada</th><td>34</td><td>36</td><td>38</td><td>40</td><td>42</td><td>44</td><td>46</td></tr>
+                <tr><th scope="row">Pinggang</th><td>28</td><td>30</td><td>32</td><td>34</td><td>36</td><td>38</td><td>40</td></tr>
+                <tr><th scope="row">Pinggul</th><td>38</td><td>40</td><td>42</td><td>44</td><td>46</td><td>48</td><td>50</td></tr>
+                <tr><th scope="row">Labuh baju</th><td>37</td><td>38</td><td>39</td><td>40</td><td>40</td><td>41</td><td>41</td></tr>
+                <tr><th scope="row">Labuh kain</th><td>38</td><td>39</td><td>40</td><td>40</td><td>41</td><td>41</td><td>42</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+        <details id="soalan" class="acc">
+          <summary>Soalan lazim</summary>
+          <div class="faq">
+            <p><b>Boleh tukar saiz?</b> Boleh, dalam 7 hari selepas barang sampai, selagi tag belum dipotong dan saiz lain masih ada.</p>
+            <p><b>Bila barang dipos?</b> Pesanan yang dibayar sebelum 3 petang dipos pada hari bekerja yang sama.</p>
+            <p><b>Bayar macam mana?</b> DuitNow QR atau pindahan bank, selepas kami sahkan stok di WhatsApp.</p>
+            <p><b>Pos ke Sabah dan Sarawak?</b> Ya, RM15 untuk satu pesanan, biasanya 4 hingga 7 hari bekerja.</p>
+            <p><b>Rona lain sama macam dalam gambar?</b> Gambar menunjukkan satu rona. Minta gambar kain sebenar di WhatsApp untuk rona lain.</p>
+            <p><b>Boleh ambil sendiri?</b> Boleh, di butik kami di Shah Alam, Isnin hingga Sabtu, 10 pagi hingga 6 petang.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Hubungi kami</summary>
+          <p class="contact-num">+60 11 0000 0000</p>
+          <p>Nombor demo, bukan nombor sebenar. Tiada pautan WhatsApp aktif di laman ini.</p>
+          <p>Shah Alam, Selangor. Isnin hingga Sabtu, 10 pagi hingga 6 petang.</p>
+        </details>
+        <details class="acc">
+          <summary>Tentang laman ini</summary>
+          <p>
+            Demo oleh Irfan Hakimi. Mahu laman seperti ini untuk kedai anda?
+            <a href="https://irfanhakimi.com/kerja/">irfanhakimi.com/kerja</a>
+          </p>
+          <p>Rona Kasturi ialah jenama rekaan untuk demo. Orang dan pakaian dalam gambar tiada kaitan dengan jenama ini.</p>
+          <p class="credits">
+            Gambar dari <a href="https://unsplash.com/license">Unsplash</a> oleh @muizur_syed, @febrianzakaria, @thealiaziz,
+            @kilarov345, @raheemblacksnows, @fzeo, @hng21, @ibrahimmushan, @aimaris, @caesarakbr, @fahriseus,
+            @visualbywahyu, @iitzblackcool dan @moonstariousproject. Senarai penuh dalam
+            <a href="img/CREDITS.txt">CREDITS.txt</a>.
+          </p>
+        </details>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p class="foot-mark">Rona Kasturi</p>
+      <p>&copy; Rona Kasturi, jenama rekaan untuk demo. <a href="https://irfanhakimi.com/kerja/">Demo oleh Irfan Hakimi</a></p>
+    </footer>
+
+    <button class="chat-fab" type="button" data-open-chat aria-label="Lihat mesej pesanan WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v10H10l-4 4v-4H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </button>
+
+    <dialog class="chatbox" data-chat aria-labelledby="chat-title"></dialog>
+
+    <dialog class="sheet" data-pv aria-labelledby="pv-title"></dialog>
+
+    <dialog class="cart" data-cart aria-labelledby="cart-title">
+      <div class="cart-head">
+        <h2 id="cart-title">Troli</h2>
+        <button type="button" class="icon-btn" data-close-cart aria-label="Tutup troli">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+      </div>
+      <div class="cart-body" data-cart-body></div>
+    </dialog>
+
+    <div class="toast" data-toast role="status" aria-live="polite"></div>
+
+    <div class="owner" id="owner" data-owner hidden></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

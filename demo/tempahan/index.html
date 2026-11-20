@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Klinik Pergigian Teratai Biru · Tempahan (demo)</title>
+    <meta
+      name="description"
+      content="Demo sistem tempahan dan admin untuk klinik gigi: pilih rawatan, tarikh dan masa, bayar deposit, urus tempahan. Klinik rekaan, dibina oleh Irfan Hakimi."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f4f7fa" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b6ea8'/%3E%3Cpath d='M32 14c6 7 8 14 8 20s-3.5 11-8 14c-4.5-3-8-8-8-14s2-13 8-20Z' fill='%23fff'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <symbol id="i-lotus" viewBox="0 0 48 48">
+          <path d="M24 6c5 6 7.5 12 7.5 18S28 34 24 37c-4-3-7.5-7-7.5-13S19 12 24 6Z" class="fill" />
+          <path d="M24 37c-6-1-12-5-15-12 5-1 10 0 14 4M24 37c6-1 12-5 15-12-5-1-10 0-14 4M8 40h32" />
+        </symbol>
+        <symbol id="i-tooth" viewBox="0 0 24 24">
+          <path d="M7 3c-2.2 0-4 1.8-4 4.3 0 2 .6 3.4 1.2 5 .5 1.4.7 3 1 4.6.3 1.9.8 4.1 2 4.1 1.4 0 1.6-2.6 2-4.4.3-1.1.6-1.9 1.3-1.9s1 .8 1.3 1.9c.4 1.8.6 4.4 2 4.4 1.2 0 1.7-2.2 2-4.1.3-1.6.5-3.2 1-4.6.6-1.6 1.2-3 1.2-5C21 4.8 19.2 3 17 3c-1.8 0-2.9 1-5 1S8.8 3 7 3Z" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+        <symbol id="i-left" viewBox="0 0 20 20"><path d="M12 5l-5 5 5 5" /></symbol>
+        <symbol id="i-right" viewBox="0 0 20 20"><path d="M8 5l5 5-5 5" /></symbol>
+        <symbol id="i-clock" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" /><path d="M10 6v4l2.5 1.5" /></symbol>
+        <symbol id="i-pin" viewBox="0 0 20 20"><path d="M10 18s6-5.3 6-10a6 6 0 1 0-12 0c0 4.7 6 10 6 10Z" /><circle cx="10" cy="8" r="2" /></symbol>
+        <symbol id="i-cal" viewBox="0 0 20 20"><rect x="3" y="4" width="14" height="13" rx="2" /><path d="M3 8h14M7 2v4M13 2v4" /></symbol>
+        <symbol id="i-wallet" viewBox="0 0 20 20"><rect x="2.5" y="5" width="15" height="11" rx="2" /><path d="M13 10.5h4.5M5 5l8-2.5V5" /></symbol>
+        <symbol id="i-chat" viewBox="0 0 20 20"><path d="M4 16.5l1-3A6.5 6.5 0 1 1 8 16l-4 .5Z" /></symbol>
+        <symbol id="i-grid" viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1.5" /><rect x="11" y="3" width="6" height="6" rx="1.5" /><rect x="3" y="11" width="6" height="6" rx="1.5" /><rect x="11" y="11" width="6" height="6" rx="1.5" /></symbol>
+        <symbol id="i-list" viewBox="0 0 20 20"><path d="M7 5h10M7 10h10M7 15h10M3.5 5h.01M3.5 10h.01M3.5 15h.01" /></symbol>
+        <symbol id="i-ban" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" /><path d="M5 15 15 5" /></symbol>
+        <symbol id="i-out" viewBox="0 0 20 20"><path d="M8 4H4v12h12v-4M11 3h6v6M17 3l-8 8" /></symbol>
+        <symbol id="i-reset" viewBox="0 0 20 20"><path d="M4 10a6 6 0 1 0 2-4.5M4 3v3h3" /></symbol>
+        <symbol id="i-exit" viewBox="0 0 20 20"><path d="M12 4h4v12h-4M8 6l-4 4 4 4M4 10h9" /></symbol>
+        <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.5" /><path d="M13 13l4 4" /></symbol>
+        <symbol id="i-x" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5 5 15" /></symbol>
+        <symbol id="i-menu" viewBox="0 0 20 20"><path d="M3 6h14M3 10h14M3 14h14" /></symbol>
+      </defs>
+    </svg>
+
+    <div class="demo-bar" role="note">
+      <div class="demo-bar__in">
+        <p><strong>Laman demo.</strong> Klinik ini rekaan. Tiada tempahan sebenar dihantar.</p>
+        <nav class="demo-bar__links" aria-label="Pautan demo">
+          <a href="#admin" data-to-admin>Paparan admin</a>
+          <a href="#" data-to-customer hidden>Halaman pelanggan</a>
+          <button type="button" class="linkish" data-reset>Reset demo</button>
+          <a href="https://irfanhakimi.com/kerja/">Demo oleh Irfan Hakimi</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ===================== CUSTOMER ===================== -->
+    <main id="customer" class="cust">
+      <aside class="clinic" aria-labelledby="clinic-name">
+        <figure class="clinic__photo">
+          <img src="img/bilik-rawatan.jpg" alt="Bilik rawatan dengan kerusi pergigian biru di sebelah tingkap yang terang" width="1000" height="667" />
+        </figure>
+        <div class="clinic__card">
+          <div class="brand">
+            <svg class="brand__mark" aria-hidden="true"><use href="#i-lotus" /></svg>
+            <span>Teratai Biru</span>
+          </div>
+          <h1 id="clinic-name">Klinik Pergigian Teratai Biru</h1>
+          <p class="clinic__lede">Tempah rawatan gigi dalam masa satu minit. Pilih rawatan, tarikh dan masa yang kosong.</p>
+          <p class="open-now" id="open-now"></p>
+          <ul class="clinic__facts">
+            <li><svg aria-hidden="true"><use href="#i-pin" /></svg>Seksyen 9, Bandar Baru Bangi</li>
+            <li><svg aria-hidden="true"><use href="#i-wallet" /></svg>Deposit dari RM20, ditolak dari bil</li>
+          </ul>
+
+          <details class="hours" id="hours">
+            <summary>Waktu operasi dan alamat</summary>
+            <dl>
+              <div><dt>Isnin hingga Khamis</dt><dd>9.00 pagi hingga 6.00 petang<span>Rehat 1.00 hingga 2.00</span></dd></div>
+              <div><dt>Jumaat</dt><dd>9.00 pagi hingga 6.00 petang<span>Rehat Jumaat 12.30 hingga 3.00</span></dd></div>
+              <div><dt>Sabtu</dt><dd>9.00 pagi hingga 2.00 petang</dd></div>
+              <div><dt>Ahad</dt><dd>Tutup</dd></div>
+              <div><dt>Alamat</dt><dd>No. 12, Jalan Teratai 3, Seksyen 9, 43650 Bandar Baru Bangi, Selangor</dd></div>
+            </dl>
+          </details>
+        </div>
+        <figure class="clinic__wait">
+          <img src="img/ruang-menunggu-900.jpg" alt="Ruang menunggu dengan sofa biru dan kaunter kayu" width="900" height="584" loading="lazy" />
+          <figcaption>Ruang menunggu berhawa dingin, sesuai untuk anak kecil.</figcaption>
+        </figure>
+      </aside>
+
+      <section class="book" id="book" aria-label="Tempahan">
+        <form id="book-form" novalidate>
+          <header class="book__head">
+            <button type="button" class="icon-btn book__back" id="back" aria-label="Kembali" hidden>
+              <svg aria-hidden="true"><use href="#i-left" /></svg>
+            </button>
+            <div class="steps" aria-label="Langkah tempahan">
+              <div class="steps__bar"><span id="steps-fill"></span></div>
+              <ol class="steps__labels">
+                <li data-step-label="1">Rawatan</li>
+                <li data-step-label="2">Tarikh dan masa</li>
+                <li data-step-label="3">Butiran</li>
+              </ol>
+            </div>
+          </header>
+
+          <!-- step: service -->
+          <section class="step" data-step="1" aria-labelledby="h-svc">
+            <h2 id="h-svc">Apa yang anda perlukan?</h2>
+            <div class="chips" role="tablist" aria-label="Kategori rawatan" id="cats"></div>
+            <div class="svc-list" id="svc-list" role="radiogroup" aria-labelledby="h-svc"></div>
+          </section>
+
+          <!-- step: date & time -->
+          <section class="step" data-step="2" aria-labelledby="h-date" hidden>
+            <h2 id="h-date">Bila sesuai untuk anda?</h2>
+            <div class="cal-card">
+              <div class="cal-card__head">
+                <button type="button" class="icon-btn" data-cmonth="-1" aria-label="Bulan sebelum"><svg aria-hidden="true"><use href="#i-left" /></svg></button>
+                <strong id="c-month"></strong>
+                <button type="button" class="icon-btn" data-cmonth="1" aria-label="Bulan berikut"><svg aria-hidden="true"><use href="#i-right" /></svg></button>
+              </div>
+              <div class="ccal" id="ccal" role="grid" aria-label="Pilih tarikh"></div>
+              <p class="ccal__legend"><span class="lg lg--open">Ada slot</span><span class="lg lg--few">Hampir penuh</span><span class="lg lg--off">Tutup atau penuh</span></p>
+            </div>
+            <div class="slots-wrap">
+              <div class="slots-head">
+                <h3 id="slots-title">Masa yang kosong</h3>
+                <span id="slots-count" class="meta"></span>
+              </div>
+              <div id="slots" class="slots" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <!-- step: details -->
+          <section class="step" data-step="3" aria-labelledby="h-you" hidden>
+            <h2 id="h-you">Sikit lagi. Siapa yang datang?</h2>
+            <div class="fields">
+              <label class="field">
+                <span>Nama penuh</span>
+                <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="60" />
+              </label>
+              <label class="field">
+                <span>Nombor telefon</span>
+                <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="012 345 6789" aria-describedby="phone-hint" />
+                <small id="phone-hint">Pengesahan dihantar ke nombor ini melalui WhatsApp.</small>
+              </label>
+              <label class="field">
+                <span>Nota untuk doktor <em>(pilihan)</em></span>
+                <textarea id="f-note" name="note" rows="2" maxlength="200" placeholder="Contoh: gigi geraham kiri sakit bila minum sejuk"></textarea>
+              </label>
+            </div>
+            <div class="receipt" id="receipt"></div>
+          </section>
+
+          <div class="actionbar" id="actionbar">
+            <div class="actionbar__sum" id="bar-sum"></div>
+            <button type="submit" class="btn btn--accent" id="bar-btn">Seterusnya</button>
+          </div>
+        </form>
+
+        <section id="confirm" class="confirm" hidden tabindex="-1" aria-labelledby="confirm-title"></section>
+      </section>
+
+      <footer class="cust__foot">
+        <p>Mahu sistem tempahan seperti ini untuk perniagaan anda?</p>
+        <a href="https://irfanhakimi.com/kerja/">Demo oleh Irfan Hakimi</a>
+        <p class="cust__credit">Foto: Ozkan Guner dan Benyamin Bohlouli di Unsplash.</p>
+      </footer>
+    </main>
+
+    <!-- ===================== ADMIN ===================== -->
+    <div id="admin" class="admin" hidden>
+      <section id="pin" class="pin" aria-labelledby="pin-title">
+        <form id="pin-form" class="pin__card">
+          <div class="brand">
+            <svg class="brand__mark" aria-hidden="true"><use href="#i-lotus" /></svg>
+            <span>Teratai Biru</span>
+          </div>
+          <h1 id="pin-title">Admin klinik</h1>
+          <p>Masukkan PIN kaunter. Untuk demo ini, PIN ialah <strong class="num">1234</strong>.</p>
+          <div class="pin__dots" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <label class="field">
+            <span class="sr-only">PIN</span>
+            <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autocomplete="off" aria-describedby="pin-err" aria-label="PIN" />
+          </label>
+          <p id="pin-err" class="pin__err" aria-live="polite"></p>
+          <button type="submit" class="btn btn--primary">Masuk</button>
+          <a href="#" class="pin__back">Kembali ke halaman tempahan</a>
+        </form>
+      </section>
+
+      <div id="console" class="shell" hidden>
+        <aside class="side" id="side">
+          <div class="side__top">
+            <div class="brand">
+              <svg class="brand__mark" aria-hidden="true"><use href="#i-lotus" /></svg>
+              <span>Teratai Biru</span>
+            </div>
+            <button type="button" class="icon-btn menu-btn" id="menu-btn" aria-expanded="false" aria-controls="side-nav" aria-label="Menu">
+              <svg aria-hidden="true"><use href="#i-menu" /></svg>
+            </button>
+          </div>
+          <div class="side__body" id="side-nav">
+            <nav class="side__nav" aria-label="Admin">
+              <button type="button" class="nav-item is-active" data-jump="sec-today"><svg aria-hidden="true"><use href="#i-grid" /></svg>Papan pemuka</button>
+              <button type="button" class="nav-item" data-jump="sec-all"><svg aria-hidden="true"><use href="#i-list" /></svg>Semua tempahan</button>
+              <button type="button" class="nav-item" data-jump="sec-blocks"><svg aria-hidden="true"><use href="#i-ban" /></svg>Tarikh ditutup</button>
+            </nav>
+            <div class="side__foot">
+              <a class="nav-item" href="#"><svg aria-hidden="true"><use href="#i-out" /></svg>Halaman pelanggan</a>
+              <button type="button" class="nav-item" data-reset><svg aria-hidden="true"><use href="#i-reset" /></svg>Reset demo</button>
+              <button type="button" class="nav-item" id="logout"><svg aria-hidden="true"><use href="#i-exit" /></svg>Keluar</button>
+              <div class="side__user"><span class="avatar">PR</span><div>Pn. Rohana<small>Kaunter · akaun demo</small></div></div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="canvas">
+          <header class="title-row">
+            <div>
+              <h1 id="greet">Papan pemuka</h1>
+              <p id="today-line" class="sub"></p>
+            </div>
+            <a class="btn btn--primary btn--sm" href="#">Buka halaman tempahan</a>
+          </header>
+
+          <div class="stats" id="stats"></div>
+
+          <div class="dash">
+            <section class="panel sched" id="sec-today" aria-labelledby="sched-title">
+              <div class="panel__head">
+                <div>
+                  <h2 id="sched-title">Jadual</h2>
+                  <p class="meta" id="sched-sub"></p>
+                </div>
+              </div>
+              <div class="daypills" id="daypills" role="tablist" aria-label="Pilih hari"></div>
+              <div class="timeline" id="timeline"></div>
+            </section>
+
+            <div class="rail">
+              <section class="panel" aria-labelledby="todo-title">
+                <div class="panel__head">
+                  <h2 id="todo-title">Deposit belum dibayar</h2>
+                  <span class="meta num" id="todo-count"></span>
+                </div>
+                <ul class="todo" id="todo"></ul>
+              </section>
+
+              <section class="panel" id="sec-blocks" aria-labelledby="blocks-title">
+                <div class="panel__head"><h2 id="blocks-title">Tarikh ditutup</h2></div>
+                <div class="panel__body">
+                  <div class="cal__head">
+                    <button type="button" class="icon-btn" data-month="-1" aria-label="Bulan sebelum"><svg aria-hidden="true"><use href="#i-left" /></svg></button>
+                    <strong id="cal-label"></strong>
+                    <button type="button" class="icon-btn" data-month="1" aria-label="Bulan berikut"><svg aria-hidden="true"><use href="#i-right" /></svg></button>
+                  </div>
+                  <div class="cal" id="cal"></div>
+                  <p class="cal__hint">Tekan tarikh untuk tutup atau buka semula. Ahad sentiasa tutup.</p>
+                  <label class="field field--compact">
+                    <span>Sebab tutup</span>
+                    <input id="block-reason" type="text" value="Cuti klinik" maxlength="40" />
+                  </label>
+                  <ul id="block-list" class="block-list"></ul>
+                </div>
+              </section>
+
+              <section class="panel" aria-labelledby="week-title">
+                <div class="panel__head"><h2 id="week-title">Tempahan minggu ini</h2></div>
+                <div class="panel__body"><div id="week-chart" class="bars"></div></div>
+              </section>
+            </div>
+          </div>
+
+          <section class="panel all" id="sec-all" aria-labelledby="all-title">
+            <div class="panel__head">
+              <h2 id="all-title">Semua tempahan</h2>
+              <span id="list-count" class="meta num"></span>
+            </div>
+            <div class="toolbar">
+              <div class="tabs" role="tablist" aria-label="Tempoh">
+                <button type="button" role="tab" data-view="today" aria-selected="false">Hari ini</button>
+                <button type="button" role="tab" data-view="week" aria-selected="true">Minggu ini</button>
+                <button type="button" role="tab" data-view="upcoming" aria-selected="false">Akan datang</button>
+                <button type="button" role="tab" data-view="all" aria-selected="false">Semua</button>
+              </div>
+              <div class="toolbar__right">
+                <label class="search">
+                  <svg aria-hidden="true"><use href="#i-search" /></svg>
+                  <input id="q" type="search" placeholder="Cari nama, rujukan, telefon" aria-label="Cari tempahan" />
+                </label>
+                <label class="select">
+                  <span class="sr-only">Tapis status</span>
+                  <select id="status-filter">
+                    <option value="any">Semua status</option>
+                    <option value="unpaid">Deposit belum dibayar</option>
+                    <option value="confirmed">Disahkan</option>
+                    <option value="done">Selesai</option>
+                    <option value="cancelled">Batal</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="table" id="list" role="table" aria-label="Senarai tempahan"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <dialog id="sheet" class="sheet" aria-labelledby="sheet-title">
+      <div id="sheet-body"></div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Irfan Hakimi | Laman web dan sistem untuk bisnes kecil</title>
+    <meta
+      name="description"
+      content="Laman web, kedai online dan sistem tempahan untuk kedai, klinik dan servis kecil di Malaysia. Cuba tiga demo di telefon anda dan minta sebut harga percuma di WhatsApp."
+    />
+    <link rel="canonical" href="https://irfanhakimi.com/kerja/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ms_MY" />
+    <meta property="og:url" content="https://irfanhakimi.com/kerja/" />
+    <meta property="og:site_name" content="Irfan Hakimi" />
+    <meta property="og:title" content="Laman web dan sistem untuk bisnes anda" />
+    <meta
+      property="og:description"
+      content="Kedai online, sistem tempahan dan laman web untuk bisnes kecil. Cuba demo di telefon dan minta sebut harga percuma."
+    />
+    <meta property="og:image" content="https://irfanhakimi.com/kerja/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Laman web bisnes anda, dengan tiga demo dalam telefon" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#000000" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='46' font-family='Impact,Arial Narrow,sans-serif' font-size='40' fill='%237fe3d0' text-anchor='middle'%3EIH%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #000000;
+        --surface: #141414;
+        --surface-2: #1f1f1f;
+        --surface-3: #2c2c2c;
+        --ink: #ffffff;
+        --muted: #b8b8b8;
+        --accent: #7fe3d0;
+        --accent-ink: #000000;
+
+        --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+        --font-text: "Work Sans", system-ui, sans-serif;
+
+        --step-small: 0.9375rem;
+        --step-body: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+        --step-statement: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
+        --step-lead: clamp(1.75rem, 1.35rem + 1.4vw, 2.5rem);
+        --step-head: clamp(2.75rem, 1.4rem + 5.4vw, 6.25rem);
+        --step-display: clamp(3.25rem, 0.8rem + 9vw, 9rem);
+
+        --margin: clamp(16px, 3vw, 40px);
+        --gap-section: clamp(104px, 11vw, 200px);
+        --nav-h: 64px;
+        --bar-h: 76px;
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(--nav-h);
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-text);
+        font-size: var(--step-body);
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .wrap {
+        padding-inline: var(--margin);
+      }
+
+      .h-section {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-head);
+        line-height: 0.95;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+      }
+
+      .h-item {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-lead);
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .lead {
+        font-size: var(--step-statement);
+        line-height: 1.4;
+        max-width: 38ch;
+      }
+
+      /* Buttons: square corners, flat fill */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55em;
+        min-height: 56px;
+        padding: 0 24px;
+        font-weight: 600;
+        font-size: var(--step-body);
+        text-decoration: none;
+        background: var(--ink);
+        color: var(--bg);
+        transition: transform 0.25s var(--ease-out), background-color 0.25s,
+          color 0.25s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      .btn svg {
+        width: 1.3em;
+        height: 1.3em;
+        flex: none;
+      }
+
+      .btn-accent {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .btn-accent:hover {
+        background: var(--ink);
+      }
+
+      .btn-quiet {
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+
+      .btn-quiet:hover {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .link {
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.25em;
+        text-decoration-color: var(--accent);
+        transition: text-underline-offset 0.25s var(--ease-out), color 0.25s;
+      }
+
+      .link:hover {
+        text-underline-offset: 0.4em;
+        color: var(--accent);
+      }
+
+      /* Nav */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        height: var(--nav-h);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg);
+      }
+
+      .wordmark {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        margin-right: auto;
+      }
+
+      .nav-links {
+        display: none;
+        gap: 28px;
+        list-style: none;
+        margin-left: auto;
+        margin-right: 16px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      .lang {
+        min-height: 44px;
+        min-width: 48px;
+        padding: 0 12px;
+        font-weight: 600;
+        background: var(--surface-2);
+        transition: background-color 0.2s, color 0.2s;
+      }
+
+      .lang:hover {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .nav .btn {
+        min-height: 44px;
+        padding: 0 14px;
+        font-size: var(--step-small);
+      }
+
+      /* Phone mockups */
+      .phone {
+        --w: 230px;
+        position: relative;
+        width: var(--w);
+        aspect-ratio: 9 / 19;
+        flex: none;
+        padding: calc(var(--w) * 0.035);
+        border-radius: calc(var(--w) * 0.16);
+        background: #3a3a3a;
+        display: block;
+        text-decoration: none;
+        transition: transform 0.5s var(--ease-out);
+      }
+
+      .phone::after {
+        content: "";
+        position: absolute;
+        top: calc(var(--w) * 0.06);
+        left: 50%;
+        width: 26%;
+        height: calc(var(--w) * 0.06);
+        transform: translateX(-50%);
+        border-radius: 99px;
+        background: #000;
+        z-index: 2;
+      }
+
+      .screen {
+        display: block;
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+        border-radius: calc(var(--w) * 0.125);
+        background: #fff;
+      }
+
+      .screen img {
+        width: 100%;
+        height: auto;
+        will-change: transform;
+      }
+
+      .run .screen img {
+        animation: pan var(--dur, 22s) ease-in-out 1.2s infinite alternate;
+      }
+
+      @keyframes pan {
+        0%,
+        8% {
+          transform: translateY(0);
+        }
+        92%,
+        100% {
+          transform: translateY(var(--pan, 0px));
+        }
+      }
+
+      /* Hero */
+      .hero {
+        padding-top: clamp(24px, 5vw, 72px);
+        display: grid;
+        gap: 40px;
+      }
+
+      .hero h1 {
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-display);
+        line-height: 0.9;
+        letter-spacing: -0.015em;
+        text-transform: uppercase;
+      }
+
+      .hero .lead {
+        margin-top: 24px;
+      }
+
+      .hero-actions {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        align-items: center;
+      }
+
+      .hero-actions .btn {
+        flex: 1 1 100%;
+        min-height: 60px;
+      }
+
+      .hero-note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: var(--step-small);
+      }
+
+      .fan {
+        --spread: -46%;
+        position: relative;
+        height: 430px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .fan .phone {
+        position: absolute;
+        top: 0;
+      }
+
+      .fan .p-mid {
+        --w: 200px;
+        z-index: 3;
+      }
+
+      .fan .p-left,
+      .fan .p-right {
+        --w: 168px;
+        top: 44px;
+        z-index: 1;
+      }
+
+      .fan .p-left {
+        transform: translateX(var(--spread)) rotate(-7deg);
+      }
+
+      .fan .p-right {
+        transform: translateX(calc(var(--spread) * -1)) rotate(7deg);
+      }
+
+      .fan .p-left:hover {
+        transform: translateX(var(--spread)) rotate(-9deg) translateY(-8px);
+      }
+
+      .fan .p-right:hover {
+        transform: translateX(calc(var(--spread) * -1)) rotate(9deg) translateY(-8px);
+      }
+
+      .fan .p-mid:hover {
+        transform: translateY(-8px);
+      }
+
+      .fan-caption {
+        margin-top: 12px;
+        text-align: center;
+        color: var(--muted);
+        font-size: var(--step-small);
+      }
+
+      /* Price band: a whole field of the accent */
+      .band {
+        margin-top: clamp(72px, 9vw, 140px);
+        background: var(--accent);
+        color: var(--accent-ink);
+        padding-block: clamp(40px, 5vw, 72px);
+        display: grid;
+        gap: 20px;
+      }
+
+      .band-points {
+        list-style: none;
+        display: grid;
+        gap: 2px;
+      }
+
+      .band-points li {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 1.3rem + 3vw, 4.25rem);
+        line-height: 1.02;
+        text-transform: uppercase;
+      }
+
+      .band p {
+        max-width: 44ch;
+      }
+
+      /* Sections */
+      section {
+        margin-top: var(--gap-section);
+      }
+
+      .section-head .lead {
+        margin-top: 20px;
+      }
+
+      /* Demo rows */
+      .demos {
+        margin-top: clamp(48px, 6vw, 88px);
+        list-style: none;
+        display: grid;
+        gap: clamp(72px, 9vw, 140px);
+      }
+
+      .demo {
+        display: grid;
+        gap: 32px;
+        align-items: center;
+      }
+
+      .demo-stage {
+        background: var(--surface);
+        padding: 40px 16px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .demo:nth-child(1) .demo-stage {
+        background: #241c18;
+      }
+
+      .demo:nth-child(2) .demo-stage {
+        background: #10222a;
+      }
+
+      .demo:nth-child(3) .demo-stage {
+        background: #22140c;
+      }
+
+      .demo-stage .phone {
+        --w: 250px;
+      }
+
+      .demo-stage .phone:hover {
+        transform: translateY(-6px);
+      }
+
+      .demo-text {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .demo .kind {
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .demo-text p {
+        max-width: 42ch;
+      }
+
+      .fits {
+        color: var(--muted);
+      }
+
+      .fits b {
+        color: var(--ink);
+        font-weight: 600;
+      }
+
+      .demo-actions {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 24px;
+        align-items: center;
+      }
+
+      /* Picker */
+      .picker {
+        margin-top: 48px;
+        display: grid;
+        gap: 28px;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        list-style: none;
+        align-content: start;
+      }
+
+      .chip {
+        min-height: 48px;
+        padding: 10px 16px;
+        text-align: left;
+        line-height: 1.25;
+        background: var(--surface-2);
+        font-weight: 600;
+        transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease-out);
+      }
+
+      .chip:hover {
+        background: var(--surface-3);
+      }
+
+      .chip:active {
+        transform: scale(0.97);
+      }
+
+      .chip[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .answer {
+        background: var(--surface);
+        padding: clamp(24px, 3vw, 40px);
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .answer-label {
+        color: var(--muted);
+        font-size: var(--step-small);
+      }
+
+      .answer-text {
+        font-size: var(--step-statement);
+        line-height: 1.4;
+        max-width: 36ch;
+      }
+
+      .answer-actions {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 24px;
+        align-items: center;
+      }
+
+      @media (max-width: 639px) {
+        .answer-actions .btn {
+          width: 100%;
+        }
+      }
+
+      .answer.swap {
+        animation: swap 0.45s var(--ease-out);
+      }
+
+      @keyframes swap {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+      }
+
+      /* Steps */
+      .steps {
+        margin-top: 48px;
+        list-style: none;
+        display: grid;
+        gap: 12px;
+      }
+
+      .steps li {
+        background: var(--surface);
+        padding: 28px clamp(20px, 2.4vw, 32px) 32px;
+        display: grid;
+        gap: 12px;
+        align-content: start;
+      }
+
+      .steps li:first-child {
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+
+      .steps .h-item {
+        font-size: clamp(2.25rem, 1.6rem + 2.2vw, 3.5rem);
+      }
+
+      .steps .when {
+        font-weight: 600;
+      }
+
+      .steps li:not(:first-child) .when {
+        color: var(--accent);
+      }
+
+      .steps .btn {
+        justify-self: start;
+        margin-top: 8px;
+        background: var(--accent-ink);
+        color: var(--ink);
+        min-height: 48px;
+      }
+
+      .steps .btn:hover {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      /* Services */
+      .services {
+        margin-top: 48px;
+        list-style: none;
+        display: grid;
+        gap: 32px;
+      }
+
+      .services p {
+        margin-top: 8px;
+        max-width: 42ch;
+      }
+
+      /* Own products */
+      .proof {
+        background: var(--surface);
+        padding-block: clamp(64px, 8vw, 120px);
+      }
+
+      .products {
+        margin-top: 48px;
+        display: grid;
+        gap: 56px;
+      }
+
+      .product {
+        display: grid;
+        gap: 16px;
+        align-content: start;
+      }
+
+      .product figure {
+        overflow: hidden;
+        background: var(--surface-2);
+      }
+
+      .product img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1024 / 456;
+        object-fit: cover;
+        object-position: top left;
+        transition: transform 0.6s var(--ease-out);
+      }
+
+      .product:hover img {
+        transform: scale(1.03);
+      }
+
+      .product .where {
+        color: var(--muted);
+        font-size: var(--step-small);
+      }
+
+      .product p {
+        max-width: 44ch;
+      }
+
+      /* Contact */
+      .contact {
+        background: var(--accent);
+        color: var(--accent-ink);
+        padding-block: clamp(72px, 10vw, 160px);
+      }
+
+      .contact h2 {
+        font-size: var(--step-display);
+        line-height: 0.9;
+      }
+
+      .contact .lead {
+        margin-top: 24px;
+      }
+
+      .contact-actions {
+        margin-top: 40px;
+        display: grid;
+        gap: 18px;
+        justify-items: start;
+      }
+
+      .contact .btn {
+        background: var(--accent-ink);
+        color: var(--ink);
+        width: 100%;
+        min-height: 72px;
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-size: var(--step-lead);
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+      }
+
+      .contact .btn:hover {
+        background: var(--ink);
+        color: var(--bg);
+      }
+
+      .number {
+        font-family: var(--font-display);
+        font-size: clamp(2.25rem, 1.5rem + 3vw, 4.5rem);
+        line-height: 1;
+        text-decoration: none;
+      }
+
+      .contact .alt a {
+        font-weight: 600;
+      }
+
+      footer {
+        padding-block: 48px 32px;
+      }
+
+      .footer-name {
+        font-family: var(--font-display);
+        text-transform: uppercase;
+        font-size: clamp(3.5rem, 0.5rem + 13.4vw, 15rem);
+        line-height: 0.85;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+      }
+
+      .footer-row {
+        margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 28px;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: var(--step-small);
+      }
+
+      .footer-row a {
+        color: var(--ink);
+      }
+
+      /* Sticky WhatsApp bar on phones */
+      .wa-bar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40;
+        padding: 10px var(--margin) calc(10px + env(safe-area-inset-bottom));
+        background: var(--bg);
+        transform: translateY(110%);
+        transition: transform 0.35s var(--ease-out);
+      }
+
+      .wa-bar.show {
+        transform: none;
+      }
+
+      .wa-bar .btn {
+        width: 100%;
+        min-height: 56px;
+      }
+
+      /* Reveal: visible without script */
+      .js [data-reveal] {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+        transition-delay: calc(var(--i, 0) * 80ms);
+      }
+
+      .js [data-reveal].in {
+        opacity: 1;
+        transform: none;
+      }
+
+      .js .fan .phone {
+        opacity: 0;
+      }
+
+      .js .fan.in .phone {
+        opacity: 1;
+        transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out);
+      }
+
+      .js .fan.in .p-left {
+        transition-delay: 0.15s;
+      }
+
+      .js .fan.in .p-right {
+        transition-delay: 0.3s;
+      }
+
+      @media (min-width: 400px) {
+        .fan {
+          height: 460px;
+        }
+
+        .fan .p-mid {
+          --w: 215px;
+        }
+
+        .fan .p-left,
+        .fan .p-right {
+          --w: 180px;
+        }
+      }
+
+      @media (min-width: 640px) {
+        .hero-actions .btn {
+          flex: 0 0 auto;
+        }
+
+        .contact .btn {
+          width: auto;
+          padding: 0 40px;
+        }
+
+        .services {
+          grid-template-columns: 1fr 1fr;
+          column-gap: clamp(24px, 4vw, 64px);
+          row-gap: 44px;
+        }
+
+        .steps {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .band {
+          grid-template-columns: 1.3fr 1fr;
+          align-items: end;
+          column-gap: 48px;
+        }
+
+        .fan {
+          --spread: -58%;
+          height: 560px;
+        }
+
+        .fan .p-mid {
+          --w: 250px;
+        }
+
+        .fan .p-left,
+        .fan .p-right {
+          --w: 210px;
+          top: 56px;
+        }
+      }
+
+      @media (min-width: 960px) {
+        .nav-links {
+          display: flex;
+        }
+
+        .wordmark {
+          margin-right: 0;
+        }
+
+        .nav .btn {
+          font-size: var(--step-body);
+          padding: 0 18px;
+        }
+
+        .hero h1 {
+          font-size: clamp(4.5rem, 7.2vw, 8.5rem);
+        }
+
+        .hero {
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          column-gap: clamp(32px, 4vw, 72px);
+        }
+
+        .fan {
+          --spread: -56%;
+          height: 600px;
+        }
+
+        .fan .p-mid {
+          --w: 262px;
+        }
+
+        .fan .p-left,
+        .fan .p-right {
+          --w: 222px;
+          top: 60px;
+        }
+
+        .demo {
+          grid-template-columns: 1fr 1fr;
+          column-gap: clamp(32px, 5vw, 96px);
+        }
+
+        .demo:nth-child(2) .demo-stage {
+          order: 2;
+        }
+
+        .demo-stage {
+          padding-block: 56px;
+        }
+
+        .demo-stage .phone {
+          --w: 290px;
+        }
+
+        .picker {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+          column-gap: clamp(32px, 4vw, 72px);
+        }
+
+        .steps {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .products {
+          grid-template-columns: 1fr 1fr;
+          gap: clamp(24px, 3vw, 48px);
+        }
+
+        .contact-inner {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          align-items: end;
+          gap: 48px;
+        }
+
+        .contact-actions {
+          margin-top: 0;
+        }
+
+        .wa-bar {
+          display: none;
+        }
+      }
+
+      @media (max-width: 959px) {
+        body.has-bar footer {
+          padding-bottom: calc(32px + var(--bar-h));
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation: none !important;
+        }
+
+        .js [data-reveal],
+        .js .fan .phone {
+          opacity: 1;
+          transform: none;
+        }
+
+        .js .fan .p-left {
+          transform: translateX(var(--spread)) rotate(-7deg);
+        }
+
+        .js .fan .p-right {
+          transform: translateX(calc(var(--spread) * -1)) rotate(7deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Chat bubble icon, reused in every WhatsApp button -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="i-chat" viewBox="0 0 24 24">
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linejoin="round"
+          d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z"
+        />
+        <path
+          fill="currentColor"
+          d="M9.2 8.2c.3-.1.6 0 .7.3l.6 1.4c.1.3 0 .5-.2.7l-.5.5c.6 1.2 1.5 2.1 2.7 2.7l.5-.5c.2-.2.5-.3.7-.2l1.4.6c.3.1.4.4.3.7-.3 1-1.1 1.6-2.1 1.4-2.6-.5-4.6-2.5-5.1-5.1-.2-1 .4-1.8 1-2.5z"
+        />
+      </symbol>
+    </svg>
+
+    <header class="nav wrap">
+      <a class="wordmark" href="/" aria-label="Irfan Hakimi, laman utama">Irfan Hakimi</a>
+      <ul class="nav-links">
+        <li><a href="#demo" data-i18n="navDemo">Demo</a></li>
+        <li><a href="#cara" data-i18n="navHow">Cara</a></li>
+        <li><a href="#servis" data-i18n="navServices">Servis</a></li>
+        <li><a href="#hubungi" data-i18n="navContact">Hubungi</a></li>
+      </ul>
+      <button class="lang" type="button" id="lang" lang="en" aria-label="Switch to English">EN</button>
+      <a class="btn btn-accent" data-wa="general" href="https://wa.me/60184090065">
+        <svg aria-hidden="true"><use href="#i-chat" /></svg><span>WhatsApp</span>
+      </a>
+    </header>
+
+    <main>
+      <!-- Hero: who, what, and three phones you can tap -->
+      <div class="hero wrap">
+        <div>
+          <h1 data-i18n="heroTitle">Laman web bisnes anda</h1>
+          <p class="lead" data-i18n="heroLead">
+            Saya Irfan dari Kuala Lumpur. Saya bina kedai online, sistem
+            tempahan dan laman web untuk bisnes kecil.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-accent" data-wa="general" href="https://wa.me/60184090065">
+              <svg aria-hidden="true"><use href="#i-chat" /></svg>
+              <span data-i18n="heroWa">WhatsApp untuk sebut harga</span>
+            </a>
+            <a class="link" href="#demo" data-i18n="heroDemo">Atau cuba demo dulu</a>
+          </div>
+          <p class="hero-note" data-i18n="heroNote">Sebut harga percuma. Tiada pakej tetap.</p>
+        </div>
+
+        <div>
+          <div class="fan" id="fan">
+            <a class="phone p-left" href="/demo/tempahan/" aria-label="Demo Klinik Pergigian Teratai Biru">
+              <span class="screen"><img src="img/tempahan-phone.jpg" width="450" height="2295" alt="" data-dur="16s" /></span>
+            </a>
+            <a class="phone p-mid" href="/demo/butik/" aria-label="Demo Rona Kasturi">
+              <span class="screen"><img src="img/butik-phone.jpg" width="450" height="3897" alt="" /></span>
+            </a>
+            <a class="phone p-right" href="/demo/restoran/" aria-label="Demo Lindap Dining Room">
+              <span class="screen"><img src="img/restoran-phone.jpg" width="450" height="3897" alt="" /></span>
+            </a>
+          </div>
+          <p class="fan-caption" data-i18n="fanCaption">Tiga demo sebenar. Tekan mana mana telefon untuk cuba.</p>
+        </div>
+      </div>
+
+      <!-- Price band -->
+      <div class="band wrap" id="harga" role="region" aria-labelledby="harga-h">
+        <div>
+          <h2 class="visually-hidden" id="harga-h" data-i18n="priceTitle" hidden>Harga</h2>
+          <ul class="band-points">
+            <li data-i18n="pp1">Sebut harga percuma</li>
+            <li data-i18n="pp2">Harga ikut projek</li>
+            <li data-i18n="pp3">Tiada pakej tetap</li>
+          </ul>
+        </div>
+        <p data-i18n="priceText">
+          Setiap bisnes lain keperluannya. Lepas kita sembang, saya beri satu
+          harga yang jelas, dengan tempoh siap dan apa yang termasuk. Tiada caj
+          tersembunyi.
+        </p>
+      </div>
+
+      <!-- Demos -->
+      <section class="wrap" id="demo" aria-labelledby="demo-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="demo-h" data-i18n="demoTitle">Cuba demo dulu</h2>
+          <p class="lead" data-i18n="demoLead">
+            Tiga bisnes contoh. Buka di telefon anda dan tekan apa sahaja,
+            macam pelanggan anda nanti.
+          </p>
+        </div>
+        <ul class="demos">
+          <li class="demo">
+            <div class="demo-stage" data-reveal>
+              <a class="phone" href="/demo/butik/" tabindex="-1" aria-hidden="true">
+                <span class="screen"><img src="img/butik-phone.jpg" width="450" height="3897" loading="lazy" alt="" /></span>
+              </a>
+            </div>
+            <div class="demo-text" data-reveal style="--i: 1">
+              <h3 class="h-item" id="d1-title">Rona Kasturi</h3>
+              <p class="kind" data-i18n="d1Kind">Kedai online butik pakaian</p>
+              <p data-i18n="d1Text">
+                Baju kurung, kebaya dan tudung. Pelanggan pilih warna dan saiz,
+                dan pesanan siap ditulis untuk dihantar ke WhatsApp kedai. Ada
+                paparan pemilik untuk pesanan dan stok.
+              </p>
+              <p class="fits" data-i18n="d1Fits"><b>Sesuai untuk</b> butik, kedai bunga, frozen food, kek dan bakeri.</p>
+              <div class="demo-actions">
+                <a class="btn btn-accent" href="/demo/butik/" aria-describedby="d1-title" data-i18n="seeDemo">Tengok demo</a>
+                <a class="link" href="/demo/butik/#owner" data-i18n="d1Owner">Paparan pemilik</a>
+              </div>
+            </div>
+          </li>
+          <li class="demo">
+            <div class="demo-stage" data-reveal>
+              <a class="phone" href="/demo/tempahan/" tabindex="-1" aria-hidden="true">
+                <span class="screen"><img src="img/tempahan-phone.jpg" width="450" height="2295" loading="lazy" alt="" data-dur="16s" /></span>
+              </a>
+            </div>
+            <div class="demo-text" data-reveal style="--i: 1">
+              <h3 class="h-item" id="d2-title">Klinik Pergigian Teratai Biru</h3>
+              <p class="kind" data-i18n="d2Kind">Sistem tempahan dan admin</p>
+              <p data-i18n="d2Text">
+                Pesakit pilih rawatan, tarikh dan masa sendiri. Klinik nampak
+                semua tempahan hari ini dan boleh tutup tarikh cuti dari skrin
+                admin.
+              </p>
+              <p class="fits" data-i18n="d2Fits"><b>Sesuai untuk</b> klinik, tuisyen, gim, homestay, servis aircond, cuci rumah dan cuci kereta.</p>
+              <div class="demo-actions">
+                <a class="btn btn-accent" href="/demo/tempahan/" aria-describedby="d2-title" data-i18n="seeDemo">Tengok demo</a>
+                <a class="link" href="/demo/tempahan/#admin" data-i18n="d2Admin">Skrin admin (PIN 1234)</a>
+              </div>
+            </div>
+          </li>
+          <li class="demo">
+            <div class="demo-stage" data-reveal>
+              <a class="phone" href="/demo/restoran/" tabindex="-1" aria-hidden="true">
+                <span class="screen"><img src="img/restoran-phone.jpg" width="450" height="3897" loading="lazy" alt="" /></span>
+              </a>
+            </div>
+            <div class="demo-text" data-reveal style="--i: 1">
+              <h3 class="h-item" id="d3-title">Lindap Dining Room</h3>
+              <p class="kind" data-i18n="d3Kind">Laman web restoran</p>
+              <p data-i18n="d3Text">
+                Menu, cerita restoran dan tempahan meja. Pelanggan pilih tarikh,
+                masa dan bilangan orang, dan mesej WhatsApp siap untuk dihantar.
+              </p>
+              <p class="fits" data-i18n="d3Fits"><b>Sesuai untuk</b> restoran, kafe, kedai makan dan katering.</p>
+              <div class="demo-actions">
+                <a class="btn btn-accent" href="/demo/restoran/" aria-describedby="d3-title" data-i18n="seeDemo">Tengok demo</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Picker: what fits your business -->
+      <section class="wrap" id="padan" aria-labelledby="padan-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="padan-h" data-i18n="pickTitle">Bisnes anda jenis apa?</h2>
+        </div>
+        <div class="picker">
+          <ul class="chips" id="chips" data-reveal>
+            <li><button class="chip" type="button" data-kind="kedai" aria-pressed="true" data-i18n="kKedai">Kedai dan jualan online</button></li>
+            <li><button class="chip" type="button" data-kind="makan" aria-pressed="false" data-i18n="kMakan">Kafe, restoran, bakeri</button></li>
+            <li><button class="chip" type="button" data-kind="klinik" aria-pressed="false" data-i18n="kKlinik">Klinik</button></li>
+            <li><button class="chip" type="button" data-kind="servis" aria-pressed="false" data-i18n="kServis">Servis rumah dan kereta</button></li>
+            <li><button class="chip" type="button" data-kind="kelas" aria-pressed="false" data-i18n="kKelas">Tuisyen, gim, kelas</button></li>
+            <li><button class="chip" type="button" data-kind="homestay" aria-pressed="false" data-i18n="kHomestay">Homestay</button></li>
+            <li><button class="chip" type="button" data-kind="tukang" aria-pressed="false" data-i18n="kTukang">Perabot dan kabinet</button></li>
+          </ul>
+          <div class="answer" id="answer" aria-live="polite" data-reveal style="--i: 1">
+            <p class="answer-label" data-i18n="pickLabel">Yang biasa saya bina untuk bisnes macam ini:</p>
+            <p class="answer-text" id="answer-text">
+              Kedai online dengan katalog, saiz dan harga, dan pesanan terus
+              masuk ke telefon anda.
+            </p>
+            <div class="answer-actions">
+              <a class="btn btn-accent" id="answer-ask" data-wa="kind" href="https://wa.me/60184090065">
+                <svg aria-hidden="true"><use href="#i-chat" /></svg><span id="answer-ask-label">Tanya harga untuk bisnes ini</span>
+              </a>
+              <a class="link" id="answer-demo" href="/demo/butik/">Demo paling dekat: Rona Kasturi</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section class="wrap" id="cara" aria-labelledby="cara-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="cara-h" data-i18n="howTitle">Empat langkah mudah</h2>
+        </div>
+        <ol class="steps">
+          <li data-reveal>
+            <h3 class="h-item" data-i18n="st1">Sembang</h3>
+            <p data-i18n="st1Text">Mesej saya di WhatsApp. Ceritakan bisnes anda dan apa yang anda perlukan, dalam bahasa biasa.</p>
+            <a class="btn" data-wa="general" href="https://wa.me/60184090065">
+              <svg aria-hidden="true"><use href="#i-chat" /></svg><span data-i18n="st1Btn">Mula sembang</span>
+            </a>
+          </li>
+          <li data-reveal style="--i: 1">
+            <h3 class="h-item" data-i18n="st2">Sebut harga</h3>
+            <p data-i18n="st2Text">Saya hantar harga dan tempoh siap. Percuma, tiada ikatan.</p>
+          </li>
+          <li data-reveal style="--i: 2">
+            <h3 class="h-item" data-i18n="st3">Bina</h3>
+            <p data-i18n="st3Text">Saya bina dan hantar link untuk anda cuba di telefon. Anda beri komen, saya ubah.</p>
+          </li>
+          <li data-reveal style="--i: 3">
+            <h3 class="h-item" data-i18n="st4">Lancar</h3>
+            <p data-i18n="st4Text">Laman anda dilancarkan dengan nama sendiri, dan saya tunjuk cara guna dan kemas kini.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Services -->
+      <section class="wrap" id="servis" aria-labelledby="servis-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="servis-h" data-i18n="svcTitle">Apa saya boleh bina</h2>
+        </div>
+        <ul class="services">
+          <li data-reveal>
+            <h3 class="h-item" data-i18n="s1Title">Laman web bisnes</h3>
+            <p data-i18n="s1Text">Laman yang laju dan kemas di telefon, supaya pelanggan senang telefon, mesej atau datang ke kedai anda.</p>
+          </li>
+          <li data-reveal style="--i: 1">
+            <h3 class="h-item" data-i18n="s2Title">Sistem tempahan dan pesanan</h3>
+            <p data-i18n="s2Text">Pelanggan tempah slot atau buat pesanan sendiri, dan anda urus semuanya dari satu skrin yang mudah.</p>
+          </li>
+          <li data-reveal>
+            <h3 class="h-item" data-i18n="s3Title">Aplikasi web dan telefon</h3>
+            <p data-i18n="s3Text">Aplikasi yang ikut cara bisnes anda berjalan, di web, Android atau iPhone.</p>
+          </li>
+          <li data-reveal style="--i: 1">
+            <h3 class="h-item" data-i18n="s4Title">Reka bentuk skrin</h3>
+            <p data-i18n="s4Text">Skrin yang kemas dan senang difahami, untuk produk baru atau yang anda sudah ada.</p>
+          </li>
+          <li data-reveal>
+            <h3 class="h-item" data-i18n="s5Title">Model 3D</h3>
+            <p data-i18n="s5Text">Model 3D untuk produk, ruang atau perabot, sedia untuk web, cetakan atau video.</p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Own products as proof -->
+      <section class="proof wrap" id="produk" aria-labelledby="produk-h">
+        <div class="section-head" data-reveal>
+          <h2 class="h-section" id="produk-h" data-i18n="prodTitle">Produk saya sendiri</h2>
+          <p class="lead" data-i18n="prodLead">Dua produk yang saya bina dan jalankan sendiri. Anda boleh buka sekarang.</p>
+        </div>
+        <div class="products">
+          <article class="product" data-reveal>
+            <figure>
+              <img src="../images/dpkadkahwin.png" width="1024" height="455" loading="lazy" alt="Sanding: kad kahwin digital dengan RSVP" data-i18n-alt="altSanding" />
+            </figure>
+            <h3 class="h-item">Sanding</h3>
+            <p class="where">kadkahwin.website</p>
+            <p data-i18n="p1Text">
+              Kad kahwin digital dengan 141 reka bentuk dan beribu pilihan.
+              Tetamu boleh RSVP, tulis ucapan dan dapat arah ke majlis.
+            </p>
+            <a class="link" href="https://kadkahwin.website" target="_blank" rel="noopener noreferrer" data-i18n="openSite">Buka laman ↗</a>
+          </article>
+          <article class="product" data-reveal style="--i: 1">
+            <figure>
+              <img src="../images/dpmuseum.png" width="1024" height="457" loading="lazy" alt="Museum of Us: bilik galeri 3D dengan gambar di dinding" data-i18n-alt="altMuseum" />
+            </figure>
+            <h3 class="h-item">Museum of Us</h3>
+            <p class="where">museumofus.online</p>
+            <p data-i18n="p2Text">
+              Galeri foto 3D dalam talian. Anda berjalan dalam bilik maya dan
+              tengok gambar keluarga di dinding, dengan lagu kegemaran.
+            </p>
+            <a class="link" href="https://museumofus.online" target="_blank" rel="noopener noreferrer" data-i18n="openSite">Buka laman ↗</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact wrap" id="hubungi" aria-labelledby="hubungi-h">
+        <div class="contact-inner">
+          <div data-reveal>
+            <h2 class="h-section" id="hubungi-h" data-i18n="ctTitle">Jom sembang</h2>
+            <p class="lead" data-i18n="ctLead">
+              Hantar mesej ringkas tentang bisnes anda. Saya akan balas dengan
+              soalan dan sebut harga.
+            </p>
+          </div>
+          <div class="contact-actions" data-reveal style="--i: 1">
+            <a class="btn" id="contact-main" data-wa="general" href="https://wa.me/60184090065?text=Hi%20Irfan%2C%20saya%20berminat%20nak%20buat%20website%20untuk%20bisnes%20saya.">
+              <svg aria-hidden="true"><use href="#i-chat" /></svg><span data-i18n="ctBtn">WhatsApp saya</span>
+            </a>
+            <a class="number" data-wa="general" href="https://wa.me/60184090065">018 409 0065</a>
+            <p class="alt" id="contact-alt">
+              <span data-i18n="ctOr">Atau emel</span>
+              <a href="mailto:irfanyahya808@gmail.com?subject=Tanya%20harga%20projek">irfanyahya808@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <p class="footer-name" aria-hidden="true">Irfan Hakimi</p>
+      <div class="footer-row">
+        <span data-i18n="ftWhere">Kuala Lumpur, Malaysia</span>
+        <a class="link" href="/" data-i18n="ftFull">Portfolio penuh (English)</a>
+      </div>
+    </footer>
+
+    <div class="wa-bar" id="wa-bar">
+      <a class="btn btn-accent" data-wa="general" href="https://wa.me/60184090065">
+        <svg aria-hidden="true"><use href="#i-chat" /></svg><span data-i18n="barWa">WhatsApp untuk sebut harga</span>
+      </a>
+    </div>
+
+    <script>
+      /* ============================================================
+         WHATSAPP NUMBER: country code, digits only (018 409 0065).
+         Clear it ("") to make every WhatsApp button send an email.
+         ============================================================ */
+      const WHATSAPP_NUMBER = "60184090065";
+
+      const EMAIL = "irfanyahya808@gmail.com";
+      const SUBJECT = "Tanya harga projek";
+
+      document.documentElement.classList.add("js");
+
+      const EN = {
+        navDemo: "Demos",
+        navHow: "How",
+        navServices: "Services",
+        navContact: "Contact",
+        heroTitle: "Your business, online",
+        heroLead:
+          "I'm Irfan from Kuala Lumpur. I build online shops, booking systems and websites for small businesses.",
+        heroWa: "WhatsApp for a free quote",
+        heroDemo: "Or try the demos first",
+        heroNote: "Free quote. No fixed packages.",
+        fanCaption: "Three real demos. Tap any phone to try it.",
+        priceTitle: "Price",
+        pp1: "Free quote",
+        pp2: "Priced per project",
+        pp3: "No fixed packages",
+        priceText:
+          "Every business needs something different. After we talk, I give you one clear price, with the finish date and what is included. No hidden charges.",
+        demoTitle: "Try the demos",
+        demoLead:
+          "Three example businesses. Open them on your phone and tap anything, just like your customers would.",
+        d1Kind: "Online shop for a clothing boutique",
+        d1Text:
+          "Baju kurung, kebaya and tudung. Customers pick a colour and size, and the order is written out ready to send to the shop's WhatsApp. There's an owner view for orders and stock.",
+        d1Fits: "<b>Good for</b> boutiques, florists, frozen food, cakes and bakeries.",
+        d1Owner: "Owner view",
+        d2Kind: "Booking and admin system",
+        d2Text:
+          "Patients choose their own treatment, date and time. The clinic sees every booking for today and can close dates from the admin screen.",
+        d2Fits:
+          "<b>Good for</b> clinics, tuition, gyms, homestays, aircond service, home cleaning and car wash.",
+        d2Admin: "Admin screen (PIN 1234)",
+        d3Kind: "Restaurant website",
+        d3Text:
+          "Menu, the restaurant's story and table bookings. Guests pick the date, time and party size, and a WhatsApp message is ready to send.",
+        d3Fits: "<b>Good for</b> restaurants, cafes, food stalls and catering.",
+        seeDemo: "Open the demo",
+        pickTitle: "What kind of business?",
+        kKedai: "Shops and online selling",
+        kMakan: "Cafes, restaurants, bakeries",
+        kKlinik: "Clinics",
+        kServis: "Home and car services",
+        kKelas: "Tuition, gyms, classes",
+        kHomestay: "Homestays",
+        kTukang: "Furniture and cabinets",
+        pickLabel: "What I usually build for a business like this:",
+        howTitle: "Four simple steps",
+        st1: "Chat",
+        st1Text: "Message me on WhatsApp. Tell me about your business and what you need, in plain words.",
+        st1Btn: "Start a chat",
+        st2: "Quote",
+        st2Text: "I send a price and a finish date. Free, no commitment.",
+        st3: "Build",
+        st3Text: "I build it and send you a link to try on your phone. You tell me what to change.",
+        st4: "Launch",
+        st4Text: "Your site goes live under your own name, and I show you how to use and update it.",
+        svcTitle: "What I can build",
+        s1Title: "Business websites",
+        s1Text: "A fast, tidy site on the phone, so customers can easily call, message or visit your shop.",
+        s2Title: "Booking and order systems",
+        s2Text: "Customers book a slot or order on their own, and you manage it all from one simple screen.",
+        s3Title: "Web and mobile apps",
+        s3Text: "Apps built around how your business runs, on the web, Android or iPhone.",
+        s4Title: "Screen design",
+        s4Text: "Clean screens that are easy to understand, for a new product or the one you already have.",
+        s5Title: "3D models",
+        s5Text: "3D models of products, spaces or furniture, ready for the web, print or video.",
+        prodTitle: "Things I built myself",
+        prodLead: "Two products I built and run myself. You can open them right now.",
+        p1Text:
+          "Digital wedding cards with 141 designs and thousands of choices. Guests RSVP, leave wishes and get directions to the venue.",
+        p2Text:
+          "An online 3D photo gallery. You walk through a virtual room and see family photos on the walls, with a favourite song playing.",
+        openSite: "Open the site ↗",
+        altSanding: "Sanding: a digital wedding card with RSVP",
+        altMuseum: "Museum of Us: a 3D gallery room with photos on the walls",
+        ctTitle: "Let's talk",
+        ctLead: "Send a short message about your business. I'll reply with questions and a quote.",
+        ctBtn: "WhatsApp me",
+        ctOr: "Or email",
+        ftWhere: "Kuala Lumpur, Malaysia",
+        ftFull: "Full portfolio",
+        barWa: "WhatsApp for a free quote",
+        askThis: "Ask for a price for this",
+        nearest: "Closest demo: ",
+      };
+
+      const MS_EXTRA = {
+        askThis: "Tanya harga untuk bisnes ini",
+        nearest: "Demo paling dekat: ",
+      };
+
+      const DEMOS = {
+        butik: { href: "/demo/butik/", name: "Rona Kasturi" },
+        tempahan: { href: "/demo/tempahan/", name: "Klinik Pergigian Teratai Biru" },
+        restoran: { href: "/demo/restoran/", name: "Lindap Dining Room" },
+      };
+
+      const KINDS = {
+        kedai: {
+          demo: "butik",
+          ms: "Kedai online dengan katalog, saiz dan harga, dan pesanan terus masuk ke telefon anda.",
+          en: "An online shop with your catalogue, sizes and prices, with orders coming straight to your phone.",
+          msName: "kedai",
+          enName: "a shop",
+        },
+        makan: {
+          demo: "restoran",
+          ms: "Menu dalam talian, tempahan meja, dan pesanan untuk ambil sendiri atau hantar.",
+          en: "An online menu, table bookings, and orders for pickup or delivery.",
+          msName: "kafe atau restoran",
+          enName: "a cafe or restaurant",
+        },
+        klinik: {
+          demo: "tempahan",
+          ms: "Temujanji dalam talian, peringatan untuk pesakit, dan senarai harian untuk staf.",
+          en: "Online appointments, reminders for patients, and a daily list for your staff.",
+          msName: "klinik",
+          enName: "a clinic",
+        },
+        servis: {
+          demo: "tempahan",
+          ms: "Pelanggan pilih servis, kawasan dan masa. Anda urus semua kerja dari satu skrin.",
+          en: "Customers pick the service, area and time. You manage every job from one screen.",
+          msName: "servis rumah atau kereta",
+          enName: "a home or car service",
+        },
+        kelas: {
+          demo: "tempahan",
+          ms: "Jadual kelas, pendaftaran pelajar atau ahli, dan rekod yuran di satu tempat.",
+          en: "Class timetables, student or member sign ups, and fee records in one place.",
+          msName: "pusat tuisyen, gim atau kelas",
+          enName: "a tuition centre, gym or class",
+        },
+        homestay: {
+          demo: "tempahan",
+          ms: "Kalendar tarikh kosong, tempahan terus, dan maklumat daftar masuk untuk tetamu.",
+          en: "A calendar of free dates, direct bookings, and check in details for guests.",
+          msName: "homestay",
+          enName: "a homestay",
+        },
+        tukang: {
+          demo: "butik",
+          ms: "Galeri hasil kerja, borang ukuran untuk sebut harga, dan model 3D sebelum dibina.",
+          en: "A gallery of your work, a measurement form for quotes, and 3D models before you build.",
+          msName: "perabot atau kabinet",
+          enName: "furniture or cabinets",
+        },
+      };
+
+      const MS = { ...MS_EXTRA };
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        MS[el.dataset.i18n] = el.innerHTML.trim();
+      });
+      document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+        MS[el.dataset.i18nAlt] = el.alt;
+      });
+
+      const TITLE = {
+        ms: document.title,
+        en: "Irfan Hakimi | Websites and systems for small businesses",
+      };
+
+      let lang = "ms";
+      let kind = "kedai";
+
+      function contactHref(text) {
+        if (WHATSAPP_NUMBER) {
+          return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+        }
+        return (
+          "mailto:" + EMAIL + "?subject=" + encodeURIComponent(SUBJECT) +
+          "&body=" + encodeURIComponent(text)
+        );
+      }
+
+      function generalMessage() {
+        return lang === "en"
+          ? "Hi Irfan, I'd like a website for my business."
+          : "Hi Irfan, saya berminat nak buat website untuk bisnes saya.";
+      }
+
+      function kindMessage() {
+        const k = KINDS[kind];
+        return lang === "en"
+          ? "Hi Irfan, I run " + k.enName + ". I'm interested in: " + k.en + " Could you give me a price?"
+          : "Hi Irfan, saya ada bisnes " + k.msName + ". Saya berminat dengan: " + k.ms + " Boleh beri sebut harga?";
+      }
+
+      function renderLinks() {
+        const general = contactHref(generalMessage());
+        document.querySelectorAll('[data-wa="general"]').forEach((a) => (a.href = general));
+        document.querySelectorAll('[data-wa="kind"]').forEach((a) => (a.href = contactHref(kindMessage())));
+      }
+
+      function renderKind(animate) {
+        const k = KINDS[kind];
+        const d = DEMOS[k.demo];
+        const dict = lang === "en" ? EN : MS;
+        document.getElementById("answer-text").textContent = k[lang];
+        const demo = document.getElementById("answer-demo");
+        demo.href = d.href;
+        demo.textContent = dict.nearest + d.name;
+        document.getElementById("answer-ask-label").textContent = dict.askThis;
+        document.querySelectorAll(".chip").forEach((c) => {
+          c.setAttribute("aria-pressed", String(c.dataset.kind === kind));
+        });
+        renderLinks();
+        if (animate) {
+          const a = document.getElementById("answer");
+          a.classList.remove("swap");
+          void a.offsetWidth;
+          a.classList.add("swap");
+        }
+      }
+
+      function setLang(next) {
+        lang = next;
+        const dict = lang === "en" ? EN : MS;
+        document.documentElement.lang = lang;
+        document.title = TITLE[lang];
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const v = dict[el.dataset.i18n];
+          if (v != null) el.innerHTML = v;
+        });
+        document.querySelectorAll("[data-i18n-alt]").forEach((el) => {
+          const v = dict[el.dataset.i18nAlt];
+          if (v != null) el.alt = v;
+        });
+        const btn = document.getElementById("lang");
+        btn.textContent = lang === "en" ? "BM" : "EN";
+        btn.lang = lang === "en" ? "ms" : "en";
+        btn.setAttribute("aria-label", lang === "en" ? "Tukar ke Bahasa Melayu" : "Switch to English");
+        renderKind(false);
+        try {
+          localStorage.setItem("kerja-lang", lang);
+        } catch (e) {}
+      }
+
+      document.getElementById("lang").addEventListener("click", () => {
+        setLang(lang === "en" ? "ms" : "en");
+      });
+
+      document.getElementById("chips").addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        kind = chip.dataset.kind;
+        renderKind(true);
+      });
+
+      let start = "ms";
+      try {
+        const q = new URLSearchParams(location.search).get("lang");
+        if (q === "en" || q === "ms") start = q;
+        else if (localStorage.getItem("kerja-lang") === "en") start = "en";
+      } catch (e) {}
+      setLang(start);
+
+      /* Phone screens: pan slowly through the real demo while in view */
+      function setPan(img) {
+        const screen = img.parentElement;
+        const travel = img.getBoundingClientRect().height - screen.getBoundingClientRect().height;
+        if (travel > 0) img.style.setProperty("--pan", -travel + "px");
+        if (img.dataset.dur) img.style.setProperty("--dur", img.dataset.dur);
+      }
+
+      const phones = document.querySelectorAll(".phone");
+      function panAll() {
+        phones.forEach((p) => {
+          const img = p.querySelector("img");
+          if (img.complete) setPan(img);
+          else img.addEventListener("load", () => setPan(img), { once: true });
+        });
+      }
+      panAll();
+      addEventListener("resize", panAll);
+
+      const motionOk = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if ("IntersectionObserver" in window) {
+        const run = new IntersectionObserver((entries) => {
+          entries.forEach((en) => en.target.classList.toggle("run", en.isIntersecting && motionOk));
+        });
+        phones.forEach((p) => run.observe(p));
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => {
+              if (en.isIntersecting) {
+                en.target.classList.add("in");
+                io.unobserve(en.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -8% 0px" }
+        );
+        document.querySelectorAll("[data-reveal], #fan").forEach((el) => io.observe(el));
+
+        /* Sticky WhatsApp bar: after the hero button, hidden at the contact block */
+        const bar = document.getElementById("wa-bar");
+        const heroBtn = document.querySelector(".hero-actions .btn");
+        const contact = document.getElementById("hubungi");
+        let pastHero = false;
+        let atContact = false;
+        const update = () => {
+          const show = pastHero && !atContact;
+          bar.classList.toggle("show", show);
+          document.body.classList.toggle("has-bar", show);
+        };
+        new IntersectionObserver(([en]) => {
+          pastHero = !en.isIntersecting && en.boundingClientRect.top < 0;
+          update();
+        }).observe(heroBtn);
+        new IntersectionObserver(([en]) => {
+          atContact = en.isIntersecting;
+          update();
+        }).observe(contact);
+      } else {
+        document.querySelectorAll("[data-reveal], #fan").forEach((el) => el.classList.add("in"));
+      }
+    </script>
+  </body>
+</html>
