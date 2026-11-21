@@ -553,6 +553,87 @@
         gap: 20px;
       }
 
+      /* Demos: three big tappable cards */
+      .demos {
+        margin-top: clamp(48px, 6vw, 88px);
+      }
+
+      .demos-head p {
+        margin-top: 12px;
+        max-width: 52ch;
+        color: var(--muted);
+      }
+
+      .demo-cards {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(16px, 2vw, 28px);
+      }
+
+      .demo-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--surface);
+        color: var(--ink);
+        text-decoration: none;
+        padding-bottom: 24px;
+        transition: transform 0.4s var(--ease-out), background 0.3s;
+      }
+
+      .demo-card:hover {
+        transform: translateY(-4px);
+        background: var(--surface-2);
+      }
+
+      .demo-card img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: var(--surface-2);
+      }
+
+      .demo-card > span {
+        padding-inline: 20px;
+      }
+
+      .demo-kind {
+        margin-top: 20px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .demo-name {
+        margin-top: 6px;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+        text-transform: uppercase;
+        line-height: 1.05;
+      }
+
+      .demo-desc {
+        margin-top: 10px;
+        color: var(--muted);
+        flex: 1;
+      }
+
+      .demo-go {
+        margin-top: 18px;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      @media (max-width: 1024px) {
+        .demo-cards {
+          grid-template-columns: 1fr;
+        }
+        .demo-card img {
+          aspect-ratio: 16 / 9;
+        }
+        .demo-card > span { padding-inline: 18px; }
+      }
+
       @media (max-width: 1024px) {
         .services {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1280,6 +1361,7 @@
         <a href="#about">About</a>
         <a href="#work">Work</a>
         <a href="#services">Services</a>
+        <a href="#demos">Demos</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
         <a class="btn btn-accent" href="file/Irfan_Hakimi_CV.pdf" download
@@ -1595,6 +1677,36 @@
             <p>3D models of products, spaces or characters, ready for the web, print or video.</p>
           </li>
         </ul>
+        <div class="demos" id="demos">
+          <div class="demos-head" data-reveal>
+            <h3 class="h-item">Try a demo</h3>
+            <p>Three example websites for small businesses. Open one on your phone and tap around, just like your customers would.</p>
+          </div>
+          <div class="demo-cards">
+            <a class="demo-card" href="/demo/butik/" data-reveal>
+              <img src="demo/butik/img/b-hero-m.jpg" alt="Boutique demo: a woman in a tudung standing under trees" loading="lazy" />
+              <span class="demo-kind small">Online shop</span>
+              <span class="demo-name">Rona Kasturi boutique</span>
+              <span class="demo-desc">Catalogue with sizes, colours and prices, a cart, orders sent to WhatsApp, and an owner view for orders and stock.</span>
+              <span class="demo-go">View demo &rarr;</span>
+            </a>
+            <a class="demo-card" href="/demo/tempahan/" data-reveal style="--i: 1">
+              <img src="demo/tempahan/img/bilik-rawatan.jpg" alt="Booking demo: a dental treatment room" loading="lazy" />
+              <span class="demo-kind small">Booking and admin system</span>
+              <span class="demo-name">Teratai Biru dental clinic</span>
+              <span class="demo-desc">Customers pick a service, date and free slot and pay a deposit. The admin dashboard tracks bookings, deposits and closed days.</span>
+              <span class="demo-go">View demo &rarr;</span>
+            </a>
+            <a class="demo-card" href="/demo/restoran/" data-reveal style="--i: 2">
+              <img src="demo/restoran/img/satay.jpg" alt="Restaurant demo: satay on the grill" loading="lazy" />
+              <span class="demo-kind small">Restaurant website</span>
+              <span class="demo-name">Lindap Dining Room</span>
+              <span class="demo-desc">Menu with a photo for every dish and a table booking that arrives as a ready WhatsApp message.</span>
+              <span class="demo-go">View demo &rarr;</span>
+            </a>
+          </div>
+        </div>
+
         <div class="services-cta" data-reveal>
           <p>Priced per project. No fixed packages.</p>
           <div class="links">
@@ -1603,7 +1715,6 @@
               href="mailto:irfanyahya808@gmail.com?subject=Project%20enquiry"
               >Ask for a quote</a
             >
-            <a class="link" href="/kerja/" lang="ms">Untuk pemilik bisnes: lihat demo</a>
             <a class="link" href="#contact">Other ways to reach me</a>
           </div>
         </div>
