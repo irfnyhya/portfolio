@@ -291,7 +291,22 @@
         --band-top: calc(var(--nav-h) + 12px + var(--name-h) + 28px);
         --band-bottom: calc(16px + var(--name-h) + 28px);
         position: relative;
-        height: calc(100svh + (var(--steps) - 1) * 56svh);
+        height: calc(100svh + (var(--steps) - 1) * 80svh);
+      }
+
+      /* One stop per project, so a fast flick or wheel spin can't skip one */
+      html.has-snap {
+        scroll-snap-type: y proximity;
+      }
+
+      .snap-stop {
+        position: absolute;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        pointer-events: none;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
       }
 
       .poster-stage {
@@ -2132,13 +2147,71 @@
           const p = Math.min(0.9999, Math.max(0, -top / range()));
           show(Math.floor(p * steps));
         };
-        const goTo = (i) => {
+        let jumping = false; // true while a reel button scrolls on purpose
+        const goTo = (i, onPurpose = true) => {
+          jumping = onPurpose;
           const y = poster.offsetTop + (range() * (i + 0.5)) / steps;
           window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
         };
 
+        // Never skip a project: when scrolling settles inside this section
+        // more than one project away from the last one seen, glide back to
+        // the next one in line. Outside the section counts as -1 or steps.
+        const where = () => {
+          const top = poster.getBoundingClientRect().top;
+          if (top > 0) return -1;
+          if (-top > range()) return steps;
+          return Math.min(steps - 1, Math.floor((-top / range()) * steps));
+        };
+        let settled = where();
+        const settle = () => {
+          const now = where();
+          if (jumping) {
+            jumping = false;
+          } else if (
+            Math.abs(now - settled) > 1 &&
+            ((now >= 0 && now < steps) || (settled >= 0 && settled < steps))
+          ) {
+            const next = settled + Math.sign(now - settled);
+            settled = next;
+            goTo(next, false);
+            return;
+          }
+          settled = now;
+        };
+        // Menu and in-page links jump on purpose, never pull them back
+        document.addEventListener("click", (e) => {
+          if (e.target.closest('a[href^="#"], a[href^="/#"]')) jumping = true;
+        });
+        let settleTimer;
+        window.addEventListener("scroll", () => {
+          clearTimeout(settleTimer);
+          settleTimer = setTimeout(settle, 160);
+        }, { passive: true });
+
+        // A stop in the middle of each project's stretch; html has a
+        // scroll-padding-top, so each stop sits that much lower
+        const stops = panels.map(() => {
+          const s = document.createElement("div");
+          s.className = "snap-stop";
+          s.setAttribute("aria-hidden", "true");
+          poster.appendChild(s);
+          return s;
+        });
+        const placeStops = () => {
+          const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+          stops.forEach((s, i) => {
+            s.style.top = (range() * (i + 0.5)) / steps + pad + "px";
+          });
+        };
+        placeStops();
+        document.documentElement.classList.add("has-snap");
+
         window.addEventListener("scroll", update, { passive: true });
-        window.addEventListener("resize", update);
+        window.addEventListener("resize", () => {
+          placeStops();
+          update();
+        });
         update();
         reel.forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.go)));
       });
