@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Lindap Dining Room · Restaurant website demo</title>
-  <meta name="description" content="A demo restaurant website by Irfan Hakimi: menu with photos, story and a table booking that ends in a ready to send WhatsApp message. Lindap is a fictional restaurant.">
+  <title>Lindap · Restaurant website demo</title>
+  <meta name="description" content="A demo restaurant website by Irfan Hakimi: a chef's counter with an open kitchen, a menu with photos and a seat booking that ends in a ready to send WhatsApp message. Lindap is a fictional restaurant.">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#0c110f">
-  <meta property="og:title" content="Lindap Dining Room · Restaurant website demo">
-  <meta property="og:description" content="A demo restaurant website with a photo menu and WhatsApp table booking. Made by Irfan Hakimi.">
+  <meta name="theme-color" content="#0b0d0c">
+  <meta property="og:title" content="Lindap · Restaurant website demo">
+  <meta property="og:description" content="A demo chef's counter restaurant website with a photo menu and WhatsApp booking. Made by Irfan Hakimi.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="img/hero-wide.jpg">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -26,22 +26,22 @@
   <header class="site-header" id="header">
     <div class="demo-strip">
       <span>Demo by Irfan Hakimi.</span>
-      <a href="https://irfanhakimi.com/kerja/">Nak satu macam ni?</a>
+      <a href="https://irfanhakimi.com/kerja/">Want one like this?</a>
     </div>
     <nav class="wrap nav" aria-label="Primary">
-      <a href="#top" class="wordmark" aria-label="Lindap Dining Room, back to top">
+      <a href="#top" class="wordmark" aria-label="Lindap, back to top">
         <span class="name">LINDAP</span>
-        <span class="sub label">Dining Room</span>
+        <span class="sub label">Chef's Counter</span>
       </a>
       <ul class="nav-links">
-        <li><a class="label" href="#signatures">Signatures</a></li>
-        <li><a class="label" href="#story">Story</a></li>
+        <li><a class="label" href="#courses">Signatures</a></li>
+        <li><a class="label" href="#story">About</a></li>
         <li><a class="label" href="#menu">Menu</a></li>
-        <li><a class="label" href="#room">The Room</a></li>
+        <li><a class="label" href="#room">The Counter</a></li>
         <li><a class="label" href="#visit">Visit</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="btn btn-solid label nav-book" type="button" data-book>Book</button>
+        <button class="btn btn-solid label nav-book" type="button" data-book>Reserve</button>
         <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
           <span class="bars" aria-hidden="true"><span></span><span></span></span>
         </button>
@@ -51,14 +51,14 @@
 
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu">
     <ul class="wrap">
-      <li><a href="#signatures"><span>01</span>Signatures</a></li>
-      <li><a href="#story"><span>02</span>Story</a></li>
-      <li><a href="#menu"><span>03</span>Menu</a></li>
-      <li><a href="#room"><span>04</span>The Room</a></li>
-      <li><a href="#reserve"><span>05</span>Book a table</a></li>
-      <li><a href="#visit"><span>06</span>Visit</a></li>
+      <li><a href="#courses"><span>I</span>Signatures</a></li>
+      <li><a href="#story"><span>II</span>About</a></li>
+      <li><a href="#menu"><span>III</span>Menu</a></li>
+      <li><a href="#room"><span>IV</span>The Counter</a></li>
+      <li><a href="#reserve"><span>V</span>Reserve</a></li>
+      <li><a href="#visit"><span>VI</span>Visit</a></li>
     </ul>
-    <p class="wrap foot label"><span>Kuala Lumpur</span><span>Wed to Mon · 6 PM</span></p>
+    <p class="wrap foot label"><span>Kuala Lumpur</span><span>Twelve seats · Wed to Mon</span></p>
   </div>
 
   <main id="main">
@@ -67,34 +67,34 @@
       <div class="hero-media" id="heroMedia">
         <picture>
           <source media="(min-width: 768px)" srcset="img/hero-wide.jpg">
-          <img src="img/hero-tall.jpg" alt="Skewers of meat grilling over glowing charcoal" fetchpriority="high">
+          <img src="img/hero-tall.jpg" alt="A chef finishing a plated course with tweezers" fetchpriority="high">
         </picture>
       </div>
       <canvas id="embers" aria-hidden="true"></canvas>
       <div class="hero-scrim" aria-hidden="true"></div>
 
       <div class="wrap hero-copy" id="heroCopy">
-        <p class="status fade-up" id="status" style="animation-delay:.2s"><span class="dot" aria-hidden="true"></span><span id="statusText">Kuala Lumpur · Open six nights</span></p>
+        <p class="status fade-up" id="status" style="animation-delay:.2s"><span class="dot" aria-hidden="true"></span><span id="statusText">Kuala Lumpur · Six nights a week</span></p>
         <h1>
-          <span class="line"><span style="animation-delay:.3s">Slow fire,</span></span>
-          <span class="line"><span style="animation-delay:.45s">long <em class="accent">tables.</em></span></span>
+          <span class="line"><span style="animation-delay:.3s">A seat at</span></span>
+          <span class="line"><span style="animation-delay:.45s">the <em class="accent">kitchen.</em></span></span>
         </h1>
         <div class="hero-foot">
-          <p class="fade-up" style="animation-delay:.75s">Kampung recipes cooked over coconut husk and charcoal, served to share in a small dining room under the shade of an old angsana tree.</p>
+          <p class="fade-up" style="animation-delay:.75s">Twelve seats around an open kitchen. Watch every plate come together, order straight from the chef, and stay as long as the conversation lasts.</p>
           <div class="hero-ctas fade-up" style="animation-delay:.9s">
-            <button class="btn btn-solid label" type="button" data-book><span>Book a table</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            <a class="btn btn-ghost label" href="#menu"><span>Menu</span></a>
+            <button class="btn btn-solid label" type="button" data-book><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+            <a class="btn btn-ghost label" href="#courses"><span>The menu</span></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Signatures -->
-    <section class="section-y" id="signatures" aria-labelledby="sig-title" style="padding-bottom:0">
+    <!-- Courses rail -->
+    <section class="section-y" id="courses" aria-labelledby="sig-title" style="padding-bottom:0">
       <div class="wrap sig-head">
         <div>
-          <p class="eyebrow label reveal"><span class="idx">i.</span><span class="rule" aria-hidden="true"></span><span>Dari api</span></p>
-          <h2 class="h2 reveal" id="sig-title" style="--d:.08s">What people <em class="accent">order first.</em></h2>
+          <p class="eyebrow label reveal"><span class="idx">i.</span><span class="rule" aria-hidden="true"></span><span>Signatures</span></p>
+          <h2 class="h2 reveal" id="sig-title" style="--d:.08s">Cooked in front of <em class="accent">you.</em></h2>
         </div>
         <div class="sig-nav">
           <button type="button" id="railPrev" aria-label="Previous dish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
@@ -109,34 +109,34 @@
     <section class="section-y" id="story" aria-labelledby="story-title">
       <div class="wrap story">
         <div>
-          <p class="eyebrow label reveal"><span class="idx">ii.</span><span class="rule" aria-hidden="true"></span><span>Tentang Lindap</span></p>
-          <h2 class="h2 reveal" id="story-title" style="--d:.08s">Food from home, cooked <em class="accent">slowly.</em></h2>
+          <p class="eyebrow label reveal"><span class="idx">ii.</span><span class="rule" aria-hidden="true"></span><span>About Lindap</span></p>
+          <h2 class="h2 reveal" id="story-title" style="--d:.08s">No back of house, <em class="accent">only the pass.</em></h2>
           <div class="lede reveal" style="--d:.16s">
-            <p>Lindap means shaded: the cool spot under a tree where everyone ends up after lunch. We built the restaurant around that feeling. Unhurried, generous, and a little bit smoky.</p>
-            <p>The kitchen cooks the dishes we grew up with over charcoal and coconut husk, then plates them to pass around the table. Bring people you like. Order more than you think.</p>
+            <p>Lindap is a small restaurant built around one long counter. Every seat looks straight into the kitchen, so dinner comes with a view of the fire, the knives and the plating.</p>
+            <p>There is no set menu. You order what you like, when you like, and the chef talks you through each plate as it lands. With only twelve seats a night, the kitchen cooks for the people in front of it.</p>
           </div>
-          <p class="sign reveal" style="--d:.24s">Jumpa di meja.</p>
+          <p class="sign reveal" style="--d:.24s">See you at the counter.</p>
         </div>
         <div class="story-media">
-          <div class="frame a wipe parallax"><img loading="lazy" src="img/grill.jpg" alt="Rows of satay over a charcoal grill, smoke rising" width="1000" height="1250"></div>
-          <div class="frame b wipe" style="--d:.25s"><img loading="lazy" src="img/ulam-sambal.jpg" alt="Grilled chicken with ulam and two sambals on a banana leaf" width="900" height="900"></div>
+          <div class="frame a wipe parallax"><img loading="lazy" src="img/chef.jpg" alt="A chef garnishing a small plate with fresh herbs" width="1000" height="1250"></div>
+          <div class="frame b wipe" style="--d:.25s"><img loading="lazy" src="img/detail.jpg" alt="Close up of a finished course" width="900" height="900"></div>
         </div>
       </div>
       <div class="wrap">
         <ul class="pillars">
-          <li class="reveal"><p class="num">01</p><h3>Kongsi</h3><p>Every plate is made for sharing. Order a few, pass them around, then order a few more.</p></li>
-          <li class="reveal" style="--d:.1s"><p class="num">02</p><h3>Api</h3><p>Most of the menu touches the fire: fish in banana leaf, skewers, chicken basted in sambal.</p></li>
-          <li class="reveal" style="--d:.2s"><p class="num">03</p><h3>Musim</h3><p>Ulam, fish and fruit follow the morning market, so the menu shifts a little every week.</p></li>
+          <li class="reveal"><p class="num">I</p><h3>Open</h3><p>Nothing happens behind a door. Every step of every dish is cooked within arm's reach.</p></li>
+          <li class="reveal" style="--d:.1s"><p class="num">II</p><h3>Direct</h3><p>Order from the person cooking your food, and ask anything about it.</p></li>
+          <li class="reveal" style="--d:.2s"><p class="num">III</p><h3>Seasonal</h3><p>The menu follows the market and is rewritten each season.</p></li>
         </ul>
       </div>
     </section>
 
     <!-- Statement band -->
     <section class="statement" aria-label="Lindap at a glance">
-      <p class="sr-only">Eat together, share everything, around the fire and under the trees.</p>
+      <p class="sr-only">Watch, taste, talk. One kitchen, twelve seats.</p>
       <div aria-hidden="true">
-        <p data-drift="1">Makan <span class="dot">·</span> Kongsi <span class="dot">·</span> Makan <span class="dot">·</span> Kongsi</p>
-        <p class="outline" data-drift="-1">around the fire · under the trees · around the fire</p>
+        <p data-drift="1">Watch <span class="dot">·</span> Taste <span class="dot">·</span> Talk <span class="dot">·</span> Watch</p>
+        <p class="outline" data-drift="-1">one kitchen · twelve seats · one kitchen</p>
       </div>
     </section>
 
@@ -146,16 +146,16 @@
         <div class="menu-top">
           <div>
             <p class="eyebrow label reveal"><span class="idx">iii.</span><span class="rule" aria-hidden="true"></span><span>Menu</span></p>
-            <h2 class="h2 reveal" id="menu-title" style="--d:.08s">Plates for the <em class="accent">middle of the table.</em></h2>
+            <h2 class="h2 reveal" id="menu-title" style="--d:.08s">Order <em class="accent">as you go.</em></h2>
           </div>
           <div class="reveal" style="--d:.16s">
-            <p class="lede">Small plates to start, then whatever comes off the fire. Two or three dishes per person is about right. Tap a dish to see it closer.</p>
+            <p class="lede">No set courses. Pick from any section in any order, and the chef will pace the plates for you. Tap a dish to see it closer.</p>
             <p class="note" role="note" style="margin-top:1.25rem">Placeholder menu for this demo. Dishes and prices are examples only.</p>
           </div>
         </div>
         <div class="chips" role="tablist" aria-label="Menu sections" id="menuTabs"></div>
         <div class="panel" role="tabpanel" id="menuPanel" tabindex="0"></div>
-        <p class="menu-foot">Prices in RM. Tell us about allergies or dietary needs when you book so the kitchen can plan ahead.</p>
+        <p class="menu-foot">Prices in RM. Tell us about allergies and dietary needs when you book so the kitchen can plan ahead.</p>
       </div>
     </section>
 
@@ -164,23 +164,23 @@
       <div class="wrap">
         <div class="room-grid">
           <div class="room-photos">
-            <div class="frame a wipe"><img loading="lazy" src="img/room-tall.jpg" alt="A warm dining room with copper toned booths and wooden tables" width="1000" height="1250"></div>
-            <div class="frame b wipe" style="--d:.2s"><img loading="lazy" src="img/room.jpg" alt="A dim dining room with a round table and a woven lamp" width="1600" height="1100"></div>
+            <div class="frame a wipe"><img loading="lazy" src="img/pass.jpg" alt="A chef plating a row of dishes at the kitchen pass" width="1000" height="1250"></div>
+            <div class="frame b wipe" style="--d:.2s"><img loading="lazy" src="img/room.jpg" alt="A table laid with glassware and candles" width="1600" height="1100"></div>
           </div>
           <div>
-            <p class="eyebrow label reveal"><span class="idx">iv.</span><span class="rule" aria-hidden="true"></span><span>Malam di Lindap</span></p>
-            <h2 class="h2 reveal" id="room-title" style="--d:.08s">Come hungry. <em class="accent">Stay late.</em></h2>
-            <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Tables of four to twelve, plates landing in the middle, and the smell of the grill drifting through the room. Plan on about two hours.</p>
+            <p class="eyebrow label reveal"><span class="idx">iv.</span><span class="rule" aria-hidden="true"></span><span>The Evening</span></p>
+            <h2 class="h2 reveal" id="room-title" style="--d:.08s">Front row to <em class="accent">the fire.</em></h2>
+            <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Two seatings a night at one long counter. Most evenings run about two hours, so plan to stay.</p>
             <ol class="steps">
-              <li class="reveal"><span class="n">01</span><h3>Sampai <small>Arrive</small></h3><p>Your table is ready when you walk in. Cold sirap bandung while you settle.</p></li>
-              <li class="reveal" style="--d:.08s"><span class="n">02</span><h3>Pilih <small>Choose</small></h3><p>We walk you through what came in from the market today and what is best off the fire.</p></li>
-              <li class="reveal" style="--d:.16s"><span class="n">03</span><h3>Kongsi <small>Share</small></h3><p>Dishes arrive as they are ready. Everything goes in the middle, everyone reaches.</p></li>
+              <li class="reveal"><span class="n">I</span><h3>Take your seat</h3><p>Everyone sits at the counter, a few steps from the stove, with a house drink to start.</p></li>
+              <li class="reveal" style="--d:.08s"><span class="n">II</span><h3>Meet the chef</h3><p>The chef takes your order across the counter and tells you what is best tonight.</p></li>
+              <li class="reveal" style="--d:.16s"><span class="n">III</span><h3>Watch it happen</h3><p>Each plate is finished in front of you and served the moment it is ready.</p></li>
             </ol>
           </div>
         </div>
         <figure class="frame wide-photo wipe parallax">
-          <img loading="lazy" src="img/spread.jpg" alt="A table covered in shared plates, rice, greens and grilled fish" width="1600" height="1100">
-          <figcaption>For birthdays, family dinners, and any night that needs one more plate on the table.</figcaption>
+          <img loading="lazy" src="img/private.jpg" alt="A long table laid for a group dinner with candles and glassware" width="1600" height="1100">
+          <figcaption>Book the whole counter for birthdays, anniversaries and team dinners of up to twelve guests.</figcaption>
         </figure>
       </div>
     </section>
@@ -189,12 +189,13 @@
     <section class="section-y" id="reserve" aria-labelledby="reserve-title">
       <div class="wrap reserve-grid">
         <div>
-          <p class="eyebrow label reveal"><span class="idx">v.</span><span class="rule" aria-hidden="true"></span><span>Tempah meja</span></p>
-          <h2 class="h2 reveal" id="reserve-title" style="--d:.08s">Book a <em class="accent">table.</em></h2>
-          <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:28rem">Three quick steps. Your request lands in our WhatsApp and we reply to confirm, usually within the hour.</p>
+          <p class="eyebrow label reveal"><span class="idx">v.</span><span class="rule" aria-hidden="true"></span><span>Reservations</span></p>
+          <h2 class="h2 reveal" id="reserve-title" style="--d:.08s">Reserve <em class="accent">your seats.</em></h2>
+          <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:28rem">Four short steps. Your request arrives in our WhatsApp and we reply to confirm, usually within the hour.</p>
           <ul class="hours reveal" style="--d:.24s">
-            <li><span>Wednesday to Monday</span><span>6 PM to 11 PM</span></li>
-            <li><span>Last seating</span><span>9:30 PM</span></li>
+            <li><span>First seating</span><span>6:00 PM</span></li>
+            <li><span>Second seating</span><span>8:30 PM</span></li>
+            <li><span>Whole counter</span><span>Up to 12 guests</span></li>
             <li><span>Tuesday</span><span>Closed</span></li>
           </ul>
         </div>
@@ -202,7 +203,7 @@
           <h3>Which night?</h3>
           <p class="sub">Pick a date to start. You can change it later.</p>
           <div class="days" id="quickDays" role="group" aria-label="Choose a date"></div>
-          <button class="btn btn-solid btn-block label" type="button" data-book><span>Book a table</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button class="btn btn-solid btn-block label" type="button" data-book><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
           <p class="fine">Demo site: requests go to a fake WhatsApp number (+60 00 000 0000), so nobody receives them.</p>
         </div>
       </div>
@@ -212,15 +213,15 @@
     <section class="section-y faq" id="faq" aria-labelledby="faq-title" style="padding-top:0">
       <div class="wrap faq-grid">
         <div>
-          <p class="eyebrow label reveal"><span class="idx">vi.</span><span class="rule" aria-hidden="true"></span><span>Soalan lazim</span></p>
-          <h2 class="h2 reveal" id="faq-title" style="--d:.08s">Good to <em class="accent">know.</em></h2>
+          <p class="eyebrow label reveal"><span class="idx">vi.</span><span class="rule" aria-hidden="true"></span><span>FAQ</span></p>
+          <h2 class="h2 reveal" id="faq-title" style="--d:.08s">Before you <em class="accent">arrive.</em></h2>
         </div>
         <div class="reveal" style="--d:.12s">
-          <details><summary>Do I need to book?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Not always. Walk ins are welcome when there is space, but weekend evenings fill up, so a booking is the safer bet.</p></div></div></details>
-          <details><summary>Can you handle allergies?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Tell us in the booking notes and the kitchen will plan ahead. Many dishes use nuts, shellfish and belacan, so please be specific.</p></div></div></details>
-          <details><summary>Is it good for kids?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Very. Shared plates suit families, and we have high chairs. Let us know how many you need.</p></div></div></details>
-          <details><summary>Where do I park?<i aria-hidden="true"></i></summary><div class="ans"><div><p>There is street parking nearby and a paid car park a short walk away. Directions come with your booking confirmation.</p></div></div></details>
-          <details><summary>Do you do private events?<i aria-hidden="true"></i></summary><div class="ans"><div><p>The whole room can be booked for groups. Send us a WhatsApp with your date and headcount and we will reply with options.</p></div></div></details>
+          <details><summary>How long is dinner?<i aria-hidden="true"></i></summary><div class="ans"><div><p>About two hours. Each seating starts together, so please arrive on time.</p></div></div></details>
+          <details><summary>Can I choose where I sit?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Every seat faces the kitchen. Pick a preference when you book and we will do our best.</p></div></div></details>
+          <details><summary>Can you cater to dietary needs?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes, most allergies and preferences. Tell us when you book so the kitchen can prepare.</p></div></div></details>
+          <details><summary>Is there a dress code?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Smart casual. You sit close to the stove, so leave the heavy jacket at home.</p></div></div></details>
+          <details><summary>Can we book the whole counter?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Choose twelve guests in the booking, or send us a WhatsApp with your date and we will reply with options.</p></div></div></details>
         </div>
       </div>
     </section>
@@ -229,11 +230,11 @@
     <section class="visit section-y" id="visit" aria-labelledby="visit-title">
       <div class="wrap visit-grid">
         <div>
-          <p class="eyebrow label reveal"><span class="idx">vii.</span><span class="rule" aria-hidden="true"></span><span>Cari kami</span></p>
-          <h2 class="h2 reveal" id="visit-title" style="--d:.08s">Find the <em class="accent">shade.</em></h2>
+          <p class="eyebrow label reveal"><span class="idx">vii.</span><span class="rule" aria-hidden="true"></span><span>Visit</span></p>
+          <h2 class="h2 reveal" id="visit-title" style="--d:.08s">Find the <em class="accent">counter.</em></h2>
           <dl class="contact reveal" style="--d:.16s">
             <div><dt class="label">Address</dt><dd>Demo address<br>Kuala Lumpur, Malaysia</dd></div>
-            <div><dt class="label">Hours</dt><dd>Wednesday to Monday, 6 PM to 11 PM<br>Closed Tuesday</dd></div>
+            <div><dt class="label">Hours</dt><dd>Wednesday to Monday, seatings at 6:00 PM and 8:30 PM<br>Closed Tuesday</dd></div>
             <div><dt class="label">WhatsApp</dt><dd>+60 00 000 0000 (demo number)</dd></div>
           </dl>
         </div>
@@ -250,8 +251,8 @@
     <div class="wrap">
       <div class="foot-grid">
         <div>
-          <span class="wordmark"><span class="name">LINDAP</span><span class="sub label">Dining Room</span></span>
-          <p class="blurb">Modern Malaysian plates from the charcoal fire, made to share. Kuala Lumpur.</p>
+          <span class="wordmark"><span class="name">LINDAP</span><span class="sub label">Chef's Counter</span></span>
+          <p class="blurb">Twelve seats around an open kitchen in Kuala Lumpur. Two seatings a night, Wednesday to Monday.</p>
         </div>
         <a class="demo-card" href="https://irfanhakimi.com/kerja/">
           <p class="label">Demo by Irfan Hakimi</p>
@@ -260,14 +261,14 @@
         </a>
       </div>
       <div class="foot-legal">
-        <p>Lindap Dining Room is a fictional restaurant made for a website demo. The menu, prices, address and phone number are placeholders.</p>
+        <p>Lindap is a fictional restaurant made for a website demo. The menu, prices, address and phone number are placeholders.</p>
         <p>Photos: Unsplash, free licence stock, not of a real venue. <a href="img/CREDITS.txt">Photo credits</a></p>
       </div>
     </div>
   </footer>
 
   <div class="book-bar" id="bookBar" aria-hidden="true">
-    <button class="btn btn-solid btn-block label" type="button" data-book tabindex="-1"><span>Book a table</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    <button class="btn btn-solid btn-block label" type="button" data-book tabindex="-1"><span>Reserve your seats</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   </div>
 
   <!-- Booking sheet -->
@@ -276,7 +277,7 @@
     <div class="sheet">
       <div class="sheet-head">
         <div class="sheet-top">
-          <p class="t" id="bookTitle">Book a table</p>
+          <p class="t" id="bookTitle">Reserve at the counter</p>
           <button class="sheet-close" type="button" data-close aria-label="Close booking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
         <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -285,32 +286,32 @@
 
       <form class="steps-viewport" id="bookForm" novalidate>
         <section class="step active" data-step="0" aria-label="Date and guests">
-          <h2>Which night, and <em class="accent">how many?</em></h2>
+          <h2>Which night, and <em class="accent">how many seats?</em></h2>
           <p class="q label">Date</p>
           <div class="days" id="days" role="group" aria-label="Choose a date"></div>
           <p class="err" id="dateErr"></p>
           <p class="q label">Guests</p>
           <div class="guests">
             <button type="button" id="gMinus" aria-label="One fewer guest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 12h12"/></svg></button>
-            <output id="gCount" aria-live="polite">2 guests</output>
+            <output id="gCount" aria-live="polite">2 seats</output>
             <button type="button" id="gPlus" aria-label="One more guest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
           </div>
-          <p class="hint">Up to 12 online. Bigger group? Add it in the notes later.</p>
+          <p class="hint" id="guestHint">Up to 6 seats online. Choose 12 to book the whole counter.</p>
         </section>
 
         <section class="step" data-step="1" aria-label="Time">
-          <h2>What <em class="accent">time?</em></h2>
+          <h2>Which <em class="accent">seating?</em></h2>
           <p class="hint" id="timeFor" style="margin-top:.75rem"></p>
-          <div class="time-group" style="margin-top:1.75rem"><span class="label">Early</span><div class="times" id="timesEarly"></div></div>
-          <div class="time-group"><span class="label">Late</span><div class="times" id="timesLate"></div></div>
+          <div class="time-group" style="margin-top:1.75rem"><span class="label">Seatings</span><div class="times" id="timesEarly"></div></div>
+          <div class="time-group" hidden><div class="times" id="timesLate"></div></div>
           <p class="err" id="timeErr"></p>
         </section>
 
         <section class="step" data-step="2" aria-label="Your details">
-          <h2>Who is <em class="accent">coming?</em></h2>
+          <h2>A few <em class="accent">details.</em></h2>
           <div class="field" id="nameField">
             <label class="label" for="name">Name</label>
-            <input id="name" name="name" autocomplete="name" placeholder="Nama anda" enterkeyhint="next">
+            <input id="name" name="name" autocomplete="name" placeholder="Your name" enterkeyhint="next">
             <p class="err" id="nameErr"></p>
           </div>
           <div class="field" id="phoneField">
@@ -318,26 +319,32 @@
             <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012 345 6789" enterkeyhint="next">
             <p class="err" id="phoneErr"></p>
           </div>
+          <p class="q label">Seat preference (optional)</p>
+          <div class="occasions" id="pairings" data-single>
+            <button type="button" class="chip" aria-pressed="false">By the grill</button>
+            <button type="button" class="chip" aria-pressed="false">By the pass</button>
+            <button type="button" class="chip" aria-pressed="false">No preference</button>
+          </div>
           <p class="q label">Occasion (optional)</p>
           <div class="occasions" id="occasions">
             <button type="button" class="chip" aria-pressed="false">Birthday</button>
             <button type="button" class="chip" aria-pressed="false">Anniversary</button>
-            <button type="button" class="chip" aria-pressed="false">Family dinner</button>
-            <button type="button" class="chip" aria-pressed="false">Work</button>
+            <button type="button" class="chip" aria-pressed="false">Date night</button>
+            <button type="button" class="chip" aria-pressed="false">Business</button>
           </div>
           <div class="field">
-            <label class="label" for="notes">Notes (optional)</label>
-            <textarea id="notes" name="notes" placeholder="Allergies, high chair, anything we should know"></textarea>
+            <label class="label" for="notes">Dietary needs and notes (optional)</label>
+            <textarea id="notes" name="notes" placeholder="Allergies, preferences, anything we should prepare for"></textarea>
           </div>
         </section>
 
         <section class="step" data-step="3" aria-label="Review">
-          <h2>Looks <em class="accent">good?</em></h2>
+          <h2>All <em class="accent">set?</em></h2>
           <div class="review">
             <dl id="reviewList"></dl>
           </div>
           <div class="wa-preview" aria-label="Message preview">
-            <div class="bar"><span class="av" aria-hidden="true">L</span><span>Lindap Dining Room<br><small>Demo number +60 00 000 0000</small></span></div>
+            <div class="bar"><span class="av" aria-hidden="true">L</span><span>Lindap<br><small>Demo number +60 00 000 0000</small></span></div>
             <div class="bubble" id="bubble"></div>
           </div>
           <p class="fine done-note">Tapping the green button opens WhatsApp with this message filled in. This is a demo, so the number is fake and nobody receives it. Want this for your business? <a href="https://irfanhakimi.com/kerja/" style="color:var(--copper-2);text-decoration:underline">irfanhakimi.com/kerja</a></p>
@@ -346,22 +353,22 @@
 
       <div class="sheet-foot">
         <button class="btn btn-ghost back" type="button" id="stepBack" aria-label="Back" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-        <button class="btn btn-solid label next" type="button" id="stepNext"><span id="nextLabel">Choose a time</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="btn btn-solid label next" type="button" id="stepNext"><span id="nextLabel">Choose a seating</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <a class="btn btn-wa label next" id="waLink" href="#" target="_blank" rel="noopener" hidden><span>Send on WhatsApp</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </div>
 
-  <!-- Dish sheet -->
+  <!-- Course sheet -->
   <div class="sheet-wrap dish-sheet" id="dishSheet" role="dialog" aria-modal="true" aria-labelledby="dishName">
     <div class="sheet-backdrop" data-close></div>
     <div class="sheet">
-      <div class="frame photo"><img id="dishImg" src="img/satay.jpg" alt=""></div>
+      <div class="frame photo"><img id="dishImg" src="img/c1.jpg" alt=""></div>
       <button class="x" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       <div class="info">
-        <div class="row"><h3 id="dishName">Dish</h3><span class="price" id="dishPrice"></span></div>
+        <div class="row"><h3 id="dishName">Course</h3><span class="price" id="dishPrice"></span></div>
         <p id="dishDesc"></p>
-        <button class="btn btn-solid btn-block label" type="button" data-book style="margin-top:1.25rem"><span>Book a table</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button class="btn btn-solid btn-block label" type="button" data-book style="margin-top:1.25rem"><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
   </div>

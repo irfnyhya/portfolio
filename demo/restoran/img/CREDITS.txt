@@ -1,24 +1,25 @@
-Photo credits for the Lindap Dining Room demo (demo/restoran/)
+Photo credits for the Lindap chef's counter demo (demo/restoran/)
 
 All photos are from Unsplash and free to use under the Unsplash License
-(https://unsplash.com/license). Each photo page was checked on 20 Nov 2026 and
-shows "Free to use under the Unsplash License" (not Unsplash+).
+(https://unsplash.com/license). Each photo page was checked on 21 Nov 2026 and
+is listed as "Free Photo on Unsplash" under the Unsplash License (not Unsplash+).
 Files were downloaded from images.unsplash.com, cropped and re-compressed (JPEG q72).
-None of them show a real Lindap venue; Lindap is fictional.
+None of them show a real Lindap venue or its food; Lindap is fictional.
+No images were taken from Pinterest or Google results.
 
-file              | used for                     | photographer            | source
-hero-wide.jpg     | hero (desktop)               | Sholahudien Al Ayyuby   | https://unsplash.com/photos/meat-skewers-cooking-over-a-hot-grill-sjZwWcUuqko
-hero-tall.jpg     | hero (mobile crop)           | Sholahudien Al Ayyuby   | https://unsplash.com/photos/meat-skewers-cooking-over-a-hot-grill-sjZwWcUuqko
-grill.jpg         | story, satay over charcoal   | Nita Anggraeni Goenawan | https://unsplash.com/photos/grilled-meat-on-charcoal-grill-9tuLDya614I
-room.jpg          | dining room                  | Decima Athens           | https://unsplash.com/photos/a-restaurant-with-a-round-table-and-chairs-PisnUZWdsms
-room-tall.jpg     | dining room                  | Antonio Araujo          | https://unsplash.com/photos/cozy-restaurant-interior-with-tables-and-seating-yQYtdkKOLnQ
-spread.jpg        | sharing table                | Takashi Miyazaki        | https://unsplash.com/photos/indonesian-feast-spread-on-wooden-table-LZDdhaYd9Z4
-satay.jpg         | menu: Satay ayam             | K Azwan                 | https://unsplash.com/photos/a-white-plate-topped-with-meat-and-veggies-next-to-a-bowl-of-sauce-qCmoHnvA94o
-ulam-sambal.jpg   | menu: Ulam platter           | Keriliwi                | https://unsplash.com/photos/vegetable-salad-on-brown-wooden-round-plate-zcxEoLOCTvQ
-ikan-bakar.jpg    | menu: Ikan bakar             | Michael Lock            | https://unsplash.com/photos/a-grilled-fish-sitting-on-top-of-a-banana-leaf-hVnClpnYUUk
-ayam-bakar.jpg    | menu: Ayam bakar             | Brian Fathurohman       | https://unsplash.com/photos/cooked-meat-with-sauce-on-white-ceramic-plate-dPoNxtkaz0Q
-rendang.jpg       | menu: Rendang daging         | qaz farid               | https://unsplash.com/photos/a-close-up-of-a-bowl-of-food-on-a-table-bX7UPKH1vxs
-nasi-lemak.jpg    | menu: Nasi lemak             | You Le                  | https://unsplash.com/photos/nasi-lemak-served-on-banana-leaf-with-spoon-o5UmAx8vEjg
-kuih-lapis.jpg    | menu: Kuih lapis             | You Le                  | https://unsplash.com/photos/rows-of-colorful-layered-cakes-on-wooden-trays-WMscq_3YADI
-kuih-daun.jpg     | menu: Kuih koci              | RANGGA ANDIKA WIBISANA  | https://unsplash.com/photos/delicious-traditional-snacks-wrapped-in-banana-leaves-on-driftwood-60kMO-HkSMA
-teh-tarik.jpg     | menu: Teh tarik              | Far Chinberdiev         | https://unsplash.com/photos/milk-tea-in-glass-mug-BiITU-lIFbs
+file           | used for                          | photographer        | source
+hero-tall.jpg  | hero (mobile) and menu: Tuna Crudo | Tommaso Ubezio      | https://unsplash.com/photos/chef-presents-a-beautifully-plated-raw-tuna-dish-7IyWeHwhJu0
+hero-wide.jpg  | hero (desktop crop)               | Tommaso Ubezio      | https://unsplash.com/photos/chef-presents-a-beautifully-plated-raw-tuna-dish-7IyWeHwhJu0
+chef.jpg       | about section                     | Alfonso Betancourt  | https://unsplash.com/photos/chef-carefully-plating-a-gourmet-dish-with-tweezers-q4nWGwVM2Vk
+detail.jpg     | about section                     | Tommaso Ubezio      | https://unsplash.com/photos/chef-garnishing-dessert-with-chocolate-sauce-and-shavings-VVxzs6d054Q
+c1.jpg         | menu: Oyster, Cucumber, Shiso      | Alfonso Betancourt  | https://unsplash.com/photos/chefs-hands-preparing-an-oyster-with-a-spoon-FPSpM4wRPc4
+c2.jpg         | menu: Crab Custard                | Ruben Mavarez       | https://unsplash.com/photos/tongs-placing-small-white-food-onto-a-blue-textured-plate-xDrI8ibpc3g
+c3.jpg         | menu: Clear Fish Consomme         | Alfonso Betancourt  | https://unsplash.com/photos/chef-garnishing-a-delicate-seafood-dish-with-herbs-8jdHX286teU
+c4.jpg         | menu: Charred Octopus             | Tomi Saputra        | https://unsplash.com/photos/chef-garnishing-a-cooked-octopus-dish-with-greens-RRBXtaAonvk
+c5.jpg         | menu: Dry Aged Striploin          | Urban Gyllström     | https://unsplash.com/photos/chef-pouring-sauce-over-plated-steak-MaWMfm-HCqQ
+c6.jpg         | menu: Pandan Dome                | Madeline Liu        | https://unsplash.com/photos/gourmet-green-dessert-with-edible-flowers-and-gold-dust-dZR5FpxIROU
+c7.jpg         | menu: Palm Sugar Caramel          | Madeline Liu        | https://unsplash.com/photos/gourmet-dessert-with-caramel-sauce-and-edible-flowers-gvar4yxpBWk
+petit.jpg      | menu: Chocolate Pinecone          | Sung Jin Cho        | https://unsplash.com/photos/dessert-shaped-like-a-pinecone-on-a-white-plate-BLwiDtdCTTU
+pass.jpg       | the counter, open kitchen         | Fabrizio Magoni     | https://unsplash.com/photos/person-preparing-cooked-dish-boaDpmC-_Xo
+room.jpg       | dining room                       | takahiro taguchi    | https://unsplash.com/photos/lighted-lamps-in-room-8l_RuuZrOyY
+private.jpg    | whole counter booking             | Nadia Valko         | https://unsplash.com/photos/dining-table-set-with-candles-0hAdietsUrE

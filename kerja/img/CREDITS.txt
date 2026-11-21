@@ -2,10 +2,9 @@ Images in kerja/img/
 
 butik-phone.jpg, tempahan-phone.jpg, restoran-phone.jpg
   Screenshots of Irfan Hakimi's own demo sites (/demo/butik/, /demo/tempahan/,
-  /demo/restoran/), retaken at 375px wide on 2026-11-20 at 21:26, after the
-  final demo redesigns (butik-phone.jpg replaced at 22:10 after the boutique
-  demo was restyled dark; that capture came from the butik demo session and
-  was checked against the live demo). Any photographs visible inside these screenshots
+  /demo/restoran/), retaken at 375px wide on 2026-11-22 at 01:30 from the
+  current demos (boutique: Maison Ve’ra, streetwear, bags and heels with a
+  demo checkout; restaurant: Lindap, a chef's counter). Any photographs visible inside these screenshots
   belong to those demos and are credited in demo/<name>/img/CREDITS.txt.
 
 No stock photos (Unsplash, Pexels or otherwise) are used on /kerja/.

@@ -1,32 +1,37 @@
-/* Lindap Dining Room demo: plain JS, no build step. */
+/* Lindap chef's counter demo: plain JS, no build step. */
 (function () {
   "use strict";
 
   var WA_NUMBER = "60000000000"; // fake demo number, nobody receives these messages
   var CLOSED_WEEKDAY = 2; // Tuesday
   var OPEN_H = 18, CLOSE_H = 23;
-  var DAYS_AHEAD = 21;
+  var DAYS_AHEAD = 28;
   var MAX_GUESTS = 12;
-  var TIMES_EARLY = ["18:00", "18:30", "19:00", "19:30"];
-  var TIMES_LATE = ["20:00", "20:30", "21:00", "21:30"];
+  var PRIVATE_FROM = 12; // 12 guests = the whole counter
+  var TIMES_EARLY = ["18:00", "20:30"];
+  var TIMES_LATE = [];
 
   var DISHES = {
-    satay: { name: "Satay ayam", price: 24, img: "img/satay.jpg", kind: "Kecil", desc: "Ten chicken skewers marinated in lemongrass and turmeric, with kuah kacang, nasi impit and cucumber.", alt: "Chicken satay with peanut sauce, rice cakes and cucumber" },
-    ulam: { name: "Ulam platter", price: 28, img: "img/ulam-sambal.jpg", kind: "Kecil", desc: "Market ulam and cucumber with sambal belacan and sambal hijau, plus a grilled chicken leg to share.", alt: "Ulam, cucumber and two sambals with grilled chicken on a banana leaf", tag: "To share" },
-    ikan: { name: "Ikan bakar", price: 38, img: "img/ikan-bakar.jpg", kind: "Dari api", desc: "Whole fish grilled on banana leaf over charcoal, with air asam and lime.", alt: "Whole grilled fish on a banana leaf" },
-    ayam: { name: "Ayam bakar", price: 34, img: "img/ayam-bakar.jpg", kind: "Dari api", desc: "Half chicken basted in sweet soy and spice, grilled slowly, with sambal merah and rice.", alt: "Grilled chicken with rice, sambal and salad on a plate" },
-    rendang: { name: "Rendang daging", price: 42, img: "img/rendang.jpg", kind: "Gulai", desc: "Beef cooked down for hours with kerisik, galangal and chilli until dark and dry. Best with rice.", alt: "Beef rendang in a blue and white bowl with fresh chillies" },
-    nasi: { name: "Nasi lemak", price: 18, img: "img/nasi-lemak.jpg", kind: "Nasi", desc: "Coconut rice in banana leaf with sambal, crispy anchovies, peanuts and egg.", alt: "Nasi lemak with sambal on a banana leaf" },
-    koci: { name: "Kuih koci", price: 12, img: "img/kuih-daun.jpg", kind: "Manis", desc: "Glutinous rice parcels wrapped in banana leaf, filled with coconut and gula melaka.", alt: "Pyramid shaped kuih wrapped in banana leaf" },
-    lapis: { name: "Kuih lapis", price: 10, img: "img/kuih-lapis.jpg", kind: "Manis", desc: "Steamed layer cake, coconut milk and rose, cut fresh each evening.", alt: "Trays of colourful layered kuih" },
-    teh: { name: "Teh tarik", price: 8, img: "img/teh-tarik.jpg", kind: "Minum", desc: "Strong tea and condensed milk, pulled to order until frothy. Hot or iced.", alt: "A glass mug of frothy teh tarik" }
+    tuna: { name: "Tuna Crudo", price: "RM 46", img: "img/hero-tall.jpg", kind: "To start", desc: "Line caught tuna, cured lightly, with toasted seeds, young herbs and a sharp citrus dressing.", alt: "Raw tuna topped with herbs in a stone bowl" },
+    c1: { name: "Oyster, Cucumber, Shiso", price: "RM 18 each", img: "img/c1.jpg", kind: "To start", desc: "Opened to order at the counter, with cucumber granita and a drop of shiso oil.", alt: "A chef dressing an oyster with a spoon" },
+    c2: { name: "Crab Custard", price: "RM 42", img: "img/c2.jpg", kind: "To start", desc: "Blue swimmer crab, soft egg yolk custard, quail egg and a crisp curry leaf crumb.", alt: "Small white spheres placed on a yellow crab custard on a blue plate" },
+    c3: { name: "Clear Fish Consomme", price: "RM 34", img: "img/c3.jpg", kind: "To start", desc: "A clear, deep fish broth with lime leaf oil and garden flowers, poured at the counter.", alt: "A chef garnishing a small bowl of broth with herbs" },
+    c4: { name: "Charred Octopus", price: "RM 78", img: "img/c4.jpg", kind: "Mains", desc: "Octopus braised slowly then charred over coals, with smoked chilli glaze and bitter leaves.", alt: "Charred octopus topped with greens on a white plate" },
+    c5: { name: "Dry Aged Striploin", price: "RM 168", img: "img/c5.jpg", kind: "Mains", desc: "Grass fed striploin, layered potato terrine and a red wine jus poured in front of you.", alt: "Sauce poured over plated beef and a potato terrine" },
+    c6: { name: "Pandan Dome", price: "RM 32", img: "img/c6.jpg", kind: "Desserts", desc: "Pandan and coconut mousse, palm sugar centre, edible flowers and a little gold.", alt: "A green dome dessert topped with white flowers and gold flakes" },
+    c7: { name: "Palm Sugar Caramel", price: "RM 30", img: "img/c7.jpg", kind: "Desserts", desc: "Burnt palm sugar caramel, guava sorbet and butterfly pea flowers.", alt: "Caramel and sorbet with purple flowers on a dark plate" },
+    pf: { name: "Chocolate Pinecone", price: "RM 28", img: "img/petit.jpg", kind: "Desserts", desc: "Dark chocolate shell, coffee cream and cocoa crumb. Made for sharing.", alt: "A chocolate dessert shaped like a pinecone beside a candle" }
   };
-  var SIGNATURES = ["ikan", "satay", "rendang", "ayam", "nasi"];
+  var SIGNATURES = ["tuna", "c2", "c4", "c5", "c6", "c7"];
   var MENU = [
-    { id: "kecil", title: "Kecil", lead: "Small plates to start the table.", items: ["satay", "ulam"] },
-    { id: "api", title: "Dari Api", lead: "Off the charcoal.", items: ["ikan", "ayam"] },
-    { id: "nasi", title: "Nasi & Gulai", lead: "Rice and slow cooked curry for the middle.", items: ["rendang", "nasi"] },
-    { id: "manis", title: "Manis & Minum", lead: "Something sweet, something cold.", items: ["koci", "lapis", "teh"] }
+    { id: "start", title: "To Start", lead: "Small plates, cold and hot.", items: ["tuna", "c1", "c2", "c3"] },
+    { id: "mains", title: "Mains", lead: "From the stove and the coals.", items: ["c4", "c5"] },
+    { id: "desserts", title: "Desserts", lead: "Plated at the counter.", items: ["c6", "c7", "pf"] },
+    { id: "drinks", title: "Drinks", lead: "House made, alcohol free.", text: [
+      ["House Lime Soda", "RM 16", "Fresh lime, cane sugar and soda, poured over hand cut ice."],
+      ["Cold Brew Tea", "RM 18", "Slow steeped black tea with orange peel and a little honey."],
+      ["Seasonal Spritz", "RM 22", "Fruit from the market, bitter herbs and sparkling water."]
+    ] }
   ];
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -39,8 +44,8 @@
     var now = new Date(), d = now.getDay(), h = now.getHours();
     var el = $("status"), t = $("statusText");
     if (d === CLOSED_WEEKDAY) { el.classList.add("closed"); t.textContent = "Closed today · Back tomorrow at 6 PM"; }
-    else if (h < OPEN_H) t.textContent = "Open tonight · 6 PM to 11 PM";
-    else if (h < CLOSE_H) t.textContent = "Open now · Kitchen until 10:30 PM";
+    else if (h < OPEN_H) t.textContent = "Seatings tonight at 6:00 PM and 8:30 PM";
+    else if (h < CLOSE_H) t.textContent = "Kitchen open now · Last seating 8:30 PM";
     else { el.classList.add("closed"); t.textContent = (d + 1) % 7 === CLOSED_WEEKDAY ? "Closed now · Back Wednesday at 6 PM" : "Closed now · Back tomorrow at 6 PM"; }
   })();
 
@@ -122,10 +127,10 @@
     var ctx = cv.getContext("2d"), parts = [], w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2), running = true;
     function size() { w = cv.clientWidth; h = cv.clientHeight; cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     function spawn(init) {
-      return { x: Math.random() * w, y: init ? Math.random() * h : h + 10, r: Math.random() * 1.6 + 0.4, vy: Math.random() * 0.6 + 0.25, vx: (Math.random() - 0.5) * 0.3, life: Math.random() * 0.6 + 0.4, ph: Math.random() * 6.28 };
+      return { x: Math.random() * w, y: init ? Math.random() * h : h + 10, r: Math.random() * 1.1 + 0.3, vy: Math.random() * 0.25 + 0.08, vx: (Math.random() - 0.5) * 0.15, life: Math.random() * 0.45 + 0.2, ph: Math.random() * 6.28 };
     }
     size();
-    var n = w < 768 ? 28 : 55;
+    var n = w < 768 ? 18 : 34;
     for (var i = 0; i < n; i++) parts.push(spawn(true));
     window.addEventListener("resize", size);
     new IntersectionObserver(function (es) { running = es[0].isIntersecting; if (running) requestAnimationFrame(tick); }).observe(cv);
@@ -137,8 +142,8 @@
         var a = Math.max(0, Math.min(1, p.y / h)) * p.life;
         if (p.y < -10) parts[i] = spawn(false);
         ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.28);
-        ctx.fillStyle = "rgba(255," + (150 + (p.r * 30 | 0)) + ",90," + a.toFixed(3) + ")";
-        ctx.shadowColor = "rgba(255,140,60,.8)"; ctx.shadowBlur = 8;
+        ctx.fillStyle = "rgba(240," + (200 + (p.r * 20 | 0)) + ",160," + a.toFixed(3) + ")";
+        ctx.shadowColor = "rgba(235,194,164,.7)"; ctx.shadowBlur = 6;
         ctx.fill();
       });
       requestAnimationFrame(tick);
@@ -159,7 +164,7 @@
   var rail = $("rail"), railBar = $("railBar");
   rail.innerHTML = SIGNATURES.map(function (k) {
     var d = DISHES[k];
-    return '<button type="button" class="card" data-dish="' + k + '"><img loading="lazy" src="' + d.img + '" alt="' + esc(d.alt) + '" width="900" height="900"><span class="price">RM' + d.price + '</span><span class="body"><span class="kind label">' + esc(d.kind) + '</span><h3>' + esc(d.name) + "</h3><p>" + esc(d.desc) + "</p></span></button>";
+    return '<button type="button" class="card" data-dish="' + k + '"><img loading="lazy" src="' + d.img + '" alt="' + esc(d.alt) + '" width="900" height="1125"><span class="price">' + esc(d.price) + '</span><span class="body"><span class="kind label">' + esc(d.kind) + '</span><h3>' + esc(d.name) + "</h3><p>" + esc(d.desc) + "</p></span></button>";
   }).join("");
   function railProgress() {
     var max = rail.scrollWidth - rail.clientWidth;
@@ -200,10 +205,13 @@
     var chip = tabsEl.children[i];
     tabsEl.scrollTo({ left: chip.offsetLeft - 20, behavior: reduce ? "auto" : "smooth" });
     panel.setAttribute("aria-labelledby", "tab-" + s.id);
-    panel.innerHTML = '<p class="lead">' + esc(s.lead) + '</p><div class="dishes">' + s.items.map(function (k) {
+    var body = s.items ? s.items.map(function (k) {
       var d = DISHES[k];
-      return '<button type="button" class="dish" data-dish="' + k + '"><span class="thumb"><img loading="lazy" src="' + d.img + '" alt="' + esc(d.alt) + '" width="900" height="900"></span><span><span class="row"><h3>' + esc(d.name) + '</h3><span class="dots" aria-hidden="true"></span><span class="price">RM' + d.price + '</span></span><span class="desc" style="display:block">' + esc(d.desc) + "</span>" + (d.tag ? '<span class="tag">' + esc(d.tag) + "</span>" : "") + "</span></button>";
-    }).join("") + "</div>";
+      return '<button type="button" class="dish" data-dish="' + k + '"><span class="thumb"><img loading="lazy" src="' + d.img + '" alt="' + esc(d.alt) + '" width="900" height="1125"></span><span><span class="row"><h3>' + esc(d.name) + '</h3><span class="dots" aria-hidden="true"></span><span class="price">' + esc(d.price) + '</span></span><span class="desc" style="display:block">' + esc(d.desc) + "</span></span></button>";
+    }).join("") : s.text.map(function (t) {
+      return '<div class="dish dish-text"><span><span class="row"><h3>' + esc(t[0]) + '</h3><span class="dots" aria-hidden="true"></span><span class="price">' + esc(t[1]) + '</span></span><span class="desc" style="display:block">' + esc(t[2]) + "</span></span></div>";
+    }).join("");
+    panel.innerHTML = '<p class="lead">' + esc(s.lead) + '</p><div class="dishes">' + body + "</div>";
     panel.classList.remove("swap"); void panel.offsetWidth; panel.classList.add("swap");
     if (focus) chip.focus();
     if (fromClick) {
@@ -260,7 +268,7 @@
     var b = e.target.closest("[data-dish]"); if (!b) return;
     var d = DISHES[b.getAttribute("data-dish")];
     $("dishImg").src = d.img; $("dishImg").alt = d.alt;
-    $("dishName").textContent = d.name; $("dishPrice").textContent = "RM" + d.price;
+    $("dishName").textContent = d.name; $("dishPrice").textContent = d.price;
     $("dishDesc").textContent = d.desc;
     lastFocus = b;
     showSheet(dishSheet);
@@ -273,8 +281,8 @@
   var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var monNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var fullDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var STEP_NAMES = ["When", "Time", "Details", "Review"];
-  var NEXT_LABELS = ["Choose a time", "Your details", "Review booking", ""];
+  var STEP_NAMES = ["When", "Seating", "Details", "Review"];
+  var NEXT_LABELS = ["Choose a seating", "Your details", "Review request", ""];
 
   function fmtTime(hhmm) { var h = Number(hhmm.slice(0, 2)); return (h % 12 || 12) + ":" + hhmm.slice(3) + " " + (h >= 12 ? "PM" : "AM"); }
   function fmtDate(d) { return fullDays[d.getDay()] + ", " + d.getDate() + " " + monNames[d.getMonth()]; }
@@ -285,7 +293,7 @@
   for (var k = 0; k < DAYS_AHEAD; k++) { var dd = new Date(today); dd.setDate(today.getDate() + k); dates.push(dd); }
   function lastSlotPassed(d) {
     if (!sameDay(d, new Date())) return false;
-    var s = new Date(d); s.setHours(21, 30, 0, 0);
+    var s = new Date(d); s.setHours(20, 30, 0, 0);
     return s - new Date() < 60 * 60 * 1000;
   }
   function buildDays(container) {
@@ -338,18 +346,28 @@
         el.appendChild(b);
       });
     });
-    $("timeFor").textContent = state.date ? fmtDate(state.date) + " · " + state.guests + (state.guests === 1 ? " guest" : " guests") : "";
+    $("timeFor").textContent = state.date ? fmtDate(state.date) + " · " + state.guests + (state.guests === 1 ? " seat" : " seats") : "";
   }
 
   function renderGuests() {
-    $("gCount").textContent = state.guests + (state.guests === 1 ? " guest" : " guests");
+    $("gCount").textContent = state.guests + (state.guests === 1 ? " seat" : " seats");
     $("gMinus").disabled = state.guests <= 1;
     $("gPlus").disabled = state.guests >= MAX_GUESTS;
+    $("guestHint").textContent = state.guests >= PRIVATE_FROM ? "That is the whole counter. We will reply with options for your group."
+      : state.guests > 6 ? "For 7 to 11 guests we check seats by hand. Send the request and we will reply."
+      : "Up to 6 seats online. Choose 12 to book the whole counter.";
   }
   $("gMinus").addEventListener("click", function () { if (state.guests > 1) { state.guests--; renderGuests(); } });
   $("gPlus").addEventListener("click", function () { if (state.guests < MAX_GUESTS) { state.guests++; renderGuests(); } });
   renderGuests();
 
+  state.pairing = "";
+  $("pairings").addEventListener("click", function (e) {
+    var b = e.target.closest(".chip"); if (!b) return;
+    var on = b.getAttribute("aria-pressed") !== "true";
+    Array.prototype.forEach.call($("pairings").children, function (x) { x.setAttribute("aria-pressed", String(x === b && on)); });
+    state.pairing = on ? b.textContent : "";
+  });
   $("occasions").addEventListener("click", function (e) {
     var b = e.target.closest(".chip"); if (!b) return;
     var on = b.getAttribute("aria-pressed") !== "true";
@@ -364,7 +382,7 @@
 
   function validate(s) {
     if (s === 0) { if (!state.date) { $("dateErr").textContent = "Please pick a date."; return false; } }
-    if (s === 1) { if (!state.time) { $("timeErr").textContent = "Please pick a time."; return false; } }
+    if (s === 1) { if (!state.time) { $("timeErr").textContent = "Please pick a seating."; return false; } }
     if (s === 2) {
       var name = $("name").value.trim(), digits = $("phone").value.replace(/\D/g, "");
       var ok = true;
@@ -377,14 +395,18 @@
 
   function message() {
     var notes = $("notes").value.trim();
-    var lines = ["Hi Lindap, saya nak tempah meja.", "", "Name: " + $("name").value.trim(), "Date: " + fmtDate(state.date) + " " + state.date.getFullYear(), "Time: " + fmtTime(state.time), "Guests: " + state.guests, "Phone: " + $("phone").value.trim()];
+    var lines = ["Hi Lindap, I would like to reserve seats at the counter.", "", "Name: " + $("name").value.trim(), "Date: " + fmtDate(state.date) + " " + state.date.getFullYear(), "Seating: " + fmtTime(state.time), "Seats: " + state.guests, "Phone: " + $("phone").value.trim()];
+    if (state.guests >= PRIVATE_FROM) lines.push("Booking: whole counter");
+    if (state.pairing) lines.push("Seat preference: " + state.pairing);
     if (state.occasions.length) lines.push("Occasion: " + state.occasions.join(", "));
     if (notes) lines.push("Notes: " + notes);
-    lines.push("", "Terima kasih!");
+    lines.push("", "Thank you!");
     return lines.join("\n");
   }
   function buildReview() {
-    var rows = [["Date", fmtDate(state.date), 0], ["Time", fmtTime(state.time), 1], ["Guests", String(state.guests), 0], ["Name", $("name").value.trim(), 2], ["Phone", $("phone").value.trim(), 2]];
+    var rows = [["Date", fmtDate(state.date), 0], ["Seating", fmtTime(state.time), 1], ["Seats", String(state.guests), 0], ["Name", $("name").value.trim(), 2], ["Phone", $("phone").value.trim(), 2]];
+    if (state.guests >= PRIVATE_FROM) rows.push(["Booking", "Whole counter", 0]);
+    if (state.pairing) rows.push(["Seat", state.pairing, 2]);
     if (state.occasions.length) rows.push(["Occasion", state.occasions.join(", "), 2]);
     $("reviewList").innerHTML = rows.map(function (r) {
       return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + ' <button type="button" class="edit" data-goto="' + r[2] + '">Edit</button></dd></div>';

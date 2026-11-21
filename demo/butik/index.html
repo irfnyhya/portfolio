@@ -3,20 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Rona Kasturi, butik baju kurung, kebaya dan tudung</title>
+    <title>Maison Ve’ra, pakaian jalanan, beg dan kasut tumit</title>
     <meta
       name="description"
-      content="Laman demo butik pakaian Muslimah: baju kurung, kebaya dan tudung. Pilih rona dan saiz, kemudian sediakan pesanan untuk WhatsApp."
+      content="Laman demo butik wanita: pakaian jalanan, beg tangan dan kasut tumit. Pilih rona dan saiz, kemudian bayar terus dengan FPX, kad, DuitNow QR atau Atome."
     />
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#0c0c0e" />
+    <meta name="theme-color" content="#fdfcf9" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230c0c0e'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%23e8892b'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23fdfcf9'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%238a5a3c'/%3E%3C/svg%3E"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <script>document.documentElement.classList.add("js");</script>
   </head>
@@ -24,7 +24,7 @@
     <a class="skip" href="#koleksi">Terus ke koleksi</a>
 
     <p class="demo-bar">
-      <span>Demo oleh <a href="https://irfanhakimi.com/kerja/">Irfan Hakimi</a></span>
+      <span>Laman demo oleh <a href="https://irfanhakimi.com/kerja/">Irfan Hakimi</a>. Pos percuma dari RM250.</span>
       <a href="#owner">Paparan pemilik</a>
     </p>
 
@@ -32,7 +32,7 @@
       <button class="icon-btn" type="button" data-open-menu aria-label="Buka menu">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
       </button>
-      <a class="wordmark" href="#top" aria-label="Rona Kasturi, ke atas">Rona Kasturi</a>
+      <a class="wordmark" href="#top" aria-label="Maison Ve’ra, ke atas">Maison Ve’ra</a>
       <div class="bar-right">
         <a class="icon-btn" href="#koleksi" aria-label="Cari dalam koleksi" data-filter="semua">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -46,112 +46,94 @@
 
     <dialog class="menu" data-menu aria-label="Menu">
       <div class="menu-head">
-        <span class="wordmark">Rona Kasturi</span>
+        <span class="wordmark">Maison Ve’ra</span>
         <button class="icon-btn" type="button" data-close-menu aria-label="Tutup menu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6"/></svg>
         </button>
       </div>
       <nav class="menu-nav" aria-label="Utama">
-        <a href="#koleksi" data-filter="raya">Koleksi Raya</a>
         <a href="#koleksi" data-filter="baru">Baru tiba</a>
-        <a href="#koleksi" data-filter="kurung">Baju kurung</a>
-        <a href="#koleksi" data-filter="kebaya">Kebaya</a>
-        <a href="#koleksi" data-filter="tudung">Tudung</a>
-        <a href="#cara">Cara tempah</a>
-        <a href="#saiz">Panduan saiz</a>
-        <a href="#owner">Paparan pemilik</a>
+        <a href="#koleksi" data-filter="pakaian">Pakaian</a>
+        <a href="#koleksi" data-filter="beg">Beg tangan</a>
+        <a href="#koleksi" data-filter="kasut">Kasut tumit</a>
+        <a class="menu-small" href="#cara">Cara tempah</a>
+        <a class="menu-small" href="#saiz">Panduan saiz</a>
+        <a class="menu-small" href="#owner">Paparan pemilik</a>
       </nav>
       <p class="menu-foot">Shah Alam, Selangor. Isnin hingga Sabtu, 10 pagi hingga 6 petang.</p>
     </dialog>
 
     <main id="top">
-      <section class="banner banner-hero" aria-labelledby="hero-title">
-        <picture>
-          <source media="(min-width: 900px)" srcset="img/b-hero-d.jpg" width="1920" height="1080" />
-          <img src="img/b-hero-m.jpg" width="900" height="1600" alt="Wanita bertudung hitam memandang ke atas di bawah pohon gelap" fetchpriority="high" />
-        </picture>
-        <div class="banner-copy">
-          <h1 id="hero-title">Rona untuk setiap majlis</h1>
-          <p>Baju kurung, kebaya dan tudung. Butik kecil di Shah Alam.</p>
-          <a class="cta" href="#koleksi" data-filter="semua"><span aria-hidden="true">&rarr;</span> Beli semua</a>
+      <section class="hero" aria-labelledby="hero-title">
+        <figure class="hero-pic"><img src="img/hero.jpg" width="1000" height="1500" alt="Wanita berkot kulit merah jambu terbaring di atas garisan tempat letak kereta" fetchpriority="high" /></figure>
+        <figure class="hero-pic hero-pic-2"><img src="img/hero-2.jpg" width="1000" height="1500" loading="lazy" alt="Potret hitam putih wanita berambut kerinting dengan baju tali halus di jalan bandar" /></figure>
+        <div class="hero-copy">
+          <p class="eyebrow">Baru tiba</p>
+          <h1 id="hero-title">Gaya Kota</h1>
+          <p>Pakaian jalanan, beg tangan dan kasut tumit untuk wanita.</p>
+          <a class="cta" href="#koleksi" data-filter="baru">Beli yang baru</a>
         </div>
       </section>
 
-      <section class="banner" aria-labelledby="b-raya">
-        <picture>
-          <source media="(min-width: 900px)" srcset="img/b-raya-d.jpg" width="1920" height="1080" />
-          <img src="img/b-raya-m.jpg" width="900" height="1600" loading="lazy" alt="Kebaya biru firus bersulam emas dengan hiasan kepala pengantin" />
-        </picture>
-        <div class="banner-copy">
-          <h2 id="b-raya">Koleksi Raya</h2>
-          <a class="cta" href="#koleksi" data-filter="raya"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+      <section class="cats" aria-labelledby="cats-title">
+        <div class="sec-head">
+          <h2 id="cats-title" class="sec-title">Pilih ikut kategori</h2>
         </div>
+        <ul class="tiles">
+          <li><a class="tile" href="#koleksi" data-filter="pakaian">
+            <span class="tile-pic"><img src="img/tile-pakaian.jpg" width="800" height="1000" loading="lazy" alt="Wanita berbeanie dan cermin mata hitam dengan jaket kulit longgar di tepi kereta" /></span>
+            <span class="tile-name">Pakaian <span aria-hidden="true">&#8600;</span></span>
+          </a></li>
+          <li><a class="tile" href="#koleksi" data-filter="kasut">
+            <span class="tile-pic"><img src="img/tile-kasut.jpg" width="800" height="1000" loading="lazy" alt="Gambar hitam putih tangan membetulkan tali kasut tumit" /></span>
+            <span class="tile-name">Kasut tumit <span aria-hidden="true">&#8600;</span></span>
+          </a></li>
+          <li><a class="tile" href="#koleksi" data-filter="beg">
+            <span class="tile-pic"><img src="img/tile-beg.jpg" width="1600" height="1000" loading="lazy" alt="Beg kulit perang tergantung di pinggang berlatar laut biru" /></span>
+            <span class="tile-name">Beg tangan <span aria-hidden="true">&#8600;</span></span>
+          </a></li>
+        </ul>
       </section>
 
-      <section class="banner" aria-labelledby="b-kebaya">
-        <picture>
-          <source media="(min-width: 900px)" srcset="img/b-kebaya-d.jpg" width="1920" height="1080" />
-          <img src="img/b-kebaya-m.jpg" width="900" height="1600" loading="lazy" alt="Potret hitam putih kebaya renda bermanik dengan hiasan kepala" />
-        </picture>
-        <div class="banner-copy">
-          <h2 id="b-kebaya">Kebaya</h2>
-          <a class="cta" href="#koleksi" data-filter="kebaya"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
-        </div>
-      </section>
-
-      <section class="banner" aria-labelledby="b-kurung">
-        <picture>
-          <source media="(min-width: 900px)" srcset="img/b-kurung-d.jpg" width="1920" height="1080" />
-          <img src="img/b-kurung-m.jpg" width="900" height="1600" loading="lazy" alt="Baju hijau zaitun bersulam emas dengan kain batik, di atas pentas peragaan" />
-        </picture>
-        <div class="banner-copy">
-          <h2 id="b-kurung">Baju kurung</h2>
-          <a class="cta" href="#koleksi" data-filter="kurung"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
-        </div>
-      </section>
-
-      <section class="banner" aria-labelledby="b-tudung">
-        <picture>
-          <source media="(min-width: 900px)" srcset="img/b-tudung-d.jpg" width="1920" height="1080" />
-          <img src="img/b-tudung-m.jpg" width="900" height="1600" loading="lazy" alt="Potret dekat wanita bertudung hitam yang menutup separuh wajah, latar malam" />
-        </picture>
-        <div class="banner-copy">
-          <h2 id="b-tudung">Tudung</h2>
-          <a class="cta" href="#koleksi" data-filter="tudung"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
-        </div>
-      </section>
-
-      <section class="banner" aria-labelledby="b-baru">
-        <picture>
-          <source media="(min-width: 900px)" srcset="img/b-malam-d.jpg" width="1920" height="1080" />
-          <img src="img/b-malam-m.jpg" width="900" height="1600" loading="lazy" alt="Butiran jubah hitam bersulam bunga dan renda di lengan" />
-        </picture>
-        <div class="banner-copy">
-          <h2 id="b-baru">Baru tiba</h2>
-          <a class="cta" href="#koleksi" data-filter="baru"><span aria-hidden="true">&rarr;</span> Beli koleksi</a>
+      <section class="edit" aria-labelledby="ed-beg">
+        <figure class="edit-pic"><img src="img/ed-beg.jpg" width="1000" height="1250" loading="lazy" alt="Tangan memegang beg tote kulit hitam di sisi seluar putih labuh, di tepi jalan" /></figure>
+        <div class="edit-copy">
+          <p class="eyebrow">Bawa ke mana saja</p>
+          <h2 id="ed-beg">Beg tangan</h2>
+          <p>Kulit lembut, tali boleh laras dan cukup ruang untuk telefon, dompet dan gincu.</p>
+          <a class="cta" href="#koleksi" data-filter="beg">Beli beg</a>
         </div>
       </section>
 
       <section id="koleksi" class="koleksi" aria-labelledby="koleksi-title">
         <div class="koleksi-head">
-          <h2 id="koleksi-title" class="sec-title" data-koleksi-title>Semua</h2>
+          <h2 id="koleksi-title" class="sec-title" data-koleksi-title>Semua koleksi</h2>
           <div class="tabs" role="tablist" aria-label="Kategori">
             <button role="tab" aria-selected="true" data-cat="semua">Semua</button>
-            <button role="tab" aria-selected="false" data-cat="raya">Raya</button>
             <button role="tab" aria-selected="false" data-cat="baru">Baru tiba</button>
-            <button role="tab" aria-selected="false" data-cat="kurung">Baju kurung</button>
-            <button role="tab" aria-selected="false" data-cat="kebaya">Kebaya</button>
-            <button role="tab" aria-selected="false" data-cat="tudung">Tudung</button>
+            <button role="tab" aria-selected="false" data-cat="pakaian">Pakaian</button>
+            <button role="tab" aria-selected="false" data-cat="beg">Beg tangan</button>
+            <button role="tab" aria-selected="false" data-cat="kasut">Kasut</button>
           </div>
         </div>
         <ul class="grid" data-grid aria-live="polite"></ul>
+      </section>
+
+      <section class="edit edit-flip" aria-labelledby="ed-kasut">
+        <figure class="edit-pic"><img src="img/ed-kasut.jpg" width="1000" height="1250" loading="lazy" alt="Kaki berstoking hitam dengan kasut tumit runcing diangkat ke atas berlatar putih" /></figure>
+        <div class="edit-copy">
+          <p class="eyebrow">Langkah terakhir</p>
+          <h2 id="ed-kasut">Kasut tumit</h2>
+          <p>Pump runcing, stiletto berkilau dan sandal bertali. Tumit 6 hingga 11 cm.</p>
+          <a class="cta" href="#koleksi" data-filter="kasut">Beli kasut</a>
+        </div>
       </section>
 
       <ul class="perks" aria-label="Kelebihan">
         <li><b>Pos percuma</b> dari RM250, Semenanjung</li>
         <li><b>Dipos hari sama</b> jika bayar sebelum 3 petang</li>
         <li><b>Tukar saiz</b> dalam 7 hari</li>
-        <li><b>XS hingga 3XL</b> bagi kebanyakan rekaan</li>
+        <li><b>Dibungkus dalam kotak</b> dengan beg habuk</li>
       </ul>
 
       <section id="cara" class="cara" aria-labelledby="cara-title">
@@ -159,15 +141,13 @@
         <div class="slip" role="table" aria-label="Langkah tempahan">
           <p class="slip-day">Di laman ini</p>
           <p class="slip-row" role="row"><span role="cell">Pilih rona, saiz dan kuantiti</span><i aria-hidden="true"></i><span role="cell">2 minit</span></p>
-          <p class="slip-row" role="row"><span role="cell">Isi nama dan alamat</span><i aria-hidden="true"></i><span role="cell">1 minit</span></p>
-          <p class="slip-row" role="row"><span role="cell">Hantar senarai ke WhatsApp</span><i aria-hidden="true"></i><span role="cell">Serta merta</span></p>
-          <p class="slip-day">Di WhatsApp</p>
-          <p class="slip-row" role="row"><span role="cell">Kami sahkan stok dan jumlah</span><i aria-hidden="true"></i><span role="cell">Dalam 1 jam</span></p>
-          <p class="slip-row" role="row"><span role="cell">Bayar dengan DuitNow atau pindahan bank</span><i aria-hidden="true"></i><span role="cell">Bila sedia</span></p>
+          <p class="slip-row" role="row"><span role="cell">Isi alamat dan pilih kaedah pos</span><i aria-hidden="true"></i><span role="cell">1 minit</span></p>
+          <p class="slip-row" role="row"><span role="cell">Bayar dengan FPX, kad, DuitNow QR atau Atome</span><i aria-hidden="true"></i><span role="cell">Serta merta</span></p>
           <p class="slip-day">Selepas bayar</p>
+          <p class="slip-row" role="row"><span role="cell">Resit dihantar ke emel anda</span><i aria-hidden="true"></i><span role="cell">Serta merta</span></p>
           <p class="slip-row" role="row"><span role="cell">Dibungkus, dipos, nombor tracking dihantar</span><i aria-hidden="true"></i><span role="cell">Hari sama</span></p>
           <p class="slip-row" role="row"><span role="cell">Sampai di Semenanjung</span><i aria-hidden="true"></i><span role="cell">2 hingga 4 hari</span></p>
-          <p class="slip-end" role="row"><span role="cell">Baju di tangan anda</span><span role="cell">3 hingga 5 hari</span></p>
+          <p class="slip-end" role="row"><span role="cell">Barang di tangan anda</span><span role="cell">2 hingga 5 hari</span></p>
         </div>
       </section>
 
@@ -190,15 +170,16 @@
               </tbody>
             </table>
           </div>
+          <p><b>Jeans</b> disaiz ikut ukuran pinggang dalam inci (24 hingga 32). <b>Kasut</b> saiz EU 36 hingga 41. Saiz 36 untuk kaki 23 cm, tambah 0.5 cm bagi setiap saiz.</p>
         </details>
         <details id="soalan" class="acc">
           <summary>Soalan lazim</summary>
           <div class="faq">
             <p><b>Boleh tukar saiz?</b> Boleh, dalam 7 hari selepas barang sampai, selagi tag belum dipotong dan saiz lain masih ada.</p>
             <p><b>Bila barang dipos?</b> Pesanan yang dibayar sebelum 3 petang dipos pada hari bekerja yang sama.</p>
-            <p><b>Bayar macam mana?</b> DuitNow QR atau pindahan bank, selepas kami sahkan stok di WhatsApp.</p>
+            <p><b>Bayar macam mana?</b> Terus semasa daftar keluar: FPX perbankan dalam talian, kad kredit atau debit, DuitNow QR, Touch 'n Go eWallet, GrabPay, ShopeePay, atau Atome untuk 3 bayaran tanpa faedah.</p>
             <p><b>Pos ke Sabah dan Sarawak?</b> Ya, RM15 untuk satu pesanan, biasanya 4 hingga 7 hari bekerja.</p>
-            <p><b>Rona lain sama macam dalam gambar?</b> Gambar menunjukkan satu rona. Minta gambar kain sebenar di WhatsApp untuk rona lain.</p>
+            <p><b>Rona lain sama macam dalam gambar?</b> Gambar menunjukkan satu rona. Minta gambar sebenar melalui chat untuk rona lain.</p>
             <p><b>Boleh ambil sendiri?</b> Boleh, di butik kami di Shah Alam, Isnin hingga Sabtu, 10 pagi hingga 6 petang.</p>
           </div>
         </details>
@@ -214,11 +195,9 @@
             Demo oleh Irfan Hakimi. Mahu laman seperti ini untuk kedai anda?
             <a href="https://irfanhakimi.com/kerja/">irfanhakimi.com/kerja</a>
           </p>
-          <p>Rona Kasturi ialah jenama rekaan untuk demo. Orang dan pakaian dalam gambar tiada kaitan dengan jenama ini.</p>
+          <p>Maison Ve’ra ialah jenama rekaan untuk demo. Orang dan pakaian dalam gambar tiada kaitan dengan jenama ini.</p>
           <p class="credits">
-            Gambar dari <a href="https://unsplash.com/license">Unsplash</a> oleh @muizur_syed, @febrianzakaria, @thealiaziz,
-            @kilarov345, @raheemblacksnows, @fzeo, @hng21, @ibrahimmushan, @aimaris, @caesarakbr, @fahriseus,
-            @visualbywahyu, @iitzblackcool dan @moonstariousproject. Senarai penuh dalam
+            Gambar dari <a href="https://unsplash.com/license">Unsplash</a> oleh @sashamatveeva, @aiony, @matt909, @mdagonakis, @alipzn, @tamarabellis, @kkalerry, @fabiraw, @yanlo, @marlonalvesphoto, @alinamatveycheva, @itsbrunoagain, @melbinjacob, @toma_ha, @maryamnemati, @vkozhevnikov, @kunyhira, @artworkarash, @maudefl, @laurachouette, @elenagolubeva, @benkoorengevel, @raquelxbaires dan @femmespirit. Senarai penuh dalam
             <a href="img/CREDITS.txt">CREDITS.txt</a>.
           </p>
         </details>
@@ -226,11 +205,11 @@
     </main>
 
     <footer class="foot">
-      <p class="foot-mark">Rona Kasturi</p>
-      <p>&copy; Rona Kasturi, jenama rekaan untuk demo. <a href="https://irfanhakimi.com/kerja/">Demo oleh Irfan Hakimi</a></p>
+      <p class="foot-mark">Maison Ve’ra</p>
+      <p>&copy; Maison Ve’ra, jenama rekaan untuk demo. <a href="https://irfanhakimi.com/kerja/">Demo oleh Irfan Hakimi</a></p>
     </footer>
 
-    <button class="chat-fab" type="button" data-open-chat aria-label="Lihat mesej pesanan WhatsApp">
+    <button class="chat-fab" type="button" data-open-chat aria-label="Chat dengan kedai">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v10H10l-4 4v-4H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
     </button>
 

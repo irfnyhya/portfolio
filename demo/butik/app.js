@@ -1,99 +1,115 @@
-/* Rona Kasturi demo shop. Plain script, no build step. */
+/* Maison Ve’ra demo shop. Plain script, no build step. */
 (function () {
   "use strict";
 
-  // Demo safety: orders never go to a real number. The link below opens WhatsApp with the message
-  // prefilled and NO recipient, so the tester picks a chat themselves. For a real shop, set
-  // SHOP_WA to the owner's number (digits only, e.g. "60123456789").
-  var SHOP_WA = "";
+  // Demo safety: checkout is simulated. The payment step asks for no card or bank details,
+  // charges nothing and contacts no one. A real shop would hand off to a gateway (Billplz, Stripe).
   var FREE_POS_FROM = 250;
 
   // ---------- Colours (rona) ----------
   var R = {
-    krimGading: ["Krim Gading", "#ece2c9"],
-    emasPudar: ["Emas Pudar", "#c3a25b"],
-    biruMalam: ["Biru Malam", "#26304f"],
-    biruLaut: ["Biru Laut Dalam", "#22395f"],
-    hijauSerai: ["Hijau Serai", "#8fa66a"],
-    merahBata: ["Merah Bata", "#9c4430"],
-    merahHati: ["Merah Hati", "#a3182a"],
-    hijauZamrud: ["Hijau Zamrud", "#1f5a4a"],
-    fuchsia: ["Merah Jambu Bunga Raya", "#d8287a"],
-    kuningKunyit: ["Kuning Kunyit", "#d9a426"],
-    hijauKasturi: ["Hijau Kasturi", "#6d8b3c"],
-    lilac: ["Ungu Keladi", "#c7b3cf"],
-    merahJambuDebu: ["Merah Jambu Debu", "#d3a09c"],
-    pucukPisang: ["Hijau Pucuk Pisang", "#b6c73a"],
-    hitamArang: ["Hitam Arang", "#2a2826"],
-    pudina: ["Hijau Pudina", "#9fbfae"],
+    hitamArang: ["Hitam Arang", "#1d1c1b"],
     kelabuAsap: ["Kelabu Asap", "#8a8c90"],
-    krimSantan: ["Krim Santan", "#eadfc8"],
-    kunyitTua: ["Kunyit Tua", "#c98d2e"],
-    coklatKopi: ["Coklat Kopi Susu", "#8a6a52"],
-    pasir: ["Pasir Pantai", "#c9ab8e"],
-    hijauLumut: ["Hijau Lumut", "#55603d"]
+    biruPudar: ["Biru Pudar", "#9db3c9"],
+    biruIndigo: ["Biru Indigo", "#2e3f5c"],
+    pasir: ["Pasir", "#c8b49a"],
+    krim: ["Krim", "#ece3d2"],
+    putih: ["Putih Susu", "#f4f1ea"],
+    zaitun: ["Zaitun", "#5d6148"],
+    coklatKopi: ["Coklat Kopi", "#6b4a35"],
+    merahJambu: ["Merah Jambu Neon", "#e8579a"],
+    merahCeri: ["Merah Ceri", "#9a1f2c"],
+    pudina: ["Pudina", "#b9d6cc"],
+    zamrud: ["Zamrud", "#1f4f47"],
+    unguKilau: ["Ungu Kilau", "#8a3fc0"],
+    perak: ["Perak", "#bfc0c4"],
+    nude: ["Nude", "#d9bfa8"]
   };
   function rona(keys) { return keys.map(function (k) { return { key: k, name: R[k][0], hex: R[k][1] }; }); }
 
-  var SZ = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
-  var SZ6 = ["XS", "S", "M", "L", "XL", "2XL"];
+  var SZ = ["XS", "S", "M", "L", "XL"];
+  var SZ_SELUAR = ["24", "26", "28", "30", "32"];
+  var SZ_KASUT = ["36", "37", "38", "39", "40", "41"];
 
   // ---------- Catalogue (first colour is the one in the photo) ----------
   var PRODUCTS = [
-    { id: "kurung-krim", cat: "kurung", name: "Kurung Moden Tenun Krim", price: 229, img: "kurung-krim",
-      colours: rona(["krimGading", "emasPudar", "biruMalam"]), sizes: SZ,
-      desc: "Tenunan jacquard bercorak bunga halus yang berkilau lembut di bawah lampu majlis. Baju labuh dengan kain lurus berbelah sisi.",
-      spec: [["Kain", "Jacquard tenun, berlapik"], ["Labuh baju", "40 inci (saiz M)"], ["Jagaan", "Cucian kering disyorkan"]] },
-    { id: "kurung-bunga", cat: "kurung", name: "Kurung Riau Bunga Kecil", price: 169, img: "kurung-bunga",
-      colours: rona(["biruMalam", "hijauSerai", "merahBata"]), sizes: SZ,
-      desc: "Cetakan bunga kecil di atas kapas yang sejuk dipakai sepanjang hari. Pilihan untuk pejabat dan kenduri.",
-      spec: [["Kain", "Kapas Jepun bercetak"], ["Labuh baju", "39 inci (saiz M)"], ["Jagaan", "Basuh mesin, kitaran lembut"]] },
-    { id: "kurung-merah", cat: "kurung", name: "Kurung Pahang Satin Merah", price: 189, img: "kurung-merah",
-      colours: rona(["merahHati", "biruLaut", "hijauZamrud"]), sizes: SZ,
-      desc: "Satin berkilat dengan jalur sulam di bahu dan leher. Merah hati yang kekal cantik dalam gambar raya.",
-      spec: [["Kain", "Satin duchess"], ["Labuh baju", "40 inci (saiz M)"], ["Jagaan", "Seterika suhu rendah dari belakang"]] },
-    { id: "kurung-fuchsia", cat: "kurung", name: "Kurung Kedah Bunga Raya", price: 159, img: "kurung-fuchsia",
-      colours: rona(["fuchsia", "kuningKunyit", "hijauKasturi"]), sizes: SZ6,
-      desc: "Baju pendek paras pinggul dengan kain kembang. Warna terang untuk majlis siang.",
-      spec: [["Kain", "Krep Korea, tidak mudah berkedut"], ["Labuh baju", "30 inci (saiz M)"], ["Jagaan", "Basuh tangan"]] },
-    { id: "kebaya-biru", cat: "kebaya", name: "Kebaya Renda Biru Malam", price: 279, img: "kebaya-biru",
-      colours: rona(["biruMalam", "hitamArang", "merahHati"]), sizes: SZ6,
-      desc: "Renda Perancis berlapik dengan tali pinggang emas dan kain songket. Sesuai untuk majlis malam.",
-      spec: [["Kain", "Renda Perancis, lapik kapas"], ["Labuh baju", "28 inci (saiz M)"], ["Termasuk", "Tali pinggang dan kain sarung"]] },
-    { id: "kebaya-lilac", cat: "kebaya", name: "Kebaya Renda Ungu Keladi", price: 249, img: "kebaya-lilac",
-      colours: rona(["lilac", "krimGading", "merahJambuDebu"]), sizes: SZ,
-      desc: "Renda lembut berbutang hadapan, lengan panjang dengan birai renda. Untuk nikah, tunang dan hari raya.",
-      spec: [["Kain", "Renda bersulam dan lapik satin"], ["Labuh baju", "30 inci (saiz M)"], ["Jagaan", "Basuh tangan"]] },
-    { id: "kebaya-nyonya", cat: "kebaya", name: "Kebaya Nyonya Sulam Kunyit", price: 299, img: "kebaya-nyonya",
-      colours: rona(["kuningKunyit", "krimSantan", "pudina"]), sizes: SZ6,
-      desc: "Kebaya pendek berhujung runcing dengan sulaman bunga di birai, disulam tangan di Melaka.",
-      spec: [["Kain", "Voile kapas"], ["Labuh baju", "26 inci (saiz M)"], ["Nota", "Sulaman berbeza sedikit setiap helai"]] },
-    { id: "kebaya-pucuk", cat: "kebaya", name: "Kebaya Labuh Pucuk Pisang", price: 199, img: "kebaya-pucuk",
-      colours: rona(["pucukPisang", "hijauLumut", "kunyitTua"]), sizes: SZ,
-      desc: "Kebaya labuh bersama kain batik sarung siap jahit. Hijau pucuk pisang yang ceria untuk pejabat.",
-      spec: [["Kain", "Krep sutera"], ["Labuh baju", "38 inci (saiz M)"], ["Termasuk", "Kain batik sarung"]] },
-    { id: "bawal-voile", cat: "tudung", name: "Tudung Bawal Cotton Voile", price: 35, img: "bawal-stack",
-      colours: rona(["hijauLumut", "hitamArang", "krimSantan", "merahJambuDebu"]), sizes: ["45 inci", "50 inci"],
-      desc: "Bawal bidang 45 atau 50 inci, jahitan tepi halus dan mudah dibentuk tanpa banyak pin.",
-      spec: [["Kain", "Cotton voile"], ["Ukuran", "45 x 45 atau 50 x 50 inci"], ["Jagaan", "Basuh mesin dalam beg jaring"]] },
-    { id: "shawl-pudina", cat: "tudung", name: "Shawl Chiffon Hijau Pudina", price: 39, img: "shawl-pudina",
-      colours: rona(["pudina", "kelabuAsap", "krimSantan"]), sizes: ["Satu saiz"],
-      desc: "Shawl panjang yang jatuh lembut dan tidak licin. Sesuai untuk gaya lilit ringkas.",
-      spec: [["Kain", "Chiffon tebal"], ["Ukuran", "70 x 180 cm"], ["Jagaan", "Basuh tangan"]] },
-    { id: "shawl-emas", cat: "tudung", name: "Shawl Satin Kunyit Tua", price: 55, img: "shawl-emas",
-      colours: rona(["kunyitTua", "biruMalam", "krimGading"]), sizes: ["Satu saiz"],
-      desc: "Satin silk berkilat lembut untuk majlis. Padankan dengan Kurung Moden Tenun Krim.",
-      spec: [["Kain", "Satin silk"], ["Ukuran", "75 x 185 cm"], ["Jagaan", "Seterika suhu rendah dari belakang"]] },
-    { id: "shawl-pasir", cat: "tudung", name: "Shawl Krep Pasir Pantai", price: 45, img: "shawl-pasir",
-      colours: rona(["pasir", "coklatKopi", "hitamArang"]), sizes: ["Satu saiz"],
-      desc: "Krep bertekstur yang mudah dibentuk dan tidak jarang. Rona neutral untuk dipakai setiap hari.",
-      spec: [["Kain", "Krep moss"], ["Ukuran", "70 x 180 cm"], ["Jagaan", "Basuh mesin, kitaran lembut"]] }
+    { id: "jaket-kulit", cat: "pakaian", name: "Jaket Biker Kulit Hitam", price: 259, img: "jaket-kulit",
+      colours: rona(["hitamArang", "coklatKopi", "merahCeri"]), sizes: SZ,
+      desc: "Jaket biker potongan pendek dengan zip serong dan bahu jatuh. Dipakai dengan apa saja, dari crop top ke hoodie.",
+      spec: [["Bahan", "Kulit sintetik lembut, lapik satin"], ["Potongan", "Pendek, longgar di bahu"], ["Jagaan", "Lap dengan kain lembap"]] },
+    { id: "jeans-hitam", cat: "pakaian", name: "Jeans Baggy Hitam Pudar", price: 169, img: "jeans-hitam",
+      colours: rona(["hitamArang", "kelabuAsap", "biruIndigo"]), sizes: SZ_SELUAR,
+      desc: "Jeans baggy pinggang rendah dengan cucian pudar dan jahitan panel di lutut. Jatuh menutup kasut.",
+      spec: [["Bahan", "Denim kapas 100%, 13 oz"], ["Labuh", "42 inci (saiz 26)"], ["Jagaan", "Basuh terbalik, air sejuk"]] },
+    { id: "jeans-biru", cat: "pakaian", name: "Jeans Lurus Biru Koyak", price: 149, img: "jeans-biru",
+      colours: rona(["biruPudar", "biruIndigo", "hitamArang"]), sizes: SZ_SELUAR,
+      desc: "Jeans kaki lurus warna biru pudar dengan koyak di lutut. Padan dengan tee putih dan kasut kanvas.",
+      spec: [["Bahan", "Denim kapas, sedikit regang"], ["Labuh", "41 inci (saiz 26)"], ["Jagaan", "Basuh terbalik, air sejuk"]] },
+    { id: "blazer-pasir", cat: "pakaian", name: "Blazer Oversize Pasir", price: 219, img: "blazer-pasir",
+      colours: rona(["pasir", "hitamArang", "krim"]), sizes: SZ,
+      desc: "Blazer besar dengan bahu berpad dan lengan panjang yang boleh dilipat. Juga boleh dipakai sebagai gaun pendek.",
+      spec: [["Bahan", "Campuran linen, tidak berlapik"], ["Potongan", "Oversize, dua saiz lebih"], ["Jagaan", "Cucian kering disyorkan"]] },
+    { id: "blazer-jalur", cat: "pakaian", name: "Blazer Jalur Halus Hitam", price: 239, img: "blazer-jalur",
+      colours: rona(["hitamArang", "kelabuAsap", "biruIndigo"]), sizes: SZ,
+      desc: "Blazer hitam berjalur halus, labuh sedikit dan longgar. Pakai terbuka di atas bralet atau tee.",
+      spec: [["Bahan", "Bulu sintetik bertenun"], ["Potongan", "Longgar, labuh paras pinggul"], ["Jagaan", "Cucian kering disyorkan"]] },
+    { id: "cargo-zaitun", cat: "pakaian", name: "Seluar Cargo Zaitun", price: 159, img: "cargo-zaitun",
+      colours: rona(["zaitun", "hitamArang", "pasir"]), sizes: SZ,
+      desc: "Cargo longgar dengan enam poket dan tali ikat di buku lali. Boleh diketatkan atau dibiarkan jatuh.",
+      spec: [["Bahan", "Kapas twill"], ["Pinggang", "Getah di belakang"], ["Jagaan", "Basuh mesin"]] },
+    { id: "trench-pasir", cat: "pakaian", name: "Kot Trench Pasir Labuh", price: 289, img: "trench-pasir",
+      colours: rona(["pasir", "hitamArang", "zaitun"]), sizes: SZ,
+      desc: "Trench labuh paras betis dengan tali pinggang. Dipakai terbuka di atas blazer untuk gaya berlapis.",
+      spec: [["Bahan", "Kapas gabardin kalis percikan"], ["Labuh", "Paras betis"], ["Termasuk", "Tali pinggang padan"]] },
+    { id: "kot-merah-jambu", cat: "pakaian", name: "Kot Kulit Merah Jambu Neon", price: 279, img: "kot-merah-jambu",
+      colours: rona(["merahJambu", "hitamArang", "krim"]), sizes: SZ,
+      desc: "Kot kulit berkilat warna merah jambu terang. Satu helai yang menjadikan pakaian hitam terus menonjol.",
+      spec: [["Bahan", "Kulit sintetik berkilat"], ["Labuh", "Paras lutut"], ["Jagaan", "Lap dengan kain lembap"]] },
+    { id: "beg-hitam", cat: "beg", name: "Beg Silang Hitam Berzip", price: 189, img: "beg-hitam",
+      colours: rona(["hitamArang", "coklatKopi", "krim"]), sizes: ["Satu saiz"],
+      desc: "Beg silang kecil dengan zip hadapan dan tali panjang boleh laras. Muat telefon, dompet dan kunci.",
+      spec: [["Bahan", "Kulit lembu licin"], ["Ukuran", "22 x 15 x 7 cm"], ["Tali", "Boleh laras, 120 cm"]] },
+    { id: "beg-krim", cat: "beg", name: "Beg Silinder Krim", price: 229, img: "beg-krim",
+      colours: rona(["krim", "hitamArang", "coklatKopi"]), sizes: ["Satu saiz"],
+      desc: "Beg bentuk silinder dengan jahitan panel dan tali bahu nipis. Lembut dan ringan.",
+      spec: [["Bahan", "Kulit sintetik lembut"], ["Ukuran", "26 x 14 cm"], ["Termasuk", "Beg habuk"]] },
+    { id: "beg-pudina", cat: "beg", name: "Beg Flap Pudina Rantai", price: 249, img: "beg-pudina",
+      colours: rona(["pudina", "hitamArang", "putih"]), sizes: ["Satu saiz"],
+      desc: "Beg flap berjahit tangan dengan tali rantai berjalin kulit. Pakai di bahu atau silang.",
+      spec: [["Bahan", "Kulit sintetik bertekstur"], ["Ukuran", "20 x 14 cm"], ["Tali", "Rantai dan kulit, dua panjang"]] },
+    { id: "beg-kroko", cat: "beg", name: "Beg Tangan Kroko Zamrud", price: 289, img: "beg-kroko",
+      colours: rona(["zamrud", "hitamArang", "coklatKopi"]), sizes: ["Satu saiz"],
+      desc: "Beg tangan bercorak buaya berkilat dengan dua pemegang dan tali bahu yang boleh ditanggalkan.",
+      spec: [["Bahan", "Kulit bercetak kroko"], ["Ukuran", "24 x 18 cm"], ["Termasuk", "Tali bahu dan beg habuk"]] },
+    { id: "beg-putih", cat: "beg", name: "Beg Bahu Putih Minimal", price: 169, img: "beg-putih",
+      colours: rona(["putih", "hitamArang", "pasir"]), sizes: ["Satu saiz"],
+      desc: "Beg bahu nipis dengan tali panjang dan buckle perak. Ringkas, dipakai setiap hari.",
+      spec: [["Bahan", "Kulit sintetik licin"], ["Ukuran", "24 x 18 cm"], ["Tali", "Boleh laras"]] },
+    { id: "kasut-kuning", cat: "kasut", name: "Pump Klasik Hitam", price: 199, img: "kasut-kuning",
+      colours: rona(["hitamArang", "nude", "merahCeri"]), sizes: SZ_KASUT,
+      desc: "Pump hujung runcing dengan tumit 10 cm. Asas untuk setiap almari.",
+      spec: [["Bahan", "Kulit sintetik matte"], ["Tumit", "10 cm"], ["Tapak", "Berlapik span lembut"]] },
+    { id: "kasut-kerusi", cat: "kasut", name: "Pump Kilat Hitam Runcing", price: 229, img: "kasut-kerusi",
+      colours: rona(["hitamArang", "nude", "perak"]), sizes: SZ_KASUT,
+      desc: "Pump kulit berkilat dengan potongan sisi rendah. Cantik dengan seluar labuh atau jeans baggy.",
+      spec: [["Bahan", "Kulit paten sintetik"], ["Tumit", "9 cm"], ["Tapak", "Getah anti gelincir"]] },
+    { id: "kasut-putih", cat: "kasut", name: "Pump Kitten Putih", price: 189, img: "kasut-putih",
+      colours: rona(["putih", "hitamArang", "nude"]), sizes: SZ_KASUT,
+      desc: "Tumit rendah 6 cm dengan hujung runcing. Selesa untuk berjalan seharian di bandar.",
+      spec: [["Bahan", "Kulit sintetik licin"], ["Tumit", "6 cm"], ["Tapak", "Berlapik span lembut"]] },
+    { id: "kasut-kilau", cat: "kasut", name: "Stiletto Kilau Ungu", price: 259, img: "kasut-kilau",
+      colours: rona(["unguKilau", "perak", "hitamArang"]), sizes: SZ_KASUT,
+      desc: "Stiletto bersalut glitter yang berkilau di bawah lampu. Untuk malam keluar.",
+      spec: [["Bahan", "Glitter atas fabrik"], ["Tumit", "11 cm"], ["Nota", "Edisi terhad"]] },
+    { id: "kasut-tali", cat: "kasut", name: "Sandal Tali Buku Lali Hitam", price: 179, img: "kasut-tali",
+      colours: rona(["hitamArang", "nude", "perak"]), sizes: SZ_KASUT,
+      desc: "Sandal tumit nipis dengan tali buku lali dan buckle kecil. Ringan dan mudah dipadankan.",
+      spec: [["Bahan", "Suede sintetik"], ["Tumit", "9 cm"], ["Tapak", "Getah anti gelincir"]] }
   ];
   var TAGS = {
-    raya: ["kurung-krim", "kurung-merah", "kebaya-biru", "kebaya-nyonya", "kebaya-lilac", "shawl-emas"],
-    baru: ["kurung-fuchsia", "kebaya-pucuk", "shawl-pudina", "shawl-pasir", "kurung-bunga"]
+    baru: ["kot-merah-jambu", "jeans-hitam", "blazer-jalur", "beg-pudina", "beg-krim", "kasut-kilau", "kasut-putih", "trench-pasir"]
   };
-  var CAT_TITLE = { semua: "Semua", raya: "Koleksi Raya", baru: "Baru tiba", kurung: "Baju kurung", kebaya: "Kebaya", tudung: "Tudung" };
+  var CAT_TITLE = { semua: "Semua koleksi", baru: "Baru tiba", pakaian: "Pakaian", beg: "Beg tangan", kasut: "Kasut tumit" };
   var byId = {};
   PRODUCTS.forEach(function (p) { byId[p.id] = p; });
   function inCat(p, cat) { return cat === "semua" || p.cat === cat || (TAGS[cat] && TAGS[cat].indexOf(p.id) > -1); }
@@ -101,40 +117,46 @@
 
   // Seed stock per product and size. A few low and sold out sizes so the owner view has something to flag.
   var STOCK_SEED = {
-    "kurung-krim": { XS: 3, S: 5, M: 6, L: 4, XL: 3, "2XL": 2, "3XL": 1 },
-    "kurung-bunga": { XS: 4, S: 7, M: 9, L: 7, XL: 5, "2XL": 4, "3XL": 3 },
-    "kurung-merah": { XS: 3, S: 5, M: 6, L: 6, XL: 4, "2XL": 3, "3XL": 0 },
-    "kurung-fuchsia": { XS: 3, S: 4, M: 5, L: 4, XL: 3, "2XL": 3 },
-    "kebaya-biru": { XS: 2, S: 3, M: 1, L: 0, XL: 3, "2XL": 3 },
-    "kebaya-lilac": { XS: 3, S: 4, M: 5, L: 4, XL: 3, "2XL": 3, "3XL": 2 },
-    "kebaya-nyonya": { XS: 1, S: 2, M: 2, L: 1, XL: 0, "2XL": 0 },
-    "kebaya-pucuk": { XS: 3, S: 5, M: 6, L: 5, XL: 4, "2XL": 3, "3XL": 3 },
-    "bawal-voile": { "45 inci": 24, "50 inci": 14 },
-    "shawl-pudina": { "Satu saiz": 31 },
-    "shawl-emas": { "Satu saiz": 3 },
-    "shawl-pasir": { "Satu saiz": 18 }
+    "jaket-kulit": { XS: 5, S: 9, M: 11, L: 7, XL: 4 },
+    "jeans-hitam": { "24": 6, "26": 9, "28": 9, "30": 5, "32": 3 },
+    "jeans-biru": { "24": 4, "26": 7, "28": 8, "30": 5, "32": 2 },
+    "blazer-pasir": { XS: 4, S: 7, M: 8, L: 5, XL: 3 },
+    "blazer-jalur": { XS: 1, S: 2, M: 1, L: 0, XL: 1 },
+    "cargo-zaitun": { XS: 6, S: 9, M: 10, L: 7, XL: 4 },
+    "trench-pasir": { XS: 3, S: 5, M: 6, L: 4, XL: 2 },
+    "kot-merah-jambu": { XS: 2, S: 3, M: 2, L: 0, XL: 0 },
+    "beg-hitam": { "Satu saiz": 21 },
+    "beg-krim": { "Satu saiz": 14 },
+    "beg-pudina": { "Satu saiz": 6 },
+    "beg-kroko": { "Satu saiz": 0 },
+    "beg-putih": { "Satu saiz": 17 },
+    "kasut-kuning": { "36": 5, "37": 9, "38": 11, "39": 7, "40": 5, "41": 3 },
+    "kasut-kerusi": { "36": 4, "37": 7, "38": 8, "39": 6, "40": 3, "41": 2 },
+    "kasut-putih": { "36": 5, "37": 7, "38": 9, "39": 7, "40": 3, "41": 0 },
+    "kasut-kilau": { "36": 1, "37": 2, "38": 1, "39": 0, "40": 1, "41": 0 },
+    "kasut-tali": { "36": 4, "37": 6, "38": 7, "39": 5, "40": 3, "41": 2 }
   };
 
   // Seed orders: sample data for the owner view, dated relative to today.
   function daysAgo(d, h, m) { var t = new Date(); t.setDate(t.getDate() - d); t.setHours(h, m, 0, 0); return t.toISOString(); }
   var SEED_ORDERS = [
-    { at: daysAgo(0, 9, 42), name: "Nur Aisyah", phone: "012 xxx 4471", area: "Shah Alam", pos: "semenanjung",
-      items: [{ id: "kurung-krim", c: "Krim Gading", s: "M", q: 1 }, { id: "shawl-emas", c: "Kunyit Tua", s: "Satu saiz", q: 1 }], status: "Baru" },
-    { at: daysAgo(0, 8, 15), name: "Siti Hajar", phone: "019 xxx 2208", area: "Kuantan", pos: "semenanjung",
-      items: [{ id: "kebaya-lilac", c: "Ungu Keladi", s: "S", q: 1 }], status: "Baru" },
-    { at: daysAgo(1, 21, 3), name: "Farah Nadia", phone: "013 xxx 9150", area: "Kuching", pos: "sabahsarawak",
-      items: [{ id: "kurung-bunga", c: "Biru Malam", s: "L", q: 1 }, { id: "shawl-pudina", c: "Hijau Pudina", s: "Satu saiz", q: 1 }], status: "Dibayar" },
-    { at: daysAgo(1, 14, 27), name: "Amira Zulaikha", phone: "011 xxx 6632", area: "Ipoh", pos: "semenanjung",
-      items: [{ id: "kebaya-biru", c: "Biru Malam", s: "M", q: 1 }], status: "Dipos" },
-    { at: daysAgo(2, 11, 50), name: "Hidayah Rahman", phone: "017 xxx 0384", area: "Shah Alam", pos: "ambil",
-      items: [{ id: "bawal-voile", c: "Hitam Arang", s: "45 inci", q: 3 }], status: "Dipos" },
-    { at: daysAgo(3, 16, 8), name: "Liyana Ismail", phone: "016 xxx 7719", area: "Johor Bahru", pos: "semenanjung",
-      items: [{ id: "kebaya-nyonya", c: "Kuning Kunyit", s: "S", q: 1 }, { id: "kurung-merah", c: "Merah Hati", s: "XL", q: 2 }], status: "Dipos" }
+    { at: daysAgo(0, 9, 42), name: "Nur Aisyah", phone: "012 xxx 4471", area: "Shah Alam", pos: "semenanjung", pay: "fpx", pick: "Maybank2u",
+      items: [{ id: "jaket-kulit", c: "Hitam Arang", s: "M", q: 1 }, { id: "beg-hitam", c: "Hitam Arang", s: "Satu saiz", q: 1 }], status: "Dibayar" },
+    { at: daysAgo(0, 8, 15), name: "Siti Hajar", phone: "019 xxx 2208", area: "Kuantan", pos: "semenanjung", pay: "dompet", pick: "Touch 'n Go eWallet",
+      items: [{ id: "jeans-hitam", c: "Hitam Arang", s: "26", q: 1 }], status: "Dibayar" },
+    { at: daysAgo(1, 21, 3), name: "Farah Nadia", phone: "013 xxx 9150", area: "Kuching", pos: "sabahsarawak", pay: "atome", pick: "",
+      items: [{ id: "kasut-kilau", c: "Ungu Kilau", s: "37", q: 1 }, { id: "beg-krim", c: "Krim", s: "Satu saiz", q: 1 }], status: "Dibungkus" },
+    { at: daysAgo(1, 14, 27), name: "Amira Zulaikha", phone: "011 xxx 6632", area: "Ipoh", pos: "semenanjung", pay: "kad", pick: "",
+      items: [{ id: "blazer-pasir", c: "Pasir", s: "S", q: 1 }], status: "Dipos" },
+    { at: daysAgo(2, 11, 50), name: "Hidayah Rahman", phone: "017 xxx 0384", area: "Shah Alam", pos: "ambil", pay: "duitnow", pick: "",
+      items: [{ id: "kasut-kuning", c: "Hitam Arang", s: "38", q: 1 }], status: "Dipos" },
+    { at: daysAgo(3, 16, 8), name: "Liyana Ismail", phone: "016 xxx 7719", area: "Johor Bahru", pos: "semenanjung", pay: "fpx", pick: "CIMB Clicks",
+      items: [{ id: "cargo-zaitun", c: "Zaitun", s: "M", q: 1 }, { id: "trench-pasir", c: "Pasir", s: "M", q: 1 }], status: "Dipos" }
   ];
-  // Sample orders use the same number format as new ones (RK + month + day + sequence).
+  // Sample orders use the same number format as new ones (MV + month + day + sequence).
   SEED_ORDERS.forEach(function (o, i) {
     var d = new Date(o.at);
-    o.id = "RK" + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + String(i + 1).padStart(2, "0"); // taste-skill-ignore
+    o.id = "MV" + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + String(i + 1).padStart(2, "0"); // taste-skill-ignore
   });
 
   var POS = {
@@ -153,10 +175,10 @@
   }
   function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage off: keep in memory */ } }
 
-  var stock = load("rk2_stock", null) || JSON.parse(JSON.stringify(STOCK_SEED));
-  var cart = load("rk2_cart", []).filter(function (l) { return byId[l.id]; });
-  var myOrders = load("rk2_orders", []);
-  var statusOverride = load("rk2_status", {});
+  var stock = load("rk3_stock", null) || JSON.parse(JSON.stringify(STOCK_SEED));
+  var cart = load("rk3_cart", []).filter(function (l) { return byId[l.id]; });
+  var myOrders = load("rk3_orders", []);
+  var statusOverride = load("rk3_status", {});
 
   function stockOf(id, size) { return (stock[id] && stock[id][size]) || 0; }
   function totalStock(id) { var s = stock[id] || {}; return Object.keys(s).reduce(function (a, k) { return a + s[k]; }, 0); }
@@ -285,7 +307,7 @@
         return '<button type="button" class="chip" data-size="' + esc(s) + '" aria-pressed="' + (s === sel.size) + '"' + (n <= 0 ? " disabled" : "") + ">" + esc(s) +
           (n > 0 && n <= 2 ? " <small>tinggal " + n + "</small>" : "") + "</button>";
       }).join("") + "</div>" +
-      (p.cat !== "tudung" ? '<details class="size-guide"' + (guideOpen ? " open" : "") + '><summary>Panduan saiz</summary>' + sizeTableHTML() + "</details>" : "") +
+      (p.cat === "pakaian" ? '<details class="size-guide"' + (guideOpen ? " open" : "") + '><summary>Panduan saiz</summary>' + sizeTableHTML() + "</details>" : "") +
       "</div>" +
       '<p class="sheet-desc">' + esc(p.desc) + "</p>" +
       '<dl class="spec">' + p.spec.map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>"; }).join("") + "</dl>" +
@@ -323,17 +345,30 @@
     }
   });
 
-  // ---------- Cart ----------
+  // ---------- Cart and checkout ----------
+  // Flow after the reference shops (Shopify style): Troli > Daftar keluar > gerbang bayaran > Selesai.
+  // Demo only: the payment page asks for no card or bank details and nothing is charged.
   var cartDlg = $("[data-cart]");
   var cartBody = $("[data-cart-body]");
-  var form = { name: "", phone: "", address: "", note: "", pos: "semenanjung" };
-  var lastWaUrl = "";
+  var cartTitle = $("#cart-title");
+  var form = { email: "", phone: "", name: "", address: "", postcode: "", city: "", state: "Selangor", note: "", pos: "semenanjung", pay: "fpx", pick: "" };
+  var step = "troli";
   var justPlaced = null;
+
+  var STATES = ["Johor", "Kedah", "Kelantan", "Kuala Lumpur", "Labuan", "Melaka", "Negeri Sembilan", "Pahang", "Perak", "Perlis", "Pulau Pinang", "Putrajaya", "Sabah", "Sarawak", "Selangor", "Terengganu"];
+  var PAY = {
+    fpx: { label: "FPX perbankan dalam talian", sub: "Pilih bank anda di langkah seterusnya", picks: ["Maybank2u", "CIMB Clicks", "Public Bank", "RHB", "Bank Islam", "Hong Leong", "AmBank", "BSN"] },
+    kad: { label: "Kad kredit atau debit", sub: "Visa dan Mastercard" },
+    duitnow: { label: "DuitNow QR", sub: "Imbas dengan aplikasi bank atau dompet digital" },
+    dompet: { label: "Dompet digital", sub: "Touch 'n Go eWallet, GrabPay, ShopeePay", picks: ["Touch 'n Go eWallet", "GrabPay", "ShopeePay"] },
+    atome: { label: "Atome", sub: "Bayar 3 kali tanpa faedah" }
+  };
+  var STEP_TITLE = { troli: "Troli", checkout: "Daftar keluar", gateway: "Bayaran", processing: "Bayaran", done: "Pesanan disahkan" };
 
   function addToCart(p, colour, size, qty) {
     var line = cart.filter(function (l) { return l.id === p.id && l.colour === colour && l.size === size; })[0];
     if (line) line.qty += qty; else cart.push({ id: p.id, colour: colour, size: size, qty: qty });
-    save("rk2_cart", cart);
+    save("rk3_cart", cart);
     updateCount(true);
   }
   function updateCount(bump) {
@@ -346,38 +381,63 @@
     });
   }
   function subtotal() { return cart.reduce(function (a, l) { return a + byId[l.id].price * l.qty; }, 0); }
+  function total() { var s = subtotal(); return s + posFee(form.pos, s); }
 
   function openCart() {
-    justPlaced = null;
+    if (step === "done" || step === "processing") { step = "troli"; justPlaced = null; }
+    if (step === "gateway") step = "checkout";
     toastEl.classList.remove("show");
     closeProduct();
     renderCart();
     openDlg(cartDlg);
   }
   function closeCart() { closeDlg(cartDlg); }
-  cartDlg.addEventListener("close", function () { justPlaced = null; document.body.classList.remove("locked"); });
-  cartDlg.addEventListener("click", function (e) { if (e.target === cartDlg) closeCart(); });
+  cartDlg.addEventListener("close", function () {
+    if (step === "done") { step = "troli"; justPlaced = null; }
+    document.body.classList.remove("locked");
+  });
+  cartDlg.addEventListener("click", function (e) { if (e.target === cartDlg && step !== "processing") closeCart(); });
 
+  function stepsBar(n) {
+    return '<div class="steps" aria-hidden="true">' + ["Troli", "Butiran", "Bayar", "Selesai"].map(function (s, i) {
+      return '<span class="' + (i < n ? "on" : "") + '">' + s + "</span>";
+    }).join("") + "</div>";
+  }
   function freeBar(sub) {
-    if (form.pos !== "semenanjung") return "";
     var left = FREE_POS_FROM - sub;
     var pct = Math.min(100, Math.round(sub / FREE_POS_FROM * 100));
     return '<div class="freebar">' + (left > 0 ? "Tambah " + rm(left) + " lagi untuk pos percuma Semenanjung." : "Anda layak pos percuma Semenanjung.") +
       '<div class="freebar-track"><i style="width:' + pct + '%"></i></div></div>';
   }
+  function setFoot(html) {
+    var f = $(".cart-foot", cartDlg);
+    if (!f) { f = document.createElement("div"); f.className = "cart-foot"; cartDlg.appendChild(f); }
+    f.innerHTML = html;
+    f.hidden = !html;
+  }
+  function field(id, label, input, err) {
+    return '<div class="fld"><label for="f-' + id + '">' + label + "</label>" + input + '<p class="field-err" id="e-' + id + '">' + (err || "") + "</p></div>";
+  }
+  function textIn(id, type, auto, extra, err) {
+    return '<input id="f-' + id + '" name="' + id + '" type="' + type + '" autocomplete="' + auto + '" value="' + esc(form[id]) + '"' + (extra || "") +
+      (err ? ' aria-invalid="true"' : "") + ' aria-describedby="e-' + id + '">';
+  }
 
   function renderCart(errors) {
-    errors = errors || {};
-    if (justPlaced) { renderDone(); return; }
+    cartTitle.textContent = STEP_TITLE[step];
+    cartBody.scrollTop = 0;
+    if (step === "done") return renderDone();
+    if (step === "processing") return renderProcessing();
     if (!cart.length) {
+      step = "troli"; cartTitle.textContent = "Troli";
       cartBody.innerHTML = '<div class="empty"><p>Troli anda masih kosong.</p><button type="button" class="btn btn-solid" data-close-cart data-goto="#koleksi">Lihat koleksi</button></div>';
       setFoot("");
       return;
     }
-    var sub = subtotal(), fee = posFee(form.pos, sub);
-    cartBody.innerHTML =
-      '<div class="steps" aria-hidden="true"><span class="on">Troli</span><span class="on">Butiran</span><span>WhatsApp</span></div>' +
-      freeBar(sub) +
+    if (step === "checkout") return renderCheckout(errors || {});
+    if (step === "gateway") return renderGateway(errors || {});
+    var sub = subtotal();
+    cartBody.innerHTML = stepsBar(1) + freeBar(sub) +
       '<ul class="lines">' + cart.map(function (l, i) {
         var p = byId[l.id];
         return '<li class="line"><img src="' + imgSrc(p) + '" width="84" height="105" alt="" loading="lazy"><div>' +
@@ -389,53 +449,151 @@
           "<b>" + rm(p.price * l.qty) + "</b></div>" +
           '<button type="button" class="rm" data-rm="' + i + '">Buang</button></div></li>';
       }).join("") + "</ul>" +
-      '<form class="form" novalidate data-form id="order-form">' +
+      '<dl class="sum"><dt class="total">Jumlah kecil</dt><dd class="total">' + rm2(sub) + "</dd></dl>" +
+      '<p class="fine">Kos pos dikira semasa daftar keluar. Bayar dengan FPX, kad, DuitNow QR, dompet digital atau Atome.</p>';
+    setFoot('<button type="button" class="btn btn-solid btn-block" data-go="checkout">Daftar keluar &middot; ' + rm2(sub) + "</button>");
+  }
+
+  function summaryBlock(open) {
+    var sub = subtotal(), fee = posFee(form.pos, sub);
+    return '<details class="co-sum"' + (open ? " open" : "") + '><summary><span>Ringkasan pesanan</span><b>' + rm2(sub + fee) + "</b></summary>" +
+      '<ul class="co-lines">' + cart.map(function (l) {
+        var p = byId[l.id];
+        return '<li><span class="co-pic"><img src="' + imgSrc(p) + '" alt="" loading="lazy"><i>' + l.qty + "</i></span><span>" + esc(p.name) + "<small>" + esc(l.colour) + ", " + esc(l.size) + "</small></span><b>" + rm2(p.price * l.qty) + "</b></li>";
+      }).join("") + "</ul>" +
+      '<dl class="sum"><dt>Jumlah kecil</dt><dd>' + rm2(sub) + "</dd><dt>" + esc(POS[form.pos].label) + "</dt><dd>" + (fee ? rm2(fee) : "Percuma") +
+      '</dd><dt class="total">Jumlah</dt><dd class="total">MYR ' + rm2(sub + fee) + "</dd></dl></details>";
+  }
+
+  function renderCheckout(errors) {
+    var sub = subtotal(), t = total();
+    var ship = form.pos !== "ambil";
+    cartBody.innerHTML = stepsBar(2) +
+      '<button type="button" class="back" data-go="troli">&larr; Kembali ke troli</button>' +
+      summaryBlock(false) +
+      '<form class="form" novalidate data-form id="co-form">' +
+      '<fieldset><legend>Hubungan</legend>' +
+      field("email", "Emel untuk resit", textIn("email", "email", "email", ' inputmode="email" placeholder="nama@contoh.com"', errors.email), errors.email) +
+      field("phone", "No. telefon untuk kurier", textIn("phone", "tel", "tel", ' inputmode="tel" placeholder="012 345 6789"', errors.phone), errors.phone) +
+      "</fieldset>" +
       '<fieldset><legend>Penghantaran</legend>' + Object.keys(POS).map(function (k) {
         var f = posFee(k, sub);
         return '<label class="radio"><input type="radio" name="pos" value="' + k + '"' + (form.pos === k ? " checked" : "") + "><span>" + POS[k].label + "</span><span>" + (f ? rm(f) : "Percuma") + "</span></label>";
       }).join("") + "</fieldset>" +
-      '<div><label for="f-name">Nama penuh</label><input id="f-name" name="name" type="text" autocomplete="name" value="' + esc(form.name) + '" aria-describedby="e-name"><p class="field-err" id="e-name">' + (errors.name || "") + "</p></div>" +
-      '<div><label for="f-phone">No. telefon</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" value="' + esc(form.phone) + '" aria-describedby="e-phone"><p class="field-err" id="e-phone">' + (errors.phone || "") + "</p></div>" +
-      (form.pos !== "ambil" ? '<div><label for="f-address">Alamat penghantaran, termasuk poskod</label><textarea id="f-address" name="address" autocomplete="street-address" aria-describedby="e-address">' + esc(form.address) + '</textarea><p class="field-err" id="e-address">' + (errors.address || "") + "</p></div>" : "") +
-      '<div><label for="f-note">Catatan (tidak wajib)</label><input id="f-note" name="note" type="text" value="' + esc(form.note) + '" placeholder="Contoh: hadiah, tolong balut"></div>' +
-      '<dl class="sum"><dt>Jumlah barang</dt><dd>' + rm2(sub) + "</dd><dt>" + POS[form.pos].label + "</dt><dd>" + (fee ? rm2(fee) : "Percuma") + '</dd><dt class="total">Jumlah perlu dibayar</dt><dd class="total">' + rm2(sub + fee) + "</dd></dl>" +
-      '<p class="fine">Laman demo: tiada mesej dihantar kepada sesiapa. Anda akan nampak mesej WhatsApp yang akan diterima kedai, dan pesanan disimpan dalam pelayar ini untuk paparan pemilik.</p>' +
+      '<fieldset><legend>' + (ship ? "Alamat penghantaran" : "Nama pengambil") + "</legend>" +
+      field("name", "Nama penuh", textIn("name", "text", "name", "", errors.name), errors.name) +
+      (ship ?
+        field("address", "Alamat", textIn("address", "text", "street-address", ' placeholder="No. rumah, jalan, taman"', errors.address), errors.address) +
+        '<div class="fld-row">' +
+        field("postcode", "Poskod", textIn("postcode", "text", "postal-code", ' inputmode="numeric" maxlength="5"', errors.postcode), errors.postcode) +
+        field("city", "Bandar", textIn("city", "text", "address-level2", "", errors.city), errors.city) + "</div>" +
+        field("state", "Negeri", '<select id="f-state" name="state" autocomplete="address-level1">' + STATES.map(function (s) {
+          return "<option" + (s === form.state ? " selected" : "") + ">" + s + "</option>";
+        }).join("") + "</select>", "") : '<p class="fine">Ambil di studio kami di Shah Alam, Isnin hingga Sabtu, 11 pagi hingga 7 petang. Kami SMS bila barang sedia.</p>') +
+      "</fieldset>" +
+      '<fieldset><legend>Bayaran</legend><p class="fine">Semua transaksi selamat dan disulitkan.</p>' + Object.keys(PAY).map(function (k) {
+        var sub2 = k === "atome" ? "3 bayaran " + rm2(Math.ceil(t / 3 * 100) / 100) + ", tanpa faedah" : PAY[k].sub;
+        return '<label class="radio pay"><input type="radio" name="pay" value="' + k + '"' + (form.pay === k ? " checked" : "") + "><span>" + PAY[k].label + "<small>" + esc(sub2) + "</small></span></label>";
+      }).join("") + "</fieldset>" +
+      field("note", "Catatan untuk kedai (tidak wajib)", textIn("note", "text", "off", ' placeholder="Contoh: hadiah, tolong balut"', ""), "") +
+      '<p class="fine">Laman demo: langkah bayaran seterusnya tidak meminta nombor kad atau log masuk bank, dan tiada wang ditolak.</p>' +
       "</form>";
-    setFoot('<button type="submit" form="order-form" class="btn btn-accent btn-block">Sediakan pesanan &middot; ' + rm2(sub + fee) + "</button>");
+    setFoot('<button type="submit" form="co-form" class="btn btn-accent btn-block">Bayar sekarang &middot; ' + rm2(t) + "</button>");
   }
-  function setFoot(html) {
-    var f = $(".cart-foot", cartDlg);
-    if (!f) { f = document.createElement("div"); f.className = "cart-foot"; cartDlg.appendChild(f); }
-    f.innerHTML = html;
-    f.hidden = !html;
+
+  function renderGateway(errors) {
+    var t = total(), m = PAY[form.pay];
+    var body = "";
+    if (m.picks) {
+      if (m.picks.indexOf(form.pick) < 0) form.pick = "";
+      body = '<p class="gw-ask">' + (form.pay === "fpx" ? "Pilih bank anda" : "Pilih dompet digital") + '</p><div class="gw-picks" role="radiogroup" aria-label="' + (form.pay === "fpx" ? "Bank" : "Dompet digital") + '">' +
+        m.picks.map(function (b) { return '<button type="button" role="radio" aria-checked="' + (b === form.pick) + '" data-pick="' + esc(b) + '">' + esc(b) + "</button>"; }).join("") + "</div>" +
+        '<p class="field-err" role="alert">' + (errors.pick || "") + "</p>";
+    } else if (form.pay === "kad") {
+      body = '<div class="gw-card"><span>Visa / Mastercard</span><b>&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242</b><small>Kad contoh. Demo ini tidak meminta nombor kad sebenar.</small></div>';
+    } else if (form.pay === "duitnow") {
+      body = '<div class="gw-qr"><svg viewBox="0 0 21 21" aria-hidden="true" shape-rendering="crispEdges">' + fakeQr() + '</svg><small>Contoh sahaja, kod ini tidak boleh diimbas.</small></div>';
+    } else if (form.pay === "atome") {
+      var part = Math.ceil(t / 3 * 100) / 100;
+      body = '<ol class="gw-plan">' + [0, 1, 2].map(function (i) {
+        var d = new Date(); d.setMonth(d.getMonth() + i);
+        return "<li><span>" + (i === 0 ? "Hari ini" : d.toLocaleDateString("ms-MY", { day: "numeric", month: "long" })) + "</span><b>" + rm2(i < 2 ? part : Math.round((t - part * 2) * 100) / 100) + "</b></li>";
+      }).join("") + "</ol>";
+    }
+    cartBody.innerHTML = stepsBar(3) +
+      '<div class="gw">' +
+      '<div class="gw-top"><span class="gw-tag">Gerbang bayaran demo</span><span>Maison Ve’ra</span></div>' +
+      '<p class="gw-amt"><small>Jumlah</small>MYR ' + rm2(t).replace("RM", "") + "</p>" +
+      '<p class="gw-via">' + esc(m.label) + "</p>" + body + "</div>" +
+      '<p class="fine">Di kedai sebenar, langkah ini dibuka oleh gerbang bayaran seperti Billplz atau Stripe. Dalam demo, tekan Luluskan untuk lihat apa yang berlaku selepas bayaran berjaya.</p>';
+    setFoot('<button type="button" class="btn btn-accent btn-block" data-approve>Luluskan bayaran &middot; ' + rm2(t) + "</button>" +
+      '<button type="button" class="btn btn-block link" style="min-height:44px" data-go="checkout">Batal dan kembali</button>');
+  }
+
+  function fakeQr() {
+    // Decorative pattern with three corner squares; not a real QR code.
+    var s = "", seed = 7;
+    function corner(x, y) { s += '<rect x="' + x + '" y="' + y + '" width="7" height="7"/><rect x="' + (x + 1) + '" y="' + (y + 1) + '" width="5" height="5" fill="#fff"/><rect x="' + (x + 2) + '" y="' + (y + 2) + '" width="3" height="3"/>'; }
+    for (var y = 0; y < 21; y++) for (var x = 0; x < 21; x++) {
+      if ((x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12)) continue;
+      seed = (seed * 9301 + 49297) % 233280;
+      if (seed / 233280 > 0.52) s += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+    }
+    corner(0, 0); corner(14, 0); corner(0, 14);
+    return s;
+  }
+
+  function renderProcessing() {
+    cartBody.innerHTML = stepsBar(3) + '<div class="gw-wait" role="status"><span class="spin" aria-hidden="true"></span><p>Mengesahkan bayaran</p><small>Jangan tutup tetingkap ini.</small></div>';
+    setFoot("");
   }
 
   function readForm() {
     var f = $("[data-form]", cartBody);
     if (!f) return;
-    ["name", "phone", "address", "note"].forEach(function (k) { if (f.elements[k]) form[k] = f.elements[k].value; });
-    var r = f.querySelector('input[name="pos"]:checked');
-    if (r) form.pos = r.value;
-    save("rk2_form", { name: form.name, phone: form.phone, address: form.address, pos: form.pos });
+    ["email", "phone", "name", "address", "postcode", "city", "state", "note"].forEach(function (k) { if (f.elements[k]) form[k] = f.elements[k].value; });
+    var r = f.querySelector('input[name="pos"]:checked'); if (r) form.pos = r.value;
+    var p = f.querySelector('input[name="pay"]:checked'); if (p) form.pay = p.value;
+    save("rk3_form", { email: form.email, phone: form.phone, name: form.name, address: form.address, postcode: form.postcode, city: form.city, state: form.state, pos: form.pos, pay: form.pay });
+  }
+
+  function go(to) {
+    readForm();
+    step = to;
+    renderCart();
+    var first = to === "checkout" ? $("#f-email", cartBody) : $("[data-pick], [data-approve]", cartDlg);
+    if (first && to !== "checkout") first.focus();
   }
 
   cartBody.addEventListener("input", function () { readForm(); });
   cartBody.addEventListener("change", function (e) {
-    if (e.target.name === "pos") { readForm(); renderCart(); var r = $('input[name="pos"]:checked', cartBody); if (r) r.focus(); }
+    if (e.target.name === "pos" || e.target.name === "pay") {
+      readForm(); renderCart();
+      var r = $('input[name="' + e.target.name + '"]:checked', cartBody); if (r) r.focus();
+    }
   });
-  cartBody.addEventListener("click", function (e) {
+  cartDlg.addEventListener("click", function (e) {
+    var g0 = e.target.closest("[data-go]");
+    if (g0) { go(g0.dataset.go); return; }
+    var pk = e.target.closest("[data-pick]");
+    if (pk) { form.pick = pk.dataset.pick; renderCart(); var again0 = $('[data-pick="' + cssEsc(form.pick) + '"]', cartBody); if (again0) again0.focus(); return; }
+    if (e.target.closest("[data-approve]")) {
+      if (PAY[form.pay].picks && !form.pick) { renderGateway({ pick: form.pay === "fpx" ? "Sila pilih bank dahulu." : "Sila pilih dompet digital dahulu." }); return; }
+      step = "processing"; renderCart();
+      setTimeout(placeOrder, matchMedia("(prefers-reduced-motion: reduce)").matches ? 300 : 1600);
+      return;
+    }
     var b = e.target.closest("[data-lq]");
     if (b) {
-      readForm();
       var l = cart[+b.dataset.l], d = +b.dataset.lq;
       var max = stockOf(l.id, l.size) - inCart(l.id, l.size) + l.qty;
       l.qty = Math.max(1, Math.min(max, l.qty + d));
-      save("rk2_cart", cart); updateCount(); renderCart();
+      save("rk3_cart", cart); updateCount(); renderCart();
       var again = $('[data-lq="' + d + '"][data-l="' + b.dataset.l + '"]', cartBody); if (again) again.focus();
       return;
     }
     var r = e.target.closest("[data-rm]");
-    if (r) { readForm(); cart.splice(+r.dataset.rm, 1); save("rk2_cart", cart); updateCount(); renderCart(); return; }
+    if (r) { cart.splice(+r.dataset.rm, 1); save("rk3_cart", cart); updateCount(); renderCart(); return; }
     var g = e.target.closest("[data-goto]");
     if (g) { closeCart(); setCat("semua"); location.hash = g.dataset.goto; }
   });
@@ -443,88 +601,79 @@
     e.preventDefault();
     readForm();
     var errs = {};
-    if (form.name.trim().length < 2) errs.name = "Sila isi nama penuh.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim())) errs.email = "Sila isi emel yang sah, contohnya nama@contoh.com.";
     if (form.phone.replace(/\D/g, "").length < 9) errs.phone = "Sila isi nombor telefon, contohnya 012 345 6789.";
-    if (form.pos !== "ambil" && form.address.trim().length < 10) errs.address = "Sila isi alamat lengkap dengan poskod.";
+    if (form.name.trim().length < 2) errs.name = "Sila isi nama penuh.";
+    if (form.pos !== "ambil") {
+      if (form.address.trim().length < 6) errs.address = "Sila isi alamat.";
+      if (!/^\d{5}$/.test(form.postcode.trim())) errs.postcode = "Poskod 5 angka.";
+      if (form.city.trim().length < 2) errs.city = "Sila isi bandar.";
+    }
     if (Object.keys(errs).length) {
-      renderCart(errs);
+      renderCheckout(errs);
       var first = $("#f-" + Object.keys(errs)[0], cartBody); if (first) first.focus();
       return;
     }
-    placeOrder();
+    form.pick = "";
+    go("gateway");
   });
 
   function nextOrderId() {
     var d = new Date();
     var n = myOrders.length + 7;
-    return "RK" + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + String(n).padStart(2, "0"); // taste-skill-ignore
+    return "MV" + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + String(n).padStart(2, "0"); // taste-skill-ignore
   }
-
-  function waMessage(o) {
-    var sub = o.items.reduce(function (a, it) { return a + byId[it.id].price * it.q; }, 0);
-    var fee = posFee(o.pos, sub);
-    var lines = [];
-    lines.push("Assalamualaikum Rona Kasturi, saya nak buat pesanan.");
-    lines.push("");
-    lines.push("*Pesanan " + o.id + "*");
-    o.items.forEach(function (it, i) {
-      var p = byId[it.id];
-      lines.push((i + 1) + ". " + p.name);
-      lines.push("   Rona: " + it.c + " | Saiz: " + it.s + " | Kuantiti: " + it.q);
-      lines.push("   " + rm2(p.price * it.q));
-    });
-    lines.push("");
-    lines.push("Jumlah barang: " + rm2(sub));
-    lines.push(POS[o.pos].label + ": " + (fee ? rm2(fee) : "Percuma"));
-    lines.push("*Jumlah perlu dibayar: " + rm2(sub + fee) + "*");
-    lines.push("");
-    lines.push("Nama: " + o.name);
-    lines.push("Telefon: " + o.phone);
-    if (o.pos !== "ambil") lines.push("Alamat: " + o.address.replace(/\s*,?\s*\n\s*/g, ", "));
-    if (o.note) lines.push("Catatan: " + o.note);
-    lines.push("");
-    lines.push("Terima kasih!");
-    return lines.join("\n");
-  }
+  function payLabel(o) { return o.pay ? PAY[o.pay].label.replace(" perbankan dalam talian", "") + (o.pick ? ", " + o.pick : "") : ""; }
 
   function placeOrder() {
+    var ship = form.pos !== "ambil";
     var o = {
       id: nextOrderId(), at: new Date().toISOString(),
-      name: form.name.trim(), phone: form.phone.trim(), address: form.pos === "ambil" ? "" : form.address.trim(),
-      note: form.note.trim(), pos: form.pos, area: form.pos === "ambil" ? "Ambil sendiri" : guessArea(form.address),
+      name: form.name.trim(), phone: form.phone.trim(), email: form.email.trim(),
+      address: ship ? [form.address.trim(), form.postcode.trim() + " " + form.city.trim(), form.state].join(", ") : "",
+      note: form.note.trim(), pos: form.pos, area: ship ? form.city.trim() + ", " + form.state : "Ambil sendiri",
+      pay: form.pay, pick: PAY[form.pay].picks ? form.pick : "",
       items: cart.map(function (l) { return { id: l.id, c: l.colour, s: l.size, q: l.qty }; }),
-      status: "Baru", mine: true
+      status: "Dibayar", mine: true
     };
-    var msg = waMessage(o);
-    lastWaUrl = "https://wa.me/" + SHOP_WA + "?text=" + encodeURIComponent(msg);
     o.items.forEach(function (it) { if (stock[it.id] && it.s in stock[it.id]) stock[it.id][it.s] = Math.max(0, stock[it.id][it.s] - it.q); });
     myOrders.push(o);
-    save("rk2_orders", myOrders); save("rk2_stock", stock);
-    cart = []; save("rk2_cart", cart); updateCount();
-    form.note = "";
-    justPlaced = { order: o, msg: msg };
+    save("rk3_orders", myOrders); save("rk3_stock", stock);
+    cart = []; save("rk3_cart", cart); updateCount();
+    form.note = ""; form.pick = "";
+    justPlaced = { order: o };
+    step = "done";
     renderCart();
     renderGrid();
-    cartBody.scrollTop = 0;
-  }
-
-  function guessArea(addr) {
-    var parts = String(addr).split(/[,\n]/).map(function (s) { return s.trim(); }).filter(Boolean);
-    return parts.length ? parts[parts.length - 1] : "";
+    var h = $("[data-done] h3", cartBody); if (h) h.focus();
   }
 
   function renderDone() {
     var o = justPlaced.order;
-    var t = new Date(o.at).toLocaleTimeString("ms-MY", { hour: "numeric", minute: "2-digit" });
-    cartBody.innerHTML = '<div class="steps" aria-hidden="true"><span class="on">Troli</span><span class="on">Butiran</span><span class="on">WhatsApp</span></div>' +
+    var sub = o.items.reduce(function (a, it) { return a + byId[it.id].price * it.q; }, 0), fee = posFee(o.pos, sub);
+    var day = function (n) { var d = new Date(); d.setDate(d.getDate() + n); return d.toLocaleDateString("ms-MY", { weekday: "short", day: "numeric", month: "short" }); };
+    var ship = o.pos !== "ambil";
+    var track = [
+      ["Bayaran diterima", payLabel(o) + ", " + new Date(o.at).toLocaleTimeString("ms-MY", { hour: "numeric", minute: "2-digit" }), true],
+      ["Dibungkus", "Hari ini", false],
+      ship ? ["Dipos", "Nombor tracking dihantar ke emel dan SMS", false] : ["Sedia untuk diambil", "Kami SMS bila sedia", false],
+      ship ? ["Sampai", day(o.pos === "semenanjung" ? 2 : 4) + " hingga " + day(o.pos === "semenanjung" ? 4 : 7), false] : ["Diambil", "Studio Shah Alam", false]
+    ];
+    cartBody.innerHTML = stepsBar(4) +
       '<div class="done" data-done>' +
-      "<h3>Pesanan " + esc(o.id) + " sudah siap</h3>" +
-      "<p>Di kedai sebenar, mesej ini terus dibuka di WhatsApp kedai. Dalam demo, ini mesej yang kedai akan terima. Tiada apa dihantar.</p>" +
-      '<div class="chat"><p class="chat-head">Rona Kasturi (demo)</p><p class="bubble" data-wa-text>' + esc(justPlaced.msg).replace(/\*([^*\n]+)\*/g, "<b>$1</b>") + "<time>" + esc(t) + "</time></p></div>" +
-      '<p class="fine">Butang di bawah membuka WhatsApp dengan mesej siap ditulis tetapi tanpa penerima, jadi anda pilih sendiri (contohnya chat dengan diri sendiri). Pesanan ini kini muncul dalam <a href="#owner" data-close-cart>paparan pemilik</a> dan stok sudah ditolak.</p>' +
+      '<p class="done-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></p>' +
+      '<h3 tabindex="-1">Terima kasih, ' + esc(o.name.split(" ")[0]) + "</h3>" +
+      "<p>Pesanan <b>" + esc(o.id) + "</b> sudah dibayar. Resit dihantar ke <b>" + esc(o.email) + "</b>.</p>" +
+      '<ol class="track">' + track.map(function (s) { return '<li class="' + (s[2] ? "on" : "") + '"><b>' + esc(s[0]) + "</b><span>" + esc(s[1]) + "</span></li>"; }).join("") + "</ol>" +
+      '<ul class="co-lines">' + o.items.map(function (it) {
+        var p = byId[it.id];
+        return '<li><span class="co-pic"><img src="' + imgSrc(p) + '" alt="" loading="lazy"><i>' + it.q + "</i></span><span>" + esc(p.name) + "<small>" + esc(it.c) + ", " + esc(it.s) + "</small></span><b>" + rm2(p.price * it.q) + "</b></li>";
+      }).join("") + "</ul>" +
+      '<dl class="sum"><dt>Jumlah kecil</dt><dd>' + rm2(sub) + "</dd><dt>" + esc(POS[o.pos].label) + "</dt><dd>" + (fee ? rm2(fee) : "Percuma") + '</dd><dt class="total">Dibayar</dt><dd class="total">' + rm2(sub + fee) + "</dd></dl>" +
+      (ship ? '<p class="fine"><b>Dihantar ke</b><br>' + esc(o.name) + ", " + esc(o.address) + "</p>" : "") +
+      '<p class="fine">Demo: tiada wang ditolak dan tiada emel dihantar. Pesanan ini kini ada dalam <a href="#owner" data-close-cart>paparan pemilik</a> dengan status Dibayar, dan stok sudah ditolak.</p>' +
       "</div>";
-    setFoot('<a class="btn btn-accent btn-block" data-wa-link href="' + esc(lastWaUrl) + '" target="_blank" rel="noopener">Cuba di WhatsApp anda</a>' +
-      '<button type="button" class="btn btn-block link" style="min-height:44px" data-close-cart>Teruskan membeli</button>');
+    setFoot('<button type="button" class="btn btn-solid btn-block" data-close-cart>Teruskan membeli</button>');
   }
 
   document.addEventListener("click", function (e) {
@@ -533,8 +682,10 @@
     if (c) { if (c.getAttribute("href") !== "#owner") e.preventDefault(); closeCart(); }
   });
 
-  var savedForm = load("rk2_form", null);
-  if (savedForm) { form.name = savedForm.name || ""; form.phone = savedForm.phone || ""; form.address = savedForm.address || ""; form.pos = savedForm.pos || "semenanjung"; }
+  var savedForm = load("rk3_form", null);
+  if (savedForm) Object.keys(form).forEach(function (k) { if (typeof savedForm[k] === "string" && savedForm[k]) form[k] = savedForm[k]; });
+  if (!PAY[form.pay]) form.pay = "fpx";
+  if (!POS[form.pos]) form.pos = "semenanjung";
 
   // ---------- Owner view ----------
   var ownerEl = $("[data-owner]");
@@ -569,17 +720,17 @@
 
   function renderOwner() {
     var orders = allOrders().filter(function (o) { return o.items.every(function (it) { return byId[it.id]; }); });
-    var baru = orders.filter(function (o) { return o.status === "Baru"; }).length;
+    var baru = orders.filter(function (o) { return o.status === "Dibayar"; }).length;
     var belumPos = orders.filter(function (o) { return o.status !== "Dipos"; }).length;
     var week = orders.filter(function (o) { return Date.now() - new Date(o.at) < 7 * 864e5; }).reduce(function (a, o) { return a + orderTotal(o); }, 0);
     var lows = lowList();
     var outCount = lows.filter(function (l) { return l.n === 0; }).length;
 
-    var html = '<div class="o-head"><a class="wordmark" href="#top">Rona Kasturi</a><h1>Paparan pemilik</h1>' +
+    var html = '<div class="o-head"><a class="wordmark" href="#top">Maison Ve’ra</a><h1>Paparan pemilik</h1>' +
       '<a class="btn btn-solid" href="#top">Kembali ke kedai</a></div>' +
-      '<p class="o-note">Contoh skrin untuk pemilik kedai. Enam pesanan pertama ialah data contoh. Pesanan yang anda sediakan dari troli di pelayar ini turut muncul di sini, berlatar jingga, dan stok ditolak secara automatik.</p>' +
+      '<p class="o-note">Contoh skrin untuk pemilik kedai. Enam pesanan pertama ialah data contoh. Pesanan yang anda bayar di troli dalam pelayar ini masuk terus ke sini, berlatar jingga, dengan status Dibayar. Stok ditolak secara automatik.</p>' +
       '<div class="o-stats">' +
-      '<div class="o-stat' + (baru ? " alert" : "") + '"><b>' + baru + "</b><span>Pesanan baru perlu disahkan</span></div>" +
+      '<div class="o-stat' + (baru ? " alert" : "") + '"><b>' + baru + "</b><span>Sudah dibayar, perlu dibungkus</span></div>" +
       '<div class="o-stat"><b>' + belumPos + "</b><span>Belum dipos</span></div>" +
       '<div class="o-stat"><b>' + rm(week) + "</b><span>Jualan 7 hari (data contoh)</span></div>" +
       '<div class="o-stat' + (lows.length ? " alert" : "") + '"><b>' + lows.length + "</b><span>Saiz stok rendah, " + outCount + " habis</span></div></div>" +
@@ -593,14 +744,14 @@
           return '<tr class="' + (o.mine ? "mine" : "") + '">' +
             '<td data-l="Pesanan"><b>' + esc(o.id) + '</b><span class="o-sub">' + fmtDate(o.at) + "</span></td>" +
             '<td data-l="Pelanggan">' + esc(o.name) + '<span class="o-sub">' + esc(o.phone) + (o.area ? ", " + esc(o.area) : "") + "</span>" +
-            (o.mine ? '<a class="o-wa" href="https://wa.me/' + waNum(o.phone) + "?text=" + encodeURIComponent("Salam " + o.name + ", terima kasih. Pesanan " + o.id + " sudah kami terima. Jumlah " + rm2(orderTotal(o)) + ". Butiran bayaran: DuitNow ke nombor kedai.") + '" target="_blank" rel="noopener">Balas di WhatsApp</a>' : "") + "</td>" +
+            (o.mine ? '<a class="o-wa" href="https://wa.me/' + waNum(o.phone) + "?text=" + encodeURIComponent("Salam " + o.name + ", terima kasih. Pesanan " + o.id + " sudah dibayar dan sedang dibungkus. Nombor tracking akan dihantar sebaik dipos.") + '" target="_blank" rel="noopener">Balas di WhatsApp</a>' : "") + "</td>" +
             '<td data-l="Barang"><div class="o-items">' + o.items.map(function (it) {
               var p = byId[it.id];
               return '<span class="o-item"><img src="' + imgSrc(p) + '" alt="" loading="lazy"><span>' + it.q + " x " + esc(p.name) + "<small>" + esc(it.c) + ", " + esc(it.s) + "</small></span></span>";
             }).join("") + "<small>" + esc(POS[o.pos].label) + "</small></div></td>" +
-            '<td data-l="Jumlah" class="num">' + rm2(orderTotal(o)) + "</td>" +
+            '<td data-l="Jumlah" class="num">' + rm2(orderTotal(o)) + (o.pay ? '<span class="o-sub">' + esc(payLabel(o)) + "</span>" : "") + "</td>" +
             '<td data-l="Status"><select class="o-status" data-oid="' + esc(o.id) + '" data-s="' + o.status + '" aria-label="Status ' + esc(o.id) + '">' +
-            ["Baru", "Dibayar", "Dipos"].map(function (s) { return "<option" + (s === o.status ? " selected" : "") + ">" + s + "</option>"; }).join("") +
+            ["Dibayar", "Dibungkus", "Dipos"].map(function (s) { return "<option" + (s === o.status ? " selected" : "") + ">" + s + "</option>"; }).join("") +
             "</select></td></tr>";
         }).join("") + "</tbody></table>";
     } else {
@@ -610,7 +761,7 @@
           var lowN = p.sizes.filter(function (s) { var n = stockOf(p.id, s); return n > 0 && n <= 2; }).length;
           var outN = p.sizes.filter(function (s) { return stockOf(p.id, s) === 0; }).length;
           return "<tr>" +
-            '<td data-l="Produk"><div class="o-prod"><img src="' + imgSrc(p) + '" alt="" loading="lazy"><div>' + esc(p.name) + '<span class="o-sub">' + rm(p.price) + ", " + ({ kurung: "Baju kurung", kebaya: "Kebaya", tudung: "Tudung" })[p.cat] + "</span>" +
+            '<td data-l="Produk"><div class="o-prod"><img src="' + imgSrc(p) + '" alt="" loading="lazy"><div>' + esc(p.name) + '<span class="o-sub">' + rm(p.price) + ", " + CAT_TITLE[p.cat] + "</span>" +
             (outN ? '<span class="flag out">' + outN + " saiz habis</span>" : "") + (lowN ? '<span class="flag low">' + lowN + " saiz stok rendah</span>" : "") + "</div></div></td>" +
             '<td data-l="Stok mengikut saiz"><div class="o-sizes">' + p.sizes.map(function (s) {
               var n = stockOf(p.id, s);
@@ -633,20 +784,20 @@
     if (st) {
       var id = st.dataset.st, sz = st.dataset.sz, d = +st.dataset.d;
       stock[id][sz] = Math.max(0, (stock[id][sz] || 0) + d);
-      save("rk2_stock", stock); renderOwner(); renderGrid();
+      save("rk3_stock", stock); renderOwner(); renderGrid();
       var again = $('[data-st="' + id + '"][data-sz="' + cssEsc(sz) + '"][data-d="' + d + '"]', ownerEl); if (again) again.focus();
       return;
     }
     if (e.target.closest("[data-reset]")) {
       if (!window.confirm("Set semula pesanan, stok dan troli demo dalam pelayar ini?")) return;
-      ["rk2_stock", "rk2_orders", "rk2_status", "rk2_cart", "rk2_form"].forEach(function (k) { try { localStorage.removeItem(k); } catch (er) { /* ignore */ } });
+      ["rk3_stock", "rk3_orders", "rk3_status", "rk3_cart", "rk3_form"].forEach(function (k) { try { localStorage.removeItem(k); } catch (er) { /* ignore */ } });
       stock = JSON.parse(JSON.stringify(STOCK_SEED)); myOrders = []; statusOverride = {}; cart = [];
       updateCount(); renderOwner(); renderGrid();
     }
   });
   ownerEl.addEventListener("change", function (e) {
     var s = e.target.closest("[data-oid]");
-    if (s) { statusOverride[s.dataset.oid] = s.value; save("rk2_status", statusOverride); renderOwner(); var a = $('[data-oid="' + s.dataset.oid + '"]', ownerEl); if (a) a.focus(); }
+    if (s) { statusOverride[s.dataset.oid] = s.value; save("rk3_status", statusOverride); renderOwner(); var a = $('[data-oid="' + s.dataset.oid + '"]', ownerEl); if (a) a.focus(); }
   });
 
   function route() {
@@ -657,9 +808,9 @@
       closeProduct(); closeCart(); closeDlg(menuDlg);
       renderOwner();
       window.scrollTo(0, 0);
-      document.title = "Paparan pemilik, Rona Kasturi";
+      document.title = "Paparan pemilik, Maison Ve’ra";
     } else {
-      document.title = "Rona Kasturi, butik baju kurung, kebaya dan tudung";
+      document.title = "Maison Ve’ra, pakaian jalanan, beg dan kasut tumit";
     }
   }
   window.addEventListener("hashchange", route);
@@ -689,29 +840,25 @@
     revealTargets.forEach(function (el) { el.classList.add("in"); });
   }
 
-  // ---------- Floating chat: preview of the order message ----------
+  // ---------- Floating chat: questions about size and stock (demo, nothing sent) ----------
   var chatDlg = $("[data-chat]");
   function renderChat() {
     var now = new Date().toLocaleTimeString("ms-MY", { hour: "numeric", minute: "2-digit" });
     var last = myOrders.length ? myOrders[myOrders.length - 1] : null;
-    var msg, note;
-    if (cart.length) {
-      msg = waMessage({ id: "(nombor diberi selepas hantar)", pos: form.pos, name: form.name || "Nama anda", phone: form.phone || "Nombor anda",
-        address: form.address || "Alamat anda", note: "", items: cart.map(function (l) { return { id: l.id, c: l.colour, s: l.size, q: l.qty }; }) });
-      note = "Ini mesej yang akan dihasilkan daripada troli anda sekarang.";
-    } else if (last) {
-      msg = waMessage(last);
-      note = "Pesanan terakhir anda di pelayar ini.";
+    var lastStatus = last ? (statusOverride[last.id] || last.status) : "";
+    var bubbles = '<p class="bubble in">Salam, ada soalan tentang saiz, stok atau pesanan? Tanya di sini.<time>' + esc(now) + "</time></p>";
+    if (last) {
+      bubbles += '<p class="bubble">Status pesanan ' + esc(last.id) + "?<time>" + esc(now) + "</time></p>" +
+        '<p class="bubble in">Pesanan ' + esc(last.id) + " berstatus <b>" + esc(lastStatus) + "</b>. " +
+        (lastStatus === "Dipos" ? "Nombor tracking sudah dihantar ke " + esc(last.email || "emel anda") + "." : "Kami bungkus dan pos dalam masa satu hari bekerja.") + "<time>" + esc(now) + "</time></p>";
     } else {
-      msg = "Assalamualaikum Rona Kasturi, saya nak tanya tentang saiz dan stok.";
-      note = "Troli anda kosong. Tambah barang untuk lihat mesej pesanan penuh.";
+      bubbles += '<p class="bubble">Saiz M untuk blazer tu muat dada 38 inci?<time>' + esc(now) + "</time></p>" +
+        '<p class="bubble in">Muat. Blazer kami potongan longgar, jadi kalau suka lebih kemas pilih S.<time>' + esc(now) + "</time></p>";
     }
-    chatDlg.innerHTML = '<div class="chat-top"><div><h2 id="chat-title">Rona Kasturi</h2><p>Demo. Tiada mesej dihantar.</p></div>' +
+    chatDlg.innerHTML = '<div class="chat-top"><div><h2 id="chat-title">Maison Ve’ra</h2><p>Demo. Tiada mesej dihantar.</p></div>' +
       '<button type="button" class="icon-btn" data-close-chat aria-label="Tutup"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6"/></svg></button></div>' +
-      '<div class="chat-scroll"><p class="chat-note">' + esc(note) + "</p>" +
-      '<p class="bubble in">Salam, terima kasih kerana singgah. Hantar senarai pesanan dan kami sahkan stok dalam masa sejam.<time>' + esc(now) + "</time></p>" +
-      '<p class="bubble">' + esc(msg).replace(/\*([^*\n]+)\*/g, "<b>$1</b>") + "<time>" + esc(now) + "</time></p></div>" +
-      '<div class="chat-actions">' + (cart.length ? '<button type="button" class="btn btn-accent btn-block" data-chat-cart>Lengkapkan di troli</button>' :
+      '<div class="chat-scroll"><p class="chat-note">Pesanan dibuat dan dibayar terus di troli. Chat ini untuk soalan.</p>' + bubbles + "</div>" +
+      '<div class="chat-actions">' + (cart.length ? '<button type="button" class="btn btn-accent btn-block" data-chat-cart>Daftar keluar</button>' :
         '<a class="btn btn-solid btn-block" href="#koleksi" data-chat-shop>Lihat koleksi</a>') + "</div>";
   }
   $("[data-open-chat]").addEventListener("click", function () { renderChat(); openDlg(chatDlg); });
@@ -726,5 +873,4 @@
   updateCount();
   route();
 
-  window.RK = { waMessage: waMessage, lastWaUrl: function () { return lastWaUrl; } };
 })();
