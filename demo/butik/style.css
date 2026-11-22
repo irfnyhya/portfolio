@@ -397,7 +397,7 @@ dialog::backdrop { background: rgba(20, 20, 20, 0.4); }
 .co-sum summary { display: flex; justify-content: space-between; align-items: center; min-height: 52px; padding: 0 14px; cursor: pointer; list-style: none; font-size: 0.9375rem; }
 .co-sum summary::-webkit-details-marker { display: none; }
 .co-sum summary span { text-decoration: underline; }
-.co-sum[open] summary span::after { content: " (tutup)"; color: var(--muted); text-decoration: none; }
+.co-sum[open] summary span::after { content: " (hide)"; color: var(--muted); text-decoration: none; }
 .co-sum > ul, .co-sum > dl { padding-inline: 14px; }
 .co-sum > dl { padding-bottom: 14px; }
 .co-lines { display: grid; gap: 12px; padding-top: 4px; }
@@ -427,7 +427,7 @@ dialog::backdrop { background: rgba(20, 20, 20, 0.4); }
 .gw-qr small, .gw-wait small { font-size: 0.75rem; color: var(--muted); }
 .gw-plan { display: grid; gap: 0; }
 .gw-plan li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.9375rem; }
-.gw-plan li:first-child b::after { content: " sekarang"; font-weight: 400; color: var(--muted); }
+.gw-plan li:first-child b::after { content: " now"; font-weight: 400; color: var(--muted); }
 .gw-wait { display: grid; justify-items: center; gap: 10px; padding: 64px 0; text-align: center; }
 .gw-wait p { font-family: var(--serif); font-size: 1.75rem; }
 .spin { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--panel-2); border-top-color: var(--ink); animation: spin 800ms linear infinite; }

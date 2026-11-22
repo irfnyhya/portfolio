@@ -4,31 +4,33 @@ no permission needed; credit given anyway): https://unsplash.com/license
 Found through Unsplash search with the "free" licence filter (no Unsplash+ images).
 Files were cropped and compressed for this demo. Maison Ve’ra is a fictional brand;
 the people, clothes, bags and shoes in these photos have no connection to it.
-Photos showing a real brand's logo or signature design were left out.
+Photos showing a real brand's logo or signature design were left out; two tiny maker's stamps were softened.
+Picked to match a Pinterest moodboard (neutral, soft daylight, quiet luxury); only free licence photos are used.
 
 file                 photographer        source page
-hero.jpg             @sashamatveeva      https://unsplash.com/photos/_jU2Kx820ao
-hero-2.jpg           @aiony              https://unsplash.com/photos/j5L0X1ioajw
-ed-beg.jpg           @matt909            https://unsplash.com/photos/GrxqPNpMK40
-ed-kasut.jpg         @mdagonakis         https://unsplash.com/photos/OkcC5kIyCYo
-tile-pakaian.jpg     @alipzn             https://unsplash.com/photos/fCe-52iIZIM
-tile-beg.jpg         @tamarabellis       https://unsplash.com/photos/HY1fq4ZtLTE
-tile-kasut.jpg       @kkalerry           https://unsplash.com/photos/IurEsRsGtuY
-jaket-kulit.jpg      @fabiraw            https://unsplash.com/photos/0XsKjui66Co
-jeans-hitam.jpg      @yanlo              https://unsplash.com/photos/pk8YSVwAm8A
-jeans-biru.jpg       @marlonalvesphoto   https://unsplash.com/photos/IucjGzKvxno
-blazer-pasir.jpg     @alinamatveycheva   https://unsplash.com/photos/MNwRn2MMHPM
-blazer-jalur.jpg     @itsbrunoagain      https://unsplash.com/photos/oMGpPyYuOPw
-cargo-zaitun.jpg     @melbinjacob        https://unsplash.com/photos/isOnKqJkKAI
-trench-pasir.jpg     @toma_ha            https://unsplash.com/photos/YDxW47w8ANg
-kot-merah-jambu.jpg  @sashamatveeva      https://unsplash.com/photos/kp418eszaEs
-beg-hitam.jpg        @maryamnemati       https://unsplash.com/photos/LW2iqpHzr8Y
-beg-krim.jpg         @vkozhevnikov       https://unsplash.com/photos/FYWNzQnXgsk
-beg-pudina.jpg       @kunyhira           https://unsplash.com/photos/mJZvDJ6Nies
-beg-kroko.jpg        @artworkarash       https://unsplash.com/photos/TEr0EM_mFXk
-beg-putih.jpg        @maudefl            https://unsplash.com/photos/Zha2jqwxzMY
-kasut-kuning.jpg     @laurachouette      https://unsplash.com/photos/sl963NLr3bI
-kasut-kerusi.jpg     @elenagolubeva      https://unsplash.com/photos/abGaNnps2Vs
-kasut-putih.jpg      @benkoorengevel     https://unsplash.com/photos/PobMAbAaHOI
-kasut-kilau.jpg      @raquelxbaires      https://unsplash.com/photos/ZFbjnFi_OGY
-kasut-tali.jpg       @femmespirit        https://unsplash.com/photos/RGYBDUHYbyM
+hero-1.jpg               @sobolivska            https://unsplash.com/photos/2MeR7oeudlE
+hero.jpg                 @sashamatveeva         https://unsplash.com/photos/_jU2Kx820ao (kept for the main portfolio page card)
+trench-pasir.jpg         @danafarouk            https://unsplash.com/photos/5vrque5NVHI
+blazer-pasir.jpg         @alinamatveycheva      https://unsplash.com/photos/MNwRn2MMHPM
+sut-krim.jpg             @olaszkolda            https://unsplash.com/photos/6A1dE8VEENc
+kot-unta.jpg             @theawguide            https://unsplash.com/photos/DsKcWDk6NEU
+jaket-kulit.jpg          @fabiraw               https://unsplash.com/photos/0XsKjui66Co
+seluar-lebar.jpg         @enginakyurt           https://unsplash.com/photos/Ok9zDSlE2bI
+jeans-biru.jpg           @enginakyurt           https://unsplash.com/photos/lTRj2ijTPAM
+kait-krim.jpg            @valnastudio           https://unsplash.com/photos/mU88MlEFcoU
+beg-krim.jpg             @globaldsioitsolution  https://images.unsplash.com/photo-1761646238176-b480909e6ba6 (from @globaldsioitsolution on Unsplash)
+beg-putih.jpg            @genesisswarner        https://unsplash.com/photos/CjPQRw3DZSs
+beg-kroko.jpg            @muneebmalhotra        https://unsplash.com/photos/hSv2XVyDSPk
+beg-hitam.jpg            @josephbobadilla       https://images.unsplash.com/photo-1664187284276-2f3254cdc7dc (from @josephbobadilla on Unsplash)
+beg-zamrud.jpg           @artworkarash          https://unsplash.com/photos/TEr0EM_mFXk
+kasut-nude.jpg           @anadventure           https://unsplash.com/photos/Zx76sbAndc0
+kasut-reben.jpg          @chitz201              https://unsplash.com/photos/9urrzNhb3PU
+kasut-kristal.jpg        @michellem18           https://unsplash.com/photos/Hj2KKgJj6IQ
+kasut-putih.jpg          @svetlana_boyko        https://unsplash.com/photos/mV6f0Brag6o
+kasut-merah-jambu.jpg    @laurachouette         https://unsplash.com/photos/fCzhzFVuMrI
+hero-2.jpg               @rosarafael            https://unsplash.com/photos/0q5e3uiAOHA
+tile-pakaian.jpg         @captureme_cz          https://unsplash.com/photos/aPIN2_ITQ2M
+tile-kasut.jpg           @kierinsightarchives   https://unsplash.com/photos/b4Xk6bzgQWU
+tile-beg.jpg             @lana_laurentez        https://unsplash.com/photos/OyvlRytxBP4
+ed-beg.jpg               @melekmavzer           https://unsplash.com/photos/umWZllrNjS8
+ed-kasut.jpg             @alexandermassph       https://images.unsplash.com/photo-1776266100221-d11f77db0e0a (from @alexandermassph on Unsplash)
