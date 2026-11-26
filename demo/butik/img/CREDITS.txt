@@ -34,7 +34,19 @@ tile-kasut.jpg           @kierinsightarchives   https://unsplash.com/photos/b4Xk
 tile-beg.jpg             @lana_laurentez        https://unsplash.com/photos/OyvlRytxBP4
 ed-beg.jpg               @melekmavzer           https://unsplash.com/photos/umWZllrNjS8
 ed-kasut.jpg             @alexandermassph       https://images.unsplash.com/photo-1776266100221-d11f77db0e0a (from @alexandermassph on Unsplash)
-line-1*.webp             @17allansfilms         https://unsplash.com/photos/2SKQF1MuakI (line-up look 1, cut out, pieces cropped)
-line-2*.webp             @antonkwibowo          https://unsplash.com/photos/V0RVqZ69JEg (line-up look 2, cut out, pieces cropped)
-line-3*.webp             @antonkwibowo          https://unsplash.com/photos/zEGIgG2aYyQ (line-up look 3, cut out, pieces cropped; bag and sneaker logos softened)
-line-4*.webp             @thisismcfollis        https://unsplash.com/photos/Qc5hYBZCsys (line-up look 4, cut out, pieces cropped)
+
+Line-up (intro). Models are cut out locally; pieces are separate product photos that closely match
+each look's pieces in type and colour (similar, not the identical item).
+line-1.webp              @alekseyryan (Unsplash)        https://unsplash.com/photos/7uDwMv9FlrQ
+line-1-trousers.webp     Image by freepik (Freepik)     https://www.freepik.com/free-photo/light-brown-beige-pants-indoors-still-life_65109546.htm
+line-1-shoes.webp        Image by rawpixel.com (Freepik) https://www.freepik.com/free-photo/women-s-beige-low-heel-shoes-fashion_15439826.htm
+line-2.webp              @17allansfilms (Unsplash)      https://unsplash.com/photos/2SKQF1MuakI
+line-2-jacket.webp       @nkosi_nuz (Unsplash)          https://unsplash.com/photos/kNVl-jxS_X0
+line-2-trousers.webp     @blueeyeaa (Unsplash)          https://unsplash.com/photos/h6PKsr0wDH4
+line-2-shoes.webp        @enginakyurt (Unsplash)        https://unsplash.com/photos/BbqotoFK8gA
+line-3.webp              Image by bristekjegor (Freepik) https://www.freepik.com/free-photo/fashion-portrait-young-elegant-woman_6022385.htm
+line-3-shoes.webp        Image by rawpixel.com (Freepik) https://www.freepik.com/free-photo/women-rsquo-s-white-high-heel-shoes-fashion_15850292.htm
+line-4.webp              Image by svetlanasokolova (Freepik) https://www.freepik.com/free-photo/stylish-woman-leather-coat-black-hat-demonstrate-winter-fashion-trends-white-full-lenght_20570205.htm
+line-4-coat.webp         Image by freepik (Freepik)     https://www.freepik.com/free-photo/model-career-kit-still-life_38745985.htm
+line-4-trousers.webp     Image by mrsiraphol (Freepik)  https://www.freepik.com/free-photo/pants_1135576.htm
+Freepik images: free licence with attribution (https://www.freepik.com/legal/terms-of-use).

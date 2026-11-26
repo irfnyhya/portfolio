@@ -544,17 +544,17 @@ body.is-owner main, body.is-owner .foot, body.is-owner .skip, body.is-owner .bar
 .lu-title .eyebrow { font-size: inherit; }
 .lu-models { position: absolute; inset: 0; }
 .lu-model {
-  position: absolute; left: 0; bottom: 8%; height: 78%; width: auto; max-width: none;
+  position: absolute; left: 0; bottom: 8%; height: calc(78% * var(--k, 1)); width: auto; max-width: none;
   transform-origin: 50% 100%; will-change: transform, opacity;
   filter: drop-shadow(0 22px 18px rgba(30, 24, 18, .14));
   transition: transform 520ms cubic-bezier(.22, .8, .2, 1), opacity 420ms ease;
 }
 .lu-model.no-anim { transition: none; }
 .lu-side { position: absolute; z-index: 20; left: var(--m); top: 50%; transform: translateY(-46%); width: clamp(92px, 13vw, 180px); }
-.lu-pieces { display: grid; gap: 18px; }
+.lu-pieces { display: grid; gap: 14px; }
 .lu-pieces[hidden], .lu-info[hidden] { display: none; }
 .lu-pieces li { display: grid; gap: 2px; font-size: .8125rem; line-height: 1.3; }
-.lu-pieces img { width: auto; max-width: 100%; max-height: 17svh; object-fit: contain; margin-bottom: 6px; filter: drop-shadow(0 8px 10px rgba(30, 24, 18, .12)); }
+.lu-pieces img { display: block; height: min(15.5svh, 140px); width: auto; aspect-ratio: 4 / 5; object-fit: cover; margin-bottom: 6px; background: #fff; }
 .lu-price { color: var(--muted); font-variant-numeric: tabular-nums; }
 .lu-top { position: absolute; z-index: 20; right: var(--m); top: 24px; text-align: right; }
 .lu-num { font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
@@ -581,12 +581,12 @@ body.lu-on .chat-fab { opacity: 0; pointer-events: none; }
 .lineup:not(.is-ready) .lu-side, .lineup:not(.is-ready) .lu-top, .lineup:not(.is-ready) .lu-nav { display: none; }
 
 @media (max-width: 699px) {
-  .lu-model { bottom: 13%; height: 60%; }
+  .lu-model { bottom: 13%; height: calc(60% * var(--k, 1)); }
   .lu-side { width: 76px; top: 52%; }
   .lu-pieces { gap: 12px; }
   .lu-pieces li { font-size: .6875rem; }
   .lu-pieces li span:not(.lu-price) { display: none; }
-  .lu-pieces img { max-height: 12svh; margin-bottom: 2px; }
+  .lu-pieces img { height: min(12svh, 96px); margin-bottom: 2px; }
   .lu-top { top: 70px; }
   .lu-title { font-size: 1.6rem; }
   .lu-btn { width: 44px; height: 44px; }
