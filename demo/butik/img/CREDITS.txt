@@ -5,6 +5,7 @@ Found through Unsplash search with the "free" licence filter (no Unsplash+ image
 Files were cropped and compressed for this demo. Maison Ve’ra is a fictional brand;
 the people, clothes, bags and shoes in these photos have no connection to it.
 Photos showing a real brand's logo or signature design were left out; two tiny maker's stamps were softened.
+intro-1.jpg: the brand name printed on the sweater was softened.
 Picked to match a Pinterest moodboard (neutral, soft daylight, quiet luxury); only free licence photos are used.
 
 file                 photographer        source page
@@ -34,3 +35,9 @@ tile-kasut.jpg           @kierinsightarchives   https://unsplash.com/photos/b4Xk
 tile-beg.jpg             @lana_laurentez        https://unsplash.com/photos/OyvlRytxBP4
 ed-beg.jpg               @melekmavzer           https://unsplash.com/photos/umWZllrNjS8
 ed-kasut.jpg             @alexandermassph       https://images.unsplash.com/photo-1776266100221-d11f77db0e0a (from @alexandermassph on Unsplash)
+intro-1.jpg              @navidsohrabi          https://unsplash.com/photos/wrNvb91xj4Q (intro, look 1)
+intro-2.jpg              @lhonkarwanhamasalih   https://unsplash.com/photos/9B5dtT0ROG4 (intro, look 2)
+intro-3.jpg              @bordunova             https://unsplash.com/photos/M2oO37DV49A (intro, look 3)
+intro-4.jpg              @onurssenay            https://unsplash.com/photos/Qy8IEssqkYU (intro, look 4)
+intro-5.jpg              @olaszkolda            https://unsplash.com/photos/h8fJcfaARJg (intro, look 5)
+intro-6.jpg              @kstudios              https://unsplash.com/photos/yYtHU9egNLA (intro, look 6)
