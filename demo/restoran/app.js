@@ -47,6 +47,8 @@
     else if (h < OPEN_H) t.textContent = "Seatings tonight at 6:00 PM and 8:30 PM";
     else if (h < CLOSE_H) t.textContent = "Kitchen open now · Last seating 8:30 PM";
     else { el.classList.add("closed"); t.textContent = (d + 1) % 7 === CLOSED_WEEKDAY ? "Closed now · Back Wednesday at 6 PM" : "Closed now · Back tomorrow at 6 PM"; }
+    // The hero ticket's dot goes grey when the kitchen is closed
+    if ($("ticketStatus")) $("ticketStatus").parentNode.classList.toggle("closed", el.classList.contains("closed"));
   })();
 
   /* ── Header, mobile menu, sticky bar ───────────────── */
@@ -283,6 +285,8 @@
   var fullDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var STEP_NAMES = ["When", "Seating", "Details", "Review"];
   var NEXT_LABELS = ["Choose a seating", "Your details", "Review request", ""];
+  var SEATING_NAMES = { "18:00": "First seating", "20:30": "Second seating" };
+  function endTime(hhmm) { return String((Number(hhmm.slice(0, 2)) + 2) % 24).padStart(2, "0") + ":" + hhmm.slice(3); } // dinner runs about two hours
 
   function fmtTime(hhmm) { var h = Number(hhmm.slice(0, 2)); return (h % 12 || 12) + ":" + hhmm.slice(3) + " " + (h >= 12 ? "PM" : "AM"); }
   function fmtDate(d) { return fullDays[d.getDay()] + ", " + d.getDate() + " " + monNames[d.getMonth()]; }
@@ -333,7 +337,8 @@
       var el = $(g[0]); el.innerHTML = "";
       g[1].forEach(function (t) {
         var b = document.createElement("button");
-        b.type = "button"; b.className = "time"; b.textContent = fmtTime(t);
+        b.type = "button"; b.className = "time";
+        b.innerHTML = '<span class="big">' + t + '</span><span class="label">' + (SEATING_NAMES[t] || "Seating") + "</span>";
         b.disabled = timeDisabled(t);
         b.setAttribute("aria-pressed", String(state.time === t));
         b.addEventListener("click", function () {
@@ -350,7 +355,7 @@
   }
 
   function renderGuests() {
-    $("gCount").textContent = state.guests + (state.guests === 1 ? " seat" : " seats");
+    $("gCount").innerHTML = "<b>" + state.guests + '</b><span class="label">' + (state.guests === 1 ? "seat" : "seats") + "</span>";
     $("gMinus").disabled = state.guests <= 1;
     $("gPlus").disabled = state.guests >= MAX_GUESTS;
     $("guestHint").textContent = state.guests >= PRIVATE_FROM ? "That is the whole counter. We will reply with options for your group."
@@ -404,19 +409,29 @@
     return lines.join("\n");
   }
   function buildReview() {
-    var rows = [["Date", fmtDate(state.date), 0], ["Seating", fmtTime(state.time), 1], ["Seats", String(state.guests), 0], ["Name", $("name").value.trim(), 2], ["Phone", $("phone").value.trim(), 2]];
+    var rows = [["Date", fmtDate(state.date), 0], ["Seats", String(state.guests), 0], ["Name", $("name").value.trim(), 2], ["Phone", $("phone").value.trim(), 2]];
     if (state.guests >= PRIVATE_FROM) rows.push(["Booking", "Whole counter", 0]);
     if (state.pairing) rows.push(["Seat", state.pairing, 2]);
     if (state.occasions.length) rows.push(["Occasion", state.occasions.join(", "), 2]);
-    $("reviewList").innerHTML = rows.map(function (r) {
-      return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + ' <button type="button" class="edit" data-goto="' + r[2] + '">Edit</button></dd></div>';
+    var cells = rows.map(function (r) {
+      return '<div><dt class="label">' + r[0] + "</dt><dd>" + esc(r[1]) + '</dd><button type="button" class="edit" data-goto="' + r[2] + '" aria-label="Edit ' + r[0].toLowerCase() + '">Edit</button></div>';
     }).join("");
+    $("ticket").innerHTML =
+      '<div class="ticket-meta"><span class="tag label">Counter</span><span class="label">Lindap · Kuala Lumpur</span></div>' +
+      '<div class="ticket-times">' +
+        '<div><p class="big">' + state.time + '</p><p class="label">' + esc(SEATING_NAMES[state.time] || "Seating") + "</p></div>" +
+        '<span class="ticket-line" aria-hidden="true"></span>' +
+        '<div class="r"><p class="big">' + endTime(state.time) + '</p><p class="label">About 2 hours</p></div>' +
+      "</div>" +
+      '<button type="button" class="edit edit-time" data-goto="1">Change seating</button>' +
+      '<div class="tix-perf" aria-hidden="true"></div>' +
+      '<dl class="tix-grid">' + cells + "</dl>";
     var msg = message();
     var now = new Date();
     $("bubble").innerHTML = esc(msg) + '<span class="ts">' + now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0") + "</span>";
     $("waLink").href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(msg);
   }
-  $("reviewList").addEventListener("click", function (e) { var b = e.target.closest("[data-goto]"); if (b) go(Number(b.getAttribute("data-goto"))); });
+  $("ticket").addEventListener("click", function (e) { var b = e.target.closest("[data-goto]"); if (b) go(Number(b.getAttribute("data-goto"))); });
 
   var stepsEls = booking.querySelectorAll(".step");
   var progressEls = booking.querySelectorAll(".progress span");

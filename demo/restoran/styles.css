@@ -462,3 +462,222 @@ a, button, input, textarea, label { touch-action: manipulation; -webkit-tap-high
   .hero-ctas { justify-content: flex-start; }
   #embers { left: 46%; width: 54%; }
 }
+
+/* == Ticket style (v3.11) ==================================
+   Dark full-bleed photo, frosted white sheets, big times with mono labels,
+   pill chips, one warm orange for live dots and the send button only.
+   Motion kept short (300 ms or less) and off under reduced motion. */
+:root {
+  --display: "Inter Tight", "Manrope", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --copper: #f2ece1;          /* primary pill = warm white on dark */
+  --copper-2: #b9b4ab;        /* soft accent text */
+  --copper-deep: #4a4f4b;
+  --orange: #ff6a2b;
+  --orange-ink: #2a0f02;
+  --paper: rgba(249, 247, 243, .93);
+  --ink: #131313;
+  --r-xl: 28px; --r-lg: 20px; --r-md: 14px;
+  --t-fast: .18s; --t-mid: .28s;
+}
+h1, h2, h3, .h2, .step h2, .quick h3, .dish h3, .card h3, .steps h3, .faq summary, .demo-card .t, .sheet-top .t, .dish-sheet h3 {
+  font-family: var(--display); font-weight: 500; letter-spacing: -.035em;
+}
+.accent { color: var(--muted); font-style: normal; }
+.label, .eyebrow .idx, .steps .n, .pillars .num, .mobile-menu a span, .day .dw, .day .dm, .dish .tag { font-family: var(--mono); letter-spacing: .08em; }
+.label { font-size: .66rem; font-weight: 500; }
+.eyebrow { color: var(--muted); }
+.eyebrow .idx { font-family: var(--display); font-style: normal; font-size: .85rem; text-transform: none; letter-spacing: 0; }
+.pillars .num, .steps .n { font-family: var(--display); }
+.wordmark .name { font-family: var(--display); font-weight: 600; letter-spacing: .18em; font-size: 1.35rem; }
+.demo-strip { background: #1b1d1c; color: var(--ivory-2); }
+.statement p { font-weight: 500; letter-spacing: -.04em; }
+.statement .dot { color: var(--orange); }
+.statement .outline { font-style: normal; -webkit-text-stroke: 1px var(--line-2); }
+.panel .lead, .wide-photo figcaption { font-style: normal; }
+.dish .price, .card .price, .price-big { font-family: var(--mono); font-style: normal; font-size: .82rem; letter-spacing: .02em; color: var(--ivory-2); }
+.note { border-left-color: var(--line-2); background: rgba(242,236,225,.04); border-radius: 0 var(--r-md) var(--r-md) 0; }
+
+/* Pills, cards and photos get the soft rounded shape */
+.btn { border-radius: 999px; transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast), transform var(--t-fast); }
+.btn svg { transition: transform var(--t-fast) var(--ease); }
+.btn:hover svg { transform: translateX(3px); }
+.btn-solid::before { display: none; }
+.btn-solid:hover { background: #fff; }
+.btn-ghost { border-color: rgba(242,236,225,.2); background: rgba(242,236,225,.06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.btn-ink { background: var(--ink); color: #fff; }
+.btn-ink:hover { background: #000; }
+.btn-soft { background: rgba(19,19,19,.06); color: var(--ink); }
+.btn-soft:hover { background: rgba(19,19,19,.11); }
+.btn-wa, .btn-wa:hover { background: var(--orange); color: var(--orange-ink); }
+.btn-wa::before { display: none; }
+.chip { border-radius: 999px; border-color: var(--line-2); transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast); }
+.chips { border-bottom: 0; }
+.card, .frame, .dish .thumb, .map, .quick, .demo-card { border-radius: var(--r-lg); }
+.dish .thumb { border-radius: var(--r-md); }
+.card img, .dish .thumb img { transition-duration: .4s; }
+.demo-card { border-color: var(--line-2); background: rgba(242,236,225,.04); }
+.demo-card .label { color: var(--muted); }
+.rail-progress span, .nav-links a::after { background: var(--ivory); }
+.contact dt, .steps .n, .mobile-menu a span { color: var(--muted); }
+.faq summary i::before, .faq summary i::after { background: var(--ivory); }
+
+/* Live dots are the only orange on the page (plus the send button) */
+.status { background: rgba(19,19,19,.45); border-color: rgba(242,236,225,.12); }
+.status .dot, .ticket-status .dot, .pin .dot { background: var(--orange); box-shadow: 0 0 0 0 rgba(255,106,43,.55); animation: livedot 2.4s infinite; }
+.status.closed .dot, .ticket-status.closed .dot { background: var(--muted); animation: none; box-shadow: none; }
+@keyframes livedot { 0% { box-shadow: 0 0 0 0 rgba(255,106,43,.5); } 70% { box-shadow: 0 0 0 8px rgba(255,106,43,0); } 100% { box-shadow: 0 0 0 0 rgba(255,106,43,0); } }
+.pin .dot { width: 12px; height: 12px; }
+
+/* Hero: thin glowing rails frame the photo */
+.hero h1 { font-weight: 500; font-size: clamp(2.9rem, 9.5vw, 6.6rem); line-height: .95; letter-spacing: -.05em; }
+.hero-rails { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.hero-rails::before, .hero-rails::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255,186,120,.55) 30%, rgba(255,186,120,.35) 70%, transparent);
+  box-shadow: 0 0 12px 1px rgba(255,150,80,.35);
+}
+.hero-rails::before { left: .6rem; }
+.hero-rails::after { right: .6rem; }
+@media (min-width: 768px) { .hero-rails::before { left: calc(46% + 1.25rem); } .hero-rails::after { right: 1.25rem; } }
+
+/* The frosted ticket card (hero and review step) */
+.ticket, .tix {
+  color: var(--ink); background: var(--paper);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255,255,255,.6); border-radius: var(--r-xl);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,.55);
+  padding: 1.1rem 1.1rem 1.15rem;
+}
+.ticket-meta { display: flex; align-items: center; gap: .6rem; color: #6d6a64; }
+.ticket-meta .label { font-size: .6rem; }
+.ticket-meta .tag { padding: .28rem .6rem; border-radius: 999px; background: var(--ink); color: #fff; font-size: .58rem; }
+.ticket-times { display: grid; grid-template-columns: auto 1fr auto; align-items: end; gap: .9rem; margin-top: 1rem; }
+.ticket-times .big { font-family: var(--display); font-weight: 500; font-size: clamp(2.4rem, 11vw, 3.1rem); line-height: .95; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.ticket-times .label { margin-top: .4rem; font-size: .58rem; color: #6d6a64; }
+.ticket-times .r { text-align: right; }
+.ticket-line { position: relative; align-self: center; height: 1px; margin-bottom: 1.2rem; background: repeating-linear-gradient(90deg, rgba(19,19,19,.3) 0 4px, transparent 4px 8px); }
+.ticket-line::after { content: ""; position: absolute; right: -2px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+.ticket-status { display: flex; align-items: center; gap: .55rem; margin-top: 1rem; padding-top: .85rem; border-top: 1px solid rgba(19,19,19,.08); font-family: var(--mono); font-size: .68rem; color: #55524d; }
+.ticket p { max-width: none; color: inherit; font-weight: 400; }
+.ticket p.ticket-status { font-size: .68rem; line-height: 1.5; color: #55524d; }
+.ticket .ticket-times p.label { font-size: .58rem; line-height: 1.4; color: #6d6a64; font-weight: 500; }
+.ticket .ticket-times p.big { font-size: clamp(2.4rem, 11vw, 3.1rem); line-height: .95; font-weight: 500; color: var(--ink); }
+.ticket-status .dot { flex: none; width: .45rem; height: .45rem; border-radius: 50%; }
+.ticket-ctas { display: grid; grid-template-columns: 1fr auto; gap: .5rem; margin-top: 1rem; }
+.ticket-ctas .btn { min-height: 3.1rem; padding-inline: 1.25rem; }
+.hero-foot { gap: 1.25rem; }
+@media (min-width: 768px) {
+  .hero-foot { max-width: 30rem; }
+  .ticket { padding: 1.35rem; }
+}
+/* Wide screens: the ticket floats over the photo, like a sheet over the scene */
+@media (min-width: 1024px) {
+  .hero-copy { position: relative; }
+  .hero .ticket { position: absolute; right: 3.5rem; bottom: 3rem; width: 25rem; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) { .hero .ticket { right: 2.5rem; } }
+
+/* Short motion everywhere */
+.fade-up { animation-duration: .45s; }
+.hero h1 .line > span { animation-duration: .5s; }
+.js .reveal { transform: translateY(12px); transition: opacity .45s var(--ease), transform .45s var(--ease); transition-delay: calc(var(--d, 0s) * .5); }
+.js .wipe { transition: clip-path .55s var(--ease-io); transition-delay: calc(var(--d, 0s) * .5); }
+.js .wipe img { transform: scale(1.05); transition: transform .7s var(--ease); }
+.panel.swap .dish { animation-duration: .3s; }
+.mobile-menu, .mobile-menu.open { transition-duration: .3s; }
+.mobile-menu a { transition-duration: .3s; }
+.book-bar { transition-duration: var(--t-mid); }
+.faq .ans { transition-duration: var(--t-mid); }
+
+/* Frosted white sheets: same variables, re-scoped to light */
+.sheet, .quick {
+  --ivory: #131313; --ivory-2: #3b3a37; --muted: #77736c;
+  --line: rgba(19,19,19,.08); --line-2: rgba(19,19,19,.14);
+  --bg: #fff; --bg-2: transparent; --bg-3: rgba(19,19,19,.05);
+  --copper: #131313; --copper-2: #131313;
+  color: var(--ivory);
+}
+.quick { overflow: hidden; background: var(--paper); border-color: rgba(255,255,255,.6); border-radius: var(--r-xl); }
+.sheet { background: var(--paper); -webkit-backdrop-filter: blur(28px) saturate(1.4); backdrop-filter: blur(28px) saturate(1.4); }
+.sheet-backdrop { background: rgba(0,0,0,.55); transition-duration: .2s; }
+.sheet-wrap { transition: visibility 0s var(--t-mid); }
+#booking .sheet { inset: max(2.25rem, calc(env(safe-area-inset-top) + 1rem)) 0 0; border-radius: var(--r-xl) var(--r-xl) 0 0; transition: transform var(--t-mid) var(--ease); }
+#booking .sheet-head { padding-top: .5rem; }
+#booking .sheet-head::before { content: ""; display: block; width: 2.5rem; height: 4px; margin: 0 auto .75rem; border-radius: 4px; background: rgba(19,19,19,.16); }
+@media (min-width: 768px) {
+  #booking .sheet { inset: .75rem .75rem .75rem auto; width: min(31rem, calc(100% - 1.5rem)); border-radius: var(--r-xl); border: 1px solid rgba(255,255,255,.6); transform: translateX(calc(100% + 1rem)); box-shadow: 0 30px 80px -20px rgba(0,0,0,.6); }
+  #booking .sheet-head::before { display: none; }
+  #booking .sheet-head { padding-top: 1.5rem; }
+}
+#booking.open .sheet { transform: none; }
+.sheet-top .t { font-size: 1.05rem; letter-spacing: -.02em; }
+.sheet-close { background: rgba(19,19,19,.06); }
+.sheet-close:hover { background: rgba(19,19,19,.11); }
+.progress span { background: rgba(19,19,19,.1); }
+.progress span::after { background: var(--ink); transition-duration: var(--t-mid); }
+.step { transform: translateX(16px); transition: opacity var(--t-fast) var(--ease), transform var(--t-mid) var(--ease), visibility 0s var(--t-mid); }
+.step.back { transform: translateX(-16px); }
+.step.active { transition: opacity var(--t-fast) var(--ease), transform var(--t-mid) var(--ease), visibility 0s; }
+.step h2 { font-size: 2rem; line-height: 1.02; letter-spacing: -.045em; }
+.step .q { color: var(--muted); }
+.sheet .btn-solid, .quick .btn-solid { background: var(--ink); color: #fff; }
+.sheet .btn-solid:hover, .quick .btn-solid:hover { background: #000; }
+.sheet .btn-ghost { background: rgba(19,19,19,.06); border-color: transparent; color: var(--ink); }
+.sheet-foot { border-top: 0; }
+.err { color: #b4410f; }
+.field input, .field textarea { border-radius: var(--r-md); border-color: rgba(19,19,19,.1); }
+.field input::placeholder, .field textarea::placeholder { color: #a29e97; }
+.field input:focus, .field textarea:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(19,19,19,.08); }
+.field.invalid input { border-color: #c2410c; }
+.occasions .chip { background: rgba(19,19,19,.04); border-color: transparent; color: var(--ivory-2); }
+.occasions .chip[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+/* Day pills and seating cards */
+.day { width: 3.7rem; height: 5.3rem; border-radius: 999px; border-color: rgba(19,19,19,.08); background: rgba(255,255,255,.7); transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast), transform var(--t-fast); }
+.day .dn { font-family: var(--display); font-weight: 500; font-size: 1.45rem; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.day .dw, .day .dm { font-size: .55rem; letter-spacing: .06em; }
+.day[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.day[aria-pressed="true"] .dw, .day[aria-pressed="true"] .dm { color: rgba(255,255,255,.6); }
+.times { grid-template-columns: 1fr 1fr; gap: .6rem; }
+.time { display: flex; flex-direction: column; align-items: flex-start; gap: .55rem; min-height: 0; padding: 1.1rem 1.1rem 1rem; border-radius: var(--r-lg); border-color: rgba(19,19,19,.08); background: rgba(255,255,255,.75); text-align: left; transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast), transform var(--t-fast); }
+.time .big { font-family: var(--display); font-weight: 500; font-size: 2.4rem; line-height: .9; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.time .label { font-size: .55rem; color: var(--muted); letter-spacing: .05em; }
+.time[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.time[aria-pressed="true"] .label { color: rgba(255,255,255,.6); }
+.time:disabled { text-decoration: none; }
+.time:disabled .big { text-decoration: line-through; text-decoration-thickness: 2px; }
+.guests { border-radius: var(--r-lg); border-color: rgba(19,19,19,.08); background: rgba(255,255,255,.75); padding: .6rem; }
+.guests button { border-radius: 50%; background: rgba(19,19,19,.06); color: var(--ink); }
+.guests output { display: flex; align-items: baseline; gap: .45rem; font-family: var(--display); }
+.guests output b { font-weight: 500; font-size: 2.6rem; line-height: 1; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.guests output .label { color: var(--muted); }
+
+/* Review step: the booking as a ticket */
+.tix { margin-top: 1.25rem; background: #fff; border-color: rgba(19,19,19,.06); box-shadow: 0 18px 40px -24px rgba(0,0,0,.35); }
+.tix .edit-time { margin-top: .6rem; }
+.tix-perf { position: relative; height: 1px; margin: 1rem -1.1rem; background: repeating-linear-gradient(90deg, rgba(19,19,19,.18) 0 6px, transparent 6px 11px); }
+.tix-perf::before, .tix-perf::after { content: ""; position: absolute; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: #f1eee8; }
+.tix-perf::before { left: -9px; }
+.tix-perf::after { right: -9px; }
+.tix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem .9rem; }
+.tix-grid > div { min-width: 0; }
+.tix-grid dt { font-size: .56rem; color: #807c75; }
+.tix-grid dd { margin-top: .25rem; font-size: .95rem; font-weight: 600; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.tix .edit { font-family: var(--mono); font-size: .62rem; color: #77736c; text-decoration: underline; text-underline-offset: 2px; padding: .2rem 0; }
+.tix .edit:hover { color: var(--ink); }
+.wa-preview { border-radius: var(--r-lg); }
+.wa-preview .av { background: var(--ink); color: #fff; font-family: var(--display); }
+.done-note a { color: var(--ink) !important; }
+
+/* Dish sheet in the same light style */
+.dish-sheet .sheet { border-radius: var(--r-xl) var(--r-xl) 0 0; overflow: hidden; transition: transform var(--t-mid) var(--ease), opacity var(--t-fast); }
+@media (min-width: 768px) { .dish-sheet .sheet { border-radius: var(--r-xl); border-color: rgba(255,255,255,.6); } }
+.dish-sheet .photo { border-radius: 0; }
+.dish-sheet .x { background: rgba(255,255,255,.75); color: var(--ink); }
+.dish-sheet .price { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .status .dot, .ticket-status .dot, .pin .dot { animation: none; }
+  .step, .step.back { transform: none; }
+}
