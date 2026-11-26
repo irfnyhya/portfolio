@@ -19,7 +19,8 @@
     // k = 0 is the centre, 1..N-1 queue up behind on the right, "out" leaves to the left
     if (k === "out") return { x: W * (phone ? 0.08 : 0.2), s: 0.9, o: 0, z: 12 };
     if (k === 0) return { x: W * (phone ? 0.58 : 0.44), s: 1, o: 1, z: 11 };
-    var o = [1, 0.85, 0.55, 0.3][k] || 0.2;
+    var o = [1, 0.85, 0.55, 0.3][k] || 0; // only three wait visibly in the queue
+    k = Math.min(k, 4);
     if (phone) return { x: W * (0.86 + 0.09 * (k - 1)), s: 0.4 - 0.07 * (k - 1), o: o, z: 10 - k };
     return { x: W * (0.67 + 0.085 * (k - 1)), s: 0.56 - 0.09 * (k - 1), o: o, z: 10 - k };
   }
