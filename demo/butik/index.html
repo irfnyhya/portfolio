@@ -28,49 +28,65 @@
       <a href="#owner">Owner view</a>
     </p>
 
-    <section class="intro" id="intro" aria-labelledby="intro-title" data-intro>
-      <div class="intro-stage">
-        <div class="intro-head">
-          <p class="eyebrow">The autumn edit</p>
-          <h2 id="intro-title">Maison Ve’ra <em>in six looks</em></h2>
+    <section class="lineup" id="intro" aria-roledescription="carousel" aria-labelledby="lu-title" data-lineup>
+      <div class="lu-stage" data-lu-stage tabindex="0" aria-describedby="lu-help">
+        <h2 id="lu-title" class="lu-title"><span class="eyebrow">The autumn</span> line-up</h2>
+        <p id="lu-help" class="sr">Use the left and right arrow keys, swipe, or the buttons to see the next look.</p>
+        <div class="lu-models" aria-live="polite">
+          <img class="lu-model" data-lu-model src="img/line-1.webp" width="598" height="1400" alt="Woman in a black double-breasted blazer and wide black trousers" decoding="async" fetchpriority="high" />
+          <img class="lu-model" data-lu-model src="img/line-2.webp" width="431" height="1400" alt="Woman in a mocha tee, black straight trousers and platform sandals" decoding="async" />
+          <img class="lu-model" data-lu-model src="img/line-3.webp" width="602" height="1400" alt="Woman in a washed grey tee, denim mini skirt and high-top sneakers, holding a small black bag" decoding="async" />
+          <img class="lu-model" data-lu-model src="img/line-4.webp" width="490" height="1400" alt="Woman in a fitted cocoa tee, wide black trousers and peep-toe platforms" decoding="async" />
         </div>
-        <div class="intro-looks">
-        <figure class="look" data-look style="--z:1">
-          <div class="look-pic"><img src="img/intro-1.jpg" width="1100" height="1650" alt="Woman in a long blush coat and boots on a hill, misty mountains behind her" decoding="async" fetchpriority="high" /></div>
-          <figcaption class="look-cap"><span class="look-n">Look 01</span><span class="look-name">The hill coat</span><span class="look-meta">Long wool coat in blush</span></figcaption>
-        </figure>
-        <figure class="look" data-look style="--z:2">
-          <div class="look-pic"><img src="img/intro-2.jpg" width="1100" height="1650" alt="Woman in a beige trench coat standing in an empty concrete arcade" decoding="async" /></div>
-          <figcaption class="look-cap"><span class="look-n">Look 02</span><span class="look-name">The arcade trench</span><span class="look-meta">Belted trench in sand</span></figcaption>
-        </figure>
-        <figure class="look" data-look style="--z:3">
-          <div class="look-pic"><img src="img/intro-3.jpg" width="1100" height="1358" alt="Black and white photo of a woman in a white suit, mid-stride" decoding="async" fetchpriority="low" /></div>
-          <figcaption class="look-cap"><span class="look-n">Look 03</span><span class="look-name">The white suit</span><span class="look-meta">Sharp tailoring in chalk</span></figcaption>
-        </figure>
-        <figure class="look" data-look style="--z:4">
-          <div class="look-pic"><img src="img/intro-4.jpg" width="1100" height="1650" alt="Woman in a camel two-piece against a warm studio wall" decoding="async" fetchpriority="low" /></div>
-          <figcaption class="look-cap"><span class="look-n">Look 04</span><span class="look-name">The camel set</span><span class="look-meta">Soft two-piece in camel</span></figcaption>
-        </figure>
-        <figure class="look" data-look style="--z:5">
-          <div class="look-pic"><img src="img/intro-5.jpg" width="1100" height="1650" alt="Woman with windswept blonde hair in a beige suit" decoding="async" fetchpriority="low" /></div>
-          <figcaption class="look-cap"><span class="look-n">Look 05</span><span class="look-name">The wind suit</span><span class="look-meta">Relaxed suit in oat</span></figcaption>
-        </figure>
-        <figure class="look" data-look style="--z:6">
-          <div class="look-pic"><img src="img/intro-6.jpg" width="1100" height="1375" alt="Woman in a cream suit and sunglasses in a parking garage" decoding="async" fetchpriority="low" /></div>
-          <figcaption class="look-cap"><span class="look-n">Look 06</span><span class="look-name">The city cream</span><span class="look-meta">Wide-leg suit in cream</span></figcaption>
-        </figure>
+        <div class="lu-side">
+          <ul class="lu-pieces" data-lu-pieces aria-label="Pieces in The black suit">
+              <li><img src="img/line-1-jacket.webp" width="329" height="520" alt="" loading="lazy" /><span>Double-breasted blazer</span><span class="lu-price">RM 429</span></li>
+              <li><img src="img/line-1-trousers.webp" width="492" height="520" alt="" loading="lazy" /><span>Wide tailored trousers</span><span class="lu-price">RM 259</span></li>
+          </ul>
+          <ul class="lu-pieces" data-lu-pieces aria-label="Pieces in Mocha and ink" hidden>
+              <li><img src="img/line-2-top.webp" width="357" height="308" alt="" loading="lazy" /><span>Boxy tee in mocha</span><span class="lu-price">RM 119</span></li>
+              <li><img src="img/line-2-trousers.webp" width="227" height="520" alt="" loading="lazy" /><span>Straight trousers in ink</span><span class="lu-price">RM 239</span></li>
+              <li><img src="img/line-2-shoes.webp" width="308" height="140" alt="" loading="lazy" /><span>Platform sandals</span><span class="lu-price">RM 289</span></li>
+          </ul>
+          <ul class="lu-pieces" data-lu-pieces aria-label="Pieces in Weekend grey" hidden>
+              <li><img src="img/line-3-top.webp" width="473" height="520" alt="" loading="lazy" /><span>Washed oversized tee</span><span class="lu-price">RM 129</span></li>
+              <li><img src="img/line-3-skirt.webp" width="401" height="168" alt="" loading="lazy" /><span>Raw-hem denim skirt</span><span class="lu-price">RM 179</span></li>
+              <li><img src="img/line-3-shoes.webp" width="508" height="168" alt="" loading="lazy" /><span>High-top sneakers</span><span class="lu-price">RM 349</span></li>
+          </ul>
+          <ul class="lu-pieces" data-lu-pieces aria-label="Pieces in Cocoa basics" hidden>
+              <li><img src="img/line-4-top.webp" width="416" height="364" alt="" loading="lazy" /><span>Fitted tee in cocoa</span><span class="lu-price">RM 109</span></li>
+              <li><img src="img/line-4-trousers.webp" width="308" height="520" alt="" loading="lazy" /><span>Wide-leg trousers</span><span class="lu-price">RM 249</span></li>
+              <li><img src="img/line-4-shoes.webp" width="374" height="112" alt="" loading="lazy" /><span>Peep-toe platforms</span><span class="lu-price">RM 299</span></li>
+          </ul>
         </div>
-        <div class="intro-ui">
-          <p class="intro-hint" aria-hidden="true"><span class="intro-hint-line"></span>Scroll or swipe</p>
-          <div class="intro-dots" role="group" aria-label="Looks">
-          <button type="button" class="intro-dot" data-intro-go="0" aria-label="Go to look 1"></button>
-          <button type="button" class="intro-dot" data-intro-go="1" aria-label="Go to look 2"></button>
-          <button type="button" class="intro-dot" data-intro-go="2" aria-label="Go to look 3"></button>
-          <button type="button" class="intro-dot" data-intro-go="3" aria-label="Go to look 4"></button>
-          <button type="button" class="intro-dot" data-intro-go="4" aria-label="Go to look 5"></button>
-          <button type="button" class="intro-dot" data-intro-go="5" aria-label="Go to look 6"></button>
+        <div class="lu-top">
+          <div class="lu-info" data-lu-info>
+            <p class="lu-num">Look 01 / 04</p>
+            <p class="lu-name">The black suit</p>
+            <p class="lu-total">Full look RM 688</p>
           </div>
-          <a class="intro-skip" href="#top" data-intro-skip>Skip to shop <span aria-hidden="true">→</span></a>
+          <div class="lu-info" data-lu-info hidden>
+            <p class="lu-num">Look 02 / 04</p>
+            <p class="lu-name">Mocha and ink</p>
+            <p class="lu-total">Full look RM 647</p>
+          </div>
+          <div class="lu-info" data-lu-info hidden>
+            <p class="lu-num">Look 03 / 04</p>
+            <p class="lu-name">Weekend grey</p>
+            <p class="lu-total">Full look RM 657</p>
+          </div>
+          <div class="lu-info" data-lu-info hidden>
+            <p class="lu-num">Look 04 / 04</p>
+            <p class="lu-name">Cocoa basics</p>
+            <p class="lu-total">Full look RM 657</p>
+          </div>
+        </div>
+        <div class="lu-ui">
+          <div class="lu-nav">
+            <button type="button" class="lu-btn" data-lu-prev aria-label="Previous look"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+            <button type="button" class="lu-btn" data-lu-next aria-label="Next look"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+          </div>
+          <a class="lu-skip" href="#top" data-lu-skip>Skip to shop <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
@@ -276,7 +292,7 @@
 
     <div class="owner" id="owner" data-owner hidden></div>
 
-    <script src="intro.js"></script>
+    <script src="lineup.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
