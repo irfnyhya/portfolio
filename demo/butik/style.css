@@ -2,18 +2,21 @@
    Warm white ground, Instrument Serif headlines with an italic lead in, quiet sans for everything else,
    product photos on soft neutral backdrops, sentence case everywhere. */
 :root {
-  --bg: #fdfcf9;
-  --panel: #f4f0ea;
-  --panel-2: #e8e2d8;
-  --line: rgba(20, 20, 20, 0.12);
-  --ink: #161514;
-  --muted: #6d6962;
-  --accent: #8a5a3c;
-  --accent-ink: #fff;
-  --paper: #fff;
-  --paper-ink: #161514;
+  /* Palette taken from the campaign photos: bone wall, espresso wood, burgundy leather */
+  --bg: #ebe8e4;
+  --panel: #e2ddd7;
+  --panel-2: #d4cdc5;
+  --line: rgba(36, 23, 15, 0.14);
+  --ink: #24170f;
+  --muted: #5f5047;
+  --accent: #6b1d24;
+  --accent-ink: #f6f1ec;
+  --paper: #f3f2f0;
+  --paper-ink: #24170f;
+  --field: #2b1b13;
+  --field-ink: #ebe9e7;
   --ok: #2f6b45;
-  --warn: #a3401f;
+  --warn: #9a2f1f;
   --wa: #dcf8c6;
 
   --serif: "Instrument Serif", "Times New Roman", serif;
@@ -28,7 +31,7 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--bg); color: var(--ink);
-  font-family: var(--sans); font-size: 1rem; line-height: 1.55;
+  font-family: var(--sans); font-size: 1.0625rem; line-height: 1.55;
   overflow-x: hidden; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
 }
 img { display: block; max-width: 100%; height: auto; }
@@ -44,7 +47,6 @@ a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1p
 .skip:focus { left: 8px; top: 8px; }
 body.locked { overflow: hidden; }
 
-.eyebrow { font-family: var(--serif); font-style: italic; font-size: 1.375rem; line-height: 1.1; }
 .sec-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.02; letter-spacing: -0.01em; }
 .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
 .sec-link { font-size: 0.875rem; text-decoration: underline; }
@@ -58,9 +60,9 @@ body.locked { overflow: hidden; }
 }
 .btn:active { transform: scale(0.98); }
 .btn-solid { background: var(--ink); color: var(--bg); }
-.btn-solid:hover { background: #3a3835; }
+.btn-solid:hover { background: #4a3226; }
 .btn-accent { background: var(--accent); color: var(--accent-ink); }
-.btn-accent:hover { background: #74482e; }
+.btn-accent:hover { background: #561519; }
 .btn[disabled] { background: var(--panel-2); color: var(--muted); cursor: not-allowed; }
 .btn-block { width: 100%; }
 .link { background: none; border: 0; padding: 0; text-decoration: underline; color: inherit; }
@@ -83,7 +85,7 @@ body.locked { overflow: hidden; }
 .bar {
   position: sticky; top: 0; z-index: 40; height: 64px;
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 calc(var(--m) - 10px);
-  background: rgba(253, 252, 249, 0.96); color: var(--ink);
+  background: var(--bg); color: var(--ink);
   transition: box-shadow 300ms var(--ease);
 }
 .bar.solid { box-shadow: 0 1px 0 var(--line); } /* hairline under the header once scrolled, taste-skill-ignore */
@@ -216,9 +218,8 @@ section { scroll-margin-top: 72px; }
 .cara { padding: 72px var(--m); display: grid; gap: 28px; justify-items: center; text-align: center; }
 .slip {
   text-align: left; background: var(--paper); color: var(--paper-ink); padding: 8px 24px 52px; max-width: 520px; width: 100%;
-  box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(60, 40, 20, 0.35);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), 96% 100%, 92% calc(100% - 14px), 88% 100%, 84% calc(100% - 14px), 80% 100%, 76% calc(100% - 14px), 72% 100%, 68% calc(100% - 14px), 64% 100%, 60% calc(100% - 14px), 56% 100%, 52% calc(100% - 14px), 48% 100%, 44% calc(100% - 14px), 40% 100%, 36% calc(100% - 14px), 32% 100%, 28% calc(100% - 14px), 24% 100%, 20% calc(100% - 14px), 16% 100%, 12% calc(100% - 14px), 8% 100%, 4% calc(100% - 14px), 0 100%);
-  font-size: 0.9375rem; border: 1px solid var(--line);
+  font-size: 0.9375rem;
 }
 .slip-day { margin-top: 22px; margin-bottom: 2px; font-family: var(--serif); font-style: italic; font-size: 1.25rem; }
 .slip-row { display: flex; align-items: baseline; gap: 8px; padding: 5px 0; }
@@ -262,13 +263,13 @@ section { scroll-margin-top: 72px; }
   position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 35;
   width: 52px; height: 52px; border-radius: 50%; border: 0;
   display: grid; place-items: center; background: var(--ink); color: var(--bg);
-  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.5); /* floats over the page, taste-skill-ignore */
   transition: transform 200ms var(--ease), background-color 200ms var(--ease);
 }
 .chat-fab svg { width: 22px; height: 22px; }
-.chat-fab:hover { background: #3a3835; transform: translateY(-2px); }
+.chat-fab:hover { background: #4a3226; transform: translateY(-2px); }
 .chat-fab:active { transform: scale(0.95); }
-.chatbox { margin: auto 16px 84px auto; padding: 0; border: 0; width: min(380px, calc(100vw - 32px)); max-height: 76svh; background: var(--paper); color: var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px -20px rgba(0,0,0,.4); }
+.chatbox { margin: auto 16px 84px auto; padding: 0; border: 0; width: min(380px, calc(100vw - 32px)); max-height: 76svh; background: var(--paper); color: var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px -20px rgba(0,0,0,.4); } /* dialog, taste-skill-ignore */
 .chatbox[open] { display: flex; flex-direction: column; animation: pop 280ms var(--ease); }
 .chatbox::backdrop { background: rgba(20,20,20,.2); }
 @keyframes pop { from { transform: translateY(16px) scale(0.98); opacity: 0; } }
@@ -319,7 +320,7 @@ dialog::backdrop { background: rgba(20, 20, 20, 0.4); }
 .sheet-desc { max-width: 52ch; color: #45423d; font-size: 0.9375rem; }
 .spec { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; font-size: 0.875rem; }
 .spec dt { color: var(--muted); }
-.sheet-buy { display: grid; grid-template-columns: auto 1fr; gap: 8px; padding: 12px var(--m) calc(12px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); }
+.sheet-buy { display: grid; grid-template-columns: auto 1fr; gap: 8px; padding: 12px var(--m) calc(12px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); } /* sticky buy bar in the dialog, taste-skill-ignore */
 .stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--line); background: var(--paper); }
 .stepper button { width: 44px; border: 0; background: none; font-size: 1.25rem; color: var(--ink); }
 .stepper button:hover { background: var(--panel); }
@@ -378,7 +379,7 @@ dialog::backdrop { background: rgba(20, 20, 20, 0.4); }
 .sum dd { text-align: right; }
 .sum .total { font-weight: 700; padding-top: 8px; }
 .fine { font-size: 0.8125rem; color: var(--muted); }
-.cart-foot { padding: 12px var(--m) calc(14px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.cart-foot { padding: 12px var(--m) calc(14px + env(safe-area-inset-bottom)); background: var(--bg); border-top: 1px solid var(--line); display: grid; gap: 4px; } /* sticky bag footer, taste-skill-ignore */
 
 /* Checkout (after the reference shops' one page checkout) */
 .back { border: 0; background: none; padding: 0; min-height: 40px; font-size: 0.875rem; text-decoration: underline; color: var(--muted); }
@@ -413,11 +414,11 @@ dialog::backdrop { background: rgba(20, 20, 20, 0.4); }
 .gw-tag { background: var(--panel); padding: 4px 8px; font-weight: 500; text-transform: none; color: var(--muted); }
 .gw-amt { font-size: 2.25rem; font-weight: 600; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .gw-amt small { display: block; font-size: 0.75rem; font-weight: 500; color: var(--muted); margin-bottom: 6px; letter-spacing: 0; }
-.gw-via { font-size: 0.9375rem; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.gw-via { font-size: 0.9375rem; padding-bottom: 4px; }
 .gw-ask { font-size: 0.8125rem; color: var(--muted); }
 .gw-picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .gw-picks button { min-height: 48px; border: 1px solid var(--line); background: var(--bg); font-size: 0.875rem; text-align: left; padding: 0 12px; }
-.gw-picks button[aria-checked="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); font-weight: 600; }
+.gw-picks button[aria-checked="true"] { border-color: var(--ink); background: var(--panel); font-weight: 600; }
 .gw-card { display: grid; gap: 10px; padding: 18px; background: var(--ink); color: var(--bg); aspect-ratio: 1.6; align-content: space-between; max-width: 320px; }
 .gw-card span { font-size: 0.75rem; opacity: 0.7; }
 .gw-card b { font-size: 1.125rem; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
@@ -426,7 +427,8 @@ dialog::backdrop { background: rgba(20, 20, 20, 0.4); }
 .gw-qr svg { width: 180px; height: 180px; padding: 10px; background: #fff; fill: #111; border: 1px solid var(--line); }
 .gw-qr small, .gw-wait small { font-size: 0.75rem; color: var(--muted); }
 .gw-plan { display: grid; gap: 0; }
-.gw-plan li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.9375rem; }
+.gw-plan li { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 0.9375rem; }
+.gw-plan li:nth-child(odd) { background: var(--panel); }
 .gw-plan li:first-child b::after { content: " now"; font-weight: 400; color: var(--muted); }
 .gw-wait { display: grid; justify-items: center; gap: 10px; padding: 64px 0; text-align: center; }
 .gw-wait p { font-family: var(--serif); font-size: 1.75rem; }
@@ -539,14 +541,13 @@ body.is-owner main, body.is-owner .foot, body.is-owner .skip, body.is-owner .bar
    the pieces of the current look on the left. Without JS it is a plain row of looks. */
 .lineup { background: #f3f0eb; color: var(--ink); }
 .lu-stage { position: relative; height: var(--lu-h, clamp(600px, 100svh, 980px)); overflow: hidden; touch-action: pan-y; outline: none; }
-.lu-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--ink); }
+.lu-stage:focus-visible { box-shadow: inset 0 0 0 2px var(--ink); } /* focus ring, taste-skill-ignore */
 .lu-title { position: absolute; z-index: 30; left: var(--m); top: 22px; font-family: var(--serif); font-weight: 400; font-size: clamp(1.75rem, 1.2rem + 2vw, 3rem); line-height: 1; letter-spacing: -0.01em; }
-.lu-title .eyebrow { font-size: inherit; }
 .lu-models { position: absolute; inset: 0; }
 .lu-model {
   position: absolute; left: 0; bottom: 8%; height: calc(78% * var(--k, 1)); width: auto; max-width: none;
   transform-origin: 50% 100%; will-change: transform, opacity;
-  filter: drop-shadow(0 22px 18px rgba(30, 24, 18, .14));
+  filter: drop-shadow(0 22px 18px rgba(30, 24, 18, .14)); /* grounds the cut-out models on the floor, taste-skill-ignore */
   transition: transform 520ms cubic-bezier(.22, .8, .2, 1), opacity 420ms ease;
 }
 .lu-model.no-anim { transition: none; }
@@ -596,3 +597,243 @@ body.lu-on .chat-fab { opacity: 0; pointer-events: none; }
   .lu-models { transition: opacity 180ms ease; }
   .lu-in > * { animation: none; }
 }
+
+/* Two category tiles (Handbags, Heels) side by side */
+.tiles-2 li:last-child { grid-column: auto; }
+.tiles-2 li:last-child .tile-pic { aspect-ratio: 3 / 4; }
+@media (min-width: 900px) {
+  .tiles-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles-2 .tile-pic, .tiles-2 li:last-child .tile-pic { aspect-ratio: 5 / 4; }
+}
+
+/* ==========================================================================
+   Campaign layer (round 8): the page as one autumn campaign.
+   The name Maison Ve’ra is the monument the eight looks stand on; bone wall,
+   espresso wood and burgundy leather from the photos; Instrument Serif for the
+   big words, Instrument Sans for everything you read. No kickers, no rules, no
+   shadows at rest; sections are separated by space and by tone.
+   ========================================================================== */
+:root { --gap: 96px; --mark-fs: 17.5vw; }
+@media (min-width: 900px) { :root { --gap: 160px; } }
+
+.sec-title { font-size: clamp(2.25rem, 1.4rem + 3vw, 4rem); line-height: 1; letter-spacing: -0.015em; }
+.sec-sub { margin-top: 14px; max-width: 46ch; }
+
+/* Buttons: one shape, square */
+.lu-skip, .tabs button { border-radius: 0; }
+
+/* ---- First screen: the line-up standing on the name ---- */
+.lineup { background: #e5e1dc; }
+.lu-stage { --band: calc(var(--mark-fs) * 0.8 + 14px); }
+.lu-lede { position: absolute; z-index: 30; left: var(--m); top: 24px; max-width: 30ch; font-size: 1.0625rem; line-height: 1.45; }
+.lu-mark {
+  position: absolute; z-index: 4; left: var(--m); right: var(--m); bottom: 10px; margin: 0;
+  font-family: var(--serif); font-weight: 400; font-size: var(--mark-fs); line-height: 0.8;
+  letter-spacing: -0.035em; white-space: nowrap; color: var(--ink); pointer-events: none;
+}
+.lu-mark span { display: inline-block; transform-origin: 0 100%; transform: scale(var(--mark-s, 1)); }
+.lu-model { bottom: calc(var(--band) + 4px); height: calc((100% - var(--band) - 124px) * var(--k, 1)); }
+.lu-side { top: calc((100% - var(--band)) / 2 + 30px); }
+.lu-top { top: 24px; }
+.lu-name { margin-top: 0; font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem); }
+.lu-num { margin-top: 8px; font-size: 1rem; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.lu-total { font-size: 1rem; }
+.lu-ui { bottom: calc(var(--band) + 18px); }
+.lu-btn { border: 0; background: var(--paper); }
+.lu-btn:hover { background: #fff; }
+.lu-skip { background: var(--accent); color: var(--accent-ink); }
+.lu-skip:hover { background: #561519; }
+.lu-pieces li { font-size: 0.875rem; }
+.lineup:not(.is-ready) .lu-mark { position: static; display: block; padding: 0 var(--m) 24px; }
+.lineup:not(.is-ready) .lu-lede { position: static; padding: 24px var(--m) 0; }
+@media (max-width: 699px) {
+  .lu-stage { --band: calc(var(--mark-fs) * 0.8 + 12px); }
+  .lu-lede { max-width: 21ch; font-size: 1rem; }
+  .lu-top { top: 24px; max-width: 46%; }
+  .lu-name { font-size: 1.625rem; }
+  .lu-num, .lu-total { font-size: 0.875rem; }
+  .lu-model { bottom: calc(var(--band) + 70px); height: calc((100% - var(--band) - 210px) * var(--k, 1)); }
+  .lu-side { top: calc((100% - var(--band)) / 2 + 10px); }
+  .lu-pieces li { font-size: 0.8125rem; }
+}
+
+/* ---- Campaign spread (two wood-wall photos) ---- */
+.hero-copy h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.75rem, 1.8rem + 4.4vw, 5.75rem); line-height: 0.95; letter-spacing: -0.02em; }
+.hero-copy p { font-size: 1.0625rem; max-width: 34ch; margin-top: 10px; }
+
+/* ---- Bags and heels ---- */
+.cats { padding: var(--gap) var(--m) 0; }
+.cats .sec-head { display: block; margin-bottom: 40px; }
+.tile-name { font-family: var(--serif); font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem); line-height: 1; }
+.tile-name span { font-size: inherit; }
+
+/* ---- Feature spreads ---- */
+.edit { margin-top: var(--gap); background: var(--panel); }
+.edit-copy h2 { font-size: clamp(3rem, 2rem + 4.4vw, 6rem); line-height: 0.95; letter-spacing: -0.02em; }
+.edit-copy p { color: var(--ink); font-size: 1.0625rem; max-width: 36ch; margin-top: 14px; }
+.edit-copy .cta { margin-top: 20px; }
+.cta { font-size: 1rem; }
+
+/* ---- Shop ---- */
+.koleksi { padding: var(--gap) var(--m) 0; }
+.koleksi-head { margin-bottom: 36px; }
+.tabs button { border: 0; background: var(--panel); min-height: 44px; padding: 0 18px; font-size: 0.9375rem; }
+.tabs button:hover { background: var(--panel-2); }
+.card-name { font-size: 0.9375rem; }
+.card-price { font-size: 0.9375rem; }
+.card-flag { font-size: 0.8125rem; background: var(--accent); color: var(--accent-ink); }
+
+/* ---- Service band on espresso ---- */
+.perks-band { margin-top: var(--gap); padding: var(--gap) var(--m); background: var(--field); color: var(--field-ink); }
+.perks-band .sec-title { color: var(--field-ink); margin-bottom: 56px; max-width: 14ch; }
+.perks { margin: 0; padding: 0; border: 0; gap: 40px 24px; font-size: 1rem; color: #d8cdc2; text-align: left; }
+.perks b { color: var(--field-ink); font-size: clamp(1.625rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.05; margin-bottom: 8px; }
+
+/* ---- How to order: the receipt slip ---- */
+.cara { padding: var(--gap) var(--m) 0; gap: 40px; }
+.slip { border: 0; background: var(--paper); font-size: 1rem; }
+.slip-day { font-size: 1.375rem; }
+
+/* ---- Questions: large questions, answers beside, all open ---- */
+.faq-t { padding: var(--gap) var(--m) 0; }
+.faq-t .sec-title { color: var(--muted); margin-bottom: 56px; }
+.qa-list { display: grid; gap: 56px; }
+.qa h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.625rem, 1.1rem + 1.6vw, 2.5rem); line-height: 1.08; letter-spacing: -0.01em; }
+.qa p { margin-top: 12px; max-width: 44ch; }
+@media (min-width: 900px) {
+  .faq-t { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+  .faq-t .sec-title { grid-column: 1 / 7; }
+  .qa-list { grid-column: 1 / -1; gap: 80px; }
+  .qa { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: baseline; }
+  .qa h3 { grid-column: 1 / 7; }
+  .qa p { grid-column: 8 / 13; margin-top: 0; }
+}
+
+/* ---- Sizes and contact: filled panels instead of ruled rows ---- */
+.info { max-width: none; padding: var(--gap) var(--m); display: grid; gap: 8px; }
+.info .sec-title { margin-bottom: 32px; }
+.acc { border: 0; background: var(--panel); padding: 0 20px; }
+.acc summary { min-height: 64px; font-size: 1.0625rem; }
+.acc > p, .acc .table-wrap { color: var(--ink); font-size: 1rem; }
+.credits { font-size: 0.875rem !important; }
+@media (min-width: 900px) { .info { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } .info .sec-title { grid-column: 1 / -1; } }
+
+/* ---- Footer: the name again, at full width, on espresso ---- */
+.foot {
+  min-height: 86svh; padding: 56px var(--m) 24px; display: grid; grid-template-rows: auto 1fr auto auto; gap: 0;
+  background: var(--field); color: #d8cdc2; font-size: 1rem;
+}
+.foot a { color: inherit; }
+.foot a:hover { color: var(--field-ink); }
+.foot b { color: var(--field-ink); font-weight: 500; }
+.foot-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; line-height: 1.7; }
+@media (min-width: 900px) { .foot-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.foot-mark {
+  grid-row: 3; align-self: end; margin-top: 64px; color: var(--field-ink); font-family: var(--serif); font-weight: 400; text-transform: none;
+  font-size: var(--foot-fs, 17.5vw); line-height: 0.8; letter-spacing: -0.035em; white-space: nowrap;
+}
+.foot-legal { grid-row: 4; margin-top: 20px; font-size: 0.8125rem; }
+
+/* ---- Motion: entrances rise a little; nothing travels with reduced motion ---- */
+.js .reveal { transform: translateY(24px); transition-duration: 800ms; }
+.edit-pic img, .hero-pic img { transition: transform 1600ms var(--ease); }
+.edit:hover .edit-pic img { transform: scale(1.025); }
+@media (prefers-reduced-motion: reduce) {
+  .lu-mark span { transform: none !important; }
+  .edit:hover .edit-pic img { transform: none; }
+}
+
+/* Round 2: controls sit under the name; models take the height above it */
+.lu-stage { --ctrl: 76px; --band: calc(var(--mark-fs) * 0.8 + var(--ctrl)); }
+.lu-mark { bottom: var(--ctrl); }
+.lu-ui { top: auto; bottom: 14px; left: var(--m); right: var(--m); }
+.lu-model { bottom: calc(var(--band) + 6px); height: calc((100% - var(--band) - 56px) * var(--k, 1)); }
+.lu-side { top: calc((100% - var(--band)) / 2 + 40px); }
+@media (max-width: 699px) {
+  .lu-stage { --ctrl: 70px; --band: calc(var(--mark-fs) * 0.8 + var(--ctrl)); }
+  .lu-model { bottom: calc(var(--band) + 8px); height: calc((100% - var(--band) - 190px) * var(--k, 1)); }
+  .tabs { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+}
+
+/* Round 3: pieces start under the intro line; the plain description sits under the name */
+.lu-side { top: 132px; transform: none; }
+.lu-pieces img { height: min(13svh, 128px); }
+.lu-what { flex: 1; text-align: center; font-size: 1.0625rem; }
+@media (max-width: 899px) { .lu-what { display: none; } }
+@media (max-width: 699px) {
+  .lu-side { top: 176px; }
+  .lu-lede { max-width: 18ch; }
+}
+
+/* Round 4: the pieces column fits the space between the intro line and the name */
+.lu-side { top: 132px; bottom: calc(var(--band) + 96px); display: flex; }
+.lu-pieces { display: flex; flex-direction: column; gap: 14px; height: 100%; }
+.lu-pieces li { flex: 0 1 auto; min-height: 0; max-height: calc((100% - 28px) / 3); display: flex; flex-direction: column; gap: 2px; }
+.lu-pieces img { flex: 1 1 auto; min-height: 0; height: auto; max-height: 150px; width: auto; align-self: flex-start; aspect-ratio: 4 / 5; }
+.lu-what { font-size: 1.125rem; }
+@media (max-width: 699px) {
+  .lu-side { top: 176px; bottom: calc(var(--band) + 40px); }
+  .lu-pieces img { max-height: 104px; }
+}
+
+/* Round 5: below 900px the description joins the intro line; more air under the demo strip */
+@media (min-width: 900px) { .lu-lede-what { display: none; } }
+@media (max-width: 899px) { .lu-top, .lu-lede { top: 40px; } }
+@media (max-width: 699px) { .lu-lede { max-width: 20ch; } .lu-side { top: 228px; } }
+
+/* Round 6: phone keeps the intro to one plain sentence; demo strip on one line */
+@media (min-width: 700px) and (max-width: 899px) { .lu-what { display: block; } .lu-lede-what { display: none; } }
+@media (max-width: 699px) {
+  .lu-lede-more { display: none; }
+  .lu-lede { max-width: 15ch; }
+  .lu-side { top: 190px; }
+}
+@media (max-width: 519px) { .demo-ship { display: none; } }
+
+/* Round 7: the look name sits clear of the demo strip on small screens */
+@media (max-width: 899px) { .lu-top { top: 76px; } }
+@media (max-width: 699px) { .lu-side { top: 214px; } }
+
+/* Round 8: on wide screens the pieces sit in a row under the intro line; tiles drop their arrows */
+@media (min-width: 900px) {
+  .lu-side { top: 108px; bottom: auto; width: auto; max-width: 34vw; display: block; }
+  .lu-pieces { flex-direction: row; height: auto; gap: 16px; }
+  .lu-pieces li { max-height: none; width: clamp(96px, 8.4vw, 128px); }
+  .lu-pieces img { flex: none; height: auto; width: 100%; max-height: none; aspect-ratio: 4 / 5; }
+}
+@media (max-width: 899px) {
+  .lu-pieces li { max-height: none; }
+  .lu-pieces img { flex: none; height: min(12svh, 104px); max-height: none; }
+}
+.tile-name span { display: none; }
+
+/* Round 9: tablet keeps the centre model clear of the intro line */
+@media (min-width: 700px) and (max-width: 899px) { .lu-lede { display: none; } .lu-side { top: 40px; } }
+
+/* Round 10: running text in full ink at the reading size (beats the older :not(.eyebrow) rules) */
+.edit-copy p:not(.eyebrow) { color: var(--ink); font-size: 1.0625rem; }
+.hero-copy p:not(.eyebrow) { font-size: 1.0625rem; }
+
+/* Round 11 (responsive): pieces keep their natural height; short landscape phones get a compact first screen */
+.lu-pieces li { flex: none; }
+@media (max-height: 559px) and (orientation: landscape) {
+  .lu-stage { --ctrl: 62px; }
+  .lu-lede, .lu-what { display: none; }
+  .lu-top { top: 12px; }
+  .lu-name { font-size: 1.5rem; }
+  .lu-num, .lu-total { font-size: 0.875rem; margin-top: 2px; }
+  .lu-side { top: 12px; bottom: auto; }
+  .lu-pieces { flex-direction: row; gap: 10px; height: auto; }
+  .lu-pieces li { width: 64px; }
+  .lu-pieces li span:not(.lu-price) { display: none; }
+  .lu-pieces img { height: auto; width: 100%; }
+  .lu-model { bottom: calc(var(--band) + 4px); height: calc((100% - var(--band) - 16px) * var(--k, 1)); }
+}
+
+/* Round 12 (responsive): every control is at least 44px to touch, without changing how it looks */
+.card-name button { display: block; min-height: 44px; padding: 12px 0; margin: -12px 0; }
+.bar .wordmark, .o-head .wordmark { display: inline-flex; align-items: center; min-height: 44px; }
+.o-status { min-height: 44px; }
+
+/* Round 13: titles that receive focus when a dialog opens do not draw a box */
+.sheet-title:focus, .done h3:focus, h2[tabindex="-1"]:focus, h1[tabindex="-1"]:focus { outline: none; }

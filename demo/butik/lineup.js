@@ -140,7 +140,7 @@
   // Fill the first screen below the demo notice, so the controls are never cut off
   function fitHeight() {
     var top = root.getBoundingClientRect().top + window.scrollY;
-    var h = Math.max(560, Math.min(window.innerHeight - top, 980));
+    var h = Math.max(window.innerHeight < 560 ? 340 : 560, Math.min(window.innerHeight - top, 980)); // short landscape phones get a short stage
     root.style.setProperty("--lu-h", h + "px");
   }
   var lastW = 0;
@@ -154,4 +154,53 @@
   models.forEach(function (m) { if (!m.complete) m.addEventListener("load", function () { layout(true); }); });
   layout(true);
   lastW = stage.clientWidth;
+})();
+
+/* The name as a monument: fit "Maison Ve'ra" to the full width (first screen and footer),
+   and let the first-screen name settle a little as you scroll away. No travel with reduced motion. */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var mark = document.querySelector("[data-lu-mark]");
+  var stage = document.querySelector("[data-lu-stage]");
+  var foot = document.querySelector(".foot-mark");
+  function size(el, prop, avail) {
+    if (!el) return;
+    var probe = document.createElement("span");
+    probe.textContent = el.textContent;
+    var f = getComputedStyle(el);
+    probe.style.cssText = "position:absolute;left:-9999px;top:0;white-space:nowrap;font-family:" + f.fontFamily + ";font-weight:" + f.fontWeight + ";font-size:100px;letter-spacing:-3.5px";
+    document.body.appendChild(probe);
+    var w = probe.getBoundingClientRect().width;
+    probe.remove();
+    if (w) document.documentElement.style.setProperty(prop, Math.floor(avail * 100 / w * 0.985) + "px");
+  }
+  function resize() {
+    var m = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--m")) || 16;
+    var W = document.documentElement.clientWidth - 2 * m;
+    size(mark, "--mark-fs", W);
+    // on short screens (landscape phones) the name may not take more than about a fifth of the height
+    if (window.innerHeight < 560) {
+      var cap = Math.floor(window.innerHeight * 0.2), cur = parseFloat(document.documentElement.style.getPropertyValue("--mark-fs"));
+      if (cur > cap) document.documentElement.style.setProperty("--mark-fs", cap + "px");
+    }
+    size(foot, "--foot-fs", W);
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { resize(); window.dispatchEvent(new Event("resize")); });
+  resize();
+  var lastW = window.innerWidth;
+  window.addEventListener("resize", function () { if (window.innerWidth !== lastW) { lastW = window.innerWidth; resize(); } });
+
+  // Signature move: the name settles from 1 to 0.94 as the first screen scrolls away
+  if (!mark || !stage) return;
+  var ticking = false;
+  function onScroll() {
+    ticking = false;
+    if (reduce.matches) { mark.style.removeProperty("--mark-s"); return; }
+    var h = stage.offsetHeight || 1;
+    var p = Math.min(Math.max(window.scrollY / h, 0), 1);
+    mark.style.setProperty("--mark-s", (1 - 0.06 * p).toFixed(4));
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
 })();

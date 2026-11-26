@@ -1,59 +1,26 @@
-Maison Ve’ra demo: photo credits
-All photos are from Unsplash under the Unsplash License (free for commercial use,
-no permission needed; credit given anyway): https://unsplash.com/license
-Found through Unsplash search with the "free" licence filter (no Unsplash+ images).
-Files were cropped and compressed for this demo. Maison Ve’ra is a fictional brand;
-the people, clothes, bags and shoes in these photos have no connection to it.
-Photos showing a real brand's logo or signature design were left out; two tiny maker's stamps were softened.
-Picked to match a Pinterest moodboard (neutral, soft daylight, quiet luxury); only free licence photos are used.
+Maison Ve’ra demo: image credits
 
-file                 photographer        source page
-hero-1.jpg               @sobolivska            https://unsplash.com/photos/2MeR7oeudlE
-hero.jpg                 @sashamatveeva         https://unsplash.com/photos/_jU2Kx820ao (kept for the main portfolio page card)
-trench-pasir.jpg         @danafarouk            https://unsplash.com/photos/5vrque5NVHI
-blazer-pasir.jpg         @alinamatveycheva      https://unsplash.com/photos/MNwRn2MMHPM
-sut-krim.jpg             @olaszkolda            https://unsplash.com/photos/6A1dE8VEENc
-kot-unta.jpg             @theawguide            https://unsplash.com/photos/DsKcWDk6NEU
-jaket-kulit.jpg          @fabiraw               https://unsplash.com/photos/0XsKjui66Co
-seluar-lebar.jpg         @enginakyurt           https://unsplash.com/photos/Ok9zDSlE2bI
-jeans-biru.jpg           @enginakyurt           https://unsplash.com/photos/lTRj2ijTPAM
-kait-krim.jpg            @valnastudio           https://unsplash.com/photos/mU88MlEFcoU
-beg-krim.jpg             @globaldsioitsolution  https://images.unsplash.com/photo-1761646238176-b480909e6ba6 (from @globaldsioitsolution on Unsplash)
-beg-putih.jpg            @genesisswarner        https://unsplash.com/photos/CjPQRw3DZSs
-beg-kroko.jpg            @muneebmalhotra        https://unsplash.com/photos/hSv2XVyDSPk
-beg-hitam.jpg            @josephbobadilla       https://images.unsplash.com/photo-1664187284276-2f3254cdc7dc (from @josephbobadilla on Unsplash)
-beg-zamrud.jpg           @artworkarash          https://unsplash.com/photos/TEr0EM_mFXk
-kasut-nude.jpg           @anadventure           https://unsplash.com/photos/Zx76sbAndc0
-kasut-reben.jpg          @chitz201              https://unsplash.com/photos/9urrzNhb3PU
-kasut-kristal.jpg        @michellem18           https://unsplash.com/photos/Hj2KKgJj6IQ
-kasut-putih.jpg          @svetlana_boyko        https://unsplash.com/photos/mV6f0Brag6o
-kasut-merah-jambu.jpg    @laurachouette         https://unsplash.com/photos/fCzhzFVuMrI
-hero-2.jpg               @rosarafael            https://unsplash.com/photos/0q5e3uiAOHA
-tile-pakaian.jpg         @captureme_cz          https://unsplash.com/photos/aPIN2_ITQ2M
-tile-kasut.jpg           @kierinsightarchives   https://unsplash.com/photos/b4Xk6bzgQWU
-tile-beg.jpg             @lana_laurentez        https://unsplash.com/photos/OyvlRytxBP4
-ed-beg.jpg               @melekmavzer           https://unsplash.com/photos/umWZllrNjS8
-ed-kasut.jpg             @alexandermassph       https://images.unsplash.com/photo-1776266100221-d11f77db0e0a (from @alexandermassph on Unsplash)
+Images: reference, not owned.
+Every fashion photo on this demo is a reference image chosen by Irfan. They are not free-licence photos
+and are not owned by this site or by Irfan; all rights stay with their owners. Remove or replace them on
+request. Maison Ve’ra is a fictional brand. Each photo is used once on the site.
 
-Line-up (intro). Models are cut out locally; pieces are separate product photos that closely match
-each look's pieces in type and colour (similar, not the identical item).
-line-1.webp              @alekseyryan (Unsplash)        https://unsplash.com/photos/7uDwMv9FlrQ
-line-1-trousers.webp     Image by freepik (Freepik)     https://www.freepik.com/free-photo/light-brown-beige-pants-indoors-still-life_65109546.htm
-line-1-shoes.webp        Image by rawpixel.com (Freepik) https://www.freepik.com/free-photo/women-s-beige-low-heel-shoes-fashion_15439826.htm
-line-2.webp              @17allansfilms (Unsplash)      https://unsplash.com/photos/2SKQF1MuakI
-line-2-jacket.webp       @nkosi_nuz (Unsplash)          https://unsplash.com/photos/kNVl-jxS_X0
-line-2-trousers.webp     @blueeyeaa (Unsplash)          https://unsplash.com/photos/h6PKsr0wDH4
-line-2-shoes.webp        @enginakyurt (Unsplash)        https://unsplash.com/photos/BbqotoFK8gA
-line-3.webp              Image by bristekjegor (Freepik) https://www.freepik.com/free-photo/fashion-portrait-young-elegant-woman_6022385.htm
-line-3-shoes.webp        Image by rawpixel.com (Freepik) https://www.freepik.com/free-photo/women-rsquo-s-white-high-heel-shoes-fashion_15850292.htm
-line-4.webp              Image by svetlanasokolova (Freepik) https://www.freepik.com/free-photo/stylish-woman-leather-coat-black-hat-demonstrate-winter-fashion-trends-white-full-lenght_20570205.htm
-line-4-coat.webp         Image by freepik (Freepik)     https://www.freepik.com/free-photo/model-career-kit-still-life_38745985.htm
-line-4-trousers.webp     Image by mrsiraphol (Freepik)  https://www.freepik.com/free-photo/pants_1135576.htm
-line-5.webp              Image by bristekjegor (Freepik) https://www.freepik.com/free-photo/fashion-portrait-young-elegant-woman_6022388.htm
-line-6.webp              Image by drobotdean (Freepik)     https://www.freepik.com/free-photo/business-woman-standing-with-arms-crossed_7379033.htm
-line-7.webp              Image by user15285612 (Freepik) https://www.freepik.com/free-photo/young-female-model-i-white-boots-black-pants-checkered-jacket-posing-camera_28759297.htm
-line-8.webp              @olaszkolda (Unsplash)         https://unsplash.com/photos/f1bGNPDeDO0
-line-9.webp              @thisismcfollis (Unsplash)     https://unsplash.com/photos/H9kzfanzzxI
-line-10.webp             @thisismcfollis (Unsplash)     https://unsplash.com/photos/Qc5hYBZCsys
-Looks 5-10 show the shop's own bag and heel photos as their pieces (see their rows above).
-Freepik images: free licence with attribution (https://www.freepik.com/legal/terms-of-use).
+line-1..8 (*.webp)   swipe line-up (photos 06, 07, 08, 15, 10, 11, 13, 14), cut out locally;
+                     the piece tiles are crops of each model's own outfit
+hero-1.webp           photo 02          hero-2.webp        photo 01
+ed-beg.webp           photo 18 (Jackets feature)
+trench-pasir.webp     photo 09          blazer-pasir.webp  photo 16
+sut-krim.webp         photo 03          kot-unta.webp      photo 17
+jaket-kulit.webp      photo 04          seluar-lebar.webp  photo 05
+kait-krim.webp        photo 12
+
+Handbags and heels (also reference images, not owned; each used once)
+tile-beg.webp         bag-08 (Handbags tile)         tile-kasut.webp     shoe-04 (Heels tile)
+ed-kasut.webp         shoe-07 (Heels feature)
+beg-karat.webp        bag-01    beg-kroko.webp   bag-02    beg-zamrud.webp  bag-03    beg-merah.webp  bag-04
+beg-taupe.webp        bag-05    beg-hitam.webp   bag-06    beg-krim.webp    bag-07
+kasut-but-merah.webp  shoe-01   kasut-but-coklat.webp shoe-02   kasut-leopard.webp shoe-03
+kasut-zaitun.webp     shoe-05   kasut-tali.webp  shoe-06   kasut-suede.webp shoe-08
+kasut-mule.webp      shoe-09   kasut-paten.webp shoe-10
+Visible brand names and maker's marks on bag-03, bag-05, bag-06, bag-08 and the insoles of shoe-09 and shoe-10 were softened.
+Product names are generic; none of the products are named after a real brand or model.
