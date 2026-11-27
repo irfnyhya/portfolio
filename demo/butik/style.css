@@ -837,3 +837,15 @@ body.lu-on .chat-fab { opacity: 0; pointer-events: none; }
 
 /* Round 13: titles that receive focus when a dialog opens do not draw a box */
 .sheet-title:focus, .done h3:focus, h2[tabindex="-1"]:focus, h1[tabindex="-1"]:focus { outline: none; }
+
+/* Round 14: the pieces column never reaches the name. Script sizes the tiles to the room left
+   (--piece-h), and the column clips its own paint so nothing can linger over the name on iOS. */
+@media (max-width: 899px), (max-height: 559px) {
+  .lu-pieces img { height: var(--piece-h, min(12svh, 104px)); width: auto; aspect-ratio: 4 / 5; }
+  .lu-side { overflow: hidden; contain: paint; }
+}
+
+/* Round 15: on phones the pieces column may run right down to the name (the script keeps it clear) */
+@media (max-width: 699px) {
+  .lu-side { bottom: calc(var(--band) + 12px); }
+}

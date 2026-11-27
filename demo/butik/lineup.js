@@ -41,6 +41,25 @@
     });
     if (skipAnim) { void wrap.offsetWidth; models.forEach(function (el) { el.classList.remove("no-anim"); }); }
   }
+  // On small screens the pieces column must end above the giant name: size the tiles
+  // so every piece of the current look fits in the room between the intro and the name.
+  var side = root.querySelector(".lu-side");
+  var markEl = root.querySelector(".lu-mark span");
+  function fitPieces() {
+    if (!side || !markEl) return;
+    var list = pieces[cur];
+    if (!list) return;
+    if (window.innerWidth >= 900 && window.innerHeight >= 560) { side.style.removeProperty("--piece-h"); return; }
+    var items = list.querySelectorAll("li");
+    var n = items.length || 1;
+    var top = side.getBoundingClientRect().top;
+    var limit = Math.min(markEl.getBoundingClientRect().top - 14, side.getBoundingClientRect().bottom - 2);
+    var gap = parseFloat(getComputedStyle(list).rowGap) || 12;
+    var img = items[0] && items[0].querySelector("img");
+    var label = items[0] ? items[0].getBoundingClientRect().height - (img ? img.getBoundingClientRect().height : 0) : 20;
+    var h = Math.floor((limit - top - (n - 1) * gap) / n - label);
+    side.style.setProperty("--piece-h", Math.max(40, Math.min(h, 104)) + "px");
+  }
   function swapText(list) {
     list.forEach(function (el, i) {
       el.hidden = i !== cur;
@@ -55,7 +74,7 @@
     var W = stage.clientWidth, phone = W < 700;
     var prev = cur;
     cur = (cur + dir + N) % N;
-    swapText(pieces); swapText(infos);
+    swapText(pieces); swapText(infos); fitPieces();
     if (reduce.matches) { // plain crossfade
       wrap.style.opacity = 0;
       setTimeout(function () { layout(true); wrap.style.opacity = 1; busy = false; }, 180);
@@ -144,7 +163,7 @@
     root.style.setProperty("--lu-h", h + "px");
   }
   var lastW = 0;
-  function relayout() { if (stage.clientWidth !== lastW) { lastW = stage.clientWidth; fitHeight(); layout(true); } }
+  function relayout() { if (stage.clientWidth !== lastW) { lastW = stage.clientWidth; fitHeight(); layout(true); } fitPieces(); }
   fitHeight();
   // The chat button sits where "Skip to shop" is, so it waits until the line-up has scrolled away
   if ("IntersectionObserver" in window) {
@@ -154,6 +173,9 @@
   models.forEach(function (m) { if (!m.complete) m.addEventListener("load", function () { layout(true); }); });
   layout(true);
   lastW = stage.clientWidth;
+  fitPieces();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPieces);
+  window.addEventListener("load", fitPieces);
 })();
 
 /* The name as a monument: fit "Maison Ve'ra" to the full width (first screen and footer),
