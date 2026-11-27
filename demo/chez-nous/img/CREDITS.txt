@@ -1,0 +1,14 @@
+Picture credits for the Chez Nous demo (demo/chez-nous/)
+
+Room views (view-*.jpg): renders of a 3D dining room built in Blender for this demo
+(tools/chez-nous/build_room.py). Not a real venue. Chez Nous is fictional.
+
+Food and table photos below are from Unsplash, free to use under the Unsplash License
+(https://unsplash.com/license), reused from the Lindap demo. None shows Chez Nous.
+
+file           | used for                          | photographer        | source
+chef.jpg       | about section                     | Alfonso Betancourt  | https://unsplash.com/photos/chef-carefully-plating-a-gourmet-dish-with-tweezers-q4nWGwVM2Vk
+c5.jpg         | menu: Dry Aged Striploin          | Urban Gyllström     | https://unsplash.com/photos/chef-pouring-sauce-over-plated-steak-MaWMfm-HCqQ
+c6.jpg         | menu: Pandan Dome                | Madeline Liu        | https://unsplash.com/photos/gourmet-green-dessert-with-edible-flowers-and-gold-dust-dZR5FpxIROU
+room.jpg       | dining room                       | takahiro taguchi    | https://unsplash.com/photos/lighted-lamps-in-room-8l_RuuZrOyY
+private.jpg    | whole counter booking             | Nadia Valko         | https://unsplash.com/photos/dining-table-set-with-candles-0hAdietsUrE

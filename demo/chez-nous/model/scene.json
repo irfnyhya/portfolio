@@ -1,0 +1,251 @@
+{
+ "room": {
+  "x0": -6.0,
+  "x1": 6.0,
+  "y0": -3.2,
+  "y1": 2.6,
+  "h": 3.2
+ },
+ "counter": {
+  "x0": -4.3,
+  "x1": 4.3,
+  "y0": -0.4,
+  "y1": 0.35,
+  "z": 0.95
+ },
+ "island": {
+  "y": 1.15
+ },
+ "stations": [
+  {
+   "x": -3.3,
+   "name": "the charcoal grill"
+  },
+  {
+   "x": -1.45,
+   "name": "the stove and copper pans"
+  },
+  {
+   "x": 0.65,
+   "name": "the pass, where every plate is finished"
+  },
+  {
+   "x": 3.3,
+   "name": "the pastry marble"
+  }
+ ],
+ "seats": [
+  {
+   "id": "S01",
+   "n": 1,
+   "x": -3.575,
+   "y": -0.92,
+   "station": "the charcoal grill"
+  },
+  {
+   "id": "S02",
+   "n": 2,
+   "x": -2.925,
+   "y": -0.92,
+   "station": "the charcoal grill"
+  },
+  {
+   "id": "S03",
+   "n": 3,
+   "x": -2.275,
+   "y": -0.92,
+   "station": "the stove and copper pans"
+  },
+  {
+   "id": "S04",
+   "n": 4,
+   "x": -1.625,
+   "y": -0.92,
+   "station": "the stove and copper pans"
+  },
+  {
+   "id": "S05",
+   "n": 5,
+   "x": -0.975,
+   "y": -0.92,
+   "station": "the stove and copper pans"
+  },
+  {
+   "id": "S06",
+   "n": 6,
+   "x": -0.325,
+   "y": -0.92,
+   "station": "the pass, where every plate is finished"
+  },
+  {
+   "id": "S07",
+   "n": 7,
+   "x": 0.325,
+   "y": -0.92,
+   "station": "the pass, where every plate is finished"
+  },
+  {
+   "id": "S08",
+   "n": 8,
+   "x": 0.975,
+   "y": -0.92,
+   "station": "the pass, where every plate is finished"
+  },
+  {
+   "id": "S09",
+   "n": 9,
+   "x": 1.625,
+   "y": -0.92,
+   "station": "the pass, where every plate is finished"
+  },
+  {
+   "id": "S10",
+   "n": 10,
+   "x": 2.275,
+   "y": -0.92,
+   "station": "the pastry marble"
+  },
+  {
+   "id": "S11",
+   "n": 11,
+   "x": 2.925,
+   "y": -0.92,
+   "station": "the pastry marble"
+  },
+  {
+   "id": "S12",
+   "n": 12,
+   "x": 3.575,
+   "y": -0.92,
+   "station": "the pastry marble"
+  }
+ ],
+ "chefs_table": {
+  "x": 5.15,
+  "y": -1.45,
+  "w": 0.85,
+  "d": 1.9,
+  "seats": [
+   [
+    4.47,
+    -2.07
+   ],
+   [
+    5.83,
+    -2.07
+   ],
+   [
+    4.47,
+    -1.45
+   ],
+   [
+    5.83,
+    -1.45
+   ],
+   [
+    4.47,
+    -0.83
+   ],
+   [
+    5.83,
+    -0.83
+   ]
+  ]
+ },
+ "chefs": [
+  "CHEF_grill",
+  "CHEF_sauce",
+  "CHEF_pass",
+  "CHEF_pastry"
+ ],
+ "lights": [
+  {
+   "kind": "hood",
+   "p": [
+    -3.3,
+    1.2,
+    2.2
+   ]
+  },
+  {
+   "kind": "hood",
+   "p": [
+    -1.45,
+    1.2,
+    2.2
+   ]
+  },
+  {
+   "kind": "hood",
+   "p": [
+    0.65,
+    1.2,
+    2.2
+   ]
+  },
+  {
+   "kind": "hood",
+   "p": [
+    3.3,
+    1.2,
+    2.2
+   ]
+  },
+  {
+   "kind": "pass",
+   "p": [
+    0.65,
+    1.0,
+    1.5
+   ]
+  },
+  {
+   "kind": "down",
+   "p": [
+    -2.6,
+    -0.2,
+    3.1
+   ]
+  },
+  {
+   "kind": "down",
+   "p": [
+    0.0,
+    -0.2,
+    3.1
+   ]
+  },
+  {
+   "kind": "down",
+   "p": [
+    2.6,
+    -0.2,
+    3.1
+   ]
+  },
+  {
+   "kind": "grill",
+   "p": [
+    -3.3,
+    1.15,
+    1.05
+   ]
+  },
+  {
+   "kind": "wall",
+   "p": [
+    5.7,
+    -1.0,
+    1.95
+   ]
+  },
+  {
+   "kind": "pendant",
+   "p": [
+    5.15,
+    -1.45,
+    1.7
+   ]
+  }
+ ]
+}
