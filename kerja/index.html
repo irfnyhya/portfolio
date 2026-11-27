@@ -1012,6 +1012,33 @@
           transform: translateX(calc(var(--spread) * -1)) rotate(7deg);
         }
       }
+      /* The tilted right-hand phone in the hero pokes 2px past narrow screens; clip it at the
+         window edge instead of letting the whole page scroll sideways */
+      html {
+        overflow-x: clip;
+      }
+
+      /* Touch targets: every link and button is at least 44px tall to tap.
+         The padding grows the tap area; the matching negative margin keeps the layout where it was. */
+      .wordmark {
+        padding-block: 4px;
+        margin-block: -4px;
+      }
+      .nav-links a,
+      .link,
+      .footer-row a {
+        padding-block: 12px;
+        margin-block: -12px;
+      }
+      .number {
+        padding-block: 5px;
+        margin-block: -5px;
+      }
+      .nav-links a {
+        padding-inline: 4px;
+        margin-inline: -4px;
+      }
+
     </style>
   </head>
   <body>
@@ -1273,7 +1300,7 @@
         <div class="products">
           <article class="product" data-reveal>
             <figure>
-              <img src="../images/dpkadkahwin.png" width="1024" height="455" loading="lazy" alt="Sanding: kad kahwin digital dengan RSVP" data-i18n-alt="altSanding" />
+              <img src="../images/dpkadkahwin.webp" width="1024" height="455" loading="lazy" alt="Sanding: kad kahwin digital dengan RSVP" data-i18n-alt="altSanding" />
             </figure>
             <h3 class="h-item">Sanding</h3>
             <p class="where">kadkahwin.website</p>
