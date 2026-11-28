@@ -309,8 +309,10 @@
   // Wide containers: kitchen at the top. Narrow ones (phones): turned a quarter so the kitchen is on the right.
   function buildPlan(el) {
     var W = PLAN.x1 - PLAN.x0, H = PLAN.y1 - PLAN.y0;
-    var rot = el.clientWidth > 0 && el.clientWidth < 440;
+    var rot = el.clientWidth > 0 && el.clientWidth < rotBelow(el);
     el.classList.toggle("rot", rot);
+    // seat size follows the plan width so neighbours never overlap (the front seats are 0.9 m apart)
+    if (!rot && el.clientWidth) el.style.setProperty("--seat", Math.max(26, Math.min(40, Math.floor(el.clientWidth / W * 0.82))) + "px");
     el.style.paddingBottom = (rot ? W / H : H / W) * 100 + "%";
     function rect(x0, x1, y0, y1) { // metres -> % box
       if (!rot) return "left:" + ((x0 - PLAN.x0) / W * 100) + "%;top:" + ((PLAN.y1 - y1) / H * 100) + "%;width:" + ((x1 - x0) / W * 100) + "%;height:" + ((y1 - y0) / H * 100) + "%";
@@ -332,6 +334,7 @@
     }).join("") + "</div>";
     el.innerHTML = html;
   }
+  function rotBelow(el) { return el.dataset.rotBelow !== undefined ? Number(el.dataset.rotBelow) : 440; }
   function refreshPlan(el, after) {
     var pressed = Array.prototype.filter.call(el.querySelectorAll("[aria-pressed=true]"), function () { return true; }).map(function (b) { return b.dataset.seat; });
     var disabled = Array.prototype.filter.call(el.querySelectorAll(".seat:disabled"), function () { return true; }).map(function (b) { return b.dataset.seat; });
@@ -347,14 +350,19 @@
     es.forEach(function (e) {
       var el = e.target, w = Math.round(e.contentRect.width), was = lastW[el.id];
       lastW[el.id] = w;
-      if (w && (was === undefined || (was < 440) !== (w < 440))) refreshPlan(el);
+      if (w && (was === undefined || (was < rotBelow(el)) !== (w < rotBelow(el)) || Math.abs(w - was) > 16)) refreshPlan(el);
     });
   }) : null;
 
   var current = "S05", plan = $("plan");
   buildPlan(plan);
   if (planRO) planRO.observe(plan);
-  plan.addEventListener("click", function (e) { var b = e.target.closest("[data-seat]"); if (b) selectSeat(b.dataset.seat); });
+  plan.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-seat]"); if (!b) return;
+    selectSeat(b.dataset.seat);
+    var v = $("viewer").getBoundingClientRect();
+    if (v.top < 0 || v.bottom > window.innerHeight) $("viewer").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  });
   function seatText(id) {
     var s = seatById(id);
     return { name: "Seat " + s.n, meta: s.side + " · facing the " + (s.station === "pass" ? "plating table" : s.station), note: NOTES[s.station] };
@@ -486,12 +494,20 @@
     return (a === b ? "Seat " + a : "Seats " + a + " to " + b) + ", facing " + STATION_LONG[seatById(ids[Math.floor((ids.length - 1) / 2)]).station];
   }
   function leadView(ids) { return ids.length >= SEATS.length ? "img/view-hero.jpg" : viewImg(ids[Math.floor((ids.length - 1) / 2)]); }
+  function setPreview(src, alt) {
+    var img = $("seatPreview");
+    if (img.getAttribute("src") === src) return;
+    if (reduce) { img.src = src; img.alt = alt; return; }
+    var next = new Image(); next.src = src;
+    img.classList.add("fade");
+    var swap = function () { img.src = src; img.alt = alt; requestAnimationFrame(function () { img.classList.remove("fade"); }); };
+    (next.decode ? next.decode() : Promise.resolve()).then(function () { setTimeout(swap, 180); }, swap);
+  }
   function syncSeats() {
     bookPlan.querySelectorAll("[data-seat]").forEach(function (b) { b.setAttribute("aria-pressed", String(state.seats.indexOf(b.dataset.seat) > -1)); });
-    var prev = $("seatPreview");
-    if (!state.seats.length) { prev.hidden = true; $("pickSum").textContent = ""; return; }
-    prev.hidden = false; prev.src = leadView(state.seats); prev.alt = "The view from your seats";
-    $("pickSum").textContent = seatsLabel(state.seats);
+    var src = state.seats.length ? leadView(state.seats) : "img/view-hero.jpg";
+    setPreview(src, state.seats.length ? "The view from your seats" : "The counter");
+    $("pickSum").textContent = state.seats.length ? seatsLabel(state.seats) : "Tap a seat on the plan.";
   }
 
   $("occasions").addEventListener("click", function (e) {
@@ -522,6 +538,20 @@
     return true;
   }
 
+  var GUEST_KEY = "chezNous.guest.v1";
+  function prefill() {
+    var g = null; try { g = JSON.parse(localStorage.getItem(GUEST_KEY)); } catch (e) { /* none */ }
+    if (!g) return;
+    ["name", "phone", "email"].forEach(function (id) { if (!$(id).value && g[id]) $(id).value = g[id]; });
+  }
+  // Enter moves to the next field, and on the last one goes on to the check step
+  ["name", "phone", "email"].forEach(function (id, i, all) {
+    $(id).addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      e.preventDefault();
+      if (i < all.length - 1) $(all[i + 1]).focus(); else $("stepNext").click();
+    });
+  });
   function draft() {
     return { ref: null, date: state.date, time: state.time, guests: state.guests, seats: state.seats.slice(), where: seatsLabel(state.seats),
       name: $("name").value.trim(), phone: $("phone").value.trim(), email: $("email").value.trim(),
@@ -548,6 +578,7 @@
     b.ref = "CN-" + b.date.slice(5).replace("-", "") + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
     b.created = new Date().toISOString();
     book.push(b); save(book); lastBooking = b;
+    try { localStorage.setItem(GUEST_KEY, JSON.stringify({ name: b.name, phone: b.phone, email: b.email })); } catch (e) { /* fine */ }
     $("doneTitle").innerHTML = b.status === "requested" ? 'Request <em class="accent">received.</em>' : 'You\'re <em class="accent">booked.</em>';
     $("done").innerHTML = ticketHtml(b, false) + '<p class="done-hint">' + (b.status === "requested"
       ? "The whole counter is held for you. We call " + esc(b.phone) + " within a day to confirm and plan the menu."
@@ -619,7 +650,17 @@
   $("stepBack").addEventListener("click", function () { go(Math.max(0, step - 1)); });
   $("bookForm").addEventListener("submit", function (e) { e.preventDefault(); });
 
+  function preselect() {
+    if (state.date && state.time) return;
+    for (var i = 0; i < dates.length && !state.date; i++) {
+      var id = iso(dates[i]);
+      if (CLOSED.indexOf(dates[i].getDay()) < 0 && !(seatingPassed(id, "18:00") && seatingPassed(id, "20:45"))) state.date = id;
+    }
+    if (!state.time && state.date) state.time = seatingPassed(state.date, "18:00") ? "20:45" : "18:00";
+  }
   function openBooking(at) {
+    if (at === 0) preselect();
+    prefill();
     go(at);
     if (!booking.classList.contains("open")) { lastFocus = document.activeElement; showSheet(booking, stepsEls[at].querySelector("h2")); }
   }

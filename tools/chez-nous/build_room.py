@@ -151,13 +151,13 @@ def mat(name, hexcol, rough=0.6, metal=0.0, emit=None, strength=0.0, tex=None, a
 
 M = {
     "panels": mat("Panel_Black", "#ffffff", 0.35, tex=TEX["panels"]),
-    "led": mat("LED_Line", "#ffe9c8", 1.0, emit="#ffd9a6", strength=1.1),
+    "led": mat("LED_Line", "#ffe9c8", 1.0, emit="#ffbf7a", strength=0.4),
     "dome": mat("Dome_Black", "#0c0c0c", 0.3, 0.8),
-    "dome_in": mat("Dome_Glow", "#ffe7c4", 1.0, emit="#ffcf8a", strength=10),
-    "lampglow": mat("Lamp_Glow", "#ffe4b8", 1.0, emit="#ffc477", strength=7),
+    "dome_in": mat("Dome_Glow", "#ffe7c4", 1.0, emit="#ffb060", strength=1.3),
+    "lampglow": mat("Lamp_Glow", "#ffe4b8", 1.0, emit="#ffaa50", strength=2),
     "velvet": mat("Velvet_Emerald", "#1d3528", 0.92),
     "drape": mat("Velvet_Drape_Oxblood", "#3a1216", 0.9),
-    "opal": mat("Opal_Globe", "#fff0d6", 0.3, emit="#ffd49a", strength=6),
+    "opal": mat("Opal_Globe", "#fff0d6", 0.3, emit="#ffb46a", strength=0.7),
     "flame_s": mat("Candle_Flame", "#ffd08a", 1.0, emit="#ffb34f", strength=14),
     "bloom": mat("Flower_Cream", "#efe2cf", 0.7),
     "bloom2": mat("Flower_Blush", "#d9a7a0", 0.7),
@@ -165,7 +165,7 @@ M = {
     "calacatta": mat("Marble_Calacatta", "#ffffff", 0.12, tex=TEX["calacatta"]),
     "crystal": mat("Crystal", "#f4f8fa", 0.02, alpha=0.18),
     "menu": mat("Menu_Paper", "#e9e4d8", 0.9),
-    "strip": mat("Strip_Light", "#fff0d0", 1.0, emit="#ffd49a", strength=10),
+    "strip": mat("Strip_Light", "#fff0d0", 1.0, emit="#ffb870", strength=1.4),
     "counter": mat("Marble_Nero_Marquina", "#ffffff", 0.14, tex=TEX["nero"]),
     "floor": mat("Floor_Chevron_Oak_Polished", "#ffffff", 0.18, tex=TEX["chevron"]),
     "kfloor": mat("Floor_Kitchen_Tile", "#ffffff", 0.6, tex=TEX["ktile"]),
@@ -180,7 +180,7 @@ M = {
     "ceiling": mat("Ceiling", "#0a0a0a", 0.9),                           # removed in the cutaway
     "ceil_slat": mat("Ceiling_Slats_Walnut", "#ffffff", 0.6, tex=TEX["walnut"]),  # removed in the cutaway
     "ceil_light": mat("Ceiling_Downlight", "#fff2dc", 1.0, emit="#ffd9a0", strength=8),  # removed in the cutaway
-    "cove": mat("Cove_Light", "#ffe2b8", 1.0, emit="#ffc887", strength=4.0),
+    "cove": mat("Cove_Light", "#ffe2b8", 1.0, emit="#ffb870", strength=2.2),
     "black": mat("Black_Metal", "#111214", 0.45, 0.6),
     "bronze": mat("Bronze_Door", "#2b2219", 0.4, 0.9),
     "brass": mat("Brass", "#c9a24a", 0.3, 1.0),
@@ -669,7 +669,7 @@ bpy.ops.export_scene.gltf(filepath=glb, export_format="GLB", export_cameras=True
 print("GLB", os.path.getsize(glb), "bytes", flush=True)
 
 # ── lighting for Blender (renders and the saved .blend files) ───
-E = {"dome": 55, "lamp": 5, "pass": 18, "hood": 35, "down": 5, "grill": 40, "wine": 30, "art": 30, "host": 4, "console": 4, "chandelier": 40, "candle": 1.5, "onyx": 30}
+E = {"dome": 40, "lamp": 7, "pass": 12, "hood": 30, "down": 3, "grill": 40, "wine": 30, "art": 30, "host": 4, "console": 4, "chandelier": 26, "candle": 1.5, "onyx": 30}
 C = {"grill": (1.0, 0.45, 0.15), "wine": (1.0, 0.72, 0.42), "candle": (1.0, 0.6, 0.3), "onyx": (1.0, 0.7, 0.4), "chandelier": (1.0, 0.76, 0.5)}
 for l in LIGHTS:
     spot = l["kind"] in ("dome", "down", "hood", "art")

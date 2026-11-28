@@ -50,20 +50,20 @@ function init() {
   if (window.innerWidth >= 768) {
     composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
-    bloom = new UnrealBloomPass(new THREE.Vector2(512, 320), 0.28, 0.35, 0.96);
+    bloom = new UnrealBloomPass(new THREE.Vector2(512, 320), 0.18, 0.4, 0.97);
     composer.addPass(bloom);
     composer.addPass(new OutputPass());
   }
   const cams = {};      // seat id -> { pos, quat, hfov }
   const chefs = [];
-  let base = null, yaw = 0, pitch = 0, tween = null, needs = true, visible = true;
+  let base = null, yaw = 0, pitch = 0, tyaw = 0, tpitch = 0, tween = null, needs = true, visible = true;
 
   // Blender (x, y, z-up) -> three (x, z, -y)
   const toThree = (p) => new THREE.Vector3(p[0], p[2], -p[1]);
 
   function addLights(data) {
     scene.add(new THREE.HemisphereLight(0xfff1dd, 0x101010, 0.12));
-    const I = { dome: 3, lamp: 0.35, pass: 0.8, hood: 1.8, down: 0.3, grill: 1.8, wine: 1.2, art: 1.5, host: 0.4, console: 0.4, chandelier: 1.5, candle: 0.12, onyx: 1.0 };
+    const I = { dome: 1.6, lamp: 0.35, pass: 0.55, hood: 1.5, down: 0.2, grill: 1.8, wine: 1.2, art: 1.5, host: 0.4, console: 0.4, chandelier: 0.8, candle: 0.12, onyx: 1.0 };
     const C = { grill: 0xff7a2a, pass: 0xffc488, wine: 0xffb46a, candle: 0xffa040, onyx: 0xffb070, chandelier: 0xffc98a };
     for (const l of data.lights) {
       const range = l.kind === "lamp" || l.kind === "candle" ? 1.6 : l.kind === "dome" ? 3.2 : 7;
@@ -129,24 +129,31 @@ function init() {
   function goTo(id, instant) {
     const target = cams[id] || cams.S05;
     if (!target) return;
-    yaw = 0; pitch = 0;
+    tyaw = 0; tpitch = 0;
     if (instant || reduce || !base) {
+      yaw = 0; pitch = 0;
       base = { pos: target.pos.clone(), quat: target.quat.clone(), hfov: target.hfov };
       camera.position.copy(base.pos); setFov(base.hfov); apply(); return;
     }
     const from = { pos: camera.position.clone(), quat: base.quat.clone(), hfov: base.hfov };
-    tween = { from, to: target, t0: performance.now(), dur: 300 };
+    tween = { from, to: target, t0: performance.now(), dur: 750 };
   }
 
   function step(now) {
     if (tween) {
       let k = Math.min(1, (now - tween.t0) / tween.dur);
-      k = 1 - Math.pow(1 - k, 3);
+      k = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;   // ease in and out
       const pos = tween.from.pos.clone().lerp(tween.to.pos, k);
       const quat = tween.from.quat.clone().slerp(tween.to.quat, k);
       base = { pos, quat, hfov: tween.from.hfov + (tween.to.hfov - tween.from.hfov) * k };
       camera.position.copy(pos); setFov(base.hfov); apply();
       if (k >= 1) tween = null;
+    }
+    // look-around eases toward where you dragged instead of snapping
+    const dy = tyaw - yaw, dp = tpitch - pitch;
+    if (Math.abs(dy) > 1e-4 || Math.abs(dp) > 1e-4) {
+      const f = reduce ? 1 : 0.16;
+      yaw += dy * f; pitch += dp * f; apply();
     }
     if (!reduce && chefs.length) {
       const t = now / 1000;
@@ -179,27 +186,27 @@ function init() {
 
   // Look around: drag (mouse or touch, horizontal), arrow keys, or the two buttons
   const MAXY = THREE.MathUtils.degToRad(60), MAXP = THREE.MathUtils.degToRad(22);
-  const clampLook = () => { yaw = Math.max(-MAXY, Math.min(MAXY, yaw)); pitch = Math.max(-MAXP, Math.min(MAXP, pitch)); apply(); };
+  const clampLook = () => { tyaw = Math.max(-MAXY, Math.min(MAXY, tyaw)); tpitch = Math.max(-MAXP, Math.min(MAXP, tpitch)); needs = true; };
   let drag = null;
-  viewer.addEventListener("pointerdown", (e) => { if (e.target.closest("button")) return; drag = { x: e.clientX, y: e.clientY, yaw, pitch }; });
+  viewer.addEventListener("pointerdown", (e) => { if (e.target.closest("button")) return; drag = { x: e.clientX, y: e.clientY, yaw: tyaw, pitch: tpitch }; });
   window.addEventListener("pointermove", (e) => {
     if (!drag) return;
     const s = 2.2 / viewer.clientWidth;
-    yaw = drag.yaw + (e.clientX - drag.x) * s;
-    if (e.pointerType === "mouse") pitch = drag.pitch + (e.clientY - drag.y) * s;
+    tyaw = drag.yaw + (e.clientX - drag.x) * s;
+    if (e.pointerType === "mouse") tpitch = drag.pitch + (e.clientY - drag.y) * s;
     clampLook();
   });
   window.addEventListener("pointerup", () => { drag = null; });
   window.addEventListener("pointercancel", () => { drag = null; });
   viewer.addEventListener("keydown", (e) => {
     const d = THREE.MathUtils.degToRad(8);
-    if (e.key === "ArrowLeft") yaw += d; else if (e.key === "ArrowRight") yaw -= d;
-    else if (e.key === "ArrowUp") pitch += d; else if (e.key === "ArrowDown") pitch -= d;
+    if (e.key === "ArrowLeft") tyaw += d; else if (e.key === "ArrowRight") tyaw -= d;
+    else if (e.key === "ArrowUp") tpitch += d; else if (e.key === "ArrowDown") tpitch -= d;
     else return;
     e.preventDefault(); clampLook();
   });
   viewer.querySelectorAll("[data-look]").forEach((b) => b.addEventListener("click", () => {
-    yaw -= Number(b.dataset.look) * THREE.MathUtils.degToRad(20); clampLook();
+    tyaw -= Number(b.dataset.look) * THREE.MathUtils.degToRad(20); clampLook();
   }));
 
   return { goTo };
