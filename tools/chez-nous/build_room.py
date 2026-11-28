@@ -734,6 +734,9 @@ if "--no-cutaway" not in argv:
     bm = bmesh.new(); bm.from_mesh(room.data)
     bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.material_index in drop], context="FACES")
     bm.to_mesh(room.data); bm.free()
+    # Irfan's ask: the lit file is open too (no roof, no entrance wall), looking through the hero camera
+    scene.camera = bpy.data.objects["CAM_HERO"]
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "chez-nous-counter.blend"))
     room.name = "Room_cutaway"
     top = bpy.data.cameras.new("CAM_TOP"); top.lens = 24; top.sensor_width = 36; top.clip_end = 80
     to = bpy.data.objects.new("CAM_TOP", top); col.objects.link(to)
