@@ -637,6 +637,7 @@
     if (n === 3) $("review").innerHTML = ticketHtml(draft(), true);
     if (n === 5) buildMine();
     step = n;
+    booking.classList.toggle("wide", n === 1);
     stepsEls.forEach(function (el, i) {
       el.classList.toggle("active", i === n);
       el.classList.toggle("back", i < n);

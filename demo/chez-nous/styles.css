@@ -827,14 +827,23 @@ h1, h2, h3, .h2, .step h2, .quick h3, .dish h3, .card h3, .steps h3, .faq summar
 .plan-key { margin-top: .9rem; }
 @media (min-width: 1100px) { .salle-grid { grid-template-columns: 1fr 1fr; } }
 
-/* Seat step: the view from the chosen seats stays in sight above the plan while you tap */
-.pick { position: sticky; top: -1.5rem; z-index: 3; margin: 1rem -1.25rem 0; padding: .75rem 1.25rem; display: grid; grid-template-columns: 9.5rem 1fr; gap: .9rem; align-items: center; background: rgba(249, 247, 243, .97); border-bottom: 1px solid rgba(0,0,0,.06); }
-@media (min-width: 768px) { .pick { top: -2rem; margin-inline: -2.25rem; padding-inline: 2.25rem; grid-template-columns: 12rem 1fr; } }
-.pick-view { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--r-lg); background: #0a0a0a; }
-.pick .seat-preview { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; aspect-ratio: auto; transition: opacity .35s var(--ease); }
+/* Seat step: the view from the chosen seats is the big thing; it stays in sight while you tap the plan */
+.pick { position: sticky; top: -1.5rem; z-index: 3; margin: 1rem -1.25rem 0; padding: .75rem 1.25rem .6rem; background: #eae9e5; }
+.pick-view { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--r-lg); background: #0a0a0a; }
+.pick .seat-preview { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; aspect-ratio: auto; object-fit: cover; transition: opacity .35s var(--ease); }
 .pick .seat-preview.fade { opacity: 0; }
-.pick .pick-sum { margin: 0; font-size: .95rem; line-height: 1.35; }
+.pick-text { margin-top: .6rem; }
+.pick .pick-sum { margin: 0; font-size: 1rem; line-height: 1.35; }
 .pick .err { margin-top: .3rem; }
+@media (min-width: 768px) { .pick { top: -2rem; margin-inline: -2.25rem; padding-inline: 2.25rem; } }
+/* wide screens: the panel widens for this step, view on the left, plan on the right */
+#booking .sheet { transition: transform var(--t-mid) var(--ease), width .45s var(--ease); }
+@media (min-width: 1100px) {
+  #booking.wide .sheet { width: min(76rem, calc(100% - 1.5rem)); }
+  #booking.wide .seat-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.75rem; align-items: center; margin-top: 1.25rem; }
+  #booking.wide .pick { position: static; margin: 0; padding: 0; background: none; }
+  #booking.wide .plan-small { margin-top: 0; }
+}
 .plan .seat { transition: background-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
 .plan .seat[aria-pressed=true] { transform: translate(-50%, -50%) scale(1.08); }
 @media (prefers-reduced-motion: reduce) { .pick .seat-preview, .plan .seat { transition: none; } .plan .seat[aria-pressed=true] { transform: translate(-50%, -50%); } }
@@ -843,8 +852,3 @@ h1, h2, h3, .h2, .step h2, .quick h3, .dish h3, .card h3, .steps h3, .faq summar
 @media (min-width: 768px) { #booking .sheet { width: min(40rem, calc(100% - 1.5rem)); } }
 .sheet .plan .pl-kitchen b, .sheet .plan .pl-plating b { font-size: .55rem; }
 .plan-small { margin-top: 1rem; }
-/* desktop: no scrolling needed, so the view and its caption sit plainly above the plan */
-@media (min-width: 768px) {
-  .pick { position: static; margin-inline: 0; padding: 0; background: none; border: 0; grid-template-columns: 10rem 1fr; }
-  .sheet .plan-small { margin-top: 1.25rem; }
-}

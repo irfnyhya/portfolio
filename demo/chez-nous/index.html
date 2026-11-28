@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/view-hero-tall.jpg" media="(max-width: 767px)">
   <link rel="preload" as="image" href="img/view-hero.jpg" media="(min-width: 768px)">
-  <link rel="stylesheet" href="styles.css?v=21">
+  <link rel="stylesheet" href="styles.css?v=22">
   <script>document.documentElement.classList.add("js")</script>
   <script type="importmap">
     { "imports": {
@@ -363,11 +363,13 @@
         <section class="step" data-step="1" aria-label="Seats">
           <h2 tabindex="-1">Where will you <em class="accent">sit?</em></h2>
           <p class="hint" id="seatFor"></p>
-          <div class="pick">
-            <div class="pick-view"><img class="seat-preview" id="seatPreview" src="img/view-s05.jpg" alt="" width="1600" height="1000"></div>
-            <div class="pick-text"><p class="pick-sum" id="pickSum" aria-live="polite">Tap a seat on the plan.</p><p class="err" id="seatErr"></p></div>
+          <div class="seat-layout">
+            <div class="pick">
+              <div class="pick-view"><img class="seat-preview" id="seatPreview" src="img/view-s05.jpg" alt="" width="1600" height="1000"></div>
+              <div class="pick-text"><p class="pick-sum" id="pickSum" aria-live="polite">Tap a seat on the plan.</p><p class="err" id="seatErr"></p></div>
+            </div>
+            <div class="plan plan-small" id="bookPlan" data-rot-below="0"></div>
           </div>
-          <div class="plan plan-small" id="bookPlan" data-rot-below="0"></div>
         </section>
 
         <section class="step" data-step="2" aria-label="Your details">
@@ -427,7 +429,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=21"></script>
-  <script type="module" src="viewer.js?v=21"></script>
+  <script src="app.js?v=22"></script>
+  <script type="module" src="viewer.js?v=22"></script>
 </body>
 </html>
