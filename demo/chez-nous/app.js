@@ -31,32 +31,39 @@
     ] }
   ];
 
-  /* Seats and stations: the same numbers as model/scene.json, exported from Blender (metres along the counter). */
-  var STATIONS = [
-    { key: "grill", name: "Grill", x: -3.3, long: "the charcoal grill" },
-    { key: "stove", name: "Stove", x: -1.45, long: "the stove and the copper pans" },
-    { key: "pass", name: "Pass", x: 0.65, long: "the pass, where every plate is finished" },
-    { key: "pastry", name: "Pastry", x: 3.3, long: "the pastry marble" }
-  ];
+  /* The room as built in Blender (model/scene.json, metres; y points to the kitchen).
+     Ten seats around a U counter: 2 on the left arm, 6 along the front, 2 on the right arm. */
+  var STATION_LONG = { grill: "the charcoal grill", stove: "the stove and the copper pans", pass: "the plating table, where every plate is finished", pastry: "the pastry marble" };
   var NOTES = {
-    grill: "Closest to the charcoal. You feel the heat and smell the smoke as the meat is turned.",
-    stove: "In front of the stove, where the sauces reduce in copper pans and the fish is cooked.",
-    pass: "Right in front of the pass, where the head chef finishes every plate before it is served.",
-    pastry: "By the pastry marble. You watch the soufflé rise and the tarts glazed for dessert."
+    grill: "Closest to the charcoal grill. You feel the heat and watch the meat turned over the coals.",
+    stove: "Facing the stove, where the sauces reduce in copper pans and the fish is cooked.",
+    pass: "Right in front of the plating table, where the head chef finishes every plate before it is served.",
+    pastry: "Beside the pastry marble. You watch the soufflé rise and the tarts glazed for dessert."
   };
-  var SEATS = [];
-  for (var si = 0; si < 12; si++) {
-    var sx = -3.575 + 0.65 * si;
-    var near = STATIONS.reduce(function (a, b) { return Math.abs(b.x - sx) < Math.abs(a.x - sx) ? b : a; });
-    SEATS.push({ id: "S" + String(si + 1).padStart(2, "0"), n: si + 1, x: sx, station: near });
-  }
-  var CT_NOTE = "A table for four to six beside the pastry station, at right angles to the kitchen, so you face each other and the chefs.";
+  var SEAT_DEF = [[-4.22, 0.4, "grill", "Left arm"], [-4.22, -0.35, "grill", "Left arm"],
+    [-2.25, -1.52, "grill", "Front"], [-1.35, -1.52, "grill", "Front"], [-0.45, -1.52, "pass", "Front"],
+    [0.45, -1.52, "pass", "Front"], [1.35, -1.52, "stove", "Front"], [2.25, -1.52, "stove", "Front"],
+    [4.22, -0.35, "pastry", "Right arm"], [4.22, 0.4, "pastry", "Right arm"]];
+  var SEATS = SEAT_DEF.map(function (d, i) {
+    return { id: "S" + String(i + 1).padStart(2, "0"), n: i + 1, x: d[0], y: d[1], station: d[2], side: d[3] };
+  });
+  var MAX_GUESTS = 10, WHOLE_FROM = 7;
+  // Plan drawing (schematic, metres). Side seats are drawn a little further apart than in the room so they stay tappable.
+  var PLAN = {
+    x0: -4.8, x1: 4.8, y0: -2.0, y1: 2.62,
+    kitchen: [["Grill", -3.7, -1.3], ["Stove", 0.1, 2.75], ["Pastry", 3.4, 4.4]], ky0: 1.95, ky1: 2.58,
+    plating: [-3.6, 3.6, 1.0, 1.6], frame: [-4.5, 4.5, 0.88, 2.58],
+    counter: [[-3.7, 3.7, -1.0, -0.35], [-3.7, -3.05, -0.37, 0.75], [3.05, 3.7, -0.37, 0.75]],
+    lamps: [[-1.8, -0.62], [0, -0.62], [1.8, -0.62], [-3.38, 0.02], [3.38, 0.02]],
+    seatY: { 1: 0.5, 2: -0.45, 9: -0.45, 10: 0.5 }
+  };
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var viewImg = function (id) { return "img/view-" + id.toLowerCase() + ".jpg"; };
   var seatById = function (id) { return SEATS.filter(function (s) { return s.id === id; })[0]; };
+  var allSeatIds = function () { return SEATS.map(function (s) { return s.id; }); };
 
   /* ── Live status in hero ──────────────────────────── */
   (function () {
@@ -296,44 +303,74 @@
   }
   function takenByMe(date, time, id) { return book.some(function (b) { return b.status !== "cancelled" && b.date === date && b.time === time && b.seats.indexOf(id) > -1; }); }
   function isTaken(date, time, id) { return takenByOthers(date, time, id) || takenByMe(date, time, id); }
-  function anyTaken(date, time) { return SEATS.concat([{ id: "CT" }]).some(function (s) { return isTaken(date, time, s.id); }); }
+  function anyTaken(date, time) { return SEATS.some(function (s) { return isTaken(date, time, s.id); }); }
 
   /* ── The counter plan (page and booking sheet) ─────── */
+  // Wide containers: kitchen at the top. Narrow ones (phones): turned a quarter so the kitchen is on the right.
   function buildPlan(el) {
-    var halves = [SEATS.slice(0, 6), SEATS.slice(6)], range = [[-3.9, 0], [0, 3.9]];
-    el.innerHTML = '<div class="halves">' + halves.map(function (seats, h) {
-      var sts = STATIONS.filter(function (s) { return s.x >= range[h][0] && s.x < range[h][1]; });
-      return '<div class="half"><div class="stations" aria-hidden="true">' + sts.map(function (s) {
-        var left = (s.x - range[h][0]) / (range[h][1] - range[h][0]) * 100;
-        return '<span class="station ' + s.key + '" style="left:' + left.toFixed(1) + '%">' + s.name + "<i></i></span>";
-      }).join("") + '</div><div class="bar" aria-hidden="true"></div><div class="seat-row" role="group" aria-label="Counter seats ' + seats[0].n + " to " + seats[seats.length - 1].n + '">' + seats.map(function (s) {
-        return '<button type="button" class="seat" data-seat="' + s.id + '" aria-pressed="false" aria-label="Seat ' + s.n + ', facing ' + esc(s.station.long) + '">' + s.n + "</button>";
-      }).join("") + "</div></div>";
-    }).join("") + '</div><button type="button" class="ct" data-seat="CT" aria-pressed="false"><b>Chef\'s table</b><span>4 to 6 guests, by the pastry station</span></button>' +
-    '<p class="plan-key">Kitchen at the top, your seats below the counter. Numbers run from the grill end.</p>';
+    var W = PLAN.x1 - PLAN.x0, H = PLAN.y1 - PLAN.y0;
+    var rot = el.clientWidth > 0 && el.clientWidth < 440;
+    el.classList.toggle("rot", rot);
+    el.style.paddingBottom = (rot ? W / H : H / W) * 100 + "%";
+    function rect(x0, x1, y0, y1) { // metres -> % box
+      if (!rot) return "left:" + ((x0 - PLAN.x0) / W * 100) + "%;top:" + ((PLAN.y1 - y1) / H * 100) + "%;width:" + ((x1 - x0) / W * 100) + "%;height:" + ((y1 - y0) / H * 100) + "%";
+      return "left:" + ((y0 - PLAN.y0) / H * 100) + "%;top:" + ((x0 - PLAN.x0) / W * 100) + "%;width:" + ((y1 - y0) / H * 100) + "%;height:" + ((x1 - x0) / W * 100) + "%";
+    }
+    function pt(x, y) {
+      return rot ? "left:" + ((y - PLAN.y0) / H * 100) + "%;top:" + ((x - PLAN.x0) / W * 100) + "%"
+                 : "left:" + ((x - PLAN.x0) / W * 100) + "%;top:" + ((PLAN.y1 - y) / H * 100) + "%";
+    }
+    var f = PLAN.frame, pl = PLAN.plating, html = "";
+    html += '<span class="pl-frame" aria-hidden="true" style="' + rect(f[0], f[1], f[2], f[3]) + '"></span>';
+    PLAN.kitchen.forEach(function (k) { html += '<span class="pl-kitchen" aria-hidden="true" style="' + rect(k[1], k[2], PLAN.ky0, PLAN.ky1) + '"><b>' + k[0] + "</b></span>"; });
+    html += '<span class="pl-plating" aria-hidden="true" style="' + rect(pl[0], pl[1], pl[2], pl[3]) + '"><b>Plating table</b></span>';
+    PLAN.counter.forEach(function (c) { html += '<span class="pl-counter" aria-hidden="true" style="' + rect(c[0], c[1], c[2], c[3]) + '"></span>'; });
+    PLAN.lamps.forEach(function (l) { html += '<span class="pl-lamp" aria-hidden="true" style="' + pt(l[0], l[1]) + '"></span>'; });
+    html += '<div class="pl-seats" role="group" aria-label="Ten seats around the counter">' + SEATS.map(function (s) {
+      var y = PLAN.seatY[s.n] !== undefined ? PLAN.seatY[s.n] : s.y;
+      return '<button type="button" class="seat" data-seat="' + s.id + '" aria-pressed="false" style="' + pt(s.x, y) + '" aria-label="Seat ' + s.n + ", " + s.side.toLowerCase() + ", facing " + esc(STATION_LONG[s.station]) + '">' + s.n + "</button>";
+    }).join("") + "</div>";
+    el.innerHTML = html;
   }
+  function refreshPlan(el, after) {
+    var pressed = Array.prototype.filter.call(el.querySelectorAll("[aria-pressed=true]"), function () { return true; }).map(function (b) { return b.dataset.seat; });
+    var disabled = Array.prototype.filter.call(el.querySelectorAll(".seat:disabled"), function () { return true; }).map(function (b) { return b.dataset.seat; });
+    buildPlan(el);
+    el.querySelectorAll(".seat").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(pressed.indexOf(b.dataset.seat) > -1));
+      b.disabled = disabled.indexOf(b.dataset.seat) > -1;
+    });
+    if (after) after();
+  }
+  var lastW = {};
+  var planRO = "ResizeObserver" in window ? new ResizeObserver(function (es) {
+    es.forEach(function (e) {
+      var el = e.target, w = Math.round(e.contentRect.width), was = lastW[el.id];
+      lastW[el.id] = w;
+      if (w && (was === undefined || (was < 440) !== (w < 440))) refreshPlan(el);
+    });
+  }) : null;
 
-  var current = "S07", plan = $("plan");
+  var current = "S05", plan = $("plan");
   buildPlan(plan);
+  if (planRO) planRO.observe(plan);
   plan.addEventListener("click", function (e) { var b = e.target.closest("[data-seat]"); if (b) selectSeat(b.dataset.seat); });
   function seatText(id) {
-    if (id === "CT") return { name: "Chef's table", meta: "Table for 4 to 6 · by the pastry station", note: CT_NOTE };
     var s = seatById(id);
-    return { name: "Seat " + s.n, meta: "Counter · facing " + s.station.name.toLowerCase(), note: NOTES[s.station.key] };
+    return { name: "Seat " + s.n, meta: s.side + " · facing the " + (s.station === "pass" ? "plating table" : s.station), note: NOTES[s.station] };
   }
   function selectSeat(id) {
     current = id;
     plan.querySelectorAll("[data-seat]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.seat === id)); });
     var t = seatText(id);
     $("seatName").textContent = t.name; $("seatMeta").textContent = t.meta; $("seatNote").textContent = t.note;
-    $("seatBook").textContent = id === "CT" ? "Book the chef's table" : "Book seat " + seatById(id).n;
+    $("seatBook").textContent = "Book seat " + seatById(id).n;
     var poster = $("viewerPoster"); poster.src = viewImg(id); poster.alt = "The view from " + t.name.toLowerCase();
     document.dispatchEvent(new CustomEvent("cn:seat", { detail: { id: id } }));
   }
-  selectSeat("S07");
+  selectSeat("S05");
   $("seatBook").addEventListener("click", function () {
     state.prefer = current;
-    if (current === "CT" && state.guests < 4) state.guests = 4;
     openBooking(0);
   });
 
@@ -396,45 +433,40 @@
   function renderGuests() {
     var g = state.guests;
     $("gCount").innerHTML = "<b>" + g + '</b><span class="label">' + (g === 1 ? "guest" : "guests") + "</span>";
-    $("gMinus").disabled = g <= 1; $("gPlus").disabled = g >= 18;
-    $("guestHint").textContent = g <= 3 ? "Side by side at the counter. You choose the seats next."
-      : g <= 6 ? "Side by side at the counter, or the chef's table facing each other."
-      : "Seven or more takes the whole room, up to eighteen. We confirm by phone.";
+    $("gMinus").disabled = g <= 1; $("gPlus").disabled = g >= MAX_GUESTS;
+    $("guestHint").textContent = g < WHOLE_FROM ? "Side by side at the counter. You choose the seats next."
+      : "Seven or more takes the whole counter, all ten seats. We confirm by phone.";
   }
   $("gMinus").addEventListener("click", function () { if (state.guests > 1) { state.guests--; renderGuests(); } });
-  $("gPlus").addEventListener("click", function () { if (state.guests < 18) { state.guests++; renderGuests(); } });
+  $("gPlus").addEventListener("click", function () { if (state.guests < MAX_GUESTS) { state.guests++; renderGuests(); } });
 
   var bookPlan = $("bookPlan");
   buildPlan(bookPlan);
+  if (planRO) planRO.observe(bookPlan);
   function free(id) { return !isTaken(state.date, state.time, id); }
   function blockFrom(n, g) { // g seats side by side, starting at seat n or a block that still includes it
     for (var start = n; start >= Math.max(1, n - g + 1); start--) {
-      var end = start + g - 1; if (end > 12) continue;
+      var end = start + g - 1; if (end > SEATS.length) continue;
       var ids = []; for (var j = start; j <= end; j++) ids.push("S" + String(j).padStart(2, "0"));
       if (ids.every(free)) return ids;
     }
     return null;
   }
   function buildSeatStep() {
-    var g = state.guests, whole = g >= 7;
+    var g = state.guests, whole = g >= WHOLE_FROM;
     $("seatFor").textContent = shortDate(state.date) + " · " + SEATINGS[state.time] + " · " + g + (g === 1 ? " guest" : " guests");
+    if (!bookPlan.querySelector(".seat")) buildPlan(bookPlan);
     bookPlan.querySelectorAll("[data-seat]").forEach(function (b) {
-      var id = b.dataset.seat, taken = !free(id);
-      if (id === "CT") {
-        b.disabled = whole || taken || g < 4;
-        b.querySelector("span").textContent = taken ? "Taken for this seating" : g < 4 ? "For 4 to 6 guests" : "4 to 6 guests, by the pastry station";
-      } else {
-        b.disabled = whole || taken;
-        b.setAttribute("aria-label", "Seat " + Number(id.slice(1)) + (taken ? ", taken" : ", facing " + seatById(id).station.long));
-      }
+      var id = b.dataset.seat, taken = !free(id), s = seatById(id);
+      b.disabled = whole || taken;
+      b.setAttribute("aria-label", "Seat " + s.n + (taken ? ", taken" : ", " + s.side.toLowerCase() + ", facing " + STATION_LONG[s.station]));
     });
     if (whole) {
-      state.seats = anyTaken(state.date, state.time) ? [] : SEATS.map(function (s) { return s.id; }).concat(["CT"]);
-      if (!state.seats.length) $("seatErr").textContent = "Part of the counter is already booked for this seating. Try another night for the whole room.";
-    } else if (state.seats.length !== g || !state.seats.every(free) || (state.seats[0] === "CT" && g < 4)) {
+      state.seats = anyTaken(state.date, state.time) ? [] : allSeatIds();
+      if (!state.seats.length) $("seatErr").textContent = "Some seats are already booked for this seating. Try another night for the whole counter.";
+    } else if (state.seats.length !== g || !state.seats.every(free)) {
       state.seats = [];
-      if (state.prefer === "CT" && g >= 4 && free("CT")) state.seats = ["CT"];
-      else if (state.prefer && state.prefer !== "CT") {
+      if (state.prefer) {
         var bl = blockFrom(Number(state.prefer.slice(1)), g);
         if (bl) state.seats = bl; else $("seatErr").textContent = "Seat " + Number(state.prefer.slice(1)) + " is not free for " + g + " that night. Choose other seats.";
       }
@@ -444,20 +476,16 @@
   bookPlan.addEventListener("click", function (e) {
     var b = e.target.closest("[data-seat]"); if (!b || b.disabled) return;
     var g = state.guests; $("seatErr").textContent = "";
-    if (b.dataset.seat === "CT") state.seats = ["CT"];
-    else {
-      var bl = blockFrom(Number(b.dataset.seat.slice(1)), g);
-      if (bl) state.seats = bl; else $("seatErr").textContent = "There are not " + g + " free seats together there. Try another part of the counter.";
-    }
+    var bl = blockFrom(Number(b.dataset.seat.slice(1)), g);
+    if (bl) state.seats = bl; else $("seatErr").textContent = "There are not " + g + " free seats together there. Try another part of the counter.";
     syncSeats();
   });
   function seatsLabel(ids) {
-    if (ids.length > 12) return "The whole room, 18 seats";
-    if (ids[0] === "CT") return "The chef's table";
+    if (ids.length >= SEATS.length) return "The whole counter, all ten seats";
     var a = Number(ids[0].slice(1)), b = Number(ids[ids.length - 1].slice(1));
-    return (a === b ? "Seat " + a : "Seats " + a + " to " + b) + ", facing " + seatById(ids[Math.floor((ids.length - 1) / 2)]).station.long;
+    return (a === b ? "Seat " + a : "Seats " + a + " to " + b) + ", facing " + STATION_LONG[seatById(ids[Math.floor((ids.length - 1) / 2)]).station];
   }
-  function leadView(ids) { return ids.length > 12 ? "img/view-hero.jpg" : viewImg(ids[Math.floor((ids.length - 1) / 2)]); }
+  function leadView(ids) { return ids.length >= SEATS.length ? "img/view-hero.jpg" : viewImg(ids[Math.floor((ids.length - 1) / 2)]); }
   function syncSeats() {
     bookPlan.querySelectorAll("[data-seat]").forEach(function (b) { b.setAttribute("aria-pressed", String(state.seats.indexOf(b.dataset.seat) > -1)); });
     var prev = $("seatPreview");
@@ -481,7 +509,7 @@
       if (!state.time) { $("timeErr").textContent = "Please pick a seating."; ok = false; }
       return ok;
     }
-    if (s === 1 && !state.seats.length) { $("seatErr").textContent = $("seatErr").textContent || "Please tap a seat on the counter."; return false; }
+    if (s === 1 && !state.seats.length) { $("seatErr").textContent = $("seatErr").textContent || "Please tap a seat on the plan."; return false; }
     if (s === 2) {
       var good = true, first = null;
       if ($("name").value.trim().length < 2) { fieldError("name", "Please enter your name."); good = false; first = first || $("name"); }
@@ -497,7 +525,7 @@
   function draft() {
     return { ref: null, date: state.date, time: state.time, guests: state.guests, seats: state.seats.slice(), where: seatsLabel(state.seats),
       name: $("name").value.trim(), phone: $("phone").value.trim(), email: $("email").value.trim(),
-      occasions: state.occasions.slice(), notes: $("notes").value.trim(), status: state.guests >= 7 ? "requested" : "confirmed" };
+      occasions: state.occasions.slice(), notes: $("notes").value.trim(), status: state.guests >= WHOLE_FROM ? "requested" : "confirmed" };
   }
   function ticketHtml(b, editable) {
     var rows = [["Date", shortDate(b.date), 0], ["Guests", String(b.guests), 0], ["Seats", b.where.split(",")[0], 1], ["Name", b.name, 2], ["Phone", b.phone, 2], ["Email", b.email, 2]];
@@ -522,7 +550,7 @@
     book.push(b); save(book); lastBooking = b;
     $("doneTitle").innerHTML = b.status === "requested" ? 'Request <em class="accent">received.</em>' : 'You\'re <em class="accent">booked.</em>';
     $("done").innerHTML = ticketHtml(b, false) + '<p class="done-hint">' + (b.status === "requested"
-      ? "The whole room is held for you. We call " + esc(b.phone) + " within a day to confirm and plan the menu."
+      ? "The whole counter is held for you. We call " + esc(b.phone) + " within a day to confirm and plan the menu."
       : "Your name cards will be on " + esc(b.where.split(",")[0].toLowerCase()) + ". A confirmation goes to " + esc(b.email) + " (demo: nothing is sent).") + "</p>";
     go(4);
   }

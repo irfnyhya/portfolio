@@ -13,7 +13,7 @@ const viewer = document.getElementById("viewer");
 const canvas = document.getElementById("viewerCanvas");
 const stateEl = document.getElementById("viewerState");
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let seat = "S07";
+let seat = "S05";
 let started = false;
 
 document.addEventListener("cn:seat", (e) => { seat = e.detail.id; if (api) api.goTo(seat); });
@@ -39,7 +39,7 @@ function init() {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x070a0e);
+  scene.background = new THREE.Color(0x050505);
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.22;
@@ -62,17 +62,18 @@ function init() {
   const toThree = (p) => new THREE.Vector3(p[0], p[2], -p[1]);
 
   function addLights(data) {
-    scene.add(new THREE.HemisphereLight(0xfff1dd, 0x1a2230, 0.4));
-    const I = { hood: 5, pass: 2.5, down: 1.2, grill: 2.5, wall: 1.6, pendant: 1.8, globe: 1.4 };
+    scene.add(new THREE.HemisphereLight(0xfff1dd, 0x101010, 0.12));
+    const I = { dome: 4.5, lamp: 0.7, pass: 1.2, down: 0.5, grill: 2.2, wall: 0.8, pendant: 1.4 };
     const C = { grill: 0xff7a2a, pass: 0xffc488 };
     for (const l of data.lights) {
-      const light = new THREE.PointLight(C[l.kind] || 0xffd2a0, I[l.kind] || 1.5, 7, 2);
+      const range = l.kind === "lamp" ? 1.6 : l.kind === "dome" ? 3.2 : 7;
+      const light = new THREE.PointLight(C[l.kind] || 0xffd2a0, I[l.kind] || 1.5, range, 2);
       light.position.copy(toThree(l.p));
       scene.add(light);
     }
     // wash on the blue tiles, as in the renders
     for (const x of [-3, 0, 3]) {
-      const w = new THREE.PointLight(0xffe0c0, 2.2, 5, 2);
+      const w = new THREE.PointLight(0xffe0c0, 0.5, 4, 2);
       w.position.copy(toThree([x, data.room.y1 - 0.8, 1.9]));
       scene.add(w);
     }
@@ -126,7 +127,7 @@ function init() {
   }
 
   function goTo(id, instant) {
-    const target = cams[id] || cams.S07;
+    const target = cams[id] || cams.S05;
     if (!target) return;
     yaw = 0; pitch = 0;
     if (instant || reduce || !base) {

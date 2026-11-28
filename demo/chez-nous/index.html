@@ -4,20 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Chez Nous · Chef's counter, Kuala Lumpur</title>
-  <meta name="description" content="Chez Nous is a fictional private French chef's counter: twelve seats facing an open kitchen. Pick your seat, see the view from it in 3D, and reserve it. A website demo by Irfan Hakimi.">
+  <meta name="description" content="Chez Nous is a fictional private French chef's counter: ten seats around an open kitchen. Pick your seat, see the view from it in 3D, and reserve it. A website demo by Irfan Hakimi.">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#0f1217">
+  <meta name="theme-color" content="#0a0a0a">
   <meta property="og:title" content="Chez Nous · Chef's counter">
-  <meta property="og:description" content="Twelve seats facing a French kitchen. Choose your seat, see its view in 3D, then book it. A website demo by Irfan Hakimi.">
+  <meta property="og:description" content="Ten seats around a French kitchen. Choose your seat, see its view in 3D, then book it. A website demo by Irfan Hakimi.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="img/hero-wide.jpg">
+  <meta property="og:image" content="img/view-hero.jpg">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="img/hero-tall.jpg" media="(max-width: 767px)">
-  <link rel="preload" as="image" href="img/hero-wide.jpg" media="(min-width: 768px)">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="preload" as="image" href="img/view-hero-tall.jpg" media="(max-width: 767px)">
+  <link rel="preload" as="image" href="img/view-hero.jpg" media="(min-width: 768px)">
+  <link rel="stylesheet" href="styles.css?v=14">
   <script>document.documentElement.classList.add("js")</script>
   <script type="importmap">
     { "imports": {
@@ -65,7 +65,7 @@
       <li><a href="#visit"><span>VI</span>Visit</a></li>
       <li><a href="#reserve" data-mine><span>VII</span>My booking</a></li>
     </ul>
-    <p class="wrap foot label"><span>Bangsar, Kuala Lumpur</span><span>Twelve seats · Wed to Sun</span></p>
+    <p class="wrap foot label"><span>Bangsar, Kuala Lumpur</span><span>Ten seats · Wed to Sun</span></p>
   </div>
 
   <main id="main">
@@ -73,8 +73,8 @@
     <section class="hero grain" id="top">
       <div class="hero-media" id="heroMedia">
         <picture>
-          <source media="(min-width: 768px)" srcset="img/hero-wide.jpg">
-          <img src="img/hero-tall.jpg" alt="A plate of raw tuna with herbs set down on a dark counter" fetchpriority="high">
+          <source media="(min-width: 768px)" srcset="img/view-hero.jpg">
+          <img src="img/view-hero-tall.jpg" alt="The counter at Chez Nous in the dark: gold table lamps on black stone, black dome lamps over the open kitchen and lines of white light around it" fetchpriority="high">
         </picture>
       </div>
       <canvas id="embers" aria-hidden="true"></canvas>
@@ -84,13 +84,13 @@
       <div class="wrap hero-copy" id="heroCopy">
         <p class="status fade-up" id="status" style="animation-delay:.05s"><span class="dot" aria-hidden="true"></span><span id="statusText">Bangsar · Five nights a week</span></p>
         <h1>
-          <span class="line"><span style="animation-delay:.05s">Dinner at</span></span>
-          <span class="line"><span style="animation-delay:.1s">our <em class="accent">counter.</em></span></span>
+          <span class="line"><span style="animation-delay:.05s">Dinner in</span></span>
+          <span class="line"><span style="animation-delay:.1s">the <em class="accent">dark.</em></span></span>
         </h1>
         <div class="hero-foot">
-          <p class="fade-up" style="animation-delay:.15s">Chez Nous means "at our place". Twelve seats face an open French kitchen, and you choose which one is yours: by the grill, the stove, the pass or the pastry marble.</p>
+          <p class="fade-up" style="animation-delay:.15s">A private French counter in Bangsar. Ten seats in a black room, lit only by table lamps, around an open kitchen where every course is cooked and plated in front of you. Reservation only, and you choose your seat.</p>
           <div class="ticket fade-up" style="animation-delay:.2s" aria-label="Seatings tonight">
-            <div class="ticket-meta"><span class="tag label">Tonight</span><span class="label">Counter · 12 seats · Chef's table</span></div>
+            <div class="ticket-meta"><span class="tag label">Tonight</span><span class="label">Carte blanche · 7 courses · 10 seats</span></div>
             <div class="ticket-times">
               <div><p class="big">18:00</p><p class="label">First seating</p></div>
               <span class="ticket-line" aria-hidden="true"></span>
@@ -129,8 +129,8 @@
           <p class="eyebrow label reveal"><span class="idx">ii.</span><span class="rule" aria-hidden="true"></span><span>About Chez Nous</span></p>
           <h2 class="h2 reveal" id="story-title" style="--d:.08s">No wall between <em class="accent">us.</em></h2>
           <div class="lede reveal" style="--d:.16s">
-            <p>Chez Nous is a French kitchen built around one long oak counter. The stoves, the charcoal grill and the pastry marble sit an arm's length from your glass, under a copper hood and a wall of blue tiles.</p>
-            <p>Every seat looks at a different station, so we let you choose yours. Sit by the fire if you like smoke, at the pass to watch every plate finished, or by the marble for the soufflé.</p>
+            <p>Chez Nous is a French kitchen wrapped in a U-shaped counter of black stone, with two seats on each arm and six along the front. The room stays dark: a gold lamp at every pair of seats, dome lights over the stoves, and a frame of white light around the kitchen. All you see is the food being made.</p>
+            <p>Every seat looks at something different, so we let you choose yours. Sit by the grill if you like fire, in front of the plating table to watch every plate finished, or by the pastry marble for the soufflé.</p>
           </div>
           <p class="sign reveal" style="--d:.24s">À bientôt, au comptoir.</p>
         </div>
@@ -150,10 +150,10 @@
 
     <!-- Statement band -->
     <section class="statement" aria-label="Chez Nous at a glance">
-      <p class="sr-only">Regarder, goûter, bavarder. One kitchen, twelve seats.</p>
+      <p class="sr-only">Regarder, goûter, bavarder. One kitchen, ten seats.</p>
       <div aria-hidden="true">
         <p data-drift="1">Regarder <span class="dot">·</span> Goûter <span class="dot">·</span> Bavarder <span class="dot">·</span> Regarder</p>
-        <p class="outline" data-drift="-1">one kitchen · twelve seats · one kitchen</p>
+        <p class="outline" data-drift="-1">one kitchen · ten seats · one kitchen</p>
       </div>
     </section>
 
@@ -186,10 +186,10 @@
           </div>
           <div>
             <p class="eyebrow label reveal"><span class="idx">iv.</span><span class="rule" aria-hidden="true"></span><span>The evening</span></p>
-            <h2 class="h2 reveal" id="room-title" style="--d:.08s">Front row to <em class="accent">the copper.</em></h2>
+            <h2 class="h2 reveal" id="room-title" style="--d:.08s">Front row, <em class="accent">lights low.</em></h2>
             <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Two seatings a night at one long counter. Most evenings run two and a half hours, so plan to stay.</p>
             <ol class="steps">
-              <li class="reveal"><span class="n">I</span><h3>Take your seat</h3><p>Your name card is on the seat you chose, with a glass of crémant to start.</p></li>
+              <li class="reveal"><span class="n">I</span><h3>Take your seat</h3><p>A velvet chair, your menu card and a lamp. A glass of crémant to start.</p></li>
               <li class="reveal" style="--d:.08s"><span class="n">II</span><h3>Watch the kitchen</h3><p>The chefs talk you through each course as they cook it in front of you.</p></li>
               <li class="reveal" style="--d:.16s"><span class="n">III</span><h3>Linger</h3><p>Cheese and coffee at the counter. The second seating stays until midnight.</p></li>
             </ol>
@@ -197,7 +197,7 @@
         </div>
         <figure class="frame wide-photo wipe parallax">
           <img loading="lazy" src="img/private.jpg" alt="A long table laid with candles and glassware" width="1600" height="1100">
-          <figcaption>The chef's table seats four to six, or book the whole room for eighteen.</figcaption>
+          <figcaption>Book all ten seats for a birthday, an anniversary or a team dinner.</figcaption>
         </figure>
       </div>
     </section>
@@ -208,9 +208,9 @@
         <div class="menu-top">
           <div>
             <p class="eyebrow label reveal"><span class="idx">v.</span><span class="rule" aria-hidden="true"></span><span>Choose a seat</span></p>
-            <h2 class="h2 reveal" id="seats-title" style="--d:.08s">Sit where <em class="accent">you like.</em></h2>
+            <h2 class="h2 reveal" id="seats-title" style="--d:.08s">See your seat <em class="accent">first.</em></h2>
           </div>
-          <p class="lede reveal" style="--d:.16s">Tap a seat on the counter to see the kitchen from that chair, in 3D. Drag the view to look around, then book that seat.</p>
+          <p class="lede reveal" style="--d:.16s">Ten seats: two on each arm of the counter, six along the front. Tap one to see the kitchen from that chair, in 3D, then book it.</p>
         </div>
         <div class="salle-grid">
           <div class="plan-wrap reveal">
@@ -218,7 +218,7 @@
           </div>
           <div class="view-wrap reveal" style="--d:.1s">
             <div class="viewer" id="viewer" tabindex="0" aria-label="The view from the selected seat. Drag, or use the arrow keys, to look around.">
-              <img class="viewer-poster" id="viewerPoster" src="img/view-s07.jpg" alt="The view from seat 7, at the pass" width="1600" height="1000">
+              <img class="viewer-poster" id="viewerPoster" src="img/view-s05.jpg" alt="The view from seat 5, facing the plating table" width="1600" height="1000">
               <canvas id="viewerCanvas" aria-hidden="true"></canvas>
               <p class="viewer-state" id="viewerState" role="status">Loading the kitchen in 3D</p>
               <div class="viewer-look">
@@ -228,9 +228,9 @@
             </div>
             <div class="seat-card" aria-live="polite">
               <div>
-                <h3 id="seatName">Seat 7</h3>
-                <p class="seat-meta label" id="seatMeta">Counter · facing the pass</p>
-                <p id="seatNote">Right in front of the pass, where every plate is finished.</p>
+                <h3 id="seatName">Seat 5</h3>
+                <p class="seat-meta label" id="seatMeta">Front · facing the plating table</p>
+                <p id="seatNote">Right in front of the plating table, where the head chef finishes every plate.</p>
               </div>
               <button class="btn btn-solid label" type="button" id="seatBook">Book this seat</button>
             </div>
@@ -249,8 +249,8 @@
           <ul class="hours reveal" style="--d:.24s">
             <li><span>First seating</span><span>6:00 PM</span></li>
             <li><span>Second seating</span><span>8:45 PM</span></li>
-            <li><span>Chef's table</span><span>4 to 6 guests</span></li>
-            <li><span>Whole room</span><span>Up to 18 guests</span></li>
+            <li><span>Side by side</span><span>Up to 6 guests</span></li>
+            <li><span>Whole counter</span><span>7 to 10 guests</span></li>
             <li><span>Monday, Tuesday</span><span>Closed</span></li>
           </ul>
         </div>
@@ -272,8 +272,8 @@
           <h2 class="h2 reveal" id="faq-title" style="--d:.08s">Before you <em class="accent">arrive.</em></h2>
         </div>
         <div class="reveal" style="--d:.12s">
-          <details><summary>Can we sit together as a group?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Up to six sit side by side at the counter. For four to six who want to face each other, book the chef's table beside the pastry station.</p></div></div></details>
-          <details><summary>Can we take the whole room?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Choose seven or more guests and the request is for the whole room: twelve counter seats and the chef's table, eighteen in all. We confirm by phone within a day.</p></div></div></details>
+          <details><summary>Can we sit together as a group?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Up to six sit side by side. Seats run from the left arm round the front to the right arm, so a group can also sit around a corner and face each other.</p></div></div></details>
+          <details><summary>Can we take the whole counter?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Choose seven to ten guests and the request is for all ten seats. We confirm by phone within a day.</p></div></div></details>
           <details><summary>What if my seat is taken?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Taken seats are crossed out for that seating. Try the other seating, another night, or a seat at the same station.</p></div></div></details>
           <details><summary>Can the kitchen cook around allergies?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes, and around most diets. Write it in the notes when you book so the chefs can plan your courses.</p></div></div></details>
           <details><summary>How do I change or cancel?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Open "My booking" in the menu. Cancel up to 48 hours before at no charge.</p></div></div></details>
@@ -307,7 +307,7 @@
       <div class="foot-grid">
         <div>
           <span class="wordmark"><span class="name">CHEZ NOUS</span><span class="sub label">Comptoir français</span></span>
-          <p class="blurb">Twelve seats at a French chef's counter and a chef's table for six. Two seatings a night, Wednesday to Sunday.</p>
+          <p class="blurb">Ten seats around a French chef's counter. Two seatings a night, Wednesday to Sunday.</p>
         </div>
         <a class="demo-card" href="https://irfanhakimi.com/kerja/">
           <p class="label">Demo by Irfan Hakimi</p>
@@ -364,7 +364,7 @@
           <h2 tabindex="-1">Where will you <em class="accent">sit?</em></h2>
           <p class="hint" id="seatFor"></p>
           <div class="plan plan-small" id="bookPlan"></div>
-          <img class="seat-preview" id="seatPreview" src="img/view-s07.jpg" alt="" width="1600" height="1000" hidden>
+          <img class="seat-preview" id="seatPreview" src="img/view-s05.jpg" alt="" width="1600" height="1000" hidden>
           <p class="pick-sum" id="pickSum" aria-live="polite"></p>
           <p class="err" id="seatErr"></p>
         </section>
@@ -426,7 +426,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=11"></script>
-  <script type="module" src="viewer.js?v=11"></script>
+  <script src="app.js?v=14"></script>
+  <script type="module" src="viewer.js?v=14"></script>
 </body>
 </html>

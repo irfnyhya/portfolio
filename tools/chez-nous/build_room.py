@@ -19,9 +19,9 @@ col = scene.collection
 
 # Room: x -6..6 (along the counter), y -3.2 (entrance wall) .. 2.6 (tile wall), z 0..3.2
 X0, X1, Y0, Y1, H = -6.0, 6.0, -3.2, 2.6, 3.2
-CT_Z = 0.95          # counter top
-CT_Y0, CT_Y1 = -0.4, 0.35   # counter depth (guest edge .. kitchen edge)
-SEAT_Y = -0.92
+CT_Z = 0.76          # counter top (table height, as at Noir)
+CT_Y0, CT_Y1 = -0.5, 0.35   # counter depth (guest edge .. kitchen edge)
+SEAT_Y = -1.02
 SEATS_X = [round(-3.575 + 0.65 * i, 3) for i in range(12)]
 
 def lin(h):
@@ -71,7 +71,24 @@ def tex_copper(n=512):
     img = base[None, None, :] * (0.7 + 0.25 * streak + 0.12 * hammer)[..., None]
     return save_img("copper", img.astype(np.float32))
 
-TEX = {"tiles": tex_tiles(), "counter": tex_wood("counter_wood", "#8c5a34", stretch=60),
+def tex_granite(n=512):
+    # black stone with fine gold and white flecks
+    img = np.full((n, n, 3), 0.012, np.float32) + (np.random.rand(n, n, 1) * 0.01).astype(np.float32)
+    for col, cnt in (((0.55, 0.42, 0.2), 900), ((0.5, 0.5, 0.5), 500)):
+        xs, ys = np.random.randint(0, n, cnt), np.random.randint(0, n, cnt)
+        img[ys, xs] = col
+    return save_img("granite", img)
+
+def tex_panels(n=512):
+    # black kitchen panels with faint vertical seams
+    y, x = np.mgrid[0:n, 0:n].astype(np.float32) / n
+    img = np.full((n, n, 3), 0.018, np.float32)
+    img += (np.sin(y * 40 + x * 3) * 0.002)[..., None]
+    seam = np.minimum((x * 6) % 1, 1 - (x * 6) % 1) < 0.008
+    img[seam] = 0.006
+    return save_img("panels", img)
+
+TEX = {"tiles": tex_panels(), "granite": tex_granite(), "counter": tex_wood("counter_wood", "#8c5a34", stretch=60),
        "floor": tex_wood("floor_wood", "#3a2619", stretch=24), "slat": tex_wood("slat_wood", "#b07a4c", stretch=90),
        "copper": tex_copper()}
 
@@ -98,16 +115,22 @@ def mat(name, hexcol, rough=0.6, metal=0.0, emit=None, strength=0.0, tex=None, a
     return len(MATS) - 1
 
 M = {
-    "tiles": mat("Tile_Blue", "#ffffff", 0.18, tex=TEX["tiles"]),
+    "tiles": mat("Panel_Black", "#ffffff", 0.35, tex=TEX["tiles"]),
+    "led": mat("LED_Line", "#ffffff", 1.0, emit="#fff6ea", strength=9),
+    "dome": mat("Dome_Black", "#0c0c0c", 0.3, 0.8),
+    "dome_in": mat("Dome_Glow", "#ffe7c4", 1.0, emit="#ffcf8a", strength=10),
+    "lampglow": mat("Lamp_Glow", "#ffe4b8", 1.0, emit="#ffc477", strength=7),
+    "velvet": mat("Velvet_Green", "#2c3a2e", 0.95),
+    "menu": mat("Menu_Paper", "#e9e4d8", 0.9),
     "strip": mat("Strip_Light", "#fff0d0", 1.0, emit="#ffd49a", strength=10),
-    "counter": mat("Counter_Wood", "#ffffff", 0.32, tex=TEX["counter"]),
+    "counter": mat("Counter_Granite", "#ffffff", 0.22, tex=TEX["granite"]),
     "floor": mat("Floor_Oak", "#ffffff", 0.5, tex=TEX["floor"]),
     "slat": mat("Slat_Oak", "#ffffff", 0.55, tex=TEX["slat"]),
     "copper": mat("Copper_Hood", "#ffffff", 0.32, 1.0, tex=TEX["copper"]),
     "steel": mat("Steel", "#c7cacc", 0.28, 1.0),
     "steel_dark": mat("Steel_Brushed", "#8d9194", 0.4, 1.0),
-    "wall": mat("Wall_Charcoal", "#1c1c1f", 0.85),
-    "ceiling": mat("Ceiling", "#141416", 0.9),
+    "wall": mat("Wall_Black", "#0c0c0d", 0.85),
+    "ceiling": mat("Ceiling", "#0a0a0a", 0.9),
     "black": mat("Black_Metal", "#111214", 0.45, 0.6),
     "leather": mat("Leather_Seat", "#2a1a14", 0.5),
     "brass": mat("Brass", "#c9a24a", 0.3, 1.0),
@@ -184,103 +207,115 @@ for i in range(40):  # oak slats on the right wall (guest side), like the photo
 boxb(0.08, 0.32, 0.5, X1 - 0.1, -1.0, 1.7, M["lamp"])           # warm wall light on the slats
 boxb(0.1, 0.36, 0.04, X1 - 0.1, -1.0, 2.2, M["brass"]); boxb(0.1, 0.36, 0.04, X1 - 0.1, -1.0, 1.66, M["brass"])
 
-# ── kitchen ──────────────────────────────────────────────────────
-KX0, KX1 = -4.6, 4.6
-# back bench along the tile wall
-boxb(KX1 - KX0, 0.65, 0.88, 0, Y1 - 0.33, 0, M["steel_dark"])
-boxb(KX1 - KX0, 0.7, 0.04, 0, Y1 - 0.35, 0.88, M["steel"])
-boxb(KX1 - KX0, 0.3, 0.03, 0, Y1 - 0.15, 1.6, M["steel"])       # shelf
-boxb(KX1 - KX0, 0.03, 0.012, 0, Y1 - 0.06, 1.585, M["strip"])  # LED strip under the shelf
-# combi oven + fridge doors on the left end of the back bench
-boxb(0.85, 0.7, 0.9, -4.0, Y1 - 0.4, 0.92, M["steel"]); boxb(0.6, 0.02, 0.6, -4.05, Y1 - 0.76, 1.05, M["black"])
-for x in (-3.0, -1.6, 0.6, 2.2): boxb(0.02, 0.01, 0.45, x, Y1 - 0.66, 0.3, M["steel"])
+# ── kitchen: three blocks along the back wall, a plating table, a U counter (2-6-2 seats) ──
+KX0, KX1 = -4.5, 4.5                  # light frame around the kitchen
+KY0, KY1 = 1.95, Y1 - 0.02            # back kitchen blocks
+KYc = (KY0 + KY1) / 2
+PY0, PY1 = 1.0, 1.6                   # plating table ("the pass")
+IY = (PY0 + PY1) / 2
+boxb(KX1 - KX0 + 0.4, 0.3, 0.03, 0, Y1 - 0.15, 1.6, M["steel_dark"])        # shelf on the black panels
+boxb(KX1 - KX0 + 0.4, 0.03, 0.012, 0, Y1 - 0.04, 1.585, M["strip"])         # light strip under the shelf
 
-# island / stations between counter and back bench
-IY = 1.15
-boxb(KX1 - KX0, 0.8, 0.86, 0, IY, 0, M["steel_dark"])
-boxb(KX1 - KX0 + 0.04, 0.84, 0.04, 0, IY, 0.86, M["steel"])
-# Station 1 (left): charcoal grill
-boxb(1.4, 0.6, 0.12, -3.3, IY, 0.9, M["black"])
-boxb(1.3, 0.5, 0.02, -3.3, IY, 0.98, M["ember"])
-for i in range(14): box(0.01, 0.52, 0.01, -3.92 + i * 0.095, IY, 1.02, M["steel_dark"])
-for i in range(5): cyl(0.03, 0.03, 0.04, -3.7 + i * 0.2, IY - 0.05 + (i % 2) * 0.12, 1.02, M["food"], seg=8, rx=math.pi / 2)
-# Station 2: stove with copper pans
-for i, x in enumerate((-1.95, -1.45, -0.95)):
-    cyl(0.12, 0.12, 0.01, x, IY, 0.9, M["flame"], seg=16)
-# Station 3: the pass (centre) with plates being finished, heat lamps
-for i in range(5):
-    x = -0.2 + i * 0.42
-    cyl(0.13, 0.11, 0.015, x, IY - 0.15, 0.9, M["plate"], seg=24)
-    sphere(0.04, x, IY - 0.15, 0.93, M["food"], seg=10, sz=0.5)
-    sphere(0.018, x + 0.03, IY - 0.13, 0.94, M["green"], seg=6)
-boxb(2.2, 0.35, 0.04, 0.65, IY - 0.15, 1.6, M["steel"])
-for x in (0.0, 0.65, 1.3): cyl(0.06, 0.09, 0.05, x, IY - 0.15, 1.55, M["bulb"], seg=12)
-for x in (-0.4, 1.7): cyl(0.012, 0.012, 0.7, x, IY - 0.15, 0.9, M["steel"], seg=6)
-# Station 4: pastry on marble, right side
-boxb(1.4, 0.7, 0.03, 3.3, IY, 0.9, M["marble"])
-boxb(0.5, 0.3, 0.02, 3.0, IY, 0.93, M["board"])
-for i in range(4): sphere(0.05, 3.5 + (i % 2) * 0.16, IY - 0.1 + (i // 2) * 0.18, 0.97, M["plate"], seg=10, sz=0.7)
-cyl(0.12, 0.09, 0.12, 3.85, IY + 0.1, 0.93, M["steel"], seg=16)
+BLOCKS = [("grill", -3.7, -1.3), ("stove", 0.1, 2.75), ("pastry", 3.4, 4.4)]
+for key, bx0, bx1 in BLOCKS:
+    boxb(bx1 - bx0, KY1 - KY0, 0.88, (bx0 + bx1) / 2, KYc, 0, M["steel_dark"])
+    boxb(bx1 - bx0 + 0.03, KY1 - KY0 + 0.03, 0.04, (bx0 + bx1) / 2, KYc, 0.88, M["steel"])
+# grill (left block): charcoal under a grate
+boxb(1.6, 0.42, 0.1, -2.5, KYc, 0.92, M["black"]); boxb(1.5, 0.34, 0.02, -2.5, KYc, 0.99, M["ember"])
+for i in range(16): box(0.01, 0.36, 0.01, -3.2 + i * 0.093, KYc, 1.03, M["steel_dark"])
+for i in range(5): cyl(0.03, 0.03, 0.04, -3.0 + i * 0.25, KYc - 0.05 + (i % 2) * 0.1, 1.03, M["food"], seg=8, rx=math.pi / 2)
+# stove (middle block): four flames
+for x in (0.55, 1.05, 1.75, 2.25): cyl(0.11, 0.11, 0.01, x, KYc, 0.92, M["flame"], seg=16)
+# pastry (narrow right block): marble and a board
+boxb(0.95, KY1 - KY0 - 0.05, 0.03, 3.9, KYc, 0.92, M["marble"]); boxb(0.4, 0.26, 0.02, 3.8, KYc, 0.95, M["board"])
+for i in range(3): sphere(0.045, 4.15, KYc - 0.12 + i * 0.12, 0.99, M["plate"], seg=10, sz=0.7)
 
-# Copper hood over the stations, with downlights
-boxb(8.6, 1.5, 0.7, 0, 1.55, 2.3, M["copper"], uvs=(6, 1))
-boxb(8.4, 1.3, 0.02, 0, 1.55, 2.29, M["steel_dark"])
-for x in (-3.3, -1.45, 0.65, 3.3):
-    cyl(0.07, 0.07, 0.02, x, 1.2, 2.27, M["bulb"], seg=12)
+# the plating table: black stone, a row of plates being finished
+boxb(7.2, PY1 - PY0, 0.86, 0, IY, 0, M["wall"])
+boxb(7.24, PY1 - PY0 + 0.04, 0.04, 0, IY, 0.86, M["counter"], uvs=(8, 1))
+for i in range(7):
+    x = -2.7 + i * 0.9
+    cyl(0.13, 0.11, 0.015, x, IY - 0.08, 0.9, M["plate"], seg=24)
+    sphere(0.04, x, IY - 0.08, 0.93, M["food"], seg=10, sz=0.5)
+    sphere(0.018, x + 0.03, IY - 0.06, 0.94, M["green"], seg=6)
 
-# Guest counter: oak top, dark front, brass foot rail
-boxb(KX1 - KX0 - 0.6, CT_Y1 - CT_Y0, 0.06, 0, (CT_Y0 + CT_Y1) / 2, CT_Z - 0.06, M["counter"], uvs=(6, 1))
-boxb(KX1 - KX0 - 0.7, 0.55, CT_Z - 0.06, 0, 0.05, 0, M["wall"])
-cyl(0.022, 0.022, KX1 - KX0 - 0.8, 0, CT_Y0 - 0.14, 0.22, M["brass"], seg=10, ry=math.pi / 2, rz=0)
-# the counter's kitchen-side upstand (low, so you see over it)
-boxb(KX1 - KX0 - 0.6, 0.08, 0.12, 0, CT_Y1 - 0.04, CT_Z - 0.06, M["counter"])
+# White light lines framing the kitchen and the plating table
+LY0, LY1, FZ = 0.88, Y1 - 0.05, 2.62
+box(KX1 - KX0, 0.025, 0.025, 0, LY0, FZ, M["led"]); box(KX1 - KX0, 0.025, 0.025, 0, LY1, FZ, M["led"])
+for x in (KX0, KX1):
+    box(0.025, LY1 - LY0, 0.025, x, (LY0 + LY1) / 2, FZ, M["led"])
+    box(0.025, 0.025, FZ - 0.95, x, LY0, (FZ + 0.95) / 2, M["led"])
+boxb(KX1 - KX0 + 0.1, LY1 - LY0 + 0.1, H - FZ - 0.02, 0, (LY0 + LY1) / 2, FZ + 0.02, M["wall"])  # dropped black soffit
+
+# Black dome pendants over the plating table
+DOMES = [-2.7, -0.9, 0.9, 2.7]
+for x in DOMES:
+    cyl(0.004, 0.004, H - 1.9, x, IY, 1.9, M["black"], seg=4)
+    cyl(0.32, 0.04, 0.2, x, IY, 1.7, M["dome"], seg=28)
+    cyl(0.3, 0.3, 0.004, x, IY, 1.697, M["dome_in"], seg=28)
+
+# The U counter: black speckled stone on wood-slat fronts. Front bar + two arms.
+UX, ARM_W, UF0, UF1, ARM_Y1 = 3.7, 0.65, -1.0, -0.35, 0.75
+def stone(x0, x1, y0, y1):
+    boxb(x1 - x0, y1 - y0, 0.05, (x0 + x1) / 2, (y0 + y1) / 2, CT_Z - 0.05, M["counter"], uvs=(max(1, (x1 - x0) / 0.9), max(1, (y1 - y0) / 0.9)))
+    boxb(x1 - x0 - 0.1, y1 - y0 - 0.1, CT_Z - 0.05, (x0 + x1) / 2, (y0 + y1) / 2, 0, M["wall"])
+stone(-UX, UX, UF0, UF1)
+stone(-UX, -UX + ARM_W, UF1 - 0.02, ARM_Y1)
+stone(UX - ARM_W, UX, UF1 - 0.02, ARM_Y1)
+x = -UX + 0.06
+while x < UX - 0.04:                       # slats on the front
+    boxb(0.045, 0.04, CT_Z - 0.07, x, UF0 + 0.03, 0.02, M["slat"], uvs=(1, 2)); x += 0.07
+y = UF0 + 0.06
+while y < ARM_Y1 - 0.03:                   # slats on the outer sides of the arms
+    for sx_ in (-1, 1): boxb(0.04, 0.045, CT_Z - 0.07, sx_ * (UX - 0.03), y, 0.02, M["slat"], uvs=(1, 2))
+    y += 0.07
 
 # Downlights in the dark ceiling over the counter
-for x in SEATS_X[::2]: cyl(0.05, 0.05, 0.02, x + 0.32, -0.2, H - 0.02, M["bulb"], seg=10)
+for x in (-2.5, 0.0, 2.5): cyl(0.05, 0.05, 0.02, x, -0.7, H - 0.02, M["bulb"], seg=10)
 
 # ── seats and place settings ────────────────────────────────────
-def stool(x, y):
-    cyl(0.2, 0.18, 0.06, x, y, 0.68, M["leather"], seg=16)
-    cyl(0.03, 0.03, 0.66, x, y, 0.02, M["black"], seg=8)
-    cyl(0.2, 0.2, 0.02, x, y, 0.0, M["black"], seg=16)
-    cyl(0.16, 0.16, 0.015, x, y, 0.3, M["black"], seg=16)
-    boxb(0.34, 0.05, 0.12, x, y - 0.2, 0.8, M["leather"])
-    for s in (-1, 1): cyl(0.012, 0.012, 0.1, x + s * 0.14, y - 0.2, 0.72, M["black"], seg=6)
+def tub_chair(x, y, face=math.pi / 2):
+    """Green velvet channel-tufted tub chair: a ring of upright tubes around a round seat."""
+    cyl(0.25, 0.25, 0.1, x, y, 0.36, M["velvet"], seg=20)
+    cyl(0.23, 0.2, 0.06, x, y, 0.3, M["velvet"], seg=20)
+    for lx, ly in ((-0.15, -0.15), (0.15, -0.15), (-0.15, 0.15), (0.15, 0.15)):
+        cyl(0.012, 0.01, 0.3, x + lx, y + ly, 0.0, M["brass"], seg=6)
+    back = face + math.pi
+    for k in range(13):
+        a = back - 1.45 + k * (2.9 / 12)
+        h = 0.36 + 0.14 * math.cos((k - 6) / 6 * 1.4)
+        cx, cy = x + 0.235 * math.cos(a), y + 0.235 * math.sin(a)
+        cyl(0.045, 0.045, h, cx, cy, 0.4, M["velvet"], seg=8)
+        sphere(0.045, cx, cy, 0.4 + h, M["velvet"], seg=8)
 
-def setting(x):
-    y = CT_Y0 + 0.2
-    boxb(0.16, 0.16, 0.03, x, y, CT_Z, M["napkin"])                     # folded napkin with the mark
-    boxb(0.05, 0.03, 0.002, x, y, CT_Z + 0.03, M["black"])
-    cyl(0.04, 0.045, 0.12, x + 0.07, y + 0.22, CT_Z, M["glass"], seg=12)  # water glass
-    box(0.012, 0.22, 0.008, x + 0.13, y, CT_Z + 0.01, M["steel"])          # knife + fork on the rest
-    box(0.012, 0.22, 0.008, x + 0.16, y, CT_Z + 0.01, M["steel"])
-    boxb(0.06, 0.02, 0.015, x + 0.145, y + 0.08, CT_Z, M["black"])
+def place_setting(x, y, face):
+    """Menu card, a tumbler with a folded napkin and black cutlery, on the counter in front of a seat."""
+    fx, fy = math.cos(face), math.sin(face); sx_, sy_ = -fy, fx
+    cx, cy = x + fx * 0.72, y + fy * 0.72
+    box(0.2, 0.28, 0.002, cx, cy, CT_Z + 0.001, M["menu"], rz=face - math.pi / 2 + 0.08)
+    gx, gy = cx + fx * 0.15 - sx_ * 0.2, cy + fy * 0.15 - sy_ * 0.2
+    cyl(0.034, 0.03, 0.09, gx, gy, CT_Z, M["glass"], seg=12)
+    cyl(0.032, 0.002, 0.13, gx, gy, CT_Z + 0.02, M["napkin"], seg=4, rx=0.12)
+    for off in (0.14, 0.165):
+        box(0.006, 0.22, 0.006, cx - sx_ * off, cy - sy_ * off, CT_Z + 0.004, M["black"], rz=face - math.pi / 2)
 
-# Brass pendant lamps over the counter (one between every two seats)
-for i in range(6):
-    x = SEATS_X[2 * i] + 0.325
-    cyl(0.004, 0.004, H - 2.25, x, -0.05, 2.25, M["black"], seg=4)
-    cyl(0.05, 0.03, 0.06, x, -0.05, 2.19, M["brass"], seg=12)
-    sphere(0.085, x, -0.05, 2.12, M["globe"], seg=16)
+def table_lamp(x, y):
+    """Gold cordless table lamp."""
+    cyl(0.055, 0.05, 0.015, x, y, CT_Z, M["brass"], seg=16)
+    cyl(0.011, 0.011, 0.25, x, y, CT_Z + 0.015, M["brass"], seg=8)
+    cyl(0.075, 0.018, 0.05, x, y, CT_Z + 0.255, M["brass"], seg=18)
+    cyl(0.07, 0.07, 0.004, x, y, CT_Z + 0.252, M["lampglow"], seg=18)
 
-# Chef's table for six, by the oak wall on the right, facing the pastry station
-CTX, CTY = 5.15, -1.45
-boxb(0.85, 1.9, 0.05, CTX, CTY, 0.74, M["counter"], uvs=(1, 3))
-for sy in (-1, 1): boxb(0.08, 0.08, 0.74, CTX, CTY + sy * 0.8, 0, M["black"])
-CHEF_TABLE_SEATS = []
-for i in range(3):
-    yy = CTY - 0.62 + i * 0.62
-    for side in (-1, 1):
-        sx = CTX + side * 0.68
-        boxb(0.42, 0.42, 0.05, sx, yy, 0.45, M["leather"]); boxb(0.05 + 0.0, 0.4, 0.42, sx + side * 0.2, yy, 0.5, M["leather"])
-        for lx in (-0.17, 0.17):
-            for ly in (-0.17, 0.17): cyl(0.015, 0.015, 0.45, sx + lx, yy + ly, 0, M["black"], seg=6)
-        CHEF_TABLE_SEATS.append((sx, yy))
-        boxb(0.16, 0.16, 0.03, CTX + side * 0.25, yy, 0.79, M["napkin"])
-        cyl(0.035, 0.04, 0.11, CTX + side * 0.2, yy + 0.18, 0.79, M["glass"], seg=12)
-cyl(0.01, 0.01, 1.2, CTX, CTY, H - 1.2, M["black"], seg=6)            # pendant over the chef's table
-cyl(0.22, 0.05, 0.22, CTX, CTY, H - 1.42, M["brass"], seg=18)
-sphere(0.06, CTX, CTY, H - 1.42, M["bulb"], seg=8)
+E_, N_, W_ = 0.0, math.pi / 2, math.pi
+SEAT_DEF = [(-4.22, 0.4, E_, "grill"), (-4.22, -0.35, E_, "grill"),
+            (-2.25, -1.52, N_, "grill"), (-1.35, -1.52, N_, "grill"), (-0.45, -1.52, N_, "pass"),
+            (0.45, -1.52, N_, "pass"), (1.35, -1.52, N_, "stove"), (2.25, -1.52, N_, "stove"),
+            (4.22, -0.35, W_, "pastry"), (4.22, 0.4, W_, "pastry")]
+for sx_, sy_, f, _ in SEAT_DEF:
+    tub_chair(sx_, sy_, f)
+    place_setting(sx_, sy_, f)
+LAMPS = [(-1.8, -0.62), (0.0, -0.62), (1.8, -0.62), (-3.38, 0.02), (3.38, 0.02)]
+for lx, ly in LAMPS: table_lamp(lx, ly)
 
 # Entrance wall: a wine rack and the door, behind the guests
 for zz in (0.4, 0.9, 1.4, 1.9):
@@ -291,21 +326,18 @@ boxb(0.04, 0.08, 0.5, 2.15, Y0 + 0.08, 1.0, M["brass"])
 
 CHEFS = []
 # ── seat data, cameras ───────────────────────────────────────────
-STATIONS = [(-3.3, "the charcoal grill"), (-1.45, "the stove and copper pans"), (0.65, "the pass, where every plate is finished"), (3.3, "the pastry marble")]
-def nearest_station(x):
-    return min(STATIONS, key=lambda s: abs(s[0] - x))
-
-SEATS = []
-for i, x in enumerate(SEATS_X):
-    st = nearest_station(x)
-    SEATS.append(dict(id="S%02d" % (i + 1), n=i + 1, x=x, y=SEAT_Y, station=st[1]))
+STATION_TEXT = {"grill": "the charcoal grill", "stove": "the stove and copper pans", "pass": "the plating table, where every plate is finished", "pastry": "the pastry marble"}
+SEATS = [dict(id="S%02d" % (i + 1), n=i + 1, x=round(sx_, 3), y=round(sy_, 3), face=round(f, 4), station=st)
+         for i, (sx_, sy_, f, st) in enumerate(SEAT_DEF)]
 CAMS = {}
-for s in SEATS:
-    eye = Vector((s["x"], SEAT_Y - 0.05, 1.33))
-    look = Vector((s["x"] * 0.75, IY + 0.5, 1.32))   # look at the kitchen, a little towards the centre
-    CAMS[s["id"]] = (eye, look, 22)
-CAMS["CT"] = (Vector((CTX - 0.55, CTY - 0.62, 1.2)), Vector((2.2, IY + 0.3, 1.15)), 20)
-CAMS["HERO"] = (Vector((0.65, -1.55, 1.45)), Vector((0.65, 2.6, 1.12)), 24)   # straight on, like the brief photo
+for s_ in SEATS:
+    f = s_["face"]
+    eye = Vector((s_["x"] + math.cos(f) * 0.06, s_["y"] + math.sin(f) * 0.06, 1.16))
+    if abs(f - N_) < 0.01: look = Vector((s_["x"] * 0.7, KYc, 1.15))
+    elif f < 0.01: look = Vector((1.2, IY + 0.2, 1.1))
+    else: look = Vector((-1.2, IY + 0.2, 1.1))
+    CAMS[s_["id"]] = (eye, look, 22)
+CAMS["HERO"] = (Vector((0.0, -3.05, 1.62)), Vector((0.0, 2.2, 1.05)), 20)   # straight on, as in the Noir photo
 
 me = bpy.data.meshes.new("Room"); bmesh.ops.remove_doubles(BM, verts=BM.verts, dist=0.0003); BM.to_mesh(me); BM.free()
 for m in MATS: me.materials.append(m)
@@ -338,36 +370,26 @@ def place(name, meshes, x, y, z, rz=0.0):
         o = bpy.data.objects.new("%s_%d" % (name, i), m); col.objects.link(o)
         o.location = (x, y, z); o.rotation_euler = (0, 0, rz)
 
-stool = list(load_protos("stool/scene.gltf", ["barStool"], 0.0078).values()); recentre(stool)
-for s in SEATS_X: place("Stool", stool, s, SEAT_Y, 0, rz=random.uniform(-0.3, 0.3))
-
 kit = load_protos("kitchen/scene.gltf", ["SM_"], 0.01)
 def kpart(key):
     hit = [m for n, m in kit.items() if n.startswith(key + "_") and "Dirty" not in n]
     recentre(hit); return hit
 plate, wglass = kpart("SM_Plate_04"), kpart("SM_WineGlass")
-for m in plate: m.transform(Matrix.Scale(0.62, 4))
-for m in wglass: m.transform(Matrix.Scale(1.9, 4))
-for x in SEATS_X:  # a place at every seat: plate, wine glass
-    place("Plate", plate, x, CT_Y0 + 0.2, CT_Z, 0)
-    place("Glass", wglass, x + 0.16, CT_Y0 + 0.36, CT_Z, 0)
-# Clean pots on the back shelf and the stove, a tray on the pastry marble
+# Clean pots on the back shelf and the stove, a plate on the plating table
 for i, key in enumerate(["SM_Pot_01", "SM_Pot_02", "SM_Pot_05", "SM_Pot_04", "SM_Pot_06", "SM_Pot_01", "SM_Pot_05", "SM_Pot_02"]):
-    place("ShelfPot", kpart(key), KX0 + 0.7 + i * 1.12, Y1 - 0.15, 1.63, random.uniform(0, 6.28))
-for key, x in (("SM_Pot_03", -1.95), ("SM_Pot_05", -0.95)):
-    place("StovePot", kpart(key), x, IY, 0.91, 0.4)
-place("PassPlate", kpart("SM_Plate_05"), 2.0, IY - 0.15, 0.9)
+    place("ShelfPot", kpart(key), -4.2 + i * 1.2, Y1 - 0.15, 1.63, random.uniform(0, 6.28))
+for key, x in (("SM_Pot_03", 0.55), ("SM_Pot_05", 2.25)):
+    place("StovePot", kpart(key), x, KYc, 0.93, 0.4)
 
-# Copper pans: on the stove and on the back bench by the grill
-copper = list(load_protos("copper/scene.gltf", ["material"], 0.55).values()); recentre(copper)
-place("Copper", copper, -1.45, IY + 0.05, 0.905, 0.2)
-place("Copper", copper, -2.6, Y1 - 0.38, 0.92, 1.4)
+# Copper pans on the stove block
+copper = list(load_protos("copper/scene.gltf", ["material"], 0.5).values()); recentre(copper)
+place("Copper", copper, 1.4, KYc, 0.92, 0.2)
 
-# Wine: a bottle and glass for each seat at the chef's table end, one at the pass
+# Wine on the counter by a few seats
 wine = list(load_protos("wine/scene.gltf", ["poly"], 1.9).values()); recentre(wine)
-place("Wine", wine, 3.55, CT_Y0 + 0.3, CT_Z, 0.3)
-place("Wine", wine, -3.0, CT_Y0 + 0.3, CT_Z, -0.2)
-place("Wine", wine, 5.15, -1.3, 0.79, 0)
+place("Wine", wine, -2.7, -0.55, CT_Z, 0.3)
+place("Wine", wine, 2.7, -0.55, CT_Z, -0.2)
+place("Wine", wine, 3.4, 0.55, CT_Z, 0.5)
 
 # Keep the web file small: textures to 512 px
 for img in bpy.data.images:
@@ -379,16 +401,18 @@ for key, (eye, look, lens) in CAMS.items():
     co = bpy.data.objects.new("CAM_" + key, cd); col.objects.link(co)
     co.location = eye; co.rotation_euler = (look - eye).to_track_quat("-Z", "Y").to_euler()
 
-LIGHTS = [dict(kind="hood", p=(x, 1.2, 2.2)) for x in (-3.3, -1.45, 0.65, 3.3)] + \
-         [dict(kind="pass", p=(0.65, IY - 0.15, 1.5))] + \
-         [dict(kind="down", p=(x, -0.2, H - 0.1)) for x in (-2.6, 0.0, 2.6)] + \
-         [dict(kind="globe", p=(SEATS_X[2 * i] + 0.325, -0.05, 2.0)) for i in range(6)] + \
-         [dict(kind="grill", p=(-3.3, IY, 1.05)), dict(kind="wall", p=(X1 - 0.3, -1.0, 1.95)), dict(kind="pendant", p=(CTX, CTY, H - 1.5))]
+LIGHTS = [dict(kind="dome", p=(x, IY, 1.62)) for x in DOMES] + \
+         [dict(kind="lamp", p=(lx, ly, CT_Z + 0.22)) for lx, ly in LAMPS] + \
+         [dict(kind="pass", p=(0.0, IY, 1.3))] + \
+         [dict(kind="down", p=(x, -0.7, H - 0.1)) for x in (-2.5, 0.0, 2.5)] + \
+         [dict(kind="grill", p=(-2.5, KYc, 1.05)), dict(kind="wall", p=(X1 - 0.3, -1.0, 1.95))]
 
-data = dict(room=dict(x0=X0, x1=X1, y0=Y0, y1=Y1, h=H), counter=dict(x0=KX0 + 0.3, x1=KX1 - 0.3, y0=CT_Y0, y1=CT_Y1, z=CT_Z),
-            island=dict(y=IY), stations=[dict(x=x, name=n) for x, n in STATIONS],
-            seats=SEATS, chefs_table=dict(x=CTX, y=CTY, w=0.85, d=1.9, seats=[[round(a, 3), round(b, 3)] for a, b in CHEF_TABLE_SEATS]),
-            chefs=CHEFS, lights=[dict(kind=l["kind"], p=[round(v, 3) for v in l["p"]]) for l in LIGHTS])
+data = dict(room=dict(x0=X0, x1=X1, y0=Y0, y1=Y1, h=H),
+            kitchen=[dict(key=k, x0=a, x1=b, y0=KY0, y1=KY1) for k, a, b in BLOCKS],
+            plating=dict(x0=-3.6, x1=3.6, y0=PY0, y1=PY1),
+            counter=dict(ux=UX, arm=ARM_W, y0=UF0, y1=UF1, arm_y1=ARM_Y1, z=CT_Z),
+            lamps=[[a, b] for a, b in LAMPS], seats=SEATS,
+            lights=[dict(kind=l["kind"], p=[round(v, 3) for v in l["p"]]) for l in LIGHTS])
 with open(os.path.join(OUT, "model", "scene.json"), "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=1)
 
@@ -402,17 +426,17 @@ bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "chez-nous-counter.blend
 print("GLB", os.path.getsize(glb), "bytes")
 
 if RENDER:
-    E = {"hood": 110, "pass": 55, "down": 20, "grill": 70, "wall": 30, "pendant": 40, "globe": 18}
+    E = {"dome": 60, "lamp": 5, "pass": 20, "down": 6, "grill": 45, "wall": 12}
     C = {"grill": (1.0, 0.45, 0.15), "pass": (1.0, 0.7, 0.45)}
     for l in LIGHTS:
-        ld = bpy.data.lights.new("L_" + l["kind"], "SPOT" if l["kind"] in ("hood", "down") else "POINT")
+        ld = bpy.data.lights.new("L_" + l["kind"], "SPOT" if l["kind"] in ("dome", "down") else "POINT")
         ld.energy = E[l["kind"]]; ld.color = C.get(l["kind"], (1.0, 0.78, 0.55)); ld.shadow_soft_size = 0.15
-        if ld.type == "SPOT": ld.spot_size = math.radians(75); ld.spot_blend = 0.6
+        if ld.type == "SPOT": ld.spot_size = math.radians(70); ld.spot_blend = 0.8
         lo = bpy.data.objects.new("L_" + l["kind"], ld); col.objects.link(lo); lo.location = l["p"]
     for x in (-3.0, 0.0, 3.0):
-        wd = bpy.data.lights.new("L_tiles", "AREA"); wd.energy = 45; wd.size = 2.6; wd.color = (1.0, 0.85, 0.7)
+        wd = bpy.data.lights.new("L_tiles", "AREA"); wd.energy = 8; wd.size = 2.6; wd.color = (1.0, 0.85, 0.7)
         wo = bpy.data.objects.new("L_tiles", wd); col.objects.link(wo); wo.location = (x, Y1 - 1.0, 2.2); wo.rotation_euler = (math.radians(60), 0, 0)
-    fill = bpy.data.lights.new("L_fill", "AREA"); fill.energy = 15; fill.size = 6; fill.color = (0.75, 0.82, 1.0)
+    fill = bpy.data.lights.new("L_fill", "AREA"); fill.energy = 3; fill.size = 6; fill.color = (0.75, 0.82, 1.0)
     fo = bpy.data.objects.new("L_fill", fill); col.objects.link(fo); fo.location = (0, -1.5, H - 0.05)
     world = bpy.data.worlds.new("W"); world.use_nodes = True
     world.node_tree.nodes["Background"].inputs[0].default_value = (0.008, 0.008, 0.01, 1)
