@@ -50,9 +50,9 @@
   var MAX_GUESTS = 10, WHOLE_FROM = 7;
   // Plan drawing (schematic, metres). Side seats are drawn a little further apart than in the room so they stay tappable.
   var PLAN = {
-    x0: -4.8, x1: 4.8, y0: -2.0, y1: 2.62,
-    kitchen: [["Grill", -3.7, -1.3], ["Stove", 0.1, 2.75], ["Pastry", 3.4, 4.4]], ky0: 1.95, ky1: 2.58,
-    plating: [-3.6, 3.6, 1.0, 1.6], frame: [-4.5, 4.5, 0.88, 2.58],
+    x0: -4.8, x1: 4.8, y0: -2.0, y1: 4.45,
+    kitchen: [["Grill", -4.2, -2.0], ["Stove", -1.2, 1.8], ["Pastry", 2.6, 4.0]], ky0: 3.3, ky1: 4.1,
+    plating: [-3.6, 3.6, 1.35, 2.1], frame: [-4.6, 4.6, 1.2, 4.35],
     counter: [[-3.7, 3.7, -1.0, -0.35], [-3.7, -3.05, -0.37, 0.75], [3.05, 3.7, -0.37, 0.75]],
     lamps: [[-1.8, -0.62], [0, -0.62], [1.8, -0.62], [-3.38, 0.02], [3.38, 0.02]],
     seatY: { 1: 0.5, 2: -0.45, 9: -0.45, 10: 0.5 }

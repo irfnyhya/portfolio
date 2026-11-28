@@ -63,10 +63,10 @@ function init() {
 
   function addLights(data) {
     scene.add(new THREE.HemisphereLight(0xfff1dd, 0x101010, 0.12));
-    const I = { dome: 4.5, lamp: 0.7, pass: 1.2, down: 0.5, grill: 2.2, wall: 0.8, pendant: 1.4 };
-    const C = { grill: 0xff7a2a, pass: 0xffc488 };
+    const I = { dome: 4, lamp: 0.7, pass: 1, hood: 2.2, down: 0.4, grill: 2, wine: 1.4, art: 1.8, host: 0.5, console: 0.5, chandelier: 2.6, candle: 0.25, onyx: 1.6 };
+    const C = { grill: 0xff7a2a, pass: 0xffc488, wine: 0xffb46a, candle: 0xffa040, onyx: 0xffb070, chandelier: 0xffc98a };
     for (const l of data.lights) {
-      const range = l.kind === "lamp" ? 1.6 : l.kind === "dome" ? 3.2 : 7;
+      const range = l.kind === "lamp" || l.kind === "candle" ? 1.6 : l.kind === "dome" ? 3.2 : 7;
       const light = new THREE.PointLight(C[l.kind] || 0xffd2a0, I[l.kind] || 1.5, range, 2);
       light.position.copy(toThree(l.p));
       scene.add(light);

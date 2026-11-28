@@ -4,10 +4,13 @@ Picture credits for the Chez Nous demo (demo/chez-nous/)
 (tools/chez-nous/build_room.py). Not a real venue. Chez Nous is fictional.
 It uses these models from Sketchfab, each under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/),
 textures reduced to 512 px and placed in the scene:
-- "1920's Leather Bar Stool" by Nicholas Record, https://sketchfab.com/3d-models/1920s-leather-bar-stool-cebb9478ad5d4b80a40df7f3b7e6dbf9
 - "Restaurant Kitchen Set - Part 1" by soidev, https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4
 - "3DDecember 2021 - Copper Pots and Pans" by Jack Kelly, https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414
 - "Wine Bottle and Glass" by JoeDev, https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef
+- "Fiddle Leaf Fig" by Dahlia, https://sketchfab.com/3d-models/fiddle-leaf-fig-7689508dc9d9481c934a412255e8de67
+- "[FREE] Pothos Potted Plant - Money Plant" by AllQuad, https://sketchfab.com/3d-models/free-pothos-potted-plant-money-plant-e9832f38484f4f85b3f9081b51fa3799
+- "Modern Abstract Painting" by fnocwei, https://sketchfab.com/3d-models/modern-abstract-painting-1ddea2a792dc4d6593438132f95f74b7
+- "Vase - Louvre Museum (Low Definition)" by Benjamin Bardou, https://sketchfab.com/3d-models/vase-louvre-museum-low-definition-660fb742a5ff4580862cf5f9eb690d92
 
 Food and table photos below are from Unsplash, free to use under the Unsplash License
 (https://unsplash.com/license), reused from the Lindap demo. None shows Chez Nous.
