@@ -6,18 +6,18 @@
   <title>Chez Nous · Chef's counter, Kuala Lumpur</title>
   <meta name="description" content="Chez Nous is a fictional private French chef's counter: twelve seats facing an open kitchen. Pick your seat, see the view from it in 3D, and reserve it. A website demo by Irfan Hakimi.">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#0e141c">
+  <meta name="theme-color" content="#efe9df">
   <meta property="og:title" content="Chez Nous · Chef's counter">
   <meta property="og:description" content="Twelve seats facing a French kitchen. Choose your seat, see its view in 3D, then book it. A website demo by Irfan Hakimi.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="img/view-hero.jpg">
+  <meta property="og:image" content="img/hero-wide.jpg">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="img/view-hero-tall.jpg" media="(max-width: 767px)">
-  <link rel="preload" as="image" href="img/view-hero.jpg" media="(min-width: 768px)">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/hero-tall.jpg" media="(max-width: 767px)">
+  <link rel="preload" as="image" href="img/hero-wide.jpg" media="(min-width: 768px)">
+  <link rel="stylesheet" href="styles.css?v=6">
   <script>document.documentElement.classList.add("js")</script>
   <script type="importmap">
     { "imports": {
@@ -46,8 +46,8 @@
   <main id="main">
     <section class="hero" id="top">
       <picture class="hero-media">
-        <source media="(min-width: 768px)" srcset="img/view-hero.jpg">
-        <img src="img/view-hero-tall.jpg" alt="The view from the counter at Chez Nous: chefs in white jackets at the pass under heat lamps, a blue tiled wall and plates being finished in front of a wooden counter" fetchpriority="high" width="1600" height="1000">
+        <source media="(min-width: 768px)" srcset="img/hero-wide.jpg">
+        <img src="img/hero-tall.jpg" alt="A plate of raw tuna with herbs set down on a dark counter" fetchpriority="high" width="1600" height="1000">
       </picture>
       <div class="hero-scrim" aria-hidden="true"></div>
       <div class="frame hero-copy">
@@ -69,8 +69,8 @@
           <p class="statement rise">Chez Nous means "at our place". The kitchen is the room: four chefs cook a French menu at the grill, the stove, the pass and the pastry marble, an arm's length from your glass.</p>
           <p class="rise">Every seat looks at a different station, so we let you choose it. Sit by the charcoal grill if you like fire, at the pass to watch every plate finished, or by the pastry marble for the soufflé.</p>
         </div>
-        <figure class="intro-pic a rise"><img loading="lazy" src="img/chef.jpg" alt="A chef plating a small course with tweezers" width="1000" height="1250"></figure>
-        <figure class="intro-pic b rise"><img loading="lazy" src="img/view-s02.jpg" alt="The view from seat 2: the charcoal grill and copper pans" width="1600" height="1000"></figure>
+        <figure class="intro-pic a rise"><img loading="lazy" src="img/detail.jpg" alt="A dessert finished with chocolate sauce at the counter" width="900" height="900"></figure>
+        <figure class="intro-pic b rise"><img loading="lazy" src="img/pass.jpg" alt="A row of plates being finished at the kitchen pass" width="1000" height="1250"></figure>
       </div>
     </section>
 
@@ -128,10 +128,12 @@
 
     <section class="evening" aria-labelledby="evening-title">
       <div class="frame evening-head"><h2 class="h2 rise" id="evening-title">Your evening</h2><p class="rise" style="--d:.07s">Two and a half hours at the counter, in four parts.</p></div>
-      <div class="verb" style="--img:url(img/view-s01.jpg)"><p class="verb-word" aria-hidden="true">Arrive</p><p class="verb-line"><strong>Arrive ten minutes early.</strong> Your name card is on your seat. Everyone starts together.</p></div>
-      <div class="verb" style="--img:url(img/view-s05.jpg)"><p class="verb-word" aria-hidden="true">Watch</p><p class="verb-line"><strong>Watch the fire and the pans.</strong> Ask anything: the chefs talk you through each course.</p></div>
-      <div class="verb" style="--img:url(img/view-s08.jpg)"><p class="verb-word" aria-hidden="true">Taste</p><p class="verb-line"><strong>Seven courses in two and a half hours.</strong> Each plate goes from the pass straight to you.</p></div>
-      <div class="verb" style="--img:url(img/view-ct.jpg)"><p class="verb-word" aria-hidden="true">Linger</p><p class="verb-line"><strong>Stay for coffee and cheese.</strong> The second seating has the counter until midnight.</p></div>
+      <div class="frame evening-list">
+      <div class="verb rise" style="--img:url(img/c1.jpg)"><p class="verb-word">Arrive</p><p class="verb-line"><strong>Arrive ten minutes early.</strong> Your name card is on your seat. Everyone starts together.</p></div>
+      <div class="verb rise" style="--img:url(img/c4.jpg)"><p class="verb-word">Watch</p><p class="verb-line"><strong>Watch the fire and the pans.</strong> Ask anything: the chefs talk you through each course.</p></div>
+      <div class="verb rise" style="--img:url(img/c2.jpg)"><p class="verb-word">Taste</p><p class="verb-line"><strong>Seven courses in two and a half hours.</strong> Each plate goes from the pass straight to you.</p></div>
+      <div class="verb rise" style="--img:url(img/c7.jpg)"><p class="verb-word">Linger</p><p class="verb-line"><strong>Stay for coffee and cheese.</strong> The second seating has the counter until midnight.</p></div>
+      </div>
     </section>
 
     <section class="faq" id="faq" aria-labelledby="faq-title">
@@ -153,8 +155,8 @@
           <div class="faq-actions"><button class="btn btn-copper" type="button" data-book>Reserve a seat</button><button class="link-btn" type="button" data-mine>My booking</button></div>
         </div>
         <div class="faq-pics rise" style="--d:.1s">
-          <figure class="tall"><img loading="lazy" src="img/view-s11.jpg" alt="The view from seat 11: the pastry marble and the pass" width="1600" height="1000"></figure>
-          <figure class="sq"><img loading="lazy" src="img/c6.jpg" alt="A green dome dessert topped with white flowers" width="900" height="1125"></figure>
+          <figure class="tall"><img loading="lazy" src="img/chef.jpg" alt="Herbs placed on a small plate with tweezers" width="1000" height="1250"></figure>
+          <figure class="sq"><img loading="lazy" src="img/petit.jpg" alt="A chocolate dessert shaped like a pine cone" width="900" height="1125"></figure>
         </div>
       </div>
     </section>
@@ -179,7 +181,7 @@
     <div class="frame">
       <div class="foot-cols rise">
         <div><p class="foot-h">Chez Nous</p><p>Twelve seats at the counter and a chef's table for six. A fictional restaurant made for a website demo; the menu, prices and address are samples.</p></div>
-        <div><p class="foot-h">Pictures</p><p>The kitchen and counter are a 3D model built in Blender for this demo; every counter view is a render of it. Food photos: Unsplash licence (<a href="img/CREDITS.txt">credits</a>).</p></div>
+        <div><p class="foot-h">Pictures</p><p>The 3D counter was built in Blender for this demo. Models from Sketchfab under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: <a href="https://sketchfab.com/3d-models/1920s-leather-bar-stool-cebb9478ad5d4b80a40df7f3b7e6dbf9">bar stool</a> by Nicholas Record, <a href="https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4">kitchen set</a> by soidev, <a href="https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414">copper pans</a> by Jack Kelly, <a href="https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef">wine bottle and glass</a> by JoeDev. Food photos: Unsplash licence (<a href="img/CREDITS.txt">all credits</a>).</p></div>
         <a class="foot-demo" href="https://irfanhakimi.com/kerja/"><span class="foot-h">Demo by Irfan Hakimi</span><span>Want a site like this for your restaurant? See packages at irfanhakimi.com/kerja</span></a>
       </div>
       <p class="foot-name" aria-hidden="true">Chez Nous</p>
@@ -269,7 +271,7 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
-  <script type="module" src="viewer.js"></script>
+  <script src="app.js?v=6"></script>
+  <script type="module" src="viewer.js?v=6"></script>
 </body>
 </html>

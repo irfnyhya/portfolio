@@ -1,10 +1,17 @@
 Picture credits for the Chez Nous demo (demo/chez-nous/)
 
-Room views (view-*.jpg): renders of a 3D dining room built in Blender for this demo
+3D counter (model/room.glb) and seat views (view-*.jpg): built in Blender for this demo
 (tools/chez-nous/build_room.py). Not a real venue. Chez Nous is fictional.
+It uses these models from Sketchfab, each under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/),
+textures reduced to 512 px and placed in the scene:
+- "1920's Leather Bar Stool" by Nicholas Record, https://sketchfab.com/3d-models/1920s-leather-bar-stool-cebb9478ad5d4b80a40df7f3b7e6dbf9
+- "Restaurant Kitchen Set - Part 1" by soidev, https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4
+- "3DDecember 2021 - Copper Pots and Pans" by Jack Kelly, https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414
+- "Wine Bottle and Glass" by JoeDev, https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef
 
 Food and table photos below are from Unsplash, free to use under the Unsplash License
 (https://unsplash.com/license), reused from the Lindap demo. None shows Chez Nous.
+Also used: hero-wide.jpg, hero-tall.jpg, pass.jpg, detail.jpg, c1, c2, c4, c7, petit.jpg (see demo/restoran/img/CREDITS.txt).
 
 file           | used for                          | photographer        | source
 chef.jpg       | about section                     | Alfonso Betancourt  | https://unsplash.com/photos/chef-carefully-plating-a-gourmet-dish-with-tweezers-q4nWGwVM2Vk

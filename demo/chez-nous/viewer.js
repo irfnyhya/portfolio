@@ -4,6 +4,10 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 
 const viewer = document.getElementById("viewer");
 const canvas = document.getElementById("viewerCanvas");
@@ -31,7 +35,7 @@ function init() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 0.85;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -41,6 +45,15 @@ function init() {
   scene.environmentIntensity = 0.22;
 
   const camera = new THREE.PerspectiveCamera(55, 16 / 10, 0.05, 60);
+  // A soft glow on the lamps and flames (desktop only, to keep phones smooth)
+  let composer = null, bloom = null;
+  if (window.innerWidth >= 768) {
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    bloom = new UnrealBloomPass(new THREE.Vector2(512, 320), 0.28, 0.35, 0.96);
+    composer.addPass(bloom);
+    composer.addPass(new OutputPass());
+  }
   const cams = {};      // seat id -> { pos, quat, hfov }
   const chefs = [];
   let base = null, yaw = 0, pitch = 0, tween = null, needs = true, visible = true;
@@ -49,8 +62,8 @@ function init() {
   const toThree = (p) => new THREE.Vector3(p[0], p[2], -p[1]);
 
   function addLights(data) {
-    scene.add(new THREE.HemisphereLight(0xfff1dd, 0x1a2230, 0.55));
-    const I = { hood: 5, pass: 2.5, down: 2.2, grill: 2.5, wall: 1.6, pendant: 1.8 };
+    scene.add(new THREE.HemisphereLight(0xfff1dd, 0x1a2230, 0.4));
+    const I = { hood: 5, pass: 2.5, down: 1.2, grill: 2.5, wall: 1.6, pendant: 1.8, globe: 1.4 };
     const C = { grill: 0xff7a2a, pass: 0xffc488 };
     for (const l of data.lights) {
       const light = new THREE.PointLight(C[l.kind] || 0xffd2a0, I[l.kind] || 1.5, 7, 2);
@@ -147,7 +160,7 @@ function init() {
   function loop(now = performance.now()) {
     if (visible) {
       step(now);
-      if (needs) { renderer.render(scene, camera); needs = false; }
+      if (needs) { if (composer) composer.render(); else renderer.render(scene, camera); needs = false; }
     }
     requestAnimationFrame(loop);
   }
@@ -155,6 +168,7 @@ function init() {
   function resize() {
     const w = viewer.clientWidth, h = viewer.clientHeight;
     renderer.setSize(w, h, false);
+    if (composer) composer.setSize(w, h);
     camera.aspect = w / h;
     if (base) setFov(base.hfov);
     needs = true;

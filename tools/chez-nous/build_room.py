@@ -71,7 +71,7 @@ def tex_copper(n=512):
     img = base[None, None, :] * (0.7 + 0.25 * streak + 0.12 * hammer)[..., None]
     return save_img("copper", img.astype(np.float32))
 
-TEX = {"tiles": tex_tiles(), "counter": tex_wood("counter_wood", "#9a5129", stretch=60),
+TEX = {"tiles": tex_tiles(), "counter": tex_wood("counter_wood", "#8c5a34", stretch=60),
        "floor": tex_wood("floor_wood", "#3a2619", stretch=24), "slat": tex_wood("slat_wood", "#b07a4c", stretch=90),
        "copper": tex_copper()}
 
@@ -123,6 +123,7 @@ M = {
     "ember": mat("Embers", "#ff6a1a", 1.0, emit="#ff5a10", strength=8),
     "flame": mat("Gas_Flame", "#7fb0ff", 1.0, emit="#5c8dff", strength=6),
     "bulb": mat("Downlight", "#fff2dc", 1.0, emit="#ffd9a0", strength=14),
+    "globe": mat("Globe_Opal", "#ffe7c4", 0.3, emit="#ffc27a", strength=4.5),
     "lamp": mat("Wall_Lamp", "#f3c27a", 0.9, emit="#ffb860", strength=5),
     "green": mat("Herbs", "#3f6a2a", 0.7),
     "food": mat("Food", "#c96b3c", 0.6),
@@ -190,11 +191,6 @@ boxb(KX1 - KX0, 0.65, 0.88, 0, Y1 - 0.33, 0, M["steel_dark"])
 boxb(KX1 - KX0, 0.7, 0.04, 0, Y1 - 0.35, 0.88, M["steel"])
 boxb(KX1 - KX0, 0.3, 0.03, 0, Y1 - 0.15, 1.6, M["steel"])       # shelf
 boxb(KX1 - KX0, 0.03, 0.012, 0, Y1 - 0.06, 1.585, M["strip"])  # LED strip under the shelf
-for i in range(18):  # bowls, tins and jars on the shelf
-    x = KX0 + 0.3 + i * 0.5
-    if i % 3 == 0: cyl(0.12, 0.08, 0.1, x, Y1 - 0.15, 1.63, M["plate"], seg=14)
-    elif i % 3 == 1: cyl(0.06, 0.06, 0.18, x, Y1 - 0.15, 1.63, M["steel"], seg=10)
-    else: cyl(0.05, 0.05, 0.22, x, Y1 - 0.15, 1.63, M["bottle"], seg=10)
 # combi oven + fridge doors on the left end of the back bench
 boxb(0.85, 0.7, 0.9, -4.0, Y1 - 0.4, 0.92, M["steel"]); boxb(0.6, 0.02, 0.6, -4.05, Y1 - 0.76, 1.05, M["black"])
 for x in (-3.0, -1.6, 0.6, 2.2): boxb(0.02, 0.01, 0.45, x, Y1 - 0.66, 0.3, M["steel"])
@@ -211,14 +207,12 @@ for i in range(5): cyl(0.03, 0.03, 0.04, -3.7 + i * 0.2, IY - 0.05 + (i % 2) * 0
 # Station 2: stove with copper pans
 for i, x in enumerate((-1.95, -1.45, -0.95)):
     cyl(0.12, 0.12, 0.01, x, IY, 0.9, M["flame"], seg=16)
-    cyl(0.13, 0.12, 0.09, x, IY, 0.92, M["copper"], seg=18)
-    box(0.25, 0.025, 0.02, x, IY - 0.25, 0.99, M["brass"])
 # Station 3: the pass (centre) with plates being finished, heat lamps
 for i in range(5):
     x = -0.2 + i * 0.42
-    cyl(0.14, 0.12, 0.02, x, IY - 0.15, 0.9, M["plate"], seg=20)
-    sphere(0.045, x, IY - 0.15, 0.94, M["food"], seg=8, sz=0.55)
-    sphere(0.02, x + 0.03, IY - 0.13, 0.96, M["green"], seg=6)
+    cyl(0.13, 0.11, 0.015, x, IY - 0.15, 0.9, M["plate"], seg=24)
+    sphere(0.04, x, IY - 0.15, 0.93, M["food"], seg=10, sz=0.5)
+    sphere(0.018, x + 0.03, IY - 0.13, 0.94, M["green"], seg=6)
 boxb(2.2, 0.35, 0.04, 0.65, IY - 0.15, 1.6, M["steel"])
 for x in (0.0, 0.65, 1.3): cyl(0.06, 0.09, 0.05, x, IY - 0.15, 1.55, M["bulb"], seg=12)
 for x in (-0.4, 1.7): cyl(0.012, 0.012, 0.7, x, IY - 0.15, 0.9, M["steel"], seg=6)
@@ -262,8 +256,12 @@ def setting(x):
     box(0.012, 0.22, 0.008, x + 0.16, y, CT_Z + 0.01, M["steel"])
     boxb(0.06, 0.02, 0.015, x + 0.145, y + 0.08, CT_Z, M["black"])
 
-for x in SEATS_X:
-    stool(x, SEAT_Y); setting(x)
+# Brass pendant lamps over the counter (one between every two seats)
+for i in range(6):
+    x = SEATS_X[2 * i] + 0.325
+    cyl(0.004, 0.004, H - 2.25, x, -0.05, 2.25, M["black"], seg=4)
+    cyl(0.05, 0.03, 0.06, x, -0.05, 2.19, M["brass"], seg=12)
+    sphere(0.085, x, -0.05, 2.12, M["globe"], seg=16)
 
 # Chef's table for six, by the oak wall on the right, facing the pastry station
 CTX, CTY = 5.15, -1.45
@@ -291,33 +289,7 @@ for zz in (0.4, 0.9, 1.4, 1.9):
 boxb(1.1, 0.06, 2.3, 2.6, Y0 + 0.03, 0, M["slat"])
 boxb(0.04, 0.08, 0.5, 2.15, Y0 + 0.08, 1.0, M["brass"])
 
-# ── chefs (separate objects so the web page can move them a little) ──
 CHEFS = []
-def chef(name, x, y, face=math.pi * 1.5, lean=0.08, arms=0.0):
-    bm = bmesh.new(); bm.loops.layers.uv.new("UVMap")
-    for s_ in (-1, 1): cyl(0.065, 0.06, 0.82, s_ * 0.1, 0, 0, M["apron"], seg=10, bm=bm)
-    cyl(0.17, 0.2, 0.42, 0, 0, 0.78, M["apron"], seg=20, bm=bm)          # hips, apron
-    cyl(0.19, 0.2, 0.36, 0, 0, 1.12, M["jacket"], seg=20, bm=bm)         # chest
-    cyl(0.2, 0.12, 0.1, 0, 0, 1.47, M["jacket"], seg=20, bm=bm)          # shoulders
-    sphere(0.205, 0, 0, 1.18, M["apron"], seg=16, sz=0.08, bm=bm)        # apron tie line
-    cyl(0.05, 0.05, 0.1, 0, 0, 1.54, M["skin"], seg=10, bm=bm)
-    sphere(0.1, 0, -0.01, 1.73, M["skin"], seg=14, sz=1.2, bm=bm)
-    sphere(0.104, 0, 0.02, 1.77, M["hair"], seg=14, sz=1.0, bm=bm)
-    for s_ in (-1, 1):  # upper arm down, forearm forward to the bench
-        sphere(0.07, s_ * 0.2, 0, 1.45, M["jacket"], seg=10, bm=bm)
-        cyl(0.06, 0.05, 0.3, s_ * 0.22, 0, 1.45, M["jacket"], seg=10, rx=2.7, bm=bm)
-        cyl(0.05, 0.04, 0.32, s_ * 0.21, -0.128, 1.18, M["jacket"], seg=10, rx=2.0 + arms * 0.5, bm=bm)
-        sphere(0.04, s_ * 0.2, -0.42, 1.05 - arms * 0.08, M["skin"], seg=8, bm=bm)
-    me = bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
-    for m in MATS: me.materials.append(m)
-    o = bpy.data.objects.new(name, me); col.objects.link(o)
-    o.location = (x, y, 0); o.rotation_euler = (lean, 0, face - math.pi * 1.5)
-    CHEFS.append(name)
-chef("CHEF_grill", -3.3, IY + 0.62, lean=0.1)
-chef("CHEF_sauce", -1.45, IY + 0.62, lean=0.06, arms=0.2)
-chef("CHEF_pass", 0.65, IY + 0.62, lean=0.14)
-chef("CHEF_pastry", 3.3, IY + 0.62, lean=0.12, arms=0.1)
-
 # ── seat data, cameras ───────────────────────────────────────────
 STATIONS = [(-3.3, "the charcoal grill"), (-1.45, "the stove and copper pans"), (0.65, "the pass, where every plate is finished"), (3.3, "the pastry marble")]
 def nearest_station(x):
@@ -339,6 +311,69 @@ me = bpy.data.meshes.new("Room"); bmesh.ops.remove_doubles(BM, verts=BM.verts, d
 for m in MATS: me.materials.append(m)
 room = bpy.data.objects.new("Room", me); col.objects.link(room)
 
+# ── Sketchfab models (CC BY 4.0, credited on the page) ──────────
+ASSETS = os.path.join(HERE, "assets")
+def load_protos(rel, keep, scale):
+    """Import a glTF, bake each wanted mesh into world space, scale to metres. Returns {name: mesh}."""
+    before = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=os.path.join(ASSETS, rel))
+    new = [o for o in bpy.data.objects if o not in before]
+    bpy.context.view_layer.update()
+    out = {}
+    for o in new:
+        if o.type == "MESH" and any(k in o.name for k in keep):
+            m = o.data.copy(); m.transform(o.matrix_world); m.transform(Matrix.Scale(scale, 4))
+            out[o.name] = m
+    for o in new: bpy.data.objects.remove(o, do_unlink=True)
+    return out
+
+def recentre(meshes):
+    """Move a group of meshes so their joint base centre sits at the origin."""
+    vs = [v.co for m in meshes for v in m.vertices]
+    cx = (min(v.x for v in vs) + max(v.x for v in vs)) / 2; cy = (min(v.y for v in vs) + max(v.y for v in vs)) / 2; z0 = min(v.z for v in vs)
+    for m in meshes: m.transform(Matrix.Translation((-cx, -cy, -z0)))
+
+def place(name, meshes, x, y, z, rz=0.0):
+    for i, m in enumerate(meshes):
+        o = bpy.data.objects.new("%s_%d" % (name, i), m); col.objects.link(o)
+        o.location = (x, y, z); o.rotation_euler = (0, 0, rz)
+
+stool = list(load_protos("stool/scene.gltf", ["barStool"], 0.0078).values()); recentre(stool)
+for s in SEATS_X: place("Stool", stool, s, SEAT_Y, 0, rz=random.uniform(-0.3, 0.3))
+
+kit = load_protos("kitchen/scene.gltf", ["SM_"], 0.01)
+def kpart(key):
+    hit = [m for n, m in kit.items() if n.startswith(key + "_") and "Dirty" not in n]
+    recentre(hit); return hit
+plate, wglass = kpart("SM_Plate_04"), kpart("SM_WineGlass")
+for m in plate: m.transform(Matrix.Scale(0.62, 4))
+for m in wglass: m.transform(Matrix.Scale(1.9, 4))
+for x in SEATS_X:  # a place at every seat: plate, wine glass
+    place("Plate", plate, x, CT_Y0 + 0.2, CT_Z, 0)
+    place("Glass", wglass, x + 0.16, CT_Y0 + 0.36, CT_Z, 0)
+# Clean pots on the back shelf and the stove, a tray on the pastry marble
+for i, key in enumerate(["SM_Pot_01", "SM_Pot_02", "SM_Pot_05", "SM_Pot_04", "SM_Pot_06", "SM_Pot_01", "SM_Pot_05", "SM_Pot_02"]):
+    place("ShelfPot", kpart(key), KX0 + 0.7 + i * 1.12, Y1 - 0.15, 1.63, random.uniform(0, 6.28))
+for key, x in (("SM_Pot_03", -1.95), ("SM_Pot_05", -0.95)):
+    place("StovePot", kpart(key), x, IY, 0.91, 0.4)
+place("PassPlate", kpart("SM_Plate_05"), 2.0, IY - 0.15, 0.9)
+
+# Copper pans: on the stove and on the back bench by the grill
+copper = list(load_protos("copper/scene.gltf", ["material"], 0.55).values()); recentre(copper)
+place("Copper", copper, -1.45, IY + 0.05, 0.905, 0.2)
+place("Copper", copper, -2.6, Y1 - 0.38, 0.92, 1.4)
+
+# Wine: a bottle and glass for each seat at the chef's table end, one at the pass
+wine = list(load_protos("wine/scene.gltf", ["poly"], 1.9).values()); recentre(wine)
+place("Wine", wine, 3.55, CT_Y0 + 0.3, CT_Z, 0.3)
+place("Wine", wine, -3.0, CT_Y0 + 0.3, CT_Z, -0.2)
+place("Wine", wine, 5.15, -1.3, 0.79, 0)
+
+# Keep the web file small: textures to 512 px
+for img in bpy.data.images:
+    if img.size[0] > 512 and img.name not in ("tiles", "counter_wood", "floor_wood"):
+        img.scale(512, 512)
+
 for key, (eye, look, lens) in CAMS.items():
     cd = bpy.data.cameras.new("CAM_" + key); cd.lens = lens; cd.sensor_width = 36; cd.clip_start = 0.05; cd.clip_end = 40
     co = bpy.data.objects.new("CAM_" + key, cd); col.objects.link(co)
@@ -347,6 +382,7 @@ for key, (eye, look, lens) in CAMS.items():
 LIGHTS = [dict(kind="hood", p=(x, 1.2, 2.2)) for x in (-3.3, -1.45, 0.65, 3.3)] + \
          [dict(kind="pass", p=(0.65, IY - 0.15, 1.5))] + \
          [dict(kind="down", p=(x, -0.2, H - 0.1)) for x in (-2.6, 0.0, 2.6)] + \
+         [dict(kind="globe", p=(SEATS_X[2 * i] + 0.325, -0.05, 2.0)) for i in range(6)] + \
          [dict(kind="grill", p=(-3.3, IY, 1.05)), dict(kind="wall", p=(X1 - 0.3, -1.0, 1.95)), dict(kind="pendant", p=(CTX, CTY, H - 1.5))]
 
 data = dict(room=dict(x0=X0, x1=X1, y0=Y0, y1=Y1, h=H), counter=dict(x0=KX0 + 0.3, x1=KX1 - 0.3, y0=CT_Y0, y1=CT_Y1, z=CT_Z),
@@ -366,7 +402,7 @@ bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "chez-nous-counter.blend
 print("GLB", os.path.getsize(glb), "bytes")
 
 if RENDER:
-    E = {"hood": 120, "pass": 60, "down": 40, "grill": 70, "wall": 30, "pendant": 40}
+    E = {"hood": 110, "pass": 55, "down": 20, "grill": 70, "wall": 30, "pendant": 40, "globe": 18}
     C = {"grill": (1.0, 0.45, 0.15), "pass": (1.0, 0.7, 0.45)}
     for l in LIGHTS:
         ld = bpy.data.lights.new("L_" + l["kind"], "SPOT" if l["kind"] in ("hood", "down") else "POINT")
@@ -394,18 +430,6 @@ if RENDER:
     except Exception: pass
     scene.view_settings.exposure = 0.1
     scene.render.image_settings.file_format = "JPEG"; scene.render.image_settings.quality = 80
-    # chefs at work: a small move between frames 1 and 3, rendered at 2 with motion blur (like a long exposure)
-    for i, name in enumerate(CHEFS):
-        o = bpy.data.objects[name]; base_loc = o.location.copy(); base_rot = o.rotation_euler.copy()
-        for f, k in ((1, -1), (3, 1)):
-            o.location = (base_loc.x + k * 0.07 * (1 if i % 2 else -1), base_loc.y, base_loc.z)
-            o.rotation_euler = (base_rot.x, base_rot.y, base_rot.z + k * 0.18)
-            o.keyframe_insert("location", frame=f); o.keyframe_insert("rotation_euler", frame=f)
-    scene.frame_set(2)
-    scene.render.use_motion_blur = True
-    scene.render.motion_blur_shutter = 1.0
-    try: scene.eevee.motion_blur_steps = 12
-    except Exception: pass
     only = [a for a in argv if a.startswith("--only=")]
     keys = only[0][7:].split(",") if only else list(CAMS.keys())
     for key in keys:
