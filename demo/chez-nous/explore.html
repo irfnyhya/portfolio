@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chez Nous model</title>
+<style>
+  :root { --bg:#141210; --ink:#f3ecdf; --muted:#b9ad98; --gold:#c9a45c; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font:15px/1.4 system-ui, sans-serif; overflow:hidden; }
+  canvas { display:block; touch-action:none; }
+  .bar { position:fixed; left:16px; right:16px; top:16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .bar button, .bar label { background:#000a; color:var(--ink); border:1px solid #fff3; border-radius:999px; padding:8px 14px; font:inherit; cursor:pointer; }
+  .bar button:hover { border-color:var(--gold); }
+  .hint { position:fixed; left:16px; bottom:16px; color:var(--muted); font-size:13px; }
+  #msg { position:fixed; inset:0; display:grid; place-items:center; color:var(--muted); pointer-events:none; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div class="bar">
+  <button data-v="top">Top</button>
+  <button data-v="front">Front</button>
+  <button data-v="corner">Corner</button>
+  <button data-v="kitchen">Kitchen</button>
+  <button data-v="seat">From a seat</button>
+  <label><input type="checkbox" id="roof"> Roof &amp; front wall</label>
+</div>
+<div class="hint">Drag to turn · scroll or pinch to zoom · right-drag or two fingers to move</div>
+<div id="msg">Loading the room…</div>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x141210);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.9;
+scene.add(new THREE.HemisphereLight(0xfff4e0, 0x2a2018, 0.8));
+const sun = new THREE.DirectionalLight(0xffffff, 1.2); sun.position.set(3, 12, 6); scene.add(sun);
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.05, 200);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+// Blender (x, y, z-up) -> three (x, z, -y)
+const B = (x, y, z) => new THREE.Vector3(x, z, -y);
+const VIEWS = {
+  top:     [B(0, -1.5, 16), B(0, 0, 0)],
+  front:   [B(0, -11, 3.2), B(0, 0.5, 0.9)],
+  corner:  [B(-9, -9, 7), B(0, 0.5, 0.6)],
+  kitchen: [B(2.5, -1.5, 2.4), B(-0.5, 3.4, 0.9)],
+  seat:    [B(0.45, -1.52, 1.16), B(0.3, 3.0, 1.0)],
+};
+let tween = null;
+function go(name) {
+  const [p, t] = VIEWS[name];
+  tween = { p0: camera.position.clone(), t0: controls.target.clone(), p, t, s: performance.now() };
+}
+const [p0, t0] = VIEWS.corner; camera.position.copy(p0); controls.target.copy(t0);
+document.querySelectorAll("[data-v]").forEach((b) => b.onclick = () => go(b.dataset.v));
+
+// parts that make the room closed; hidden so you can see in from outside
+const ROOF = ["Ceiling", "Soffit_Black", "Wall_Front"];
+const closers = [];
+const draco = new DRACOLoader().setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/libs/draco/gltf/");
+new GLTFLoader().setDRACOLoader(draco).load("model/room.glb", (g) => {
+  g.scene.traverse((o) => {
+    if (!o.isMesh) return;
+    const mats = Array.isArray(o.material) ? o.material : [o.material];
+    if (mats.some((m) => ROOF.some((k) => (m.name || "").startsWith(k)))) closers.push(o);
+  });
+  closers.forEach((o) => (o.visible = false));
+  scene.add(g.scene);
+  document.getElementById("msg").remove();
+}, undefined, () => { document.getElementById("msg").textContent = "Could not load model/room.glb"; });
+document.getElementById("roof").onchange = (e) => closers.forEach((o) => (o.visible = e.target.checked));
+
+addEventListener("resize", () => {
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+renderer.setAnimationLoop((now) => {
+  if (tween) {
+    const k = Math.min(1, (now - tween.s) / 700), e = k * k * (3 - 2 * k);
+    camera.position.lerpVectors(tween.p0, tween.p, e);
+    controls.target.lerpVectors(tween.t0, tween.t, e);
+    if (k === 1) tween = null;
+  }
+  controls.update();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>
