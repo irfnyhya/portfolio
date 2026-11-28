@@ -6,7 +6,7 @@
   <title>Chez Nous · Chef's counter, Kuala Lumpur</title>
   <meta name="description" content="Chez Nous is a fictional private French chef's counter: twelve seats facing an open kitchen. Pick your seat, see the view from it in 3D, and reserve it. A website demo by Irfan Hakimi.">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#efe9df">
+  <meta name="theme-color" content="#0f1217">
   <meta property="og:title" content="Chez Nous · Chef's counter">
   <meta property="og:description" content="Twelve seats facing a French kitchen. Choose your seat, see its view in 3D, then book it. A website demo by Irfan Hakimi.">
   <meta property="og:type" content="website">
@@ -14,10 +14,10 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/hero-tall.jpg" media="(max-width: 767px)">
   <link rel="preload" as="image" href="img/hero-wide.jpg" media="(min-width: 768px)">
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=11">
   <script>document.documentElement.classList.add("js")</script>
   <script type="importmap">
     { "imports": {
@@ -27,251 +27,406 @@
   </script>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip label" href="#main">Skip to content</a>
 
   <header class="site-header" id="header">
-    <p class="demo-strip">Demo by Irfan Hakimi. <a href="https://irfanhakimi.com/kerja/">Want one like this?</a></p>
-    <nav class="frame nav" aria-label="Primary">
-      <a href="#top" class="wordmark">Chez Nous</a>
+    <div class="demo-strip">
+      <span>Demo by Irfan Hakimi.</span>
+      <a href="https://irfanhakimi.com/kerja/">Want one like this?</a>
+    </div>
+    <nav class="wrap nav" aria-label="Primary">
+      <a href="#top" class="wordmark" aria-label="Chez Nous, back to top">
+        <span class="name">CHEZ NOUS</span>
+        <span class="sub label">Comptoir français</span>
+      </a>
       <ul class="nav-links">
-        <li><a href="#seats">Seats</a></li>
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#visit">Visit</a></li>
-        <li><button type="button" class="link-btn" data-mine>My booking</button></li>
+        <li><a class="label" href="#courses">Signatures</a></li>
+        <li><a class="label" href="#story">About</a></li>
+        <li><a class="label" href="#menu">Menu</a></li>
+        <li><a class="label" href="#seats">Seats</a></li>
+        <li><a class="label" href="#visit">Visit</a></li>
       </ul>
-      <button class="btn btn-copper nav-book" type="button" data-book>Reserve</button>
+      <div class="nav-actions">
+        <button class="btn btn-solid label nav-book" type="button" data-book>Reserve</button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+          <span class="bars" aria-hidden="true"><span></span><span></span></span>
+        </button>
+      </div>
     </nav>
   </header>
 
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu">
+    <ul class="wrap">
+      <li><a href="#courses"><span>I</span>Signatures</a></li>
+      <li><a href="#story"><span>II</span>About</a></li>
+      <li><a href="#menu"><span>III</span>Menu</a></li>
+      <li><a href="#seats"><span>IV</span>Choose a seat</a></li>
+      <li><a href="#reserve"><span>V</span>Reserve</a></li>
+      <li><a href="#visit"><span>VI</span>Visit</a></li>
+      <li><a href="#reserve" data-mine><span>VII</span>My booking</a></li>
+    </ul>
+    <p class="wrap foot label"><span>Bangsar, Kuala Lumpur</span><span>Twelve seats · Wed to Sun</span></p>
+  </div>
+
   <main id="main">
-    <section class="hero" id="top">
-      <picture class="hero-media">
-        <source media="(min-width: 768px)" srcset="img/hero-wide.jpg">
-        <img src="img/hero-tall.jpg" alt="A plate of raw tuna with herbs set down on a dark counter" fetchpriority="high" width="1600" height="1000">
-      </picture>
+    <!-- Hero -->
+    <section class="hero grain" id="top">
+      <div class="hero-media" id="heroMedia">
+        <picture>
+          <source media="(min-width: 768px)" srcset="img/hero-wide.jpg">
+          <img src="img/hero-tall.jpg" alt="A plate of raw tuna with herbs set down on a dark counter" fetchpriority="high">
+        </picture>
+      </div>
+      <canvas id="embers" aria-hidden="true"></canvas>
       <div class="hero-scrim" aria-hidden="true"></div>
-      <div class="frame hero-copy">
-        <div class="hero-text">
-          <p class="hero-lead">A French chef's counter in Bangsar, Kuala Lumpur. Twelve seats face the open kitchen. Choose yours, see what you will watch, then book it.</p>
-          <div class="hero-actions">
-            <a class="btn btn-copper" href="#seats">Choose your seat</a>
-            <p class="hero-fact">Two seatings, 6:00 and 8:45 PM · RM 420 · Wed to Sun</p>
+      <span class="hero-rails" aria-hidden="true"></span>
+
+      <div class="wrap hero-copy" id="heroCopy">
+        <p class="status fade-up" id="status" style="animation-delay:.05s"><span class="dot" aria-hidden="true"></span><span id="statusText">Bangsar · Five nights a week</span></p>
+        <h1>
+          <span class="line"><span style="animation-delay:.05s">Dinner at</span></span>
+          <span class="line"><span style="animation-delay:.1s">our <em class="accent">counter.</em></span></span>
+        </h1>
+        <div class="hero-foot">
+          <p class="fade-up" style="animation-delay:.15s">Chez Nous means "at our place". Twelve seats face an open French kitchen, and you choose which one is yours: by the grill, the stove, the pass or the pastry marble.</p>
+          <div class="ticket fade-up" style="animation-delay:.2s" aria-label="Seatings tonight">
+            <div class="ticket-meta"><span class="tag label">Tonight</span><span class="label">Counter · 12 seats · Chef's table</span></div>
+            <div class="ticket-times">
+              <div><p class="big">18:00</p><p class="label">First seating</p></div>
+              <span class="ticket-line" aria-hidden="true"></span>
+              <div class="r"><p class="big">20:45</p><p class="label">Second seating</p></div>
+            </div>
+            <p class="ticket-status"><span class="dot" aria-hidden="true"></span><span id="ticketStatus">Pick your seat in 3D · confirmed on the spot</span></p>
+            <div class="ticket-ctas">
+              <button class="btn btn-ink label" type="button" data-book><span>Reserve a seat</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <a class="btn btn-soft label" href="#seats"><span>See the seats</span></a>
+            </div>
           </div>
         </div>
-        <h1 class="hero-name">Chez Nous</h1>
       </div>
     </section>
 
-    <section class="intro" aria-labelledby="intro-title">
-      <div class="frame intro-grid">
-        <h2 class="h2 rise" id="intro-title">No wall between us</h2>
-        <div class="intro-body">
-          <p class="statement rise">Chez Nous means "at our place". The kitchen is the room: four chefs cook a French menu at the grill, the stove, the pass and the pastry marble, an arm's length from your glass.</p>
-          <p class="rise">Every seat looks at a different station, so we let you choose it. Sit by the charcoal grill if you like fire, at the pass to watch every plate finished, or by the pastry marble for the soufflé.</p>
+    <!-- Signatures rail -->
+    <section class="section-y" id="courses" aria-labelledby="sig-title" style="padding-bottom:0">
+      <div class="wrap sig-head">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">i.</span><span class="rule" aria-hidden="true"></span><span>Signatures</span></p>
+          <h2 class="h2 reveal" id="sig-title" style="--d:.08s">Finished in front of <em class="accent">you.</em></h2>
         </div>
-        <figure class="intro-pic a rise"><img loading="lazy" src="img/detail.jpg" alt="A dessert finished with chocolate sauce at the counter" width="900" height="900"></figure>
-        <figure class="intro-pic b rise"><img loading="lazy" src="img/pass.jpg" alt="A row of plates being finished at the kitchen pass" width="1000" height="1250"></figure>
+        <div class="sig-nav">
+          <button type="button" id="railPrev" aria-label="Previous dish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <button type="button" id="railNext" aria-label="Next dish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="rail reveal" id="rail" style="--d:.15s" tabindex="0" aria-label="Signature dishes, swipe to see more"></div>
+      <div class="wrap"><div class="rail-progress" aria-hidden="true"><span id="railBar"></span></div></div>
+    </section>
+
+    <!-- Story -->
+    <section class="section-y" id="story" aria-labelledby="story-title">
+      <div class="wrap story">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">ii.</span><span class="rule" aria-hidden="true"></span><span>About Chez Nous</span></p>
+          <h2 class="h2 reveal" id="story-title" style="--d:.08s">No wall between <em class="accent">us.</em></h2>
+          <div class="lede reveal" style="--d:.16s">
+            <p>Chez Nous is a French kitchen built around one long oak counter. The stoves, the charcoal grill and the pastry marble sit an arm's length from your glass, under a copper hood and a wall of blue tiles.</p>
+            <p>Every seat looks at a different station, so we let you choose yours. Sit by the fire if you like smoke, at the pass to watch every plate finished, or by the marble for the soufflé.</p>
+          </div>
+          <p class="sign reveal" style="--d:.24s">À bientôt, au comptoir.</p>
+        </div>
+        <div class="story-media">
+          <div class="frame a wipe parallax"><img loading="lazy" src="img/pass.jpg" alt="A row of plates being finished at the kitchen pass" width="1000" height="1250"></div>
+          <div class="frame b wipe" style="--d:.25s"><img loading="lazy" src="img/detail.jpg" alt="A dessert finished with chocolate sauce" width="900" height="900"></div>
+        </div>
+      </div>
+      <div class="wrap">
+        <ul class="pillars">
+          <li class="reveal"><p class="num">I</p><h3>Ouvert</h3><p>Nothing happens behind a door. Every step of every dish is cooked in front of the counter.</p></li>
+          <li class="reveal" style="--d:.1s"><p class="num">II</p><h3>Choisi</h3><p>You pick your seat before you come, and see the view from it in 3D.</p></li>
+          <li class="reveal" style="--d:.2s"><p class="num">III</p><h3>De saison</h3><p>The menu follows the market and changes with every season.</p></li>
+        </ul>
       </div>
     </section>
 
-    <section class="salle" id="seats" aria-labelledby="seats-title">
-      <div class="frame">
-        <div class="salle-head">
-          <h2 class="h2 rise" id="seats-title">Choose your seat</h2>
-          <p class="salle-sub rise" style="--d:.07s">Tap a seat on the counter to sit there. Drag the view to look around the kitchen.</p>
+    <!-- Statement band -->
+    <section class="statement" aria-label="Chez Nous at a glance">
+      <p class="sr-only">Regarder, goûter, bavarder. One kitchen, twelve seats.</p>
+      <div aria-hidden="true">
+        <p data-drift="1">Regarder <span class="dot">·</span> Goûter <span class="dot">·</span> Bavarder <span class="dot">·</span> Regarder</p>
+        <p class="outline" data-drift="-1">one kitchen · twelve seats · one kitchen</p>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section class="section-y" id="menu" aria-labelledby="menu-title">
+      <div class="wrap">
+        <div class="menu-top">
+          <div>
+            <p class="eyebrow label reveal"><span class="idx">iii.</span><span class="rule" aria-hidden="true"></span><span>La carte</span></p>
+            <h2 class="h2 reveal" id="menu-title" style="--d:.08s">Seven courses, <em class="accent">or à la carte.</em></h2>
+          </div>
+          <div class="reveal" style="--d:.16s">
+            <p class="lede">Take the seven-course menu at RM 420, or order from the sections below and the kitchen will pace the plates for you. Tap a dish to see it closer.</p>
+            <p class="note" role="note" style="margin-top:1.25rem">Sample menu for this demo. Dishes and prices are examples only.</p>
+          </div>
+        </div>
+        <div class="chips" role="tablist" aria-label="Menu sections" id="menuTabs"></div>
+        <div class="panel" role="tabpanel" id="menuPanel" tabindex="0"></div>
+        <p class="menu-foot">Prices in RM. Tell us about allergies when you book so the kitchen can plan ahead.</p>
+      </div>
+    </section>
+
+    <!-- The evening -->
+    <section class="room section-y" id="room" aria-labelledby="room-title">
+      <div class="wrap">
+        <div class="room-grid">
+          <div class="room-photos">
+            <div class="frame a wipe"><img loading="lazy" src="img/chef.jpg" alt="Herbs placed on a small plate with tweezers" width="1000" height="1250"></div>
+            <div class="frame b wipe" style="--d:.2s"><img loading="lazy" src="img/room.jpg" alt="Warm lamps in a dark dining room" width="1600" height="1100"></div>
+          </div>
+          <div>
+            <p class="eyebrow label reveal"><span class="idx">iv.</span><span class="rule" aria-hidden="true"></span><span>The evening</span></p>
+            <h2 class="h2 reveal" id="room-title" style="--d:.08s">Front row to <em class="accent">the copper.</em></h2>
+            <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Two seatings a night at one long counter. Most evenings run two and a half hours, so plan to stay.</p>
+            <ol class="steps">
+              <li class="reveal"><span class="n">I</span><h3>Take your seat</h3><p>Your name card is on the seat you chose, with a glass of crémant to start.</p></li>
+              <li class="reveal" style="--d:.08s"><span class="n">II</span><h3>Watch the kitchen</h3><p>The chefs talk you through each course as they cook it in front of you.</p></li>
+              <li class="reveal" style="--d:.16s"><span class="n">III</span><h3>Linger</h3><p>Cheese and coffee at the counter. The second seating stays until midnight.</p></li>
+            </ol>
+          </div>
+        </div>
+        <figure class="frame wide-photo wipe parallax">
+          <img loading="lazy" src="img/private.jpg" alt="A long table laid with candles and glassware" width="1600" height="1100">
+          <figcaption>The chef's table seats four to six, or book the whole room for eighteen.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Seats: floor plan + 3D view -->
+    <section class="section-y seats" id="seats" aria-labelledby="seats-title">
+      <div class="wrap">
+        <div class="menu-top">
+          <div>
+            <p class="eyebrow label reveal"><span class="idx">v.</span><span class="rule" aria-hidden="true"></span><span>Choose a seat</span></p>
+            <h2 class="h2 reveal" id="seats-title" style="--d:.08s">Sit where <em class="accent">you like.</em></h2>
+          </div>
+          <p class="lede reveal" style="--d:.16s">Tap a seat on the counter to see the kitchen from that chair, in 3D. Drag the view to look around, then book that seat.</p>
         </div>
         <div class="salle-grid">
-          <div class="plan-wrap rise">
-            <div class="plan" id="plan" data-role="view"></div>
+          <div class="plan-wrap reveal">
+            <div class="plan" id="plan"></div>
           </div>
-          <div class="view-wrap rise" style="--d:.1s">
+          <div class="view-wrap reveal" style="--d:.1s">
             <div class="viewer" id="viewer" tabindex="0" aria-label="The view from the selected seat. Drag, or use the arrow keys, to look around.">
               <img class="viewer-poster" id="viewerPoster" src="img/view-s07.jpg" alt="The view from seat 7, at the pass" width="1600" height="1000">
               <canvas id="viewerCanvas" aria-hidden="true"></canvas>
               <p class="viewer-state" id="viewerState" role="status">Loading the kitchen in 3D</p>
               <div class="viewer-look">
-                <button type="button" data-look="-1" aria-label="Look left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-                <button type="button" data-look="1" aria-label="Look right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+                <button type="button" data-look="-1" aria-label="Look left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <button type="button" data-look="1" aria-label="Look right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
               </div>
             </div>
             <div class="seat-card" aria-live="polite">
               <div>
                 <h3 id="seatName">Seat 7</h3>
-                <p class="seat-meta" id="seatMeta">Counter · facing the pass</p>
+                <p class="seat-meta label" id="seatMeta">Counter · facing the pass</p>
                 <p id="seatNote">Right in front of the pass, where every plate is finished.</p>
               </div>
-              <button class="btn btn-copper" type="button" id="seatBook">Book this seat</button>
+              <button class="btn btn-solid label" type="button" id="seatBook">Book this seat</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="menu" id="menu" aria-labelledby="menu-title">
-      <div class="frame">
-        <h2 class="h2 menu-title rise" id="menu-title">Seven courses</h2>
-        <div class="menu-grid">
-          <figure class="menu-pic rise"><img loading="lazy" src="img/c5.jpg" alt="Sauce poured over plated beef and a potato terrine" width="900" height="1125"><figcaption>Sauce poured at the counter</figcaption></figure>
-          <div class="menu-card rise" style="--d:.1s">
-            <p class="menu-word">Autumn menu, from the four stations</p>
-            <ol class="courses" id="courses"></ol>
-            <dl class="menu-price">
-              <div><dt>The menu</dt><dd>RM 420 a guest</dd></div>
-              <div><dt>Wine pairing, five glasses</dt><dd>RM 240</dd></div>
-              <div><dt>Without alcohol, five pours</dt><dd>RM 120</dd></div>
-            </dl>
-            <p class="menu-note">Sample menu for this demo. Tell us about allergies when you book and the kitchen will plan around them.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="evening" aria-labelledby="evening-title">
-      <div class="frame evening-head"><h2 class="h2 rise" id="evening-title">Your evening</h2><p class="rise" style="--d:.07s">Two and a half hours at the counter, in four parts.</p></div>
-      <div class="frame evening-list">
-      <div class="verb rise" style="--img:url(img/c1.jpg)"><p class="verb-word">Arrive</p><p class="verb-line"><strong>Arrive ten minutes early.</strong> Your name card is on your seat. Everyone starts together.</p></div>
-      <div class="verb rise" style="--img:url(img/c4.jpg)"><p class="verb-word">Watch</p><p class="verb-line"><strong>Watch the fire and the pans.</strong> Ask anything: the chefs talk you through each course.</p></div>
-      <div class="verb rise" style="--img:url(img/c2.jpg)"><p class="verb-word">Taste</p><p class="verb-line"><strong>Seven courses in two and a half hours.</strong> Each plate goes from the pass straight to you.</p></div>
-      <div class="verb rise" style="--img:url(img/c7.jpg)"><p class="verb-word">Linger</p><p class="verb-line"><strong>Stay for coffee and cheese.</strong> The second seating has the counter until midnight.</p></div>
-      </div>
-    </section>
-
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-      <div class="frame faq-grid">
-        <div class="faq-col">
-          <h2 class="h2 rise" id="faq-title">Before you come</h2>
-          <ul class="facts rise" style="--d:.07s">
-            <li>Seatings at 6:00 PM and 8:45 PM, Wednesday to Sunday</li>
-            <li>Jalan Telawi, Bangsar (demo address)</li>
-            <li>Park at Bangsar Village, three minutes on foot</li>
+    <!-- Reserve -->
+    <section class="section-y" id="reserve" aria-labelledby="reserve-title">
+      <div class="wrap reserve-grid">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">vi.</span><span class="rule" aria-hidden="true"></span><span>Reservations</span></p>
+          <h2 class="h2 reveal" id="reserve-title" style="--d:.08s">Reserve <em class="accent">your seats.</em></h2>
+          <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:28rem">Four short steps: the night, your seats on the counter, your details, done. You get a booking number straight away.</p>
+          <ul class="hours reveal" style="--d:.24s">
+            <li><span>First seating</span><span>6:00 PM</span></li>
+            <li><span>Second seating</span><span>8:45 PM</span></li>
+            <li><span>Chef's table</span><span>4 to 6 guests</span></li>
+            <li><span>Whole room</span><span>Up to 18 guests</span></li>
+            <li><span>Monday, Tuesday</span><span>Closed</span></li>
           </ul>
-          <div class="qa rise" style="--d:.14s">
-            <details><summary>Can we sit together as a group?</summary><p>Up to six sit side by side at the counter. For four to six who want to face each other, book the chef's table beside the pastry station.</p></details>
-            <details><summary>Can we take the whole counter?</summary><p>Yes. Choose seven or more guests and the request is for the whole room: twelve counter seats and the chef's table, eighteen in all. We confirm by phone within a day.</p></details>
-            <details><summary>What if my seat is taken?</summary><p>Taken seats are crossed out for that seating. Try the other seating, another night, or a seat at the same station.</p></details>
-            <details><summary>Can the kitchen cook around allergies?</summary><p>Yes, and around most diets. Write it in the notes when you book so the chefs can plan your courses.</p></details>
-            <details><summary>How do I change or cancel?</summary><p>Open "My booking" at the top of the page. Cancel up to 48 hours before at no charge.</p></details>
-          </div>
-          <div class="faq-actions"><button class="btn btn-copper" type="button" data-book>Reserve a seat</button><button class="link-btn" type="button" data-mine>My booking</button></div>
         </div>
-        <div class="faq-pics rise" style="--d:.1s">
-          <figure class="tall"><img loading="lazy" src="img/chef.jpg" alt="Herbs placed on a small plate with tweezers" width="1000" height="1250"></figure>
-          <figure class="sq"><img loading="lazy" src="img/petit.jpg" alt="A chocolate dessert shaped like a pine cone" width="900" height="1125"></figure>
+        <div class="quick reveal" style="--d:.12s">
+          <h3>Which night?</h3>
+          <p class="sub">Pick a date to start. You can change it later.</p>
+          <div class="days" id="quickDays" role="group" aria-label="Choose a date"></div>
+          <button class="btn btn-solid btn-block label" type="button" data-book><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="fine">Demo: bookings are saved in this browser only, nobody receives them. <button type="button" class="link-inline" data-mine>My booking</button></p>
         </div>
       </div>
     </section>
 
-    <section class="visit" id="visit" aria-labelledby="visit-title">
-      <img class="visit-bg" loading="lazy" src="img/private.jpg" alt="" width="1600" height="1100">
-      <div class="frame">
-        <div class="visit-card rise">
-          <h2 class="h2" id="visit-title">Find the counter</h2>
-          <dl>
-            <div><dt>Address</dt><dd>Jalan Telawi, Bangsar<br>59100 Kuala Lumpur (demo address)</dd></div>
-            <div><dt>Seatings</dt><dd>Wednesday to Sunday, 6:00 PM and 8:45 PM<br>Closed Monday and Tuesday</dd></div>
-            <div><dt>Bookings</dt><dd>Online only, on this page.<br>We call you if anything changes.</dd></div>
+    <!-- FAQ -->
+    <section class="section-y faq" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+      <div class="wrap faq-grid">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">vii.</span><span class="rule" aria-hidden="true"></span><span>FAQ</span></p>
+          <h2 class="h2 reveal" id="faq-title" style="--d:.08s">Before you <em class="accent">arrive.</em></h2>
+        </div>
+        <div class="reveal" style="--d:.12s">
+          <details><summary>Can we sit together as a group?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Up to six sit side by side at the counter. For four to six who want to face each other, book the chef's table beside the pastry station.</p></div></div></details>
+          <details><summary>Can we take the whole room?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Choose seven or more guests and the request is for the whole room: twelve counter seats and the chef's table, eighteen in all. We confirm by phone within a day.</p></div></div></details>
+          <details><summary>What if my seat is taken?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Taken seats are crossed out for that seating. Try the other seating, another night, or a seat at the same station.</p></div></div></details>
+          <details><summary>Can the kitchen cook around allergies?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes, and around most diets. Write it in the notes when you book so the chefs can plan your courses.</p></div></div></details>
+          <details><summary>How do I change or cancel?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Open "My booking" in the menu. Cancel up to 48 hours before at no charge.</p></div></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visit -->
+    <section class="visit section-y" id="visit" aria-labelledby="visit-title">
+      <div class="wrap visit-grid">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">viii.</span><span class="rule" aria-hidden="true"></span><span>Visit</span></p>
+          <h2 class="h2 reveal" id="visit-title" style="--d:.08s">Find the <em class="accent">counter.</em></h2>
+          <dl class="contact reveal" style="--d:.16s">
+            <div><dt class="label">Address</dt><dd>Jalan Telawi, Bangsar<br>59100 Kuala Lumpur (demo address)</dd></div>
+            <div><dt class="label">Seatings</dt><dd>Wednesday to Sunday, 6:00 PM and 8:45 PM<br>Closed Monday and Tuesday</dd></div>
+            <div><dt class="label">Bookings</dt><dd>Online only, on this page. We call you if anything changes.</dd></div>
           </dl>
-          <button class="btn btn-copper" type="button" data-book>Reserve a seat</button>
+        </div>
+        <div class="map reveal" style="--d:.1s" role="img" aria-label="Illustrated map placeholder">
+          <span class="park" aria-hidden="true"></span>
+          <div class="pin"><span class="tag label">Chez Nous</span><span class="dot"></span></div>
+          <p class="cap label">Map placeholder</p>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="frame">
-      <div class="foot-cols rise">
-        <div><p class="foot-h">Chez Nous</p><p>Twelve seats at the counter and a chef's table for six. A fictional restaurant made for a website demo; the menu, prices and address are samples.</p></div>
-        <div><p class="foot-h">Pictures</p><p>The 3D counter was built in Blender for this demo. Models from Sketchfab under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: <a href="https://sketchfab.com/3d-models/1920s-leather-bar-stool-cebb9478ad5d4b80a40df7f3b7e6dbf9">bar stool</a> by Nicholas Record, <a href="https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4">kitchen set</a> by soidev, <a href="https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414">copper pans</a> by Jack Kelly, <a href="https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef">wine bottle and glass</a> by JoeDev. Food photos: Unsplash licence (<a href="img/CREDITS.txt">all credits</a>).</p></div>
-        <a class="foot-demo" href="https://irfanhakimi.com/kerja/"><span class="foot-h">Demo by Irfan Hakimi</span><span>Want a site like this for your restaurant? See packages at irfanhakimi.com/kerja</span></a>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <span class="wordmark"><span class="name">CHEZ NOUS</span><span class="sub label">Comptoir français</span></span>
+          <p class="blurb">Twelve seats at a French chef's counter and a chef's table for six. Two seatings a night, Wednesday to Sunday.</p>
+        </div>
+        <a class="demo-card" href="https://irfanhakimi.com/kerja/">
+          <p class="label">Demo by Irfan Hakimi</p>
+          <p class="t">Want a site like this for your restaurant?</p>
+          <p class="d">See packages and prices at irfanhakimi.com/kerja</p>
+        </a>
       </div>
-      <p class="foot-name" aria-hidden="true">Chez Nous</p>
+      <div class="foot-legal">
+        <p>Chez Nous is a fictional restaurant made for a website demo. The menu, prices and address are placeholders. Food photos: Unsplash, free licence stock, not of a real venue.</p>
+        <p>3D counter built in Blender with Sketchfab models under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: <a href="https://sketchfab.com/3d-models/1920s-leather-bar-stool-cebb9478ad5d4b80a40df7f3b7e6dbf9">bar stool</a> by Nicholas Record, <a href="https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4">kitchen set</a> by soidev, <a href="https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414">copper pans</a> by Jack Kelly, <a href="https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef">wine bottle and glass</a> by JoeDev. <a href="img/CREDITS.txt">All credits</a></p>
+      </div>
     </div>
   </footer>
 
+  <div class="book-bar" id="bookBar" aria-hidden="true">
+    <button class="btn btn-solid btn-block label" type="button" data-book tabindex="-1"><span>Reserve your seats</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+
+  <!-- Booking sheet -->
   <div class="sheet-wrap" id="booking" role="dialog" aria-modal="true" aria-labelledby="bookTitle">
     <div class="sheet-backdrop" data-close></div>
     <div class="sheet">
       <div class="sheet-head">
-        <p class="sheet-title" id="bookTitle">Reserve at Chez Nous</p>
-        <button class="sheet-close" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="sheet-top">
+          <p class="t" id="bookTitle">Reserve at Chez Nous</p>
+          <button class="sheet-close" type="button" data-close aria-label="Close booking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
         <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <p class="step-name" id="stepName">Step 1 of 4 · When</p>
+        <p class="step-name label"><span id="stepName">When</span><span id="stepCount">Step 1 of 4</span></p>
       </div>
 
-      <form class="steps" id="bookForm" novalidate>
+      <form class="steps-viewport" id="bookForm" novalidate>
         <section class="step active" data-step="0" aria-label="Date, seating and guests">
-          <h2 tabindex="-1">Which night?</h2>
-          <p class="q">Date</p>
+          <h2 tabindex="-1">Which night, and <em class="accent">how many?</em></h2>
+          <p class="q label">Date</p>
           <div class="days" id="days" role="group" aria-label="Choose a date"></div>
           <p class="err" id="dateErr"></p>
-          <p class="q">Seating</p>
+          <p class="q label">Seating</p>
           <div class="times" id="times" role="group" aria-label="Choose a seating">
-            <button type="button" class="time" data-time="18:00" aria-pressed="false"><b>6:00</b><span>First seating</span></button>
-            <button type="button" class="time" data-time="20:45" aria-pressed="false"><b>8:45</b><span>Second seating</span></button>
+            <button type="button" class="time" data-time="18:00" aria-pressed="false"><span class="big">18:00</span><span class="label">First seating</span></button>
+            <button type="button" class="time" data-time="20:45" aria-pressed="false"><span class="big">20:45</span><span class="label">Second seating</span></button>
           </div>
           <p class="err" id="timeErr"></p>
-          <p class="q">Guests</p>
+          <p class="q label">Guests</p>
           <div class="guests">
-            <button type="button" id="gMinus" aria-label="One fewer guest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></button>
+            <button type="button" id="gMinus" aria-label="One fewer guest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 12h12"/></svg></button>
             <output id="gCount" aria-live="polite">2 guests</output>
-            <button type="button" id="gPlus" aria-label="One more guest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
+            <button type="button" id="gPlus" aria-label="One more guest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
           </div>
           <p class="hint" id="guestHint"></p>
         </section>
 
         <section class="step" data-step="1" aria-label="Seats">
-          <h2 tabindex="-1">Where will you sit?</h2>
+          <h2 tabindex="-1">Where will you <em class="accent">sit?</em></h2>
           <p class="hint" id="seatFor"></p>
-          <div class="plan plan-small" id="bookPlan" data-role="book"></div>
-          <img class="table-preview" id="seatPreview" src="img/view-s07.jpg" alt="" width="1600" height="1000" hidden>
+          <div class="plan plan-small" id="bookPlan"></div>
+          <img class="seat-preview" id="seatPreview" src="img/view-s07.jpg" alt="" width="1600" height="1000" hidden>
           <p class="pick-sum" id="pickSum" aria-live="polite"></p>
           <p class="err" id="seatErr"></p>
         </section>
 
         <section class="step" data-step="2" aria-label="Your details">
-          <h2 tabindex="-1">Your details</h2>
-          <div class="field" id="nameField"><label for="name">Name</label><input id="name" name="name" autocomplete="name" enterkeyhint="next"><p class="err" id="nameErr"></p></div>
-          <div class="field" id="phoneField"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012 345 6789" enterkeyhint="next"><p class="err" id="phoneErr"></p></div>
-          <div class="field" id="emailField"><label for="email">Email</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" enterkeyhint="next"><p class="err" id="emailErr"></p></div>
-          <p class="q">Occasion</p>
-          <div class="chips" id="occasions">
+          <h2 tabindex="-1">A few <em class="accent">details.</em></h2>
+          <div class="field" id="nameField"><label class="label" for="name">Name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" enterkeyhint="next"><p class="err" id="nameErr"></p></div>
+          <div class="field" id="phoneField"><label class="label" for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012 345 6789" enterkeyhint="next"><p class="err" id="phoneErr"></p></div>
+          <div class="field" id="emailField"><label class="label" for="email">Email</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" enterkeyhint="next"><p class="err" id="emailErr"></p></div>
+          <p class="q label">Occasion (optional)</p>
+          <div class="occasions" id="occasions">
             <button type="button" class="chip" aria-pressed="false">Birthday</button>
             <button type="button" class="chip" aria-pressed="false">Anniversary</button>
             <button type="button" class="chip" aria-pressed="false">Proposal</button>
             <button type="button" class="chip" aria-pressed="false">Business</button>
           </div>
-          <div class="field"><label for="notes">Allergies and notes</label><textarea id="notes" name="notes"></textarea></div>
+          <div class="field"><label class="label" for="notes">Allergies and notes (optional)</label><textarea id="notes" name="notes" placeholder="Allergies, preferences, anything we should prepare for"></textarea></div>
         </section>
 
         <section class="step" data-step="3" aria-label="Check and confirm">
-          <h2 tabindex="-1">Check and confirm</h2>
-          <div class="review" id="review"></div>
-          <p class="fine">Demo: the booking is saved in this browser only. Nobody receives it.</p>
+          <h2 tabindex="-1">All <em class="accent">set?</em></h2>
+          <div class="tix" id="review"></div>
+          <p class="fine done-note">Demo: the booking is saved in this browser only. Nobody receives it.</p>
         </section>
 
         <section class="step" data-step="4" aria-label="Confirmed">
-          <h2 tabindex="-1" id="doneTitle">You're booked</h2>
-          <div class="review" id="done"></div>
+          <h2 tabindex="-1" id="doneTitle">You're <em class="accent">booked.</em></h2>
+          <div class="tix" id="done"></div>
           <div class="done-actions">
-            <button type="button" class="btn btn-copper" id="icsBtn">Add to calendar</button>
-            <button type="button" class="link-btn" id="viewMine">See all my bookings</button>
+            <button type="button" class="btn btn-solid label" id="icsBtn">Add to calendar</button>
+            <button type="button" class="link-inline" id="viewMine">See all my bookings</button>
           </div>
         </section>
 
         <section class="step" data-step="5" aria-label="My bookings">
-          <h2 tabindex="-1">My bookings</h2>
+          <h2 tabindex="-1">My <em class="accent">bookings.</em></h2>
           <div id="mineList"></div>
         </section>
       </form>
 
       <div class="sheet-foot" id="sheetFoot">
-        <button class="btn btn-ghost" type="button" id="stepBack">Back</button>
-        <button class="btn btn-copper" type="button" id="stepNext">Next</button>
+        <button class="btn btn-ghost back" type="button" id="stepBack" aria-label="Back" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button class="btn btn-solid label next" type="button" id="stepNext"><span id="nextLabel">Choose your seats</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       </div>
     </div>
   </div>
 
-  <script src="app.js?v=6"></script>
-  <script type="module" src="viewer.js?v=6"></script>
+  <!-- Dish sheet -->
+  <div class="sheet-wrap dish-sheet" id="dishSheet" role="dialog" aria-modal="true" aria-labelledby="dishName">
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet">
+      <div class="frame photo"><img id="dishImg" src="img/c1.jpg" alt=""></div>
+      <button class="x" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="info">
+        <div class="row"><h3 id="dishName">Dish</h3><span class="price" id="dishPrice"></span></div>
+        <p id="dishDesc"></p>
+        <button class="btn btn-solid btn-block label" type="button" data-book style="margin-top:1.25rem"><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js?v=11"></script>
+  <script type="module" src="viewer.js?v=11"></script>
 </body>
 </html>
