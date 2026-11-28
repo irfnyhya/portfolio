@@ -840,8 +840,11 @@ h1, h2, h3, .h2, .step h2, .quick h3, .dish h3, .card h3, .steps h3, .faq summar
 @media (prefers-reduced-motion: reduce) { .pick .seat-preview, .plan .seat { transition: none; } .plan .seat[aria-pressed=true] { transform: translate(-50%, -50%); } }
 
 /* Wider booking sheet on desktop so the seat plan fits flat */
-@media (min-width: 768px) { #booking .sheet { width: min(44rem, calc(100% - 1.5rem)); } }
+@media (min-width: 768px) { #booking .sheet { width: min(40rem, calc(100% - 1.5rem)); } }
 .sheet .plan .pl-kitchen b, .sheet .plan .pl-plating b { font-size: .55rem; }
 .plan-small { margin-top: 1rem; }
-/* keep the whole seat step on one screen: the plan shrinks with the window height */
-@media (min-width: 768px) { .sheet .plan-small { width: min(100%, calc((100svh - 560px) * 1.5)); padding-bottom: 0 !important; height: auto; aspect-ratio: 9.6 / 6.45; margin-inline: auto; } }
+/* desktop: no scrolling needed, so the view and its caption sit plainly above the plan */
+@media (min-width: 768px) {
+  .pick { position: static; margin-inline: 0; padding: 0; background: none; border: 0; grid-template-columns: 10rem 1fr; }
+  .sheet .plan-small { margin-top: 1.25rem; }
+}
