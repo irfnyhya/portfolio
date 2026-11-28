@@ -118,7 +118,7 @@ def tex_marble(name, base, vein, n=512, seed=1, veins=5.0, sharp=24.0):
 
 TEX = {"nero": tex_marble("nero_marquina", "#0d0d0e", "#d9d4cb", seed=4, veins=4.0, sharp=30.0),
        "calacatta": tex_marble("calacatta", "#ece7de", "#9b8a6d", seed=9, veins=3.0, sharp=18.0),
-       "onyx": tex_marble("onyx", "#b98a55", "#f3dfbd", seed=2, veins=6.0, sharp=9.0),
+       "onyx": tex_marble("onyx", "#a98d6c", "#f4e8d4", seed=2, veins=6.0, sharp=9.0),
        "panels": tex_panels(), "granite": tex_granite(), "chevron": tex_chevron(), "plaster": tex_plaster(), "ktile": tex_ktile(),
        "slat": tex_wood("slat_wood", "#6b4a2f", stretch=90), "walnut": tex_wood("walnut", "#3a2618", stretch=120)}
 
@@ -161,7 +161,7 @@ M = {
     "flame_s": mat("Candle_Flame", "#ffd08a", 1.0, emit="#ffb34f", strength=14),
     "bloom": mat("Flower_Cream", "#efe2cf", 0.7),
     "bloom2": mat("Flower_Blush", "#d9a7a0", 0.7),
-    "onyx": mat("Onyx_Backlit", "#ffffff", 0.3, emit_tex=TEX["onyx"], strength=0.55),
+    "onyx": mat("Onyx_Backlit", "#ffffff", 0.3, emit_tex=TEX["onyx"], strength=0.28),
     "calacatta": mat("Marble_Calacatta", "#ffffff", 0.12, tex=TEX["calacatta"]),
     "crystal": mat("Crystal", "#f4f8fa", 0.02, alpha=0.18),
     "menu": mat("Menu_Paper", "#e9e4d8", 0.9),
@@ -346,22 +346,22 @@ for x in (-5.5, 5.5):
     for e in (-0.67, 0.67): boxb(0.04, 0.04, 2.58, x + e, Y1 - 0.67, 0.16, M["brass"])
     for zz in (0.16, 2.72): boxb(1.38, 0.04, 0.04, x, Y1 - 0.67, zz, M["brass"])
 BLOCKS = [("grill", -4.2, -2.0), ("stove", -1.2, 1.8), ("pastry", 2.6, 4.0)]
-for key, bx0, bx1 in BLOCKS:
-    boxb(bx1 - bx0, KY1 - KY0, 0.88, (bx0 + bx1) / 2, KYc, 0, M["steel_dark"])
-    boxb(bx1 - bx0 + 0.03, KY1 - KY0 + 0.03, 0.04, (bx0 + bx1) / 2, KYc, 0.88, M["steel"])
+WT_TOP = 0.9   # top of the stainless work tables (Sketchfab model), checked in the renders
+RANGE_TOP = 0.92  # cooking surface of the range model
 # grill block: charcoal under a grate
-boxb(1.7, 0.5, 0.1, -3.1, KYc, 0.92, M["black"]); boxb(1.6, 0.42, 0.02, -3.1, KYc, 0.99, M["ember"])
-for i in range(17): box(0.01, 0.44, 0.01, -3.85 + i * 0.094, KYc, 1.03, M["steel_dark"])
-for i in range(6): cyl(0.03, 0.03, 0.04, -3.7 + i * 0.25, KYc - 0.05 + (i % 2) * 0.1, 1.03, M["food"], seg=8, rx=math.pi / 2)
+GZ = WT_TOP + 0.02
+boxb(1.5, 0.48, 0.12, -3.1, KYc - 0.1, GZ, M["black"]); boxb(1.42, 0.4, 0.02, -3.1, KYc - 0.1, GZ + 0.07, M["ember"])
+for i in range(16): box(0.01, 0.42, 0.01, -3.8 + i * 0.093, KYc - 0.1, GZ + 0.11, M["steel_dark"])
+for i in range(6): cyl(0.03, 0.03, 0.04, -3.6 + i * 0.22, KYc - 0.15 + (i % 2) * 0.1, GZ + 0.11, M["food"], seg=8, rx=math.pi / 2)
+for i in range(4): cyl(0.012, 0.012, 0.03, -3.75 + i * 0.45, KYc - 0.35, GZ + 0.02, M["steel"], seg=8, rx=math.pi / 2)   # grill knobs
 # stove block: six flames and a dark steel hood above
-for x in (-0.8, -0.2, 0.4, 1.0, 1.4):
-    cyl(0.11, 0.11, 0.01, x, KYc, 0.92, M["flame"], seg=16)
+
 boxb(3.2, 0.95, 0.6, 0.3, KYc + 0.05, 2.25, M["steel_dark"])
 boxb(3.1, 0.85, 0.01, 0.3, KYc + 0.05, 2.245, M["strip"])
 # pastry block: marble top, a board, little cakes under glass
-boxb(1.35, KY1 - KY0 - 0.05, 0.03, 3.3, KYc, 0.92, M["marble"]); boxb(0.45, 0.3, 0.02, 3.0, KYc, 0.95, M["board"])
-for i in range(3): sphere(0.045, 3.65, KYc - 0.15 + i * 0.15, 0.99, M["plate"], seg=10, sz=0.7)
-sphere(0.16, 3.65, KYc, 0.95, M["glass"], seg=16, sz=0.9)
+boxb(0.95, 0.6, 0.03, 2.95, KYc - 0.15, WT_TOP, M["calacatta"]); boxb(0.4, 0.28, 0.02, 2.85, KYc - 0.2, WT_TOP + 0.03, M["board"])
+for i in range(3): sphere(0.045, 3.2, KYc - 0.3 + i * 0.13, WT_TOP + 0.07, M["plate"], seg=10, sz=0.7)
+sphere(0.15, 3.2, KYc - 0.17, WT_TOP + 0.03, M["crystal"], seg=16, sz=0.9)
 
 # the plating table: black stone, a row of plates being finished
 boxb(7.2, PY1 - PY0, 0.86, 0, IY, 0, M["wall"])
@@ -466,7 +466,6 @@ SEAT_DEF = [(-4.22, 0.4, E_, "grill"), (-4.22, -0.35, E_, "grill"),
             (0.45, -1.52, N_, "pass"), (1.35, -1.52, N_, "stove"), (2.25, -1.52, N_, "stove"),
             (4.22, -0.35, W_, "pastry"), (4.22, 0.4, W_, "pastry")]
 for sx_, sy_, f, _ in SEAT_DEF:
-    tub_chair(sx_, sy_, f)
     place_setting(sx_, sy_, f)
 LAMPS = [(-1.8, -0.62), (0.0, -0.62), (1.8, -0.62), (-3.38, 0.02), (3.38, 0.02)]
 for lx, ly in LAMPS: table_lamp(lx, ly)
@@ -540,6 +539,53 @@ def place(name, meshes, x, y, z, rz=0.0, decimate=None):
         if decimate:
             md = o.modifiers.new("Lighter", "DECIMATE"); md.ratio = decimate
 
+def decimated(meshes, ratio):
+    """Return lighter copies of meshes (decimated once, so every placed copy shares the same mesh)."""
+    out = []
+    for m in meshes:
+        tmp = bpy.data.objects.new("tmp_dec", m); col.objects.link(tmp)
+        md = tmp.modifiers.new("d", "DECIMATE"); md.ratio = ratio
+        dg = bpy.context.evaluated_depsgraph_get()
+        out.append(bpy.data.meshes.new_from_object(tmp.evaluated_get(dg)))
+        bpy.data.objects.remove(tmp, do_unlink=True)
+    return out
+
+def restyle(meshes, mapping):
+    """Swap a model's materials for ours by material name (substring match)."""
+    for m in meshes:
+        for i, slot in enumerate(m.materials):
+            for key, mi in mapping.items():
+                if slot and key.lower() in slot.name.lower():
+                    m.materials[i] = MATS[mi]
+
+def fit_height(meshes, h):
+    s_ = h / height(meshes)
+    for m in meshes: m.transform(Matrix.Scale(s_, 4))
+
+# Lena chairs in emerald velvet with brass legs, facing the counter
+chair = list(load_protos("chair/scene.gltf", [""], 1.0).values()); recentre(chair)
+chair = decimated(chair, 0.3); recentre(chair)
+restyle(chair, {"Seat": M["velvet"], "Back": M["velvet"], "Legs": M["brass"]})
+for sx_, sy_, f, _ in SEAT_DEF:
+    place("Chair", chair, sx_, sy_, 0, rz=f + math.pi / 2)
+
+# three commercial ranges under the hood (the stove station)
+rng_ = list(load_protos("range/scene.gltf", [""], 1.0).values()); recentre(rng_)
+for x in (-0.85, 0.15, 1.15): place("Range", rng_, x, KYc + 0.05, 0, rz=0.0)
+
+# stainless work tables under the grill and the pastry station
+wt = list(load_protos("worktable/scene.gltf", [""], 1.0).values()); recentre(wt)
+wt = decimated(wt, 0.3); recentre(wt)
+restyle(wt, {"material": M["steel"]})
+place("WorkTable", wt, -3.1, KYc + 0.05, 0, rz=0.0)
+place("WorkTable", wt, 3.35, KYc + 0.05, 0, rz=0.0)
+
+# combi oven on the pastry table
+combi = list(load_protos("combi/scene.gltf", [""], 1.0).values()); recentre(combi)
+fit_height(combi, 0.75); recentre(combi)
+restyle(combi, {"front": M["black"], "touch": M["black"], "color": M["steel"], "auto": M["steel"], "zone": M["steel"]})
+place("Combi", combi, 3.85, KYc + 0.15, WT_TOP, rz=0.0)
+
 kit = load_protos("kitchen/scene.gltf", ["SM_"], 0.01)
 def kpart(key):
     hit = [m for n_, m in kit.items() if n_.startswith(key + "_") and "Dirty" not in n_]
@@ -549,11 +595,11 @@ for m in wglass: m.transform(Matrix.Scale(1.9, 4))
 for gx, gy in GLASS_SPOTS: place("WineGlass", wglass, gx, gy, CT_Z)
 for i, key in enumerate(["SM_Pot_01", "SM_Pot_02", "SM_Pot_05", "SM_Pot_04", "SM_Pot_06", "SM_Pot_01", "SM_Pot_05", "SM_Pot_02"]):
     place("ShelfPot", kpart(key), -4.2 + i * 1.2, Y1 - 0.15, 1.68, random.uniform(0, 6.28))
-for key, x in (("SM_Pot_03", -0.8), ("SM_Pot_05", 1.4)):
-    place("StovePot", kpart(key), x, KYc, 0.93, 0.4)
+for key, x in (("SM_Pot_03", -0.85), ("SM_Pot_05", 1.15)):
+    place("StovePot", kpart(key), x, KYc - 0.1, RANGE_TOP, 0.4)
 
 copper = list(load_protos("copper/scene.gltf", ["material"], 0.5).values()); recentre(copper)
-place("Copper", copper, 0.3, KYc, 0.92, 0.2)
+place("Copper", copper, 0.15, KYc - 0.1, RANGE_TOP, 0.2)
 place("Copper", copper, -3.0, Y1 - 0.18, 2.13, 1.2)
 
 wine = list(load_protos("wine/scene.gltf", ["poly"], 1.9).values()); recentre(wine)

@@ -35,7 +35,7 @@ function init() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.85;
+  renderer.toneMappingExposure = 0.75;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -63,7 +63,7 @@ function init() {
 
   function addLights(data) {
     scene.add(new THREE.HemisphereLight(0xfff1dd, 0x101010, 0.12));
-    const I = { dome: 4, lamp: 0.7, pass: 1, hood: 2.2, down: 0.4, grill: 2, wine: 1.4, art: 1.8, host: 0.5, console: 0.5, chandelier: 2.6, candle: 0.25, onyx: 1.6 };
+    const I = { dome: 3, lamp: 0.35, pass: 0.8, hood: 1.8, down: 0.3, grill: 1.8, wine: 1.2, art: 1.5, host: 0.4, console: 0.4, chandelier: 1.5, candle: 0.12, onyx: 1.0 };
     const C = { grill: 0xff7a2a, pass: 0xffc488, wine: 0xffb46a, candle: 0xffa040, onyx: 0xffb070, chandelier: 0xffc98a };
     for (const l of data.lights) {
       const range = l.kind === "lamp" || l.kind === "candle" ? 1.6 : l.kind === "dome" ? 3.2 : 7;

@@ -11,6 +11,10 @@ textures reduced to 512 px and placed in the scene:
 - "[FREE] Pothos Potted Plant - Money Plant" by AllQuad, https://sketchfab.com/3d-models/free-pothos-potted-plant-money-plant-e9832f38484f4f85b3f9081b51fa3799
 - "Modern Abstract Painting" by fnocwei, https://sketchfab.com/3d-models/modern-abstract-painting-1ddea2a792dc4d6593438132f95f74b7
 - "Vase - Louvre Museum (Low Definition)" by Benjamin Bardou, https://sketchfab.com/3d-models/vase-louvre-museum-low-definition-660fb742a5ff4580862cf5f9eb690d92
+- "Commercial Electric Range" by Syrus_Michaels, https://sketchfab.com/3d-models/commercial-electric-range-20b3415e5d4e475799a65399d10f7e6f
+- "Chair Lena" by formiodesign, https://sketchfab.com/3d-models/chair-lena-5373d79a24b3442fb4320e6e7d70feac (recoloured)
+- "Combi 6H" by daviddesalvo, https://sketchfab.com/3d-models/combi-6h-60e12e773ef74fb6b7c988ec91e77e97 (labels removed, plain steel)
+- "Stainless steel commercial work table" by david.07eg, https://sketchfab.com/3d-models/stainless-steel-commercial-work-table-6ad18d2957a64e359e3700bbbf934e0c
 
 Food and table photos below are from Unsplash, free to use under the Unsplash License
 (https://unsplash.com/license), reused from the Lindap demo. None shows Chez Nous.
