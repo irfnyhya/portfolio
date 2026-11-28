@@ -6,7 +6,7 @@
     <title>Irfan Hakimi | Laman web dan sistem untuk bisnes kecil</title>
     <meta
       name="description"
-      content="Laman web, kedai online dan sistem tempahan untuk kedai, klinik dan servis kecil di Malaysia. Cuba tiga demo di telefon anda dan minta sebut harga percuma di WhatsApp."
+      content="Laman web, kedai online dan sistem tempahan untuk kedai, klinik dan servis kecil di Malaysia. Cuba empat demo di telefon anda dan minta sebut harga percuma di WhatsApp."
     />
     <link rel="canonical" href="https://irfanhakimi.com/kerja/" />
     <meta property="og:type" content="website" />
@@ -480,6 +480,10 @@
         background: #22140c;
       }
 
+      .demo:nth-child(4) .demo-stage {
+        background: #0e0d0b;
+      }
+
       .demo-stage .phone {
         --w: 250px;
       }
@@ -937,7 +941,8 @@
           column-gap: clamp(32px, 5vw, 96px);
         }
 
-        .demo:nth-child(2) .demo-stage {
+        .demo:nth-child(2) .demo-stage,
+        .demo:nth-child(4) .demo-stage {
           order: 2;
         }
 
@@ -1130,7 +1135,7 @@
         <div class="section-head" data-reveal>
           <h2 class="h-section" id="demo-h" data-i18n="demoTitle">Cuba demo dulu</h2>
           <p class="lead" data-i18n="demoLead">
-            Tiga bisnes contoh. Buka di telefon anda dan tekan apa sahaja,
+            Empat bisnes contoh. Buka di telefon anda dan tekan apa sahaja,
             macam pelanggan anda nanti.
           </p>
         </div>
@@ -1197,6 +1202,28 @@
               <p class="fits" data-i18n="d3Fits"><b>Sesuai untuk</b> restoran, kafe, katering dan dewan majlis.</p>
               <div class="demo-actions">
                 <a class="btn btn-accent" href="/demo/restoran/" aria-describedby="d3-title" data-i18n="seeDemo">Tengok demo</a>
+              </div>
+            </div>
+          </li>
+          <li class="demo">
+            <div class="demo-stage" data-reveal>
+              <a class="phone" href="/demo/chez-nous/" tabindex="-1" aria-hidden="true">
+                <span class="screen"><img src="img/chez-nous-phone.jpg" width="450" height="3897" loading="lazy" alt="" /></span>
+              </a>
+            </div>
+            <div class="demo-text" data-reveal style="--i: 1">
+              <h3 class="h-item" id="d4-title">Chez Nous</h3>
+              <p class="kind" data-i18n="d4Kind">Restoran kaunter chef dengan pandangan 3D</p>
+              <p data-i18n="d4Text">
+                Sepuluh kerusi mengelilingi dapur terbuka. Tetamu pilih tarikh dan
+                slot masa yang menunjukkan baki kerusi, kemudian tekan kerusi sendiri
+                dan nampak pemandangan dari setiap kerusi dalam 3D. Kerusi terus
+                ditahan sementara deposit diatur. Laman ini dalam bahasa Inggeris.
+              </p>
+              <p class="fits" data-i18n="d4Fits"><b>Sesuai untuk</b> fine dining, omakase, bar koktel dan private dining.</p>
+              <div class="demo-actions">
+                <a class="btn btn-accent" href="/demo/chez-nous/" aria-describedby="d4-title" data-i18n="seeDemo">Tengok demo</a>
+                <a class="link" href="/demo/chez-nous/#seats" data-i18n="d4Seat">Pilih kerusi dalam 3D</a>
               </div>
             </div>
           </li>
@@ -1395,7 +1422,7 @@
           "Every business needs something different. After we talk, I give you one clear price, with the finish date and what is included. No hidden charges.",
         demoTitle: "Try the demos",
         demoLead:
-          "Three example businesses. Open them on your phone and tap anything, just like your customers would.",
+          "Four example businesses. Open them on your phone and tap anything, just like your customers would.",
         d1Kind: "Online shop with checkout",
         d1Text:
           "Womenswear, handbags and heels. Customers fill a cart and pay by FPX, card, DuitNow QR, digital wallet or Atome, then get an order confirmation with tracking. The owner sees every paid order. Demo only, no money is taken.",
@@ -1411,6 +1438,11 @@
         d3Text:
           "Twelve seats facing an open kitchen, a menu chosen by the chef and two seatings a night. Guests book their seats, or the whole counter for 12, and a WhatsApp message is ready to send. The site is in English.",
         d3Fits: "<b>Good for</b> restaurants, cafes, catering and event halls.",
+        d4Kind: "Chef's counter restaurant with a 3D seat view",
+        d4Text:
+          "Ten seats around an open kitchen. Guests pick a date and a time slot that shows the seats left, then tap their own seats and see the view from each one in 3D. The seats are held at once while the deposit is arranged. The site is in English.",
+        d4Fits: "<b>Good for</b> fine dining, omakase counters, cocktail bars and private dining.",
+        d4Seat: "Pick a seat in 3D",
         seeDemo: "Open the demo",
         pickTitle: "What kind of business?",
         kKedai: "Shops and online selling",
