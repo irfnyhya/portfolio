@@ -1,0 +1,28 @@
+Picture credits for the Chez Nous demo (demo/chez-nous/)
+
+3D counter (model/room.glb) and seat views (view-*.jpg): built in Blender for this demo
+(tools/chez-nous/build_room.py). Not a real venue. Chez Nous is fictional.
+It uses these models from Sketchfab, each under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/),
+textures reduced to 512 px and placed in the scene:
+- "Restaurant Kitchen Set - Part 1" by soidev, https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4
+- "3DDecember 2021 - Copper Pots and Pans" by Jack Kelly, https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414
+- "Wine Bottle and Glass" by JoeDev, https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef
+- "Fiddle Leaf Fig" by Dahlia, https://sketchfab.com/3d-models/fiddle-leaf-fig-7689508dc9d9481c934a412255e8de67
+- "[FREE] Pothos Potted Plant - Money Plant" by AllQuad, https://sketchfab.com/3d-models/free-pothos-potted-plant-money-plant-e9832f38484f4f85b3f9081b51fa3799
+- "Modern Abstract Painting" by fnocwei, https://sketchfab.com/3d-models/modern-abstract-painting-1ddea2a792dc4d6593438132f95f74b7
+- "Vase - Louvre Museum (Low Definition)" by Benjamin Bardou, https://sketchfab.com/3d-models/vase-louvre-museum-low-definition-660fb742a5ff4580862cf5f9eb690d92
+- "Commercial Electric Range" by Syrus_Michaels, https://sketchfab.com/3d-models/commercial-electric-range-20b3415e5d4e475799a65399d10f7e6f
+- "Chair Lena" by formiodesign, https://sketchfab.com/3d-models/chair-lena-5373d79a24b3442fb4320e6e7d70feac (recoloured)
+- "Combi 6H" by daviddesalvo, https://sketchfab.com/3d-models/combi-6h-60e12e773ef74fb6b7c988ec91e77e97 (labels removed, plain steel)
+- "Stainless steel commercial work table" by david.07eg, https://sketchfab.com/3d-models/stainless-steel-commercial-work-table-6ad18d2957a64e359e3700bbbf934e0c
+
+Food and table photos below are from Unsplash, free to use under the Unsplash License
+(https://unsplash.com/license), reused from the Lindap demo. None shows Chez Nous.
+Also used: hero-wide.jpg, hero-tall.jpg, pass.jpg, detail.jpg, c1, c2, c4, c7, petit.jpg (see demo/restoran/img/CREDITS.txt).
+
+file           | used for                          | photographer        | source
+chef.jpg       | about section                     | Alfonso Betancourt  | https://unsplash.com/photos/chef-carefully-plating-a-gourmet-dish-with-tweezers-q4nWGwVM2Vk
+c5.jpg         | menu: Dry Aged Striploin          | Urban Gyllström     | https://unsplash.com/photos/chef-pouring-sauce-over-plated-steak-MaWMfm-HCqQ
+c6.jpg         | menu: Pandan Dome                | Madeline Liu        | https://unsplash.com/photos/gourmet-green-dessert-with-edible-flowers-and-gold-dust-dZR5FpxIROU
+room.jpg       | dining room                       | takahiro taguchi    | https://unsplash.com/photos/lighted-lamps-in-room-8l_RuuZrOyY
+private.jpg    | whole counter booking             | Nadia Valko         | https://unsplash.com/photos/dining-table-set-with-candles-0hAdietsUrE

@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Chez Nous · Chef's counter, Kuala Lumpur</title>
+  <meta name="description" content="Chez Nous is a fictional private French chef's counter: ten seats around an open kitchen. Pick your seat, see the view from it in 3D, and reserve it. A website demo by Irfan Hakimi.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:title" content="Chez Nous · Chef's counter">
+  <meta property="og:description" content="Ten seats around a French kitchen. Choose your seat, see its view in 3D, then book it. A website demo by Irfan Hakimi.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="img/view-hero.jpg">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="img/view-hero-tall.jpg" media="(max-width: 767px)">
+  <link rel="preload" as="image" href="img/view-hero.jpg" media="(min-width: 768px)">
+  <link rel="stylesheet" href="styles.css?v=25">
+  <script>document.documentElement.classList.add("js")</script>
+  <script type="importmap">
+    { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body>
+  <a class="skip label" href="#main">Skip to content</a>
+
+  <header class="site-header" id="header">
+    <div class="demo-strip">
+      <span>Demo by Irfan Hakimi.</span>
+      <a href="https://irfanhakimi.com/kerja/">Want one like this?</a>
+    </div>
+    <nav class="wrap nav" aria-label="Primary">
+      <a href="#top" class="wordmark" aria-label="Chez Nous, back to top">
+        <span class="name">CHEZ NOUS</span>
+        <span class="sub label">Comptoir français</span>
+      </a>
+      <ul class="nav-links">
+        <li><a class="label" href="#courses">Signatures</a></li>
+        <li><a class="label" href="#story">About</a></li>
+        <li><a class="label" href="#menu">Menu</a></li>
+        <li><a class="label" href="#seats">Seats</a></li>
+        <li><a class="label" href="#visit">Visit</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="btn btn-solid label nav-book" type="button" data-book>Reserve</button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+          <span class="bars" aria-hidden="true"><span></span><span></span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu">
+    <ul class="wrap">
+      <li><a href="#courses"><span>I</span>Signatures</a></li>
+      <li><a href="#story"><span>II</span>About</a></li>
+      <li><a href="#menu"><span>III</span>Menu</a></li>
+      <li><a href="#seats"><span>IV</span>Choose a seat</a></li>
+      <li><a href="#reserve"><span>V</span>Reserve</a></li>
+      <li><a href="#visit"><span>VI</span>Visit</a></li>
+      <li><a href="#reserve" data-mine><span>VII</span>My bookings</a></li>
+    </ul>
+    <p class="wrap foot label"><span>Bangsar, Kuala Lumpur</span><span>Ten seats · Tue to Sun</span></p>
+  </div>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero grain" id="top">
+      <div class="hero-media" id="heroMedia">
+        <picture>
+          <source media="(min-width: 768px)" srcset="img/view-hero.jpg">
+          <img src="img/view-hero-tall.jpg" alt="The counter at Chez Nous in the dark: gold table lamps on black stone, black dome lamps over the open kitchen and lines of white light around it" fetchpriority="high">
+        </picture>
+      </div>
+      <canvas id="embers" aria-hidden="true"></canvas>
+      <div class="hero-scrim" aria-hidden="true"></div>
+      <span class="hero-rails" aria-hidden="true"></span>
+
+      <div class="wrap hero-copy" id="heroCopy">
+        <p class="status fade-up" id="status" style="animation-delay:.05s"><span class="dot" aria-hidden="true"></span><span id="statusText">Bangsar · Five nights a week</span></p>
+        <h1>
+          <span class="line"><span style="animation-delay:.05s">Dinner in</span></span>
+          <span class="line"><span style="animation-delay:.1s">the <em class="accent">dark.</em></span></span>
+        </h1>
+        <div class="hero-foot">
+          <p class="fade-up" style="animation-delay:.15s">A private French counter in Bangsar. Ten seats in a black room, lit only by table lamps, around an open kitchen where every course is cooked and plated in front of you. Reservation only, and you choose your seat.</p>
+          <div class="ticket fade-up" style="animation-delay:.2s" aria-label="Seatings tonight">
+            <div class="ticket-meta"><span class="tag label">Tonight</span><span class="label">Four time slots · 10 seats each</span></div>
+            <div class="ticket-times">
+              <div><p class="big">16:00</p><p class="label">First slot</p></div>
+              <span class="ticket-line" aria-hidden="true"></span>
+              <div class="r"><p class="big">20:15</p><p class="label">Last slot</p></div>
+            </div>
+            <p class="ticket-status"><span class="dot" aria-hidden="true"></span><span id="ticketStatus">Pick your seat in 3D · held on the spot</span></p>
+            <div class="ticket-ctas">
+              <button class="btn btn-ink label" type="button" data-book><span>Reserve a seat</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              <a class="btn btn-soft label" href="#seats"><span>See the seats</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signatures rail -->
+    <section class="section-y" id="courses" aria-labelledby="sig-title" style="padding-bottom:0">
+      <div class="wrap sig-head">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">i.</span><span class="rule" aria-hidden="true"></span><span>Signatures</span></p>
+          <h2 class="h2 reveal" id="sig-title" style="--d:.08s">Finished in front of <em class="accent">you.</em></h2>
+        </div>
+        <div class="sig-nav">
+          <button type="button" id="railPrev" aria-label="Previous dish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <button type="button" id="railNext" aria-label="Next dish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="rail reveal" id="rail" style="--d:.15s" tabindex="0" aria-label="Signature dishes, swipe to see more"></div>
+      <div class="wrap"><div class="rail-progress" aria-hidden="true"><span id="railBar"></span></div></div>
+    </section>
+
+    <!-- Story -->
+    <section class="section-y" id="story" aria-labelledby="story-title">
+      <div class="wrap story">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">ii.</span><span class="rule" aria-hidden="true"></span><span>About Chez Nous</span></p>
+          <h2 class="h2 reveal" id="story-title" style="--d:.08s">No wall between <em class="accent">us.</em></h2>
+          <div class="lede reveal" style="--d:.16s">
+            <p>Chez Nous is a French kitchen wrapped in a U-shaped counter of black stone, with two seats on each arm and six along the front. The counter is Nero Marquina marble edged in brass, the pass is Calacatta, and a brass chandelier of opal globes hangs over the front. Fluted walnut walls, backlit onyx and a glass-fronted wine wall frame the room. The room stays dark: a gold lamp at every pair of seats, dome lights over the stoves, and a frame of white light around the kitchen. All you see is the food being made.</p>
+            <p>Every seat looks at something different, so we let you choose yours. Sit by the grill if you like fire, in front of the plating table to watch every plate finished, or by the pastry marble for the soufflé.</p>
+          </div>
+          <p class="sign reveal" style="--d:.24s">À bientôt, au comptoir.</p>
+        </div>
+        <div class="story-media">
+          <div class="frame a wipe parallax"><img loading="lazy" src="img/pass.jpg" alt="A row of plates being finished at the kitchen pass" width="1000" height="1250"></div>
+          <div class="frame b wipe" style="--d:.25s"><img loading="lazy" src="img/detail.jpg" alt="A dessert finished with chocolate sauce" width="900" height="900"></div>
+        </div>
+      </div>
+      <div class="wrap">
+        <ul class="pillars">
+          <li class="reveal"><p class="num">I</p><h3>Ouvert</h3><p>Nothing happens behind a door. Every step of every dish is cooked in front of the counter.</p></li>
+          <li class="reveal" style="--d:.1s"><p class="num">II</p><h3>Choisi</h3><p>You pick your seat before you come, and see the view from it in 3D.</p></li>
+          <li class="reveal" style="--d:.2s"><p class="num">III</p><h3>De saison</h3><p>The menu follows the market and changes with every season.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Statement band -->
+    <section class="statement" aria-label="Chez Nous at a glance">
+      <p class="sr-only">Regarder, goûter, bavarder. One kitchen, ten seats.</p>
+      <div aria-hidden="true">
+        <p data-drift="1">Regarder <span class="dot">·</span> Goûter <span class="dot">·</span> Bavarder <span class="dot">·</span> Regarder</p>
+        <p class="outline" data-drift="-1">one kitchen · ten seats · one kitchen</p>
+      </div>
+    </section>
+
+    <!-- Menu -->
+    <section class="section-y" id="menu" aria-labelledby="menu-title">
+      <div class="wrap">
+        <div class="menu-top">
+          <div>
+            <p class="eyebrow label reveal"><span class="idx">iii.</span><span class="rule" aria-hidden="true"></span><span>La carte</span></p>
+            <h2 class="h2 reveal" id="menu-title" style="--d:.08s">Seven courses, <em class="accent">or à la carte.</em></h2>
+          </div>
+          <div class="reveal" style="--d:.16s">
+            <p class="lede">Take the seven-course menu at RM 420, or order from the sections below and the kitchen will pace the plates for you. Tap a dish to see it closer.</p>
+            <p class="note" role="note" style="margin-top:1.25rem">Sample menu for this demo. Dishes and prices are examples only.</p>
+          </div>
+        </div>
+        <div class="chips" role="tablist" aria-label="Menu sections" id="menuTabs"></div>
+        <div class="panel" role="tabpanel" id="menuPanel" tabindex="0"></div>
+        <p class="menu-foot">Prices in RM. Tell us about allergies when you book so the kitchen can plan ahead.</p>
+      </div>
+    </section>
+
+    <!-- The evening -->
+    <section class="room section-y" id="room" aria-labelledby="room-title">
+      <div class="wrap">
+        <div class="room-grid">
+          <div class="room-photos">
+            <div class="frame a wipe"><img loading="lazy" src="img/chef.jpg" alt="Herbs placed on a small plate with tweezers" width="1000" height="1250"></div>
+            <div class="frame b wipe" style="--d:.2s"><img loading="lazy" src="img/room.jpg" alt="Warm lamps in a dark dining room" width="1600" height="1100"></div>
+          </div>
+          <div>
+            <p class="eyebrow label reveal"><span class="idx">iv.</span><span class="rule" aria-hidden="true"></span><span>The evening</span></p>
+            <h2 class="h2 reveal" id="room-title" style="--d:.08s">Front row, <em class="accent">lights low.</em></h2>
+            <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Four time slots a day at one long counter, ten seats each. Dinner runs about an hour and a half.</p>
+            <ol class="steps">
+              <li class="reveal"><span class="n">I</span><h3>Take your seat</h3><p>A velvet chair, your menu card and a lamp. A glass of crémant to start.</p></li>
+              <li class="reveal" style="--d:.08s"><span class="n">II</span><h3>Watch the kitchen</h3><p>The chefs talk you through each course as they cook it in front of you.</p></li>
+              <li class="reveal" style="--d:.16s"><span class="n">III</span><h3>Linger</h3><p>Cheese and coffee at the counter, and a last word with the chef.</p></li>
+            </ol>
+          </div>
+        </div>
+        <figure class="frame wide-photo wipe parallax">
+          <img loading="lazy" src="img/private.jpg" alt="A long table laid with candles and glassware" width="1600" height="1100">
+          <figcaption>Book all ten seats for a birthday, an anniversary or a team dinner.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Seats: floor plan + 3D view -->
+    <section class="section-y seats" id="seats" aria-labelledby="seats-title">
+      <div class="wrap">
+        <div class="menu-top">
+          <div>
+            <p class="eyebrow label reveal"><span class="idx">v.</span><span class="rule" aria-hidden="true"></span><span>Choose a seat</span></p>
+            <h2 class="h2 reveal" id="seats-title" style="--d:.08s">See your seat <em class="accent">first.</em></h2>
+          </div>
+          <p class="lede reveal" style="--d:.16s">Ten seats: two on each arm of the counter, six along the front. Tap one to see the kitchen from that chair, in 3D, then book it.</p>
+        </div>
+        <div class="salle-grid">
+          <div class="plan-wrap reveal">
+            <div class="plan" id="plan"></div>
+          </div>
+          <div class="view-wrap reveal" style="--d:.1s">
+            <div class="viewer" id="viewer" tabindex="0" aria-label="The view from the selected seat. Drag, or use the arrow keys, to look around.">
+              <img class="viewer-poster" id="viewerPoster" src="img/view-s05.jpg" alt="The view from seat 5, facing the plating table" width="1600" height="1000">
+              <canvas id="viewerCanvas" aria-hidden="true"></canvas>
+              <p class="viewer-state" id="viewerState" role="status">Loading the kitchen in 3D</p>
+              <div class="viewer-look">
+                <button type="button" data-look="-1" aria-label="Look left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <button type="button" data-look="1" aria-label="Look right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+              </div>
+            </div>
+            <div class="seat-card" aria-live="polite">
+              <div>
+                <h3 id="seatName">Seat 5</h3>
+                <p class="seat-meta label" id="seatMeta">Front · facing the plating table</p>
+                <p id="seatNote">Right in front of the plating table, where the head chef finishes every plate.</p>
+              </div>
+              <button class="btn btn-solid label" type="button" id="seatBook">Book this seat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reserve -->
+    <section class="section-y" id="reserve" aria-labelledby="reserve-title">
+      <div class="wrap rv-grid">
+        <div class="rv-intro">
+          <p class="eyebrow label reveal"><span class="idx">vi.</span><span class="rule" aria-hidden="true"></span><span>Reservations</span></p>
+          <h2 class="h2 reveal" id="reserve-title" style="--d:.08s">Reserve <em class="accent">your seats.</em></h2>
+          <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:28rem">Ten seats at the counter for each time slot. Choose a date and a time, then your seats on the plan, and see the view from them. Your seats are held straight away while we arrange your deposit.</p>
+          <p class="label rv-cap reveal" style="--d:.2s">Daily time slots · Closed Mondays</p>
+          <ul class="hours reveal" style="--d:.24s">
+            <li><span>2:00 PM</span><span>Sat &amp; Sun only</span></li>
+            <li><span>4:00 PM</span><span>Tue to Sun</span></li>
+            <li><span>6:00 PM</span><span>Tue to Sun</span></li>
+            <li><span>8:15 PM</span><span>Tue to Sun</span></li>
+          </ul>
+          <div class="rv-policy reveal" style="--d:.3s">
+            <p><strong>Deposit RM100 per guest.</strong> It confirms your booking and comes off your bill on the day.</p>
+            <p><strong>Minimum spend RM100 per guest.</strong> Order anything from the chef at the counter.</p>
+            <p>Confirmed bookings are final: the deposit cannot be refunded or moved to another date.</p>
+          </div>
+          <p class="fine rv-fine reveal" style="--d:.34s">Dinner at the counter lasts about 1.5 hours. Demo: bookings are saved in this browser only, nobody receives them. <button type="button" class="link-inline" data-mine>My bookings</button></p>
+        </div>
+
+        <div class="rv reveal" style="--d:.12s" id="rv">
+          <form class="rv-form" id="rvForm" novalidate>
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>1</i>Choose a date</legend>
+              <div class="rv-days" id="rvDays" role="group" aria-label="Dates in the next two weeks"></div>
+              <div class="rv-other"><label for="rvDate">Another date:</label><input type="date" id="rvDate"><span id="rvUntil"></span></div>
+              <p class="err" id="rvDateErr"></p>
+            </fieldset>
+
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>2</i><span id="rvTimeTitle">Choose a time</span></legend>
+              <div class="rv-slots" id="rvSlots" role="group" aria-label="Time slots"><p class="rv-hint">Select a date to see the available times.</p></div>
+              <p class="err" id="rvTimeErr"></p>
+            </fieldset>
+
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>3</i>Guests and seats</legend>
+              <div class="rv-guests">
+                <button type="button" id="rvMinus" aria-label="Fewer guests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 12h12"/></svg></button>
+                <output id="rvCount" aria-live="polite">2</output>
+                <button type="button" id="rvPlus" aria-label="More guests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
+              </div>
+              <p class="rv-hint" id="rvGuestHint">Up to 10 per online booking.</p>
+              <div class="rv-seats" id="rvSeats" hidden>
+                <div class="rv-view"><div class="rv-view-frame" id="rvViewFrame"><img class="layer on" src="img/view-hero.jpg" alt="The counter" width="1600" height="1000"></div><p class="rv-view-cap" id="rvViewCap" aria-live="polite"></p></div>
+                <div class="rv-plan-wrap">
+                  <div class="plan plan-small" id="rvPlan" data-rot-below="0"></div>
+                  <p class="rv-legend"><span><i class="k free"></i>Free</span><span><i class="k yours"></i>Yours</span><span><i class="k taken"></i>Taken</span></p>
+                  <p class="rv-hint">Tap a seat for each guest. Tap one of yours to see its view again, and once more to remove it.</p>
+                </div>
+              </div>
+              <p class="err" id="rvSeatErr"></p>
+            </fieldset>
+
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>4</i>Your details</legend>
+              <div class="rv-fields">
+                <div class="rv-field wide" id="rvNameF"><label class="label" for="rvName">Full name</label><input id="rvName" autocomplete="name" enterkeyhint="next"><p class="err" id="rvNameErr"></p></div>
+                <div class="rv-field" id="rvPhoneF"><label class="label" for="rvPhone">Contact number</label><input id="rvPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" enterkeyhint="next"><p class="err" id="rvPhoneErr"></p></div>
+                <div class="rv-field" id="rvEmailF"><label class="label" for="rvEmail">Email (optional)</label><input id="rvEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" enterkeyhint="next"><p class="err" id="rvEmailErr"></p></div>
+                <div class="rv-field wide"><label class="label" for="rvNotes">Dietary needs and requests (optional)</label><textarea id="rvNotes" rows="2" maxlength="600" placeholder="Allergies, dietary needs, celebrations"></textarea><p class="rv-hint">Please tell us now. Same-day dietary requests may not be possible.</p></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="rv-part rv-deposit">
+              <legend class="sr-only">Deposit and booking policy</legend>
+              <div class="rv-dep-row"><span class="rv-step label"><i>5</i>Deposit</span><p><b id="rvDeposit">RM200</b><span id="rvDepositFor">RM100 × 2 guests</span></p></div>
+              <p class="rv-dep-text">We contact you with deposit details. Your booking is confirmed once the deposit arrives, and it comes off your bill on the day. <span>For example, if your bill is RM150, you pay RM50 more.</span></p>
+              <label class="rv-agree" id="rvAgreeBox"><input type="checkbox" id="rvAgree"><span>I understand the RM100-per-guest deposit <strong>cannot be refunded or transferred, and confirmed bookings cannot be moved.</strong> The minimum spend is RM100 per guest.</span></label>
+              <p class="err" id="rvAgreeErr"></p>
+            </fieldset>
+
+            <div class="rv-submit">
+              <p class="rv-alert" id="rvAlert" role="alert" hidden></p>
+              <button type="submit" class="btn btn-solid btn-block label" id="rvGo">Reserve seats</button>
+              <p class="rv-hint center">Seats are held as soon as you book, pending your deposit. Please arrive on time.</p>
+            </div>
+          </form>
+
+          <div class="rv-done" id="rvDone" hidden tabindex="-1" role="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-y faq" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+      <div class="wrap faq-grid">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">vii.</span><span class="rule" aria-hidden="true"></span><span>FAQ</span></p>
+          <h2 class="h2 reveal" id="faq-title" style="--d:.08s">Before you <em class="accent">arrive.</em></h2>
+        </div>
+        <div class="reveal" style="--d:.12s">
+          <details><summary>Can we sit together as a group?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Seats run from the left arm round the front to the right arm, and we keep a group side by side where the seats allow. Tap a seat on the plan to move your group.</p></div></div></details>
+          <details><summary>Can we take the whole counter?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Book ten guests in a time slot that is still empty and the whole counter is yours.</p></div></div></details>
+          <details><summary>What if my seat is taken?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Taken seats are crossed out for that time slot. Try another slot that day, or another date: the strip shows how many seats are left.</p></div></div></details>
+          <details><summary>Can the kitchen cook around allergies?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes, and around most diets. Write it in the notes when you book so the chefs can plan your courses.</p></div></div></details>
+          <details><summary>How do I change or cancel?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Open "My bookings" in the menu. Held seats can be released before you pay the deposit. Once the deposit is paid the booking is final and cannot be moved.</p></div></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visit -->
+    <section class="visit section-y" id="visit" aria-labelledby="visit-title">
+      <div class="wrap visit-grid">
+        <div>
+          <p class="eyebrow label reveal"><span class="idx">viii.</span><span class="rule" aria-hidden="true"></span><span>Visit</span></p>
+          <h2 class="h2 reveal" id="visit-title" style="--d:.08s">Find the <em class="accent">counter.</em></h2>
+          <dl class="contact reveal" style="--d:.16s">
+            <div><dt class="label">Address</dt><dd>Jalan Telawi, Bangsar<br>59100 Kuala Lumpur (demo address)</dd></div>
+            <div><dt class="label">Time slots</dt><dd>Tuesday to Sunday, 4:00, 6:00 and 8:15 PM<br>Also 2:00 PM on Saturday and Sunday. Closed Monday</dd></div>
+            <div><dt class="label">Bookings</dt><dd>Online only, on this page. We call you if anything changes.</dd></div>
+          </dl>
+        </div>
+        <div class="map reveal" style="--d:.1s" role="img" aria-label="Illustrated map placeholder">
+          <span class="park" aria-hidden="true"></span>
+          <div class="pin"><span class="tag label">Chez Nous</span><span class="dot"></span></div>
+          <p class="cap label">Map placeholder</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <span class="wordmark"><span class="name">CHEZ NOUS</span><span class="sub label">Comptoir français</span></span>
+          <p class="blurb">Ten seats around a French chef's counter. Four time slots a day, Tuesday to Sunday.</p>
+        </div>
+        <a class="demo-card" href="https://irfanhakimi.com/kerja/">
+          <p class="label">Demo by Irfan Hakimi</p>
+          <p class="t">Want a site like this for your restaurant?</p>
+          <p class="d">See packages and prices at irfanhakimi.com/kerja</p>
+        </a>
+      </div>
+      <div class="foot-legal">
+        <p>Chez Nous is a fictional restaurant made for a website demo. The menu, prices and address are placeholders. Food photos: Unsplash, free licence stock, not of a real venue.</p>
+        <p>3D counter built in Blender with Sketchfab models under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>: <a href="https://sketchfab.com/3d-models/restaurant-kitchen-set-part-1-129dd2f84879477ea261b422d21491f4">kitchen set</a> by soidev, <a href="https://sketchfab.com/3d-models/3ddecember-2021-copper-pots-and-pans-851f78fc9a994cd5a1c392ce28c9e414">copper pans</a> by Jack Kelly, <a href="https://sketchfab.com/3d-models/wine-bottle-and-glass-13027525814d4c4ea07d4e12549cb9ef">wine bottle and glass</a> by JoeDev, <a href="https://sketchfab.com/3d-models/7689508dc9d9481c934a412255e8de67">fiddle leaf fig</a> by Dahlia, <a href="https://sketchfab.com/3d-models/e9832f38484f4f85b3f9081b51fa3799">pothos plant</a> by AllQuad, <a href="https://sketchfab.com/3d-models/1ddea2a792dc4d6593438132f95f74b7">abstract painting</a> by fnocwei, <a href="https://sketchfab.com/3d-models/660fb742a5ff4580862cf5f9eb690d92">Louvre vase</a> by Benjamin Bardou, <a href="https://sketchfab.com/3d-models/20b3415e5d4e475799a65399d10f7e6f">commercial range</a> by Syrus_Michaels, <a href="https://sketchfab.com/3d-models/5373d79a24b3442fb4320e6e7d70feac">Chair Lena</a> by formiodesign, <a href="https://sketchfab.com/3d-models/60e12e773ef74fb6b7c988ec91e77e97">combi oven</a> by daviddesalvo, <a href="https://sketchfab.com/3d-models/6ad18d2957a64e359e3700bbbf934e0c">stainless work table</a> by david.07eg. <a href="img/CREDITS.txt">All credits</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="book-bar" id="bookBar" aria-hidden="true">
+    <button class="btn btn-solid btn-block label" type="button" data-book tabindex="-1"><span>Reserve your seats</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+
+  <!-- My bookings sheet -->
+  <div class="sheet-wrap" id="booking" role="dialog" aria-modal="true" aria-labelledby="bookTitle">
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet">
+      <div class="sheet-head">
+        <div class="sheet-top">
+          <p class="t" id="bookTitle">My bookings</p>
+          <button class="sheet-close" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+      <div class="mine-body"><h2 tabindex="-1" class="mine-h">Held in <em class="accent">this browser.</em></h2><div id="mineList"></div></div>
+    </div>
+  </div>
+
+  <!-- Dish sheet -->
+  <div class="sheet-wrap dish-sheet" id="dishSheet" role="dialog" aria-modal="true" aria-labelledby="dishName">
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet">
+      <div class="frame photo"><img id="dishImg" src="img/c1.jpg" alt=""></div>
+      <button class="x" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <div class="info">
+        <div class="row"><h3 id="dishName">Dish</h3><span class="price" id="dishPrice"></span></div>
+        <p id="dishDesc"></p>
+        <button class="btn btn-solid btn-block label" type="button" data-book style="margin-top:1.25rem"><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js?v=25"></script>
+  <script type="module" src="viewer.js?v=25"></script>
+</body>
+</html>
