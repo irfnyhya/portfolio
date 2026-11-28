@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/view-hero-tall.jpg" media="(max-width: 767px)">
   <link rel="preload" as="image" href="img/view-hero.jpg" media="(min-width: 768px)">
-  <link rel="stylesheet" href="styles.css?v=22">
+  <link rel="stylesheet" href="styles.css?v=23">
   <script>document.documentElement.classList.add("js")</script>
   <script type="importmap">
     { "imports": {
@@ -63,9 +63,9 @@
       <li><a href="#seats"><span>IV</span>Choose a seat</a></li>
       <li><a href="#reserve"><span>V</span>Reserve</a></li>
       <li><a href="#visit"><span>VI</span>Visit</a></li>
-      <li><a href="#reserve" data-mine><span>VII</span>My booking</a></li>
+      <li><a href="#reserve" data-mine><span>VII</span>My bookings</a></li>
     </ul>
-    <p class="wrap foot label"><span>Bangsar, Kuala Lumpur</span><span>Ten seats · Wed to Sun</span></p>
+    <p class="wrap foot label"><span>Bangsar, Kuala Lumpur</span><span>Ten seats · Tue to Sun</span></p>
   </div>
 
   <main id="main">
@@ -90,13 +90,13 @@
         <div class="hero-foot">
           <p class="fade-up" style="animation-delay:.15s">A private French counter in Bangsar. Ten seats in a black room, lit only by table lamps, around an open kitchen where every course is cooked and plated in front of you. Reservation only, and you choose your seat.</p>
           <div class="ticket fade-up" style="animation-delay:.2s" aria-label="Seatings tonight">
-            <div class="ticket-meta"><span class="tag label">Tonight</span><span class="label">Carte blanche · 7 courses · 10 seats</span></div>
+            <div class="ticket-meta"><span class="tag label">Tonight</span><span class="label">Four time slots · 10 seats each</span></div>
             <div class="ticket-times">
-              <div><p class="big">18:00</p><p class="label">First seating</p></div>
+              <div><p class="big">16:00</p><p class="label">First slot</p></div>
               <span class="ticket-line" aria-hidden="true"></span>
-              <div class="r"><p class="big">20:45</p><p class="label">Second seating</p></div>
+              <div class="r"><p class="big">20:15</p><p class="label">Last slot</p></div>
             </div>
-            <p class="ticket-status"><span class="dot" aria-hidden="true"></span><span id="ticketStatus">Pick your seat in 3D · confirmed on the spot</span></p>
+            <p class="ticket-status"><span class="dot" aria-hidden="true"></span><span id="ticketStatus">Pick your seat in 3D · held on the spot</span></p>
             <div class="ticket-ctas">
               <button class="btn btn-ink label" type="button" data-book><span>Reserve a seat</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
               <a class="btn btn-soft label" href="#seats"><span>See the seats</span></a>
@@ -187,11 +187,11 @@
           <div>
             <p class="eyebrow label reveal"><span class="idx">iv.</span><span class="rule" aria-hidden="true"></span><span>The evening</span></p>
             <h2 class="h2 reveal" id="room-title" style="--d:.08s">Front row, <em class="accent">lights low.</em></h2>
-            <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Two seatings a night at one long counter. Most evenings run two and a half hours, so plan to stay.</p>
+            <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:30rem">Four time slots a day at one long counter, ten seats each. Dinner runs about an hour and a half.</p>
             <ol class="steps">
               <li class="reveal"><span class="n">I</span><h3>Take your seat</h3><p>A velvet chair, your menu card and a lamp. A glass of crémant to start.</p></li>
               <li class="reveal" style="--d:.08s"><span class="n">II</span><h3>Watch the kitchen</h3><p>The chefs talk you through each course as they cook it in front of you.</p></li>
-              <li class="reveal" style="--d:.16s"><span class="n">III</span><h3>Linger</h3><p>Cheese and coffee at the counter. The second seating stays until midnight.</p></li>
+              <li class="reveal" style="--d:.16s"><span class="n">III</span><h3>Linger</h3><p>Cheese and coffee at the counter, and a last word with the chef.</p></li>
             </ol>
           </div>
         </div>
@@ -241,25 +241,86 @@
 
     <!-- Reserve -->
     <section class="section-y" id="reserve" aria-labelledby="reserve-title">
-      <div class="wrap reserve-grid">
-        <div>
+      <div class="wrap rv-grid">
+        <div class="rv-intro">
           <p class="eyebrow label reveal"><span class="idx">vi.</span><span class="rule" aria-hidden="true"></span><span>Reservations</span></p>
           <h2 class="h2 reveal" id="reserve-title" style="--d:.08s">Reserve <em class="accent">your seats.</em></h2>
-          <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:28rem">Four short steps: the night, your seats on the counter, your details, done. You get a booking number straight away.</p>
+          <p class="lede reveal" style="--d:.16s;margin-top:1.75rem;max-width:28rem">Ten seats at the counter for each time slot. Choose a date and a time, then your seats on the plan, and see the view from them. Your seats are held straight away while we arrange your deposit.</p>
+          <p class="label rv-cap reveal" style="--d:.2s">Daily time slots · Closed Mondays</p>
           <ul class="hours reveal" style="--d:.24s">
-            <li><span>First seating</span><span>6:00 PM</span></li>
-            <li><span>Second seating</span><span>8:45 PM</span></li>
-            <li><span>Side by side</span><span>Up to 6 guests</span></li>
-            <li><span>Whole counter</span><span>7 to 10 guests</span></li>
-            <li><span>Monday, Tuesday</span><span>Closed</span></li>
+            <li><span>2:00 PM</span><span>Sat &amp; Sun only</span></li>
+            <li><span>4:00 PM</span><span>Tue to Sun</span></li>
+            <li><span>6:00 PM</span><span>Tue to Sun</span></li>
+            <li><span>8:15 PM</span><span>Tue to Sun</span></li>
           </ul>
+          <div class="rv-policy reveal" style="--d:.3s">
+            <p><strong>Deposit RM100 per guest.</strong> It confirms your booking and comes off your bill on the day.</p>
+            <p><strong>Minimum spend RM100 per guest.</strong> Order anything from the chef at the counter.</p>
+            <p>Confirmed bookings are final: the deposit cannot be refunded or moved to another date.</p>
+          </div>
+          <p class="fine rv-fine reveal" style="--d:.34s">Dinner at the counter lasts about 1.5 hours. Demo: bookings are saved in this browser only, nobody receives them. <button type="button" class="link-inline" data-mine>My bookings</button></p>
         </div>
-        <div class="quick reveal" style="--d:.12s">
-          <h3>Which night?</h3>
-          <p class="sub">Pick a date to start. You can change it later.</p>
-          <div class="days" id="quickDays" role="group" aria-label="Choose a date"></div>
-          <button class="btn btn-solid btn-block label" type="button" data-book><span>Reserve</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-          <p class="fine">Demo: bookings are saved in this browser only, nobody receives them. <button type="button" class="link-inline" data-mine>My booking</button></p>
+
+        <div class="rv reveal" style="--d:.12s" id="rv">
+          <form class="rv-form" id="rvForm" novalidate>
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>1</i>Choose a date</legend>
+              <div class="rv-days" id="rvDays" role="group" aria-label="Dates in the next two weeks"></div>
+              <div class="rv-other"><label for="rvDate">Another date:</label><input type="date" id="rvDate"><span id="rvUntil"></span></div>
+              <p class="err" id="rvDateErr"></p>
+            </fieldset>
+
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>2</i><span id="rvTimeTitle">Choose a time</span></legend>
+              <div class="rv-slots" id="rvSlots" role="group" aria-label="Time slots"><p class="rv-hint">Select a date to see the available times.</p></div>
+              <p class="err" id="rvTimeErr"></p>
+            </fieldset>
+
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>3</i>Guests and seats</legend>
+              <div class="rv-guests">
+                <button type="button" id="rvMinus" aria-label="Fewer guests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 12h12"/></svg></button>
+                <output id="rvCount" aria-live="polite">2</output>
+                <button type="button" id="rvPlus" aria-label="More guests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
+              </div>
+              <p class="rv-hint" id="rvGuestHint">Up to 10 per online booking.</p>
+              <div class="rv-seats" id="rvSeats" hidden>
+                <div class="rv-view"><img id="rvView" src="img/view-hero.jpg" alt="The counter" width="1600" height="1000"><p class="rv-view-cap" id="rvViewCap" aria-live="polite"></p></div>
+                <div class="rv-plan-wrap">
+                  <div class="plan plan-small" id="rvPlan" data-rot-below="0"></div>
+                  <p class="rv-legend"><span><i class="k free"></i>Free</span><span><i class="k yours"></i>Yours</span><span><i class="k taken"></i>Taken</span></p>
+                  <p class="rv-hint">Tap a seat to move your group there. We keep you side by side where we can.</p>
+                </div>
+              </div>
+              <p class="err" id="rvSeatErr"></p>
+            </fieldset>
+
+            <fieldset class="rv-part">
+              <legend class="rv-step label"><i>4</i>Your details</legend>
+              <div class="rv-fields">
+                <div class="rv-field wide" id="rvNameF"><label class="label" for="rvName">Full name</label><input id="rvName" autocomplete="name" enterkeyhint="next"><p class="err" id="rvNameErr"></p></div>
+                <div class="rv-field" id="rvPhoneF"><label class="label" for="rvPhone">Contact number</label><input id="rvPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012-345 6789" enterkeyhint="next"><p class="err" id="rvPhoneErr"></p></div>
+                <div class="rv-field" id="rvEmailF"><label class="label" for="rvEmail">Email (optional)</label><input id="rvEmail" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" enterkeyhint="next"><p class="err" id="rvEmailErr"></p></div>
+                <div class="rv-field wide"><label class="label" for="rvNotes">Dietary needs and requests (optional)</label><textarea id="rvNotes" rows="2" maxlength="600" placeholder="Allergies, dietary needs, celebrations"></textarea><p class="rv-hint">Please tell us now. Same-day dietary requests may not be possible.</p></div>
+              </div>
+            </fieldset>
+
+            <fieldset class="rv-part rv-deposit">
+              <legend class="sr-only">Deposit and booking policy</legend>
+              <div class="rv-dep-row"><span class="rv-step label"><i>5</i>Deposit</span><p><b id="rvDeposit">RM200</b><span id="rvDepositFor">RM100 × 2 guests</span></p></div>
+              <p class="rv-dep-text">We contact you with deposit details. Your booking is confirmed once the deposit arrives, and it comes off your bill on the day. <span>For example, if your bill is RM150, you pay RM50 more.</span></p>
+              <label class="rv-agree" id="rvAgreeBox"><input type="checkbox" id="rvAgree"><span>I understand the RM100-per-guest deposit <strong>cannot be refunded or transferred, and confirmed bookings cannot be moved.</strong> The minimum spend is RM100 per guest.</span></label>
+              <p class="err" id="rvAgreeErr"></p>
+            </fieldset>
+
+            <div class="rv-submit">
+              <p class="rv-alert" id="rvAlert" role="alert" hidden></p>
+              <button type="submit" class="btn btn-solid btn-block label" id="rvGo">Reserve seats</button>
+              <p class="rv-hint center">Seats are held as soon as you book, pending your deposit. Please arrive on time.</p>
+            </div>
+          </form>
+
+          <div class="rv-done" id="rvDone" hidden tabindex="-1" role="status"></div>
         </div>
       </div>
     </section>
@@ -272,11 +333,11 @@
           <h2 class="h2 reveal" id="faq-title" style="--d:.08s">Before you <em class="accent">arrive.</em></h2>
         </div>
         <div class="reveal" style="--d:.12s">
-          <details><summary>Can we sit together as a group?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Up to six sit side by side. Seats run from the left arm round the front to the right arm, so a group can also sit around a corner and face each other.</p></div></div></details>
-          <details><summary>Can we take the whole counter?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Choose seven to ten guests and the request is for all ten seats. We confirm by phone within a day.</p></div></div></details>
-          <details><summary>What if my seat is taken?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Taken seats are crossed out for that seating. Try the other seating, another night, or a seat at the same station.</p></div></div></details>
+          <details><summary>Can we sit together as a group?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Seats run from the left arm round the front to the right arm, and we keep a group side by side where the seats allow. Tap a seat on the plan to move your group.</p></div></div></details>
+          <details><summary>Can we take the whole counter?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes. Book ten guests in a time slot that is still empty and the whole counter is yours.</p></div></div></details>
+          <details><summary>What if my seat is taken?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Taken seats are crossed out for that time slot. Try another slot that day, or another date: the strip shows how many seats are left.</p></div></div></details>
           <details><summary>Can the kitchen cook around allergies?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Yes, and around most diets. Write it in the notes when you book so the chefs can plan your courses.</p></div></div></details>
-          <details><summary>How do I change or cancel?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Open "My booking" in the menu. Cancel up to 48 hours before at no charge.</p></div></div></details>
+          <details><summary>How do I change or cancel?<i aria-hidden="true"></i></summary><div class="ans"><div><p>Open "My bookings" in the menu. Held seats can be released before you pay the deposit. Once the deposit is paid the booking is final and cannot be moved.</p></div></div></details>
         </div>
       </div>
     </section>
@@ -289,7 +350,7 @@
           <h2 class="h2 reveal" id="visit-title" style="--d:.08s">Find the <em class="accent">counter.</em></h2>
           <dl class="contact reveal" style="--d:.16s">
             <div><dt class="label">Address</dt><dd>Jalan Telawi, Bangsar<br>59100 Kuala Lumpur (demo address)</dd></div>
-            <div><dt class="label">Seatings</dt><dd>Wednesday to Sunday, 6:00 PM and 8:45 PM<br>Closed Monday and Tuesday</dd></div>
+            <div><dt class="label">Time slots</dt><dd>Tuesday to Sunday, 4:00, 6:00 and 8:15 PM<br>Also 2:00 PM on Saturday and Sunday. Closed Monday</dd></div>
             <div><dt class="label">Bookings</dt><dd>Online only, on this page. We call you if anything changes.</dd></div>
           </dl>
         </div>
@@ -307,7 +368,7 @@
       <div class="foot-grid">
         <div>
           <span class="wordmark"><span class="name">CHEZ NOUS</span><span class="sub label">Comptoir français</span></span>
-          <p class="blurb">Ten seats around a French chef's counter. Two seatings a night, Wednesday to Sunday.</p>
+          <p class="blurb">Ten seats around a French chef's counter. Four time slots a day, Tuesday to Sunday.</p>
         </div>
         <a class="demo-card" href="https://irfanhakimi.com/kerja/">
           <p class="label">Demo by Irfan Hakimi</p>
@@ -326,92 +387,17 @@
     <button class="btn btn-solid btn-block label" type="button" data-book tabindex="-1"><span>Reserve your seats</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
   </div>
 
-  <!-- Booking sheet -->
+  <!-- My bookings sheet -->
   <div class="sheet-wrap" id="booking" role="dialog" aria-modal="true" aria-labelledby="bookTitle">
     <div class="sheet-backdrop" data-close></div>
     <div class="sheet">
       <div class="sheet-head">
         <div class="sheet-top">
-          <p class="t" id="bookTitle">Reserve at Chez Nous</p>
-          <button class="sheet-close" type="button" data-close aria-label="Close booking"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <p class="t" id="bookTitle">My bookings</p>
+          <button class="sheet-close" type="button" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
-        <div class="progress" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <p class="step-name label"><span id="stepName">When</span><span id="stepCount">Step 1 of 4</span></p>
       </div>
-
-      <form class="steps-viewport" id="bookForm" novalidate>
-        <section class="step active" data-step="0" aria-label="Date, seating and guests">
-          <h2 tabindex="-1">Which night, and <em class="accent">how many?</em></h2>
-          <p class="q label">Date</p>
-          <div class="days" id="days" role="group" aria-label="Choose a date"></div>
-          <p class="err" id="dateErr"></p>
-          <p class="q label">Seating</p>
-          <div class="times" id="times" role="group" aria-label="Choose a seating">
-            <button type="button" class="time" data-time="18:00" aria-pressed="false"><span class="big">18:00</span><span class="label">First seating</span></button>
-            <button type="button" class="time" data-time="20:45" aria-pressed="false"><span class="big">20:45</span><span class="label">Second seating</span></button>
-          </div>
-          <p class="err" id="timeErr"></p>
-          <p class="q label">Guests</p>
-          <div class="guests">
-            <button type="button" id="gMinus" aria-label="One fewer guest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 12h12"/></svg></button>
-            <output id="gCount" aria-live="polite">2 guests</output>
-            <button type="button" id="gPlus" aria-label="One more guest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 12h12M12 6v12"/></svg></button>
-          </div>
-          <p class="hint" id="guestHint"></p>
-        </section>
-
-        <section class="step" data-step="1" aria-label="Seats">
-          <h2 tabindex="-1">Where will you <em class="accent">sit?</em></h2>
-          <p class="hint" id="seatFor"></p>
-          <div class="seat-layout">
-            <div class="pick">
-              <div class="pick-view"><img class="seat-preview" id="seatPreview" src="img/view-s05.jpg" alt="" width="1600" height="1000"></div>
-              <div class="pick-text"><p class="pick-sum" id="pickSum" aria-live="polite">Tap a seat on the plan.</p><p class="err" id="seatErr"></p></div>
-            </div>
-            <div class="plan plan-small" id="bookPlan" data-rot-below="0"></div>
-          </div>
-        </section>
-
-        <section class="step" data-step="2" aria-label="Your details">
-          <h2 tabindex="-1">A few <em class="accent">details.</em></h2>
-          <div class="field" id="nameField"><label class="label" for="name">Name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" enterkeyhint="next"><p class="err" id="nameErr"></p></div>
-          <div class="field" id="phoneField"><label class="label" for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="012 345 6789" enterkeyhint="next"><p class="err" id="phoneErr"></p></div>
-          <div class="field" id="emailField"><label class="label" for="email">Email</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" enterkeyhint="next"><p class="err" id="emailErr"></p></div>
-          <p class="q label">Occasion (optional)</p>
-          <div class="occasions" id="occasions">
-            <button type="button" class="chip" aria-pressed="false">Birthday</button>
-            <button type="button" class="chip" aria-pressed="false">Anniversary</button>
-            <button type="button" class="chip" aria-pressed="false">Proposal</button>
-            <button type="button" class="chip" aria-pressed="false">Business</button>
-          </div>
-          <div class="field"><label class="label" for="notes">Allergies and notes (optional)</label><textarea id="notes" name="notes" placeholder="Allergies, preferences, anything we should prepare for"></textarea></div>
-        </section>
-
-        <section class="step" data-step="3" aria-label="Check and confirm">
-          <h2 tabindex="-1">All <em class="accent">set?</em></h2>
-          <div class="tix" id="review"></div>
-          <p class="fine done-note">Demo: the booking is saved in this browser only. Nobody receives it.</p>
-        </section>
-
-        <section class="step" data-step="4" aria-label="Confirmed">
-          <h2 tabindex="-1" id="doneTitle">You're <em class="accent">booked.</em></h2>
-          <div class="tix" id="done"></div>
-          <div class="done-actions">
-            <button type="button" class="btn btn-solid label" id="icsBtn">Add to calendar</button>
-            <button type="button" class="link-inline" id="viewMine">See all my bookings</button>
-          </div>
-        </section>
-
-        <section class="step" data-step="5" aria-label="My bookings">
-          <h2 tabindex="-1">My <em class="accent">bookings.</em></h2>
-          <div id="mineList"></div>
-        </section>
-      </form>
-
-      <div class="sheet-foot" id="sheetFoot">
-        <button class="btn btn-ghost back" type="button" id="stepBack" aria-label="Back" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
-        <button class="btn btn-solid label next" type="button" id="stepNext"><span id="nextLabel">Choose your seats</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-      </div>
+      <div class="mine-body"><h2 tabindex="-1" class="mine-h">Held in <em class="accent">this browser.</em></h2><div id="mineList"></div></div>
     </div>
   </div>
 
@@ -429,7 +415,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=22"></script>
-  <script type="module" src="viewer.js?v=22"></script>
+  <script src="app.js?v=23"></script>
+  <script type="module" src="viewer.js?v=23"></script>
 </body>
 </html>

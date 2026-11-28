@@ -3,10 +3,8 @@
 (function () {
   "use strict";
 
-  var CLOSED = [1, 2]; // Monday, Tuesday
-  var DAYS_AHEAD = 42;
+  var CLOSED = [1]; // Monday
   var KEY = "chezNous.bookings.v1";
-  var SEATINGS = { "18:00": "First seating, 6:00 PM", "20:45": "Second seating, 8:45 PM" };
 
   var DISHES = {
     thon: { name: "Thon cru, agrumes", price: "RM 58", img: "img/hero-tall.jpg", kind: "Entrée", desc: "Raw tuna cured lightly at the pass, toasted seeds, young herbs and a sharp citrus dressing.", alt: "Raw tuna topped with herbs in a stone bowl" },
@@ -47,7 +45,6 @@
   var SEATS = SEAT_DEF.map(function (d, i) {
     return { id: "S" + String(i + 1).padStart(2, "0"), n: i + 1, x: d[0], y: d[1], station: d[2], side: d[3] };
   });
-  var MAX_GUESTS = 10, WHOLE_FROM = 7;
   // Plan drawing (schematic, metres). Side seats are drawn a little further apart than in the room so they stay tappable.
   var PLAN = {
     x0: -4.8, x1: 4.8, y0: -2.0, y1: 4.45,
@@ -69,10 +66,11 @@
   (function () {
     var now = new Date(), d = now.getDay(), h = now.getHours();
     var el = $("status"), t = $("statusText");
-    if (CLOSED.indexOf(d) > -1) { el.classList.add("closed"); t.textContent = "Closed today · Back Wednesday at 6 PM"; }
-    else if (h < 18) t.textContent = "Seatings tonight at 6:00 PM and 8:45 PM";
-    else if (h < 23) t.textContent = "Kitchen open now · Last seating 8:45 PM";
-    else { el.classList.add("closed"); t.textContent = CLOSED.indexOf((d + 1) % 7) > -1 ? "Closed now · Back Wednesday at 6 PM" : "Closed now · Back tomorrow at 6 PM"; }
+    var wknd = d === 0 || d === 6, first = wknd ? "2 PM" : "4 PM";
+    if (CLOSED.indexOf(d) > -1) { el.classList.add("closed"); t.textContent = "Closed today · Back tomorrow at 4 PM"; }
+    else if (h < (wknd ? 14 : 16)) t.textContent = "Time slots today from " + first + " to 8:15 PM";
+    else if (h < 22) t.textContent = "Kitchen open now · Last slot 8:15 PM";
+    else { el.classList.add("closed"); t.textContent = CLOSED.indexOf((d + 1) % 7) > -1 ? "Closed now · Back Tuesday at 4 PM" : "Closed now · Back tomorrow at " + ((d + 1) % 7 === 6 || (d + 1) % 7 === 0 ? "2 PM" : "4 PM"); }
     $("ticketStatus").parentNode.classList.toggle("closed", el.classList.contains("closed"));
   })();
 
@@ -297,7 +295,7 @@
   function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function takenByOthers(date, time, id) {
     var dow = new Date(date + "T12:00").getDay();
-    var busy = (dow === 5 || dow === 6 ? 0.5 : 0.28) + (time === "20:45" ? 0.08 : 0);
+    var busy = (dow === 5 || dow === 6 || dow === 0 ? 0.42 : 0.24) + ({ "14:00": -0.06, "16:00": -0.1, "18:00": 0.12, "20:15": 0.06 }[time] || 0);
     var n = id === "CT" ? 99 : Number(id.slice(1)), pair = Math.ceil(n / 2); // other guests book in pairs
     return hash(date + time + (id === "CT" ? "CT" : "P" + pair)) < busy;
   }
@@ -377,221 +375,265 @@
     document.dispatchEvent(new CustomEvent("cn:seat", { detail: { id: id } }));
   }
   selectSeat("S05");
-  $("seatBook").addEventListener("click", function () {
-    state.prefer = current;
-    openBooking(0);
-  });
+  $("seatBook").addEventListener("click", function () { bookFromSeat(current); });
 
-  /* ── Booking sheet ─────────────────────────────────── */
-  var booking = $("booking"), step = 0;
-  var stepsEls = booking.querySelectorAll(".step"), progressEls = booking.querySelectorAll(".progress span");
-  var STEP_NAMES = ["When", "Seats", "Details", "Confirm", "Booked", "My bookings"];
-  var NEXT_LABELS = ["Choose your seats", "Your details", "Check the booking", "Confirm reservation"];
-  var state = { date: null, time: null, guests: 2, seats: [], prefer: null, occasions: [] };
-  var lastBooking = null;
+  /* ── Reservations: date, time, guests and seats, details, deposit (the Noir flow, plus the seat view) ── */
+  var SLOTS = [
+    { t: "14:00", label: "2:00 PM", days: [0, 6], note: "Sat & Sun only" },
+    { t: "16:00", label: "4:00 PM" },
+    { t: "18:00", label: "6:00 PM" },
+    { t: "20:15", label: "8:15 PM" }
+  ];
+  var STRIP_DAYS = 14, MAX_AHEAD = 60, CUTOFF_MIN = 60, DEPOSIT = 100, CAPACITY = 10, MAX_GUESTS = 10;
   var dayN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], monN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var fullDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  function fmtDate(s) { var d = new Date(s + "T12:00"); return fullDay[d.getDay()] + ", " + d.getDate() + " " + monN[d.getMonth()] + " " + d.getFullYear(); }
-  function shortDate(s) { var d = new Date(s + "T12:00"); return dayN[d.getDay()] + " " + d.getDate() + " " + monN[d.getMonth()]; }
+  function fmtDate(s) { var d = new Date(s + "T12:00"); return fullDay[d.getDay()] + ", " + d.getDate() + " " + monN[d.getMonth()]; }
+  function shortDate(s) { var d = new Date(s + "T12:00"); return dayN[d.getDay()] + ", " + d.getDate() + " " + monN[d.getMonth()]; }
+  function slotLabel(t) { var s = SLOTS.filter(function (x) { return x.t === t; })[0]; if (s) return s.label; var h = Number(t.slice(0, 2)); return (h % 12 || 12) + ":" + t.slice(3) + (h >= 12 ? " PM" : " AM"); }
+  function rm(n) { return "RM" + n; }
 
-  var today = new Date(); today.setHours(0, 0, 0, 0);
-  var dates = [];
-  for (var k = 0; k < DAYS_AHEAD; k++) { var dd = new Date(today); dd.setDate(today.getDate() + k); dates.push(dd); }
-  function seatingPassed(date, time) {
-    if (date !== iso(new Date())) return false;
-    var s = new Date(); s.setHours(Number(time.slice(0, 2)), Number(time.slice(3)), 0, 0);
-    return s - new Date() < 2 * 3600 * 1000;
+  var todayD = new Date(); todayD.setHours(0, 0, 0, 0);
+  var todayIso = iso(todayD), maxD = new Date(todayD); maxD.setDate(maxD.getDate() + MAX_AHEAD);
+  function slotRuns(slot, date) {
+    var dow = new Date(date + "T12:00").getDay();
+    return CLOSED.indexOf(dow) < 0 && (!slot.days || slot.days.indexOf(dow) > -1);
   }
-  function buildDays(box) {
-    box.innerHTML = "";
-    dates.forEach(function (d, i) {
-      var b = document.createElement("button"), id = iso(d);
-      var closed = CLOSED.indexOf(d.getDay()) > -1 || (seatingPassed(id, "18:00") && seatingPassed(id, "20:45"));
-      b.type = "button"; b.className = "day"; b.disabled = closed;
-      b.setAttribute("aria-pressed", String(state.date === id));
-      b.setAttribute("aria-label", fmtDate(id) + (closed ? ", closed" : ""));
-      b.innerHTML = '<span class="dw">' + (i === 0 ? "Today" : i === 1 ? "Tmrw" : dayN[d.getDay()]) + '</span><span class="dn">' + d.getDate() + '</span><span class="dm">' + monN[d.getMonth()] + "</span>";
-      b.addEventListener("click", function () {
-        state.date = id; $("dateErr").textContent = "";
-        syncDays(); syncTimes();
-        if (box.id === "quickDays") openBooking(0);
-      });
+  function slotClosedNow(date, t) { // online booking closes an hour before the slot starts
+    var s = new Date(date + "T" + t + ":00");
+    return s - new Date() < CUTOFF_MIN * 60000;
+  }
+  function freeSeats(date, t) { return SEATS.filter(function (s) { return !isTaken(date, t, s.id); }).map(function (s) { return s.id; }); }
+  function slotInfo(date, slot) {
+    var runs = slotRuns(slot, date), shut = runs && slotClosedNow(date, slot.t);
+    var free = runs ? freeSeats(date, slot.t) : [];
+    return { slot: slot, runs: runs, shut: shut, free: free, booked: CAPACITY - free.length, ok: runs && !shut && free.length > 0 };
+  }
+  function dayInfo(date) {
+    var infos = SLOTS.map(function (s) { return slotInfo(date, s); }).filter(function (x) { return x.runs; });
+    var open = infos.filter(function (x) { return x.ok; });
+    return { infos: infos, open: open, left: open.reduce(function (n, x) { return n + x.free.length; }, 0), closed: !infos.length || infos.every(function (x) { return x.shut; }) };
+  }
+
+  var rv = { date: null, time: null, guests: 2, seats: [], prefer: null, anchor: null };
+  var rvDone = null;
+
+  function buildDays() {
+    var box = $("rvDays"); box.innerHTML = "";
+    for (var k = 0; k < STRIP_DAYS; k++) {
+      var d = new Date(todayD); d.setDate(d.getDate() + k);
+      var id = iso(d), info = dayInfo(id), b = document.createElement("button");
+      var state = info.open.length ? info.left + " left" : info.closed ? "Closed" : "Full";
+      b.type = "button"; b.className = "rv-day"; b.dataset.date = id; b.disabled = !info.open.length;
+      b.setAttribute("aria-pressed", String(rv.date === id));
+      b.setAttribute("aria-label", fmtDate(id) + ": " + (info.open.length ? info.left + " seats available" : state.toLowerCase()));
+      b.innerHTML = '<span class="dw label">' + (k === 0 ? "Today" : dayN[d.getDay()]) + '</span><span class="dn">' + d.getDate() + '</span><span class="dl">' + state + "</span>";
       box.appendChild(b);
-    });
+    }
+    var inp = $("rvDate"); inp.min = todayIso; inp.max = iso(maxD);
+    $("rvUntil").textContent = "bookable until " + shortDate(iso(maxD));
   }
-  function syncDays() {
-    ["days", "quickDays"].forEach(function (id) {
-      Array.prototype.forEach.call($(id).children, function (b, i) { b.setAttribute("aria-pressed", String(iso(dates[i]) === state.date)); });
-    });
-  }
-  buildDays($("days")); buildDays($("quickDays"));
-  function syncTimes() {
-    $("times").querySelectorAll(".time").forEach(function (b) {
-      var t = b.dataset.time;
-      b.disabled = !!state.date && seatingPassed(state.date, t);
-      if (b.disabled && state.time === t) state.time = null;
-      b.setAttribute("aria-pressed", String(state.time === t));
-    });
-  }
-  $("times").addEventListener("click", function (e) {
-    var b = e.target.closest(".time"); if (!b || b.disabled) return;
-    state.time = b.dataset.time; $("timeErr").textContent = ""; syncTimes();
+  $("rvDays").addEventListener("click", function (e) { var b = e.target.closest(".rv-day"); if (b && !b.disabled) chooseDate(b.dataset.date); });
+  $("rvDate").addEventListener("change", function () {
+    var v = this.value; if (!v) return;
+    if (v < todayIso || v > iso(maxD)) { $("rvDateErr").textContent = "Please choose a date between today and " + shortDate(iso(maxD)) + "."; return; }
+    chooseDate(v);
   });
 
+  function chooseDate(id) {
+    rv.date = id; rv.time = null; rv.seats = [];
+    $("rvDateErr").textContent = ""; $("rvAlert").hidden = true;
+    Array.prototype.forEach.call($("rvDays").children, function (b) { b.setAttribute("aria-pressed", String(b.dataset.date === id)); });
+    $("rvDate").value = $("rvDays").querySelector('[data-date="' + id + '"]') ? "" : id;
+    var info = dayInfo(id);
+    if (!info.open.length) $("rvDateErr").textContent = info.closed ? "We are closed on " + fmtDate(id) + ". Mondays are closed." : "Every time slot on " + fmtDate(id) + " is full.";
+    renderSlots(); renderGuests(); renderSeats(); renderSubmit();
+  }
+
+  function renderSlots() {
+    var box = $("rvSlots");
+    $("rvTimeTitle").textContent = rv.date ? "Choose a time · " + fmtDate(rv.date) : "Choose a time";
+    if (!rv.date) { box.innerHTML = '<p class="rv-hint">Select a date to see the available times.</p>'; return; }
+    var info = dayInfo(rv.date);
+    if (!info.infos.length) { box.innerHTML = '<p class="rv-hint">No time slots on this day.</p>'; return; }
+    box.innerHTML = info.infos.map(function (x) {
+      var status = x.shut ? "Booking closed" : !x.free.length ? "Fully booked" : x.free.length + " of " + CAPACITY + " seats left";
+      var meter = ""; for (var n = 0; n < CAPACITY; n++) meter += '<i class="' + (n < x.booked ? "b" : "") + '"></i>';
+      var on = rv.time === x.slot.t;
+      return '<button type="button" class="rv-slot' + (x.ok && x.free.length <= 3 ? " few" : "") + '" data-time="' + x.slot.t + '" aria-pressed="' + on + '"' + (x.ok ? "" : " disabled") +
+        ' aria-label="' + x.slot.label + (x.slot.note ? " (" + x.slot.note + ")" : "") + ": " + status + '">' +
+        '<span class="st">' + x.slot.label + "</span>" + (x.slot.note ? '<span class="sn label">' + x.slot.note + "</span>" : "") +
+        '<span class="ss">' + status + '</span><span class="sm" aria-hidden="true">' + meter + "</span></button>";
+    }).join("");
+  }
+  $("rvSlots").addEventListener("click", function (e) {
+    var b = e.target.closest(".rv-slot"); if (!b || b.disabled) return;
+    rv.time = b.dataset.time; $("rvTimeErr").textContent = ""; $("rvAlert").hidden = true;
+    Array.prototype.forEach.call($("rvSlots").querySelectorAll(".rv-slot"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    var free = freeSeats(rv.date, rv.time);
+    if (rv.guests > free.length) rv.guests = Math.max(1, free.length);
+    rv.seats = [];
+    renderGuests(); renderSeats(); renderSubmit();
+    if (window.innerWidth < 900) setTimeout(function () { $("rvSeats").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }, 60);
+  });
+
+  function maxGuests() { return rv.date && rv.time ? Math.max(1, Math.min(MAX_GUESTS, freeSeats(rv.date, rv.time).length)) : MAX_GUESTS; }
   function renderGuests() {
-    var g = state.guests;
-    $("gCount").innerHTML = "<b>" + g + '</b><span class="label">' + (g === 1 ? "guest" : "guests") + "</span>";
-    $("gMinus").disabled = g <= 1; $("gPlus").disabled = g >= MAX_GUESTS;
-    $("guestHint").textContent = g < WHOLE_FROM ? "Side by side at the counter. You choose the seats next."
-      : "Seven or more takes the whole counter, all ten seats. We confirm by phone.";
+    var mx = maxGuests();
+    if (rv.guests > mx) rv.guests = mx;
+    $("rvCount").innerHTML = rv.guests + '<span class="sr-only"> ' + (rv.guests === 1 ? "guest" : "guests") + "</span>";
+    $("rvMinus").disabled = rv.guests <= 1; $("rvPlus").disabled = rv.guests >= mx;
+    $("rvGuestHint").textContent = rv.time ? "Up to " + mx + " for this time slot." : "Up to " + MAX_GUESTS + " per online booking.";
+    $("rvDeposit").textContent = rm(rv.guests * DEPOSIT);
+    $("rvDepositFor").textContent = rm(DEPOSIT) + " × " + rv.guests + (rv.guests === 1 ? " guest" : " guests");
   }
-  $("gMinus").addEventListener("click", function () { if (state.guests > 1) { state.guests--; renderGuests(); } });
-  $("gPlus").addEventListener("click", function () { if (state.guests < MAX_GUESTS) { state.guests++; renderGuests(); } });
+  $("rvMinus").addEventListener("click", function () { if (rv.guests > 1) { rv.guests--; rv.seats = []; renderGuests(); renderSeats(); renderSubmit(); } });
+  $("rvPlus").addEventListener("click", function () { if (rv.guests < maxGuests()) { rv.guests++; rv.seats = []; renderGuests(); renderSeats(); renderSubmit(); } });
 
-  var bookPlan = $("bookPlan");
-  buildPlan(bookPlan);
-  if (planRO) planRO.observe(bookPlan);
-  function free(id) { return !isTaken(state.date, state.time, id); }
-  function blockFrom(n, g) { // g seats side by side, starting at seat n or a block that still includes it
-    for (var start = n; start >= Math.max(1, n - g + 1); start--) {
-      var end = start + g - 1; if (end > SEATS.length) continue;
-      var ids = []; for (var j = start; j <= end; j++) ids.push("S" + String(j).padStart(2, "0"));
-      if (ids.every(free)) return ids;
+  // Seats: a group sits side by side where it can (seats are numbered round the U), else as close together as possible
+  var seatNum = function (id) { return Number(id.slice(1)); };
+  function pickSeats(n, anchor) {
+    var free = freeSeats(rv.date, rv.time), has = function (k) { return free.indexOf("S" + String(k).padStart(2, "0")) > -1; };
+    if (free.length < n) return [];
+    var starts = [];
+    for (var st = 1; st + n - 1 <= CAPACITY; st++) {
+      var ok = true; for (var k = st; k < st + n; k++) if (!has(k)) { ok = false; break; }
+      if (ok) starts.push(st);
     }
-    return null;
-  }
-  function buildSeatStep() {
-    var g = state.guests, whole = g >= WHOLE_FROM;
-    $("seatFor").textContent = shortDate(state.date) + " · " + SEATINGS[state.time] + " · " + g + (g === 1 ? " guest" : " guests");
-    if (!bookPlan.querySelector(".seat")) buildPlan(bookPlan);
-    bookPlan.querySelectorAll("[data-seat]").forEach(function (b) {
-      var id = b.dataset.seat, taken = !free(id), s = seatById(id);
-      b.disabled = whole || taken;
-      b.setAttribute("aria-label", "Seat " + s.n + (taken ? ", taken" : ", " + s.side.toLowerCase() + ", facing " + STATION_LONG[s.station]));
-    });
-    if (whole) {
-      state.seats = anyTaken(state.date, state.time) ? [] : allSeatIds();
-      if (!state.seats.length) $("seatErr").textContent = "Some seats are already booked for this seating. Try another night for the whole counter.";
-    } else if (state.seats.length !== g || !state.seats.every(free)) {
-      state.seats = [];
-      if (state.prefer) {
-        var bl = blockFrom(Number(state.prefer.slice(1)), g);
-        if (bl) state.seats = bl; else $("seatErr").textContent = "Seat " + Number(state.prefer.slice(1)) + " is not free for " + g + " that night. Choose other seats.";
-      }
+    if (starts.length) {
+      var a = anchor || 5.5; // no anchor: closest to the plating table in the middle
+      starts.sort(function (x, y) { return Math.abs(x + (n - 1) / 2 - a) - Math.abs(y + (n - 1) / 2 - a); });
+      if (anchor) { var inc = starts.filter(function (st2) { return anchor >= st2 && anchor < st2 + n; }); if (inc.length) starts = inc.concat(starts); }
+      var out = []; for (var j = starts[0]; j < starts[0] + n; j++) out.push("S" + String(j).padStart(2, "0"));
+      return out;
     }
-    syncSeats();
+    var a2 = anchor || 5.5;
+    return free.slice().sort(function (x, y) { return Math.abs(seatNum(x) - a2) - Math.abs(seatNum(y) - a2); }).slice(0, n).sort();
   }
-  bookPlan.addEventListener("click", function (e) {
-    var b = e.target.closest("[data-seat]"); if (!b || b.disabled) return;
-    var g = state.guests; $("seatErr").textContent = "";
-    var bl = blockFrom(Number(b.dataset.seat.slice(1)), g);
-    if (bl) state.seats = bl; else $("seatErr").textContent = "There are not " + g + " free seats together there. Try another part of the counter.";
-    syncSeats();
-  });
-  function seatsLabel(ids) {
-    if (ids.length >= SEATS.length) return "The whole counter, all ten seats";
-    var a = Number(ids[0].slice(1)), b = Number(ids[ids.length - 1].slice(1));
-    return (a === b ? "Seat " + a : "Seats " + a + " to " + b) + ", facing " + STATION_LONG[seatById(ids[Math.floor((ids.length - 1) / 2)]).station];
+  function together(ids) { for (var i = 1; i < ids.length; i++) if (seatNum(ids[i]) !== seatNum(ids[i - 1]) + 1) return false; return true; }
+  function seatsText(ids) {
+    if (ids.length >= CAPACITY) return "The whole counter, all ten seats";
+    var nums = ids.map(seatNum);
+    var list = together(ids) ? (nums.length === 1 ? "Seat " + nums[0] : "Seats " + nums[0] + " to " + nums[nums.length - 1]) : "Seats " + nums.slice(0, -1).join(", ") + " and " + nums[nums.length - 1];
+    return list + ", facing " + STATION_LONG[seatById(ids[Math.floor((ids.length - 1) / 2)]).station];
   }
-  function leadView(ids) { return ids.length >= SEATS.length ? "img/view-hero.jpg" : viewImg(ids[Math.floor((ids.length - 1) / 2)]); }
-  function setPreview(src, alt) {
-    var img = $("seatPreview");
+  function viewFor(ids) { return ids.length >= CAPACITY ? "img/view-hero.jpg" : viewImg(ids[Math.floor((ids.length - 1) / 2)]); }
+  function setView(src, alt) {
+    var img = $("rvView");
     if (img.getAttribute("src") === src) return;
     if (reduce) { img.src = src; img.alt = alt; return; }
     var next = new Image(); next.src = src;
     img.classList.add("fade");
     var swap = function () { img.src = src; img.alt = alt; requestAnimationFrame(function () { img.classList.remove("fade"); }); };
-    (next.decode ? next.decode() : Promise.resolve()).then(function () { setTimeout(swap, 180); }, swap);
-  }
-  function syncSeats() {
-    bookPlan.querySelectorAll("[data-seat]").forEach(function (b) { b.setAttribute("aria-pressed", String(state.seats.indexOf(b.dataset.seat) > -1)); });
-    var src = state.seats.length ? leadView(state.seats) : "img/view-hero.jpg";
-    setPreview(src, state.seats.length ? "The view from your seats" : "The counter");
-    $("pickSum").textContent = state.seats.length ? seatsLabel(state.seats) : "Tap a seat on the plan.";
+    (next.decode ? next.decode() : Promise.resolve()).then(function () { setTimeout(swap, 160); }, swap);
   }
 
-  $("occasions").addEventListener("click", function (e) {
-    var b = e.target.closest(".chip"); if (!b) return;
-    b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
-    state.occasions = Array.prototype.filter.call($("occasions").children, function (x) { return x.getAttribute("aria-pressed") === "true"; }).map(function (x) { return x.textContent; });
+  var rvPlan = $("rvPlan");
+  function renderSeats() {
+    var box = $("rvSeats");
+    if (!rv.date || !rv.time) { box.hidden = true; return; }
+    box.hidden = false;
+    if (!rvPlan.querySelector(".seat")) buildPlan(rvPlan);
+    if (rv.seats.length !== rv.guests || !rv.seats.every(function (id) { return !isTaken(rv.date, rv.time, id); })) {
+      rv.seats = pickSeats(rv.guests, rv.anchor || (rv.prefer ? seatNum(rv.prefer) : null));
+    }
+    rvPlan.querySelectorAll("[data-seat]").forEach(function (b) {
+      var id = b.dataset.seat, taken = isTaken(rv.date, rv.time, id), mine = rv.seats.indexOf(id) > -1, s = seatById(id);
+      b.disabled = taken;
+      b.setAttribute("aria-pressed", String(mine));
+      b.setAttribute("aria-label", "Seat " + s.n + (taken ? ", taken" : mine ? ", yours" : ", free") + ", facing " + STATION_LONG[s.station]);
+    });
+    if (rv.seats.length) {
+      setView(viewFor(rv.seats), "The view from your seats");
+      $("rvViewCap").textContent = seatsText(rv.seats) + (together(rv.seats) || rv.seats.length >= CAPACITY ? "" : " (not all side by side)");
+      $("rvSeatErr").textContent = "";
+    }
+  }
+  rvPlan.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-seat]"); if (!b || b.disabled) return;
+    rv.anchor = seatNum(b.dataset.seat);
+    rv.seats = pickSeats(rv.guests, rv.anchor);
+    renderSeats(); renderSubmit();
   });
-  function fieldError(id, msg) { $(id + "Err").textContent = msg; $(id + "Field").classList.toggle("invalid", !!msg); }
-  ["name", "phone", "email"].forEach(function (id) { $(id).addEventListener("input", function () { fieldError(id, ""); }); });
+  if (planRO) planRO.observe(rvPlan);
 
-  function validate(s) {
-    if (s === 0) {
-      var ok = true;
-      if (!state.date) { $("dateErr").textContent = "Please pick a night. We are closed on Monday and Tuesday."; ok = false; }
-      if (!state.time) { $("timeErr").textContent = "Please pick a seating."; ok = false; }
-      return ok;
-    }
-    if (s === 1 && !state.seats.length) { $("seatErr").textContent = $("seatErr").textContent || "Please tap a seat on the plan."; return false; }
-    if (s === 2) {
-      var good = true, first = null;
-      if ($("name").value.trim().length < 2) { fieldError("name", "Please enter your name."); good = false; first = first || $("name"); }
-      var digits = $("phone").value.replace(/\D/g, "");
-      if (digits.length < 9 || digits.length > 13) { fieldError("phone", "Please enter a phone number we can call."); good = false; first = first || $("phone"); }
-      if (!/^\S+@\S+\.\S+$/.test($("email").value.trim())) { fieldError("email", "Please enter an email for the confirmation."); good = false; first = first || $("email"); }
-      if (first) first.focus();
-      return good;
-    }
-    return true;
+  function renderSubmit() {
+    $("rvGo").textContent = rv.date && rv.time ? "Reserve " + rv.guests + (rv.guests === 1 ? " seat" : " seats") + " · " + shortDate(rv.date) + ", " + slotLabel(rv.time) : "Reserve seats";
   }
+
+  function fieldErr(k, msg) { $("rv" + k + "Err").textContent = msg; $("rv" + k + "F").classList.toggle("invalid", !!msg); }
+  ["Name", "Phone", "Email"].forEach(function (k, i, all) {
+    var el = $("rv" + k);
+    el.addEventListener("input", function () { fieldErr(k, ""); });
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); if (i < all.length - 1) $("rv" + all[i + 1]).focus(); else $("rvNotes").focus(); } });
+  });
+  $("rvAgree").addEventListener("change", function () { if (this.checked) { $("rvAgreeErr").textContent = ""; $("rvAgreeBox").classList.remove("invalid"); } $("rvAgreeBox").classList.toggle("on", this.checked); });
 
   var GUEST_KEY = "chezNous.guest.v1";
-  function prefill() {
+  (function () {
     var g = null; try { g = JSON.parse(localStorage.getItem(GUEST_KEY)); } catch (e) { /* none */ }
-    if (!g) return;
-    ["name", "phone", "email"].forEach(function (id) { if (!$(id).value && g[id]) $(id).value = g[id]; });
-  }
-  // Enter moves to the next field, and on the last one goes on to the check step
-  ["name", "phone", "email"].forEach(function (id, i, all) {
-    $(id).addEventListener("keydown", function (e) {
-      if (e.key !== "Enter") return;
-      e.preventDefault();
-      if (i < all.length - 1) $(all[i + 1]).focus(); else $("stepNext").click();
-    });
-  });
-  function draft() {
-    return { ref: null, date: state.date, time: state.time, guests: state.guests, seats: state.seats.slice(), where: seatsLabel(state.seats),
-      name: $("name").value.trim(), phone: $("phone").value.trim(), email: $("email").value.trim(),
-      occasions: state.occasions.slice(), notes: $("notes").value.trim(), status: state.guests >= WHOLE_FROM ? "requested" : "confirmed" };
-  }
-  function ticketHtml(b, editable) {
-    var rows = [["Date", shortDate(b.date), 0], ["Guests", String(b.guests), 0], ["Seats", b.where.split(",")[0], 1], ["Name", b.name, 2], ["Phone", b.phone, 2], ["Email", b.email, 2]];
-    if (b.occasions.length) rows.push(["Occasion", b.occasions.join(", "), 2]);
-    var end = String(Number(b.time.slice(0, 2)) + 2).padStart(2, "0") + ":" + (b.time === "18:00" ? "30" : "15");
-    return '<img class="review-view" src="' + leadView(b.seats) + '" alt="The view from your seats">' +
-      (b.ref ? '<p class="ref">' + esc(b.ref) + "</p>" : "") +
-      '<div class="ticket-meta"><span class="tag label">' + (b.ref ? (b.status === "requested" ? "Requested" : "Confirmed") : "Counter") + '</span><span class="label">Chez Nous · Bangsar</span></div>' +
-      '<div class="ticket-times"><div><p class="big">' + b.time + '</p><p class="label">' + (b.time === "18:00" ? "First seating" : "Second seating") + '</p></div><span class="ticket-line" aria-hidden="true"></span><div class="r"><p class="big">' + end + '</p><p class="label">About 2.5 hours</p></div></div>' +
-      '<div class="tix-perf" aria-hidden="true"></div><dl class="tix-grid">' + rows.map(function (r) {
-        return "<div><dt class=\"label\">" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd>" + (editable ? '<button type="button" class="edit" data-goto="' + r[2] + '" aria-label="Change ' + r[0].toLowerCase() + '">Change</button>' : "") + "</div>";
-      }).join("") + "</dl>";
-  }
-  $("review").addEventListener("click", function (e) { var x = e.target.closest("[data-goto]"); if (x) go(Number(x.dataset.goto)); });
+    if (g) { if (g.name) $("rvName").value = g.name; if (g.phone) $("rvPhone").value = g.phone; if (g.email) $("rvEmail").value = g.email; }
+  })();
 
-  function confirmBooking() {
+  $("rvForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var first = null, mark = function (el) { first = first || el; };
+    $("rvAlert").hidden = true;
+    if (!rv.date) { $("rvDateErr").textContent = "Please choose a date."; mark($("rvDays").querySelector(".rv-day:not(:disabled)")); }
+    if (rv.date && !rv.time) { $("rvTimeErr").textContent = "Please choose a time."; mark($("rvSlots").querySelector(".rv-slot:not(:disabled)")); }
+    if (rv.time && rv.seats.length !== rv.guests) { $("rvSeatErr").textContent = "Please choose your seats on the plan."; mark(rvPlan); }
+    var name = $("rvName").value.trim(), phone = $("rvPhone").value.trim(), email = $("rvEmail").value.trim();
+    if (name.length < 2) { fieldErr("Name", "Please enter your full name."); mark($("rvName")); }
+    var digits = phone.replace(/\D/g, "");
+    if (digits.length < 9 || digits.length > 13) { fieldErr("Phone", "Please enter a number we can call."); mark($("rvPhone")); }
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) { fieldErr("Email", "This email does not look right."); mark($("rvEmail")); }
+    if (!$("rvAgree").checked) { $("rvAgreeErr").textContent = "Please confirm you have read the deposit policy."; $("rvAgreeBox").classList.add("invalid"); mark($("rvAgree")); }
+    if (first) { if (first.focus) first.focus({ preventScroll: true }); first.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); return; }
+
     book = load(); // another tab may have booked meanwhile
-    if (!state.seats.every(free)) { state.seats = []; go(1); $("seatErr").textContent = "Those seats were just taken. Please choose others."; return; }
-    var b = draft();
-    b.ref = "CN-" + b.date.slice(5).replace("-", "") + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
-    b.created = new Date().toISOString();
-    book.push(b); save(book); lastBooking = b;
-    try { localStorage.setItem(GUEST_KEY, JSON.stringify({ name: b.name, phone: b.phone, email: b.email })); } catch (e) { /* fine */ }
-    $("doneTitle").innerHTML = b.status === "requested" ? 'Request <em class="accent">received.</em>' : 'You\'re <em class="accent">booked.</em>';
-    $("done").innerHTML = ticketHtml(b, false) + '<p class="done-hint">' + (b.status === "requested"
-      ? "The whole counter is held for you. We call " + esc(b.phone) + " within a day to confirm and plan the menu."
-      : "Your name cards will be on " + esc(b.where.split(",")[0].toLowerCase()) + ". A confirmation goes to " + esc(b.email) + " (demo: nothing is sent).") + "</p>";
-    go(4);
+    if (slotClosedNow(rv.date, rv.time) || !rv.seats.every(function (id) { return !isTaken(rv.date, rv.time, id); })) {
+      buildDays(); renderSlots(); rv.seats = []; renderGuests(); renderSeats();
+      $("rvAlert").textContent = "Those seats were just taken or the slot has closed. Here is the latest availability.";
+      $("rvAlert").hidden = false; return;
+    }
+    var ref = "CN-"; for (var i = 0; i < 6; i++) ref += "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".charAt(Math.floor(Math.random() * 32));
+    var b = { ref: ref, date: rv.date, time: rv.time, guests: rv.guests, seats: rv.seats.slice(), where: seatsText(rv.seats),
+      name: name, phone: phone, email: email, occasions: [], notes: $("rvNotes").value.trim(), status: "held", deposit: rv.guests * DEPOSIT, created: new Date().toISOString() };
+    book.push(b); save(book); rvDone = b;
+    buildDays(); renderSlots();
+    try { localStorage.setItem(GUEST_KEY, JSON.stringify({ name: name, phone: phone, email: email })); } catch (e2) { /* fine */ }
+    showDone(b);
+  });
+
+  function showDone(b) {
+    var d = $("rvDone");
+    d.innerHTML = '<span class="rv-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>' +
+      '<h3>Your seats are <em class="accent">held.</em></h3>' +
+      '<p class="rv-done-text">Thank you. We will contact you on ' + esc(b.phone) + ' with deposit details. Your booking is confirmed once the deposit of <b>' + rm(b.deposit) + '</b> arrives, and it comes off your bill on the day.' + (b.email ? " The details are on their way to " + esc(b.email) + " (demo: nothing is sent)." : " Please keep your reference.") + "</p>" +
+      '<img class="rv-done-view" src="' + viewFor(b.seats) + '" alt="The view from your seats">' +
+      '<dl class="rv-done-grid">' + [["Reference", b.ref], ["Guests", String(b.guests)], ["Date", fmtDate(b.date)], ["Time", slotLabel(b.time)], ["Seats", b.where.split(",")[0]], ["Deposit due", rm(b.deposit)]].map(function (r) {
+        return "<div><dt class=\"label\">" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>";
+      }).join("") + "</dl>" +
+      '<div class="rv-done-actions"><button type="button" class="btn btn-solid label" data-ics="' + b.ref + '">Add to calendar</button><button type="button" class="btn btn-ghost label" data-again>Make another booking</button><button type="button" class="link-inline" data-mine>My bookings</button></div>';
+    $("rvForm").hidden = true; d.hidden = false;
+    $("rv").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    setTimeout(function () { d.focus({ preventScroll: true }); }, 300);
   }
+  $("rvDone").addEventListener("click", function (e) {
+    if (e.target.closest("[data-again]")) {
+      rvDone = null; rv.date = null; rv.time = null; rv.seats = []; rv.guests = 2; rv.anchor = null; rv.prefer = null;
+      $("rvAgree").checked = false; $("rvAgreeBox").classList.remove("on"); $("rvNotes").value = "";
+      $("rvDone").hidden = true; $("rvForm").hidden = false;
+      buildDays(); renderSlots(); renderGuests(); renderSeats(); renderSubmit();
+      $("rv").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    }
+  });
 
   function ics(b) {
-    var d = b.date.replace(/-/g, ""), start = b.time.replace(":", "") + "00";
-    var endH = String(Number(b.time.slice(0, 2)) + 3).padStart(2, "0");
+    var d = b.date.replace(/-/g, ""), start = new Date(b.date + "T" + b.time + ":00"), end = new Date(start.getTime() + 90 * 60000);
+    var hm = function (x) { return String(x.getHours()).padStart(2, "0") + String(x.getMinutes()).padStart(2, "0") + "00"; };
     var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Chez Nous demo//EN", "BEGIN:VEVENT",
       "UID:" + b.ref + "@chez-nous.demo", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z",
-      "DTSTART:" + d + "T" + start, "DTEND:" + d + "T" + endH + b.time.slice(3) + "00",
+      "DTSTART:" + d + "T" + hm(start), "DTEND:" + d + "T" + hm(end),
       "SUMMARY:Dinner at Chez Nous", "LOCATION:Jalan Telawi\\, Bangsar\\, Kuala Lumpur (demo)",
       "DESCRIPTION:Booking " + b.ref + "\\, " + b.where.replace(/,/g, "\\,") + ". Demo booking\\, not a real reservation.", "END:VEVENT", "END:VCALENDAR"];
     var a = document.createElement("a");
@@ -599,77 +641,56 @@
     a.download = "chez-nous-" + b.ref + ".ics";
     document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   }
-  $("icsBtn").addEventListener("click", function () { if (lastBooking) ics(lastBooking); });
-  $("viewMine").addEventListener("click", function () { go(5); });
+  document.addEventListener("click", function (e) {
+    var i = e.target.closest("[data-ics]");
+    if (i) { book = load(); var b = book.filter(function (x) { return x.ref === i.dataset.ics; })[0]; if (b) ics(b); }
+  });
 
+  /* ── My bookings (sheet) ── */
+  var booking = $("booking");
   function buildMine() {
     book = load();
     var list = book.slice().sort(function (a, b) { return (a.date + a.time) < (b.date + b.time) ? -1 : 1; });
-    if (!list.length) { $("mineList").innerHTML = '<p class="empty">No bookings in this browser yet.</p><div class="done-actions"><button type="button" class="btn btn-solid label" data-new>Reserve a seat</button></div>'; return; }
+    if (!list.length) { $("mineList").innerHTML = '<p class="empty">No bookings in this browser yet.</p>'; return; }
     $("mineList").innerHTML = list.map(function (b) {
-      var st = b.status === "cancelled" ? "Cancelled" : b.status === "requested" ? "Requested, we will call" : "Confirmed";
-      return '<div class="mine' + (b.status === "cancelled" ? " cancelled" : "") + '"><b>' + esc(b.ref) + "</b><span>" + esc(fmtDate(b.date)) + " · " + esc(SEATINGS[b.time]) + " · " + b.guests + (b.guests === 1 ? " guest" : " guests") + "</span><span>" + esc(b.where) + '</span><span class="status-line">' + st + "</span>" +
-        (b.status === "cancelled" ? "" : '<div class="mine-actions"><button type="button" class="link-inline" data-ics="' + b.ref + '">Add to calendar</button><button type="button" class="link-inline" data-cancel="' + b.ref + '">Cancel booking</button></div>') + "</div>";
-    }).join("") + '<div class="done-actions"><button type="button" class="btn btn-solid label" data-new>Book another night</button></div>';
+      var dep = b.deposit || b.guests * DEPOSIT;
+      var st = b.status === "cancelled" ? "Released" : b.status === "held" ? "Seats held · deposit " + rm(dep) + " due" : b.status === "requested" ? "Requested, we will call" : "Confirmed";
+      return '<div class="mine' + (b.status === "cancelled" ? " cancelled" : "") + '"><b>' + esc(b.ref) + "</b><span>" + esc(fmtDate(b.date)) + " · " + esc(slotLabel(b.time)) + " · " + b.guests + (b.guests === 1 ? " guest" : " guests") + "</span><span>" + esc(b.where) + '</span><span class="status-line">' + st + "</span>" +
+        (b.status === "cancelled" ? "" : '<div class="mine-actions"><button type="button" class="link-inline" data-ics="' + b.ref + '">Add to calendar</button><button type="button" class="link-inline" data-cancel="' + b.ref + '">Release seats</button></div>') + "</div>";
+    }).join("");
   }
   $("mineList").addEventListener("click", function (e) {
-    var c = e.target.closest("[data-cancel]"), i = e.target.closest("[data-ics]"), n = e.target.closest("[data-new]");
-    if (c) {
-      var b = book.filter(function (x) { return x.ref === c.dataset.cancel; })[0];
-      if (b && window.confirm("Cancel " + b.ref + " on " + fmtDate(b.date) + "?")) { b.status = "cancelled"; save(book); buildMine(); }
+    var c = e.target.closest("[data-cancel]"); if (!c) return;
+    var b = book.filter(function (x) { return x.ref === c.dataset.cancel; })[0];
+    if (b && window.confirm("Release the seats for " + b.ref + " on " + fmtDate(b.date) + "?")) {
+      b.status = "cancelled"; save(book); buildMine();
+      buildDays(); if (rv.date) { renderSlots(); renderGuests(); renderSeats(); }
     }
-    if (i) ics(book.filter(function (x) { return x.ref === i.dataset.ics; })[0]);
-    if (n) { state.seats = []; state.prefer = null; go(0); }
   });
+  function openMine() { buildMine(); lastFocus = document.activeElement; showSheet(booking, booking.querySelector(".mine-h")); }
 
-  function updateNav() {
-    $("stepBack").hidden = step === 0 || step >= 4;
-    $("sheetFoot").hidden = step >= 4;
-    $("nextLabel").textContent = NEXT_LABELS[step] || "";
-    $("stepName").textContent = STEP_NAMES[step];
-    $("stepCount").textContent = step < 4 ? "Step " + (step + 1) + " of 4" : "Saved in this browser";
-    progressEls.forEach(function (p, i) { p.classList.toggle("on", step >= 4 || i <= step); });
+  /* ── Every "Reserve" button goes to the booking panel ── */
+  function firstOpenDate() {
+    for (var k = 0; k < STRIP_DAYS; k++) { var d = new Date(todayD); d.setDate(d.getDate() + k); if (dayInfo(iso(d)).open.length) return iso(d); }
+    return null;
   }
-  function go(n) {
-    var prev = step;
-    if (n === 0) { syncDays(); syncTimes(); renderGuests(); }
-    if (n === 1) { $("seatErr").textContent = ""; buildSeatStep(); }
-    if (n === 3) $("review").innerHTML = ticketHtml(draft(), true);
-    if (n === 5) buildMine();
-    step = n;
-    booking.classList.toggle("wide", n === 1);
-    stepsEls.forEach(function (el, i) {
-      el.classList.toggle("active", i === n);
-      el.classList.toggle("back", i < n);
-      el.setAttribute("aria-hidden", String(i !== n));
-      if (i === n) el.scrollTop = 0;
-    });
-    updateNav();
-    if (prev !== n) setTimeout(function () { stepsEls[n].querySelector("h2").focus({ preventScroll: true }); }, 200);
+  function goReserve(focusEl) {
+    if (rvDone) { $("rvDone").hidden = false; $("rvForm").hidden = true; }
+    $("rv").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    setTimeout(function () { var f = focusEl || $("rvDays").querySelector('[aria-pressed="true"]') || $("rvDays").querySelector(".rv-day:not(:disabled)"); if (f) f.focus({ preventScroll: true }); }, reduce ? 0 : 600);
   }
-  $("stepNext").addEventListener("click", function () { if (!validate(step)) return; if (step === 3) confirmBooking(); else go(step + 1); });
-  $("stepBack").addEventListener("click", function () { go(Math.max(0, step - 1)); });
-  $("bookForm").addEventListener("submit", function (e) { e.preventDefault(); });
-
-  function preselect() {
-    if (state.date && state.time) return;
-    for (var i = 0; i < dates.length && !state.date; i++) {
-      var id = iso(dates[i]);
-      if (CLOSED.indexOf(dates[i].getDay()) < 0 && !(seatingPassed(id, "18:00") && seatingPassed(id, "20:45"))) state.date = id;
-    }
-    if (!state.time && state.date) state.time = seatingPassed(state.date, "18:00") ? "20:45" : "18:00";
-  }
-  function openBooking(at) {
-    if (at === 0) preselect();
-    prefill();
-    go(at);
-    if (!booking.classList.contains("open")) { lastFocus = document.activeElement; showSheet(booking, stepsEls[at].querySelector("h2")); }
+  function bookFromSeat(id) {
+    if (rvDone) $("rvDone").querySelector("[data-again]").click();
+    rv.prefer = id; rv.anchor = seatNum(id);
+    if (!rv.date) { var d = firstOpenDate(); if (d) chooseDate(d); }
+    if (rv.time) { rv.seats = []; renderSeats(); renderSubmit(); }
+    goReserve($("rvSlots").querySelector(".rv-slot:not(:disabled)"));
   }
   document.addEventListener("click", function (e) {
     var b = e.target.closest("[data-book]"), m = e.target.closest("[data-mine]");
-    if (b) { if (b.closest("#mobileMenu")) setMenu(false); openBooking(0); }
-    else if (m) { e.preventDefault(); if (m.closest("#mobileMenu")) setMenu(false); openBooking(5); }
+    if (b) { e.preventDefault(); if (b.closest("#mobileMenu")) setMenu(false); goReserve(); }
+    else if (m) { e.preventDefault(); if (m.closest("#mobileMenu")) setMenu(false); openMine(); }
   });
-  stepsEls.forEach(function (el, i) { el.setAttribute("aria-hidden", String(i !== 0)); });
-  renderGuests(); updateNav();
+
+  buildDays(); renderSlots(); renderGuests(); renderSeats(); renderSubmit();
 })();
