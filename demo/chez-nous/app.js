@@ -104,7 +104,8 @@
     header.classList.toggle("hide", !menuOpen && y > vh && y > lastY + 4);
     if (y < lastY - 4 || y < vh) header.classList.remove("hide");
     lastY = y;
-    var show = y > vh * 0.7 && !document.body.classList.contains("locked");
+    var rvBox = $("reserve").getBoundingClientRect(); // no floating "Reserve" bar while the booking panel is on screen
+    var show = y > vh * 0.7 && !document.body.classList.contains("locked") && !(rvBox.top < vh && rvBox.bottom > 0);
     bar.classList.toggle("show", show);
     bar.setAttribute("aria-hidden", String(!show));
     bar.querySelector("button").tabIndex = show ? 0 : -1;
