@@ -975,3 +975,19 @@ h1, h2, h3, .h2, .step h2, .quick h3, .dish h3, .card h3, .steps h3, .faq summar
 @media (min-width: 768px) { .mine-body { padding: 2rem 2.25rem 2.5rem; } }
 .mine-h { font-family: var(--display); font-weight: 300; font-size: 2rem; line-height: 1.05; color: var(--ink); }
 .mine-body .empty { margin-top: 1rem; color: #55524d; }
+
+/* seat view crossfade: layers stack, the newest fades in over the old one */
+.rv-view-frame { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #050505; }
+.rv-view-frame .layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.025); transition: opacity .6s cubic-bezier(.22,.61,.36,1), transform 1.1s cubic-bezier(.22,.61,.36,1); will-change: opacity, transform; }
+.rv-view-frame .layer.on { opacity: 1; transform: none; }
+.rv-view-cap b { font-weight: 500; }
+.rv-view-cap .rv-view-all { display: block; margin-top: .3rem; font-size: .82rem; color: var(--muted); }
+/* seats: soft colour change, a little lift on the one you are looking from */
+.rv .plan .seat { transition: background-color .35s ease, border-color .35s ease, color .35s ease, transform .45s cubic-bezier(.34,1.4,.64,1), box-shadow .45s ease; }
+.rv .plan .seat[aria-pressed="true"] { transform: translate(-50%, -50%) scale(1.06); }
+.rv .plan .seat.last { transform: translate(-50%, -50%) scale(1.16); box-shadow: 0 0 0 3px rgba(201,164,92,.28), 0 0 16px rgba(201,164,92,.35); }
+.rv .plan .seat:not(:disabled):hover { border-color: var(--orange); }
+@media (prefers-reduced-motion: reduce) {
+  .rv-view-frame .layer { transition: none; transform: none; }
+  .rv .plan .seat, .rv .plan .seat[aria-pressed="true"], .rv .plan .seat.last { transition: none; transform: translate(-50%, -50%); }
+}

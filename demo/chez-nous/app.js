@@ -414,7 +414,7 @@
     return { infos: infos, open: open, left: open.reduce(function (n, x) { return n + x.free.length; }, 0), closed: !infos.length || infos.every(function (x) { return x.shut; }) };
   }
 
-  var rv = { date: null, time: null, guests: 2, seats: [], prefer: null, anchor: null };
+  var rv = { date: null, time: null, seats: [], last: null, prefer: null };
   var rvDone = null;
 
   function buildDays() {
@@ -469,62 +469,66 @@
     var b = e.target.closest(".rv-slot"); if (!b || b.disabled) return;
     rv.time = b.dataset.time; $("rvTimeErr").textContent = ""; $("rvAlert").hidden = true;
     Array.prototype.forEach.call($("rvSlots").querySelectorAll(".rv-slot"), function (x) { x.setAttribute("aria-pressed", String(x === b)); });
-    var free = freeSeats(rv.date, rv.time);
-    if (rv.guests > free.length) rv.guests = Math.max(1, free.length);
-    rv.seats = [];
+    // nothing is chosen for you: only the seat you picked in the 3D view, if it is free
+    rv.seats = rv.prefer && !isTaken(rv.date, rv.time, rv.prefer) ? [rv.prefer] : [];
+    rv.last = rv.seats[0] || null;
+    if (!preloaded) { preloaded = true; SEATS.forEach(function (x) { var im = new Image(); im.src = viewImg(x.id); }); } // taps then swap views instantly
     renderGuests(); renderSeats(); renderSubmit();
     if (window.innerWidth < 900) setTimeout(function () { $("rvSeats").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }, 60);
   });
 
-  function maxGuests() { return rv.date && rv.time ? Math.max(1, Math.min(MAX_GUESTS, freeSeats(rv.date, rv.time).length)) : MAX_GUESTS; }
-  function renderGuests() {
-    var mx = maxGuests();
-    if (rv.guests > mx) rv.guests = mx;
-    $("rvCount").innerHTML = rv.guests + '<span class="sr-only"> ' + (rv.guests === 1 ? "guest" : "guests") + "</span>";
-    $("rvMinus").disabled = rv.guests <= 1; $("rvPlus").disabled = rv.guests >= mx;
-    $("rvGuestHint").textContent = rv.time ? "Up to " + mx + " for this time slot." : "Up to " + MAX_GUESTS + " per online booking.";
-    $("rvDeposit").textContent = rm(rv.guests * DEPOSIT);
-    $("rvDepositFor").textContent = rm(DEPOSIT) + " × " + rv.guests + (rv.guests === 1 ? " guest" : " guests");
-  }
-  $("rvMinus").addEventListener("click", function () { if (rv.guests > 1) { rv.guests--; rv.seats = []; renderGuests(); renderSeats(); renderSubmit(); } });
-  $("rvPlus").addEventListener("click", function () { if (rv.guests < maxGuests()) { rv.guests++; rv.seats = []; renderGuests(); renderSeats(); renderSubmit(); } });
-
-  // Seats: a group sits side by side where it can (seats are numbered round the U), else as close together as possible
+  var preloaded = false;
+  // Guests = the seats you have chosen. Tap seats on the plan, or use + and - (adds the nearest free seat / drops the last one).
   var seatNum = function (id) { return Number(id.slice(1)); };
-  function pickSeats(n, anchor) {
-    var free = freeSeats(rv.date, rv.time), has = function (k) { return free.indexOf("S" + String(k).padStart(2, "0")) > -1; };
-    if (free.length < n) return [];
-    var starts = [];
-    for (var st = 1; st + n - 1 <= CAPACITY; st++) {
-      var ok = true; for (var k = st; k < st + n; k++) if (!has(k)) { ok = false; break; }
-      if (ok) starts.push(st);
-    }
-    if (starts.length) {
-      var a = anchor || 5.5; // no anchor: closest to the plating table in the middle
-      starts.sort(function (x, y) { return Math.abs(x + (n - 1) / 2 - a) - Math.abs(y + (n - 1) / 2 - a); });
-      if (anchor) { var inc = starts.filter(function (st2) { return anchor >= st2 && anchor < st2 + n; }); if (inc.length) starts = inc.concat(starts); }
-      var out = []; for (var j = starts[0]; j < starts[0] + n; j++) out.push("S" + String(j).padStart(2, "0"));
-      return out;
-    }
-    var a2 = anchor || 5.5;
-    return free.slice().sort(function (x, y) { return Math.abs(seatNum(x) - a2) - Math.abs(seatNum(y) - a2); }).slice(0, n).sort();
+  function guests() { return rv.seats.length; }
+  function renderGuests() {
+    var g = guests(), free = rv.date && rv.time ? freeSeats(rv.date, rv.time) : [];
+    $("rvCount").innerHTML = (rv.time ? g : "–") + '<span class="sr-only"> ' + (g === 1 ? "guest" : "guests") + "</span>";
+    $("rvMinus").disabled = !rv.time || g < 1;
+    $("rvPlus").disabled = !rv.time || g >= Math.min(MAX_GUESTS, free.length);
+    $("rvGuestHint").textContent = !rv.time ? "Choose a time first, then tap your seats on the plan."
+      : g ? g + (g === 1 ? " seat" : " seats") + " chosen · " + (free.length - g) + " more free in this time slot."
+      : "Tap a seat for each guest. " + free.length + " seats are free in this time slot.";
+    $("rvDeposit").textContent = rm(g * DEPOSIT);
+    $("rvDepositFor").textContent = rm(DEPOSIT) + " × " + g + (g === 1 ? " guest" : " guests");
   }
-  function together(ids) { for (var i = 1; i < ids.length; i++) if (seatNum(ids[i]) !== seatNum(ids[i - 1]) + 1) return false; return true; }
+  function nearestFree() {
+    var free = freeSeats(rv.date, rv.time).filter(function (id) { return rv.seats.indexOf(id) < 0; });
+    var a = rv.last ? seatNum(rv.last) : 5.5;
+    free.sort(function (x, y) { return Math.abs(seatNum(x) - a) - Math.abs(seatNum(y) - a) || seatNum(x) - seatNum(y); });
+    return free[0] || null;
+  }
+  function addSeat(id) { if (!id || rv.seats.indexOf(id) > -1 || guests() >= MAX_GUESTS) return; rv.seats.push(id); rv.last = id; }
+  function dropSeat(id) { rv.seats = rv.seats.filter(function (x) { return x !== id; }); rv.last = rv.seats[rv.seats.length - 1] || null; }
+  function seatsChanged() { $("rvSeatErr").textContent = ""; renderGuests(); renderSeats(); renderSubmit(); }
+  $("rvMinus").addEventListener("click", function () { if (guests()) { dropSeat(rv.seats[rv.seats.length - 1]); seatsChanged(); } });
+  $("rvPlus").addEventListener("click", function () { if (rv.time) { addSeat(nearestFree()); seatsChanged(); } });
+
+  function sorted(ids) { return ids.slice().sort(function (a, b) { return seatNum(a) - seatNum(b); }); }
+  function together(ids) { var s = sorted(ids); for (var i = 1; i < s.length; i++) if (seatNum(s[i]) !== seatNum(s[i - 1]) + 1) return false; return true; }
   function seatsText(ids) {
     if (ids.length >= CAPACITY) return "The whole counter, all ten seats";
-    var nums = ids.map(seatNum);
-    var list = together(ids) ? (nums.length === 1 ? "Seat " + nums[0] : "Seats " + nums[0] + " to " + nums[nums.length - 1]) : "Seats " + nums.slice(0, -1).join(", ") + " and " + nums[nums.length - 1];
-    return list + ", facing " + STATION_LONG[seatById(ids[Math.floor((ids.length - 1) / 2)]).station];
+    var nums = sorted(ids).map(seatNum);
+    if (nums.length === 1) return "Seat " + nums[0];
+    return together(ids) ? "Seats " + nums[0] + " to " + nums[nums.length - 1] : "Seats " + nums.slice(0, -1).join(", ") + " and " + nums[nums.length - 1];
   }
-  function viewFor(ids) { return ids.length >= CAPACITY ? "img/view-hero.jpg" : viewImg(ids[Math.floor((ids.length - 1) / 2)]); }
+  function viewFor(ids) { var s = sorted(ids); return ids.length >= CAPACITY ? "img/view-hero.jpg" : viewImg(s[Math.floor((s.length - 1) / 2)]); }
+
+  // Crossfade: the new view loads underneath, then fades in over the old one (no flash to black)
+  var viewToken = 0;
   function setView(src, alt) {
-    var img = $("rvView");
-    if (img.getAttribute("src") === src) return;
-    if (reduce) { img.src = src; img.alt = alt; return; }
-    var next = new Image(); next.src = src;
-    img.classList.add("fade");
-    var swap = function () { img.src = src; img.alt = alt; requestAnimationFrame(function () { img.classList.remove("fade"); }); };
-    (next.decode ? next.decode() : Promise.resolve()).then(function () { setTimeout(swap, 160); }, swap);
+    var frame = $("rvViewFrame"), top = frame.lastElementChild;
+    if (top && top.getAttribute("src") === src) return;
+    var token = ++viewToken, img = new Image();
+    img.className = "layer"; img.alt = alt; img.decoding = "async"; img.src = src;
+    var show = function () {
+      if (token !== viewToken) return;
+      frame.appendChild(img);
+      if (reduce) { Array.prototype.slice.call(frame.children, 0, -1).forEach(function (o) { o.remove(); }); img.classList.add("on"); return; }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { img.classList.add("on"); }); });
+      setTimeout(function () { if (token === viewToken) Array.prototype.slice.call(frame.children, 0, -1).forEach(function (o) { o.remove(); }); }, 650);
+    };
+    (img.decode ? img.decode() : Promise.resolve()).then(show, show);
   }
 
   var rvPlan = $("rvPlan");
@@ -533,31 +537,40 @@
     if (!rv.date || !rv.time) { box.hidden = true; return; }
     box.hidden = false;
     if (!rvPlan.querySelector(".seat")) buildPlan(rvPlan);
-    if (rv.seats.length !== rv.guests || !rv.seats.every(function (id) { return !isTaken(rv.date, rv.time, id); })) {
-      rv.seats = pickSeats(rv.guests, rv.anchor || (rv.prefer ? seatNum(rv.prefer) : null));
-    }
+    rv.seats = rv.seats.filter(function (id) { return !isTaken(rv.date, rv.time, id); });
+    if (rv.last && rv.seats.indexOf(rv.last) < 0) rv.last = rv.seats[rv.seats.length - 1] || null;
     rvPlan.querySelectorAll("[data-seat]").forEach(function (b) {
       var id = b.dataset.seat, taken = isTaken(rv.date, rv.time, id), mine = rv.seats.indexOf(id) > -1, s = seatById(id);
       b.disabled = taken;
       b.setAttribute("aria-pressed", String(mine));
-      b.setAttribute("aria-label", "Seat " + s.n + (taken ? ", taken" : mine ? ", yours" : ", free") + ", facing " + STATION_LONG[s.station]);
+      b.classList.toggle("last", id === rv.last);
+      b.setAttribute("aria-label", "Seat " + s.n + (taken ? ", taken" : mine ? ", yours, tap to remove" : ", free") + ", facing " + STATION_LONG[s.station]);
     });
-    if (rv.seats.length) {
-      setView(viewFor(rv.seats), "The view from your seats");
-      $("rvViewCap").textContent = seatsText(rv.seats) + (together(rv.seats) || rv.seats.length >= CAPACITY ? "" : " (not all side by side)");
-      $("rvSeatErr").textContent = "";
+    if (rv.last) {
+      var s = seatById(rv.last);
+      setView(viewImg(rv.last), "The view from seat " + s.n);
+      $("rvViewCap").innerHTML = "<b>The view from seat " + s.n + "</b>, facing " + esc(STATION_LONG[s.station]) +
+        (guests() > 1 ? '<span class="rv-view-all">Your seats: ' + esc(seatsText(rv.seats)) + (together(rv.seats) ? "" : " (not side by side)") + "</span>" : "");
+    } else {
+      setView("img/view-hero.jpg", "The counter");
+      $("rvViewCap").innerHTML = "<b>Tap a seat</b> to see the view from it. Tap it again to remove it.";
     }
   }
   rvPlan.addEventListener("click", function (e) {
     var b = e.target.closest("[data-seat]"); if (!b || b.disabled) return;
-    rv.anchor = seatNum(b.dataset.seat);
-    rv.seats = pickSeats(rv.guests, rv.anchor);
-    renderSeats(); renderSubmit();
+    var id = b.dataset.seat;
+    if (rv.seats.indexOf(id) > -1) {
+      if (rv.last !== id) rv.last = id;          // first tap on one of yours shows its view
+      else dropSeat(id);                          // tapping it again removes it
+    } else if (guests() >= MAX_GUESTS) { $("rvSeatErr").textContent = "Up to " + MAX_GUESTS + " seats per online booking."; return; }
+    else addSeat(id);
+    seatsChanged();
   });
   if (planRO) planRO.observe(rvPlan);
 
   function renderSubmit() {
-    $("rvGo").textContent = rv.date && rv.time ? "Reserve " + rv.guests + (rv.guests === 1 ? " seat" : " seats") + " · " + shortDate(rv.date) + ", " + slotLabel(rv.time) : "Reserve seats";
+    var g = guests();
+    $("rvGo").textContent = rv.date && rv.time && g ? "Reserve " + g + (g === 1 ? " seat" : " seats") + " · " + shortDate(rv.date) + ", " + slotLabel(rv.time) : rv.time ? "Choose your seats" : "Reserve seats";
   }
 
   function fieldErr(k, msg) { $("rv" + k + "Err").textContent = msg; $("rv" + k + "F").classList.toggle("invalid", !!msg); }
@@ -580,7 +593,7 @@
     $("rvAlert").hidden = true;
     if (!rv.date) { $("rvDateErr").textContent = "Please choose a date."; mark($("rvDays").querySelector(".rv-day:not(:disabled)")); }
     if (rv.date && !rv.time) { $("rvTimeErr").textContent = "Please choose a time."; mark($("rvSlots").querySelector(".rv-slot:not(:disabled)")); }
-    if (rv.time && rv.seats.length !== rv.guests) { $("rvSeatErr").textContent = "Please choose your seats on the plan."; mark(rvPlan); }
+    if (rv.time && !rv.seats.length) { $("rvSeatErr").textContent = "Please tap a seat on the plan for each guest."; mark(rvPlan); }
     var name = $("rvName").value.trim(), phone = $("rvPhone").value.trim(), email = $("rvEmail").value.trim();
     if (name.length < 2) { fieldErr("Name", "Please enter your full name."); mark($("rvName")); }
     var digits = phone.replace(/\D/g, "");
@@ -596,8 +609,8 @@
       $("rvAlert").hidden = false; return;
     }
     var ref = "CN-"; for (var i = 0; i < 6; i++) ref += "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".charAt(Math.floor(Math.random() * 32));
-    var b = { ref: ref, date: rv.date, time: rv.time, guests: rv.guests, seats: rv.seats.slice(), where: seatsText(rv.seats),
-      name: name, phone: phone, email: email, occasions: [], notes: $("rvNotes").value.trim(), status: "held", deposit: rv.guests * DEPOSIT, created: new Date().toISOString() };
+    var b = { ref: ref, date: rv.date, time: rv.time, guests: guests(), seats: sorted(rv.seats), where: seatsText(rv.seats) + ", facing " + STATION_LONG[seatById(sorted(rv.seats)[Math.floor((rv.seats.length - 1) / 2)]).station],
+      name: name, phone: phone, email: email, occasions: [], notes: $("rvNotes").value.trim(), status: "held", deposit: guests() * DEPOSIT, created: new Date().toISOString() };
     book.push(b); save(book); rvDone = b;
     buildDays(); renderSlots();
     try { localStorage.setItem(GUEST_KEY, JSON.stringify({ name: name, phone: phone, email: email })); } catch (e2) { /* fine */ }
@@ -610,7 +623,7 @@
       '<h3>Your seats are <em class="accent">held.</em></h3>' +
       '<p class="rv-done-text">Thank you. We will contact you on ' + esc(b.phone) + ' with deposit details. Your booking is confirmed once the deposit of <b>' + rm(b.deposit) + '</b> arrives, and it comes off your bill on the day.' + (b.email ? " The details are on their way to " + esc(b.email) + " (demo: nothing is sent)." : " Please keep your reference.") + "</p>" +
       '<img class="rv-done-view" src="' + viewFor(b.seats) + '" alt="The view from your seats">' +
-      '<dl class="rv-done-grid">' + [["Reference", b.ref], ["Guests", String(b.guests)], ["Date", fmtDate(b.date)], ["Time", slotLabel(b.time)], ["Seats", b.where.split(",")[0]], ["Deposit due", rm(b.deposit)]].map(function (r) {
+      '<dl class="rv-done-grid">' + [["Reference", b.ref], ["Guests", String(b.guests)], ["Date", fmtDate(b.date)], ["Time", slotLabel(b.time)], ["Seats", seatsText(b.seats)], ["Deposit due", rm(b.deposit)]].map(function (r) {
         return "<div><dt class=\"label\">" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>";
       }).join("") + "</dl>" +
       '<div class="rv-done-actions"><button type="button" class="btn btn-solid label" data-ics="' + b.ref + '">Add to calendar</button><button type="button" class="btn btn-ghost label" data-again>Make another booking</button><button type="button" class="link-inline" data-mine>My bookings</button></div>';
@@ -620,7 +633,7 @@
   }
   $("rvDone").addEventListener("click", function (e) {
     if (e.target.closest("[data-again]")) {
-      rvDone = null; rv.date = null; rv.time = null; rv.seats = []; rv.guests = 2; rv.anchor = null; rv.prefer = null;
+      rvDone = null; rv.date = null; rv.time = null; rv.seats = []; rv.last = null; rv.prefer = null;
       $("rvAgree").checked = false; $("rvAgreeBox").classList.remove("on"); $("rvNotes").value = "";
       $("rvDone").hidden = true; $("rvForm").hidden = false;
       buildDays(); renderSlots(); renderGuests(); renderSeats(); renderSubmit();
@@ -681,9 +694,9 @@
   }
   function bookFromSeat(id) {
     if (rvDone) $("rvDone").querySelector("[data-again]").click();
-    rv.prefer = id; rv.anchor = seatNum(id);
+    rv.prefer = id;
     if (!rv.date) { var d = firstOpenDate(); if (d) chooseDate(d); }
-    if (rv.time) { rv.seats = []; renderSeats(); renderSubmit(); }
+    if (rv.time && !isTaken(rv.date, rv.time, id)) { addSeat(id); rv.last = id; seatsChanged(); }
     goReserve($("rvSlots").querySelector(".rv-slot:not(:disabled)"));
   }
   document.addEventListener("click", function (e) {

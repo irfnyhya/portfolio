@@ -17,7 +17,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/view-hero-tall.jpg" media="(max-width: 767px)">
   <link rel="preload" as="image" href="img/view-hero.jpg" media="(min-width: 768px)">
-  <link rel="stylesheet" href="styles.css?v=23">
+  <link rel="stylesheet" href="styles.css?v=24">
   <script>document.documentElement.classList.add("js")</script>
   <script type="importmap">
     { "imports": {
@@ -285,11 +285,11 @@
               </div>
               <p class="rv-hint" id="rvGuestHint">Up to 10 per online booking.</p>
               <div class="rv-seats" id="rvSeats" hidden>
-                <div class="rv-view"><img id="rvView" src="img/view-hero.jpg" alt="The counter" width="1600" height="1000"><p class="rv-view-cap" id="rvViewCap" aria-live="polite"></p></div>
+                <div class="rv-view"><div class="rv-view-frame" id="rvViewFrame"><img class="layer on" src="img/view-hero.jpg" alt="The counter" width="1600" height="1000"></div><p class="rv-view-cap" id="rvViewCap" aria-live="polite"></p></div>
                 <div class="rv-plan-wrap">
                   <div class="plan plan-small" id="rvPlan" data-rot-below="0"></div>
                   <p class="rv-legend"><span><i class="k free"></i>Free</span><span><i class="k yours"></i>Yours</span><span><i class="k taken"></i>Taken</span></p>
-                  <p class="rv-hint">Tap a seat to move your group there. We keep you side by side where we can.</p>
+                  <p class="rv-hint">Tap a seat for each guest. Tap one of yours to see its view again, and once more to remove it.</p>
                 </div>
               </div>
               <p class="err" id="rvSeatErr"></p>
@@ -415,7 +415,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=23"></script>
-  <script type="module" src="viewer.js?v=23"></script>
+  <script src="app.js?v=24"></script>
+  <script type="module" src="viewer.js?v=24"></script>
 </body>
 </html>
